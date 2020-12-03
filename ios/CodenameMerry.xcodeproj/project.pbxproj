@@ -18,6 +18,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* CodenameMerryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CodenameMerryTests.m */; };
 		4336DFC828A8C9ADA355787C /* libPods-CodenameMerry-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A27DE9EA7CC25AB71900BD8 /* libPods-CodenameMerry-tvOS.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		C11DD76B2578DDBA008D8205 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C11DD76A2578DDBA008D8205 /* Feather.ttf */; };
 		F4CC12AD715BF3310D1152A3 /* libPods-CodenameMerry-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E802883A0F5ECFA9DEB2F6D /* libPods-CodenameMerry-tvOSTests.a */; };
 		F906F208824FFFBC1077D36B /* libPods-CodenameMerry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC78ECDB0BC66909D52DE1 /* libPods-CodenameMerry.a */; };
 /* End PBXBuildFile section */
@@ -64,6 +65,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = CodenameMerry/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A549150FE2EFE2ED3FE5DEBD /* Pods-CodenameMerry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodenameMerry.release.xcconfig"; path = "Target Support Files/Pods-CodenameMerry/Pods-CodenameMerry.release.xcconfig"; sourceTree = "<group>"; };
 		B4F62E6427F80F1CF9609214 /* Pods-CodenameMerry-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodenameMerry-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-CodenameMerry-tvOS/Pods-CodenameMerry-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		C11DD76A2578DDBA008D8205 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		C609DF5B0AD1C4B63C9D39EF /* libPods-CodenameMerry-CodenameMerryTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CodenameMerry-CodenameMerryTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -125,6 +127,7 @@
 		13B07FAE1A68108700A75B9A /* CodenameMerry */ = {
 			isa = PBXGroup;
 			children = (
+				C11DD7692578DD6F008D8205 /* Fonts */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -148,7 +151,6 @@
 				10493C66F242B81234324AAF /* Pods-CodenameMerry-tvOSTests.debug.xcconfig */,
 				4BE5308CEF903BACD7D5712F /* Pods-CodenameMerry-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -196,6 +198,14 @@
 				2D02E4901E0B4A5D006451C7 /* CodenameMerry-tvOSTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C11DD7692578DD6F008D8205 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C11DD76A2578DDBA008D8205 /* Feather.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,17 +301,21 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = UE6BVYPPFX;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = UE6BVYPPFX;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = UE6BVYPPFX;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = UE6BVYPPFX;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -342,6 +356,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				C11DD76B2578DDBA008D8205 /* Feather.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +626,7 @@
 			baseConfigurationReference = 04D676CC8B4BF506FD97F343 /* Pods-CodenameMerry-CodenameMerryTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -635,6 +651,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				INFOPLIST_FILE = CodenameMerryTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -656,6 +673,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CodenameMerry/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -679,6 +697,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				INFOPLIST_FILE = CodenameMerry/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -704,6 +723,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "CodenameMerry-tvOS/Info.plist";
@@ -733,6 +753,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "CodenameMerry-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -759,6 +780,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "CodenameMerry-tvOSTests/Info.plist";
@@ -787,6 +809,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "CodenameMerry-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
