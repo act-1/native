@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { Box, Text } from '../';
 
 function EventBox() {
   return (
-    <View>
-      <Text>EventBox</Text>
-    </View>
+    <Box alignItems="flex-start">
+      <Text>hi</Text>
+    </Box>
   );
 }
 
