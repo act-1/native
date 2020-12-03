@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { EventBox } from '../../components';
 
 function EventsScreen() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Events Screen</Text>
+    <View style={{ justifyContent: 'center' }}>
+      <EventBox />
     </View>
   );
 }
