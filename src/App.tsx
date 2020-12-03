@@ -5,6 +5,7 @@ import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Feather';
+import { Events } from './screens';
 
 type RootStackParamList = {
   Home: undefined;
@@ -69,7 +70,7 @@ function App() {
         }}
       >
         <Tab.Screen name="Map" component={HomeScreen} options={{ title: 'מפה' }} />
-        <Tab.Screen name="Events" component={HomeScreen} />
+        <Tab.Screen name="Events" component={Events} />
         <Tab.Screen name="CheckIn" component={HomeScreen} />
         <Tab.Screen name="Inbox" component={HomeScreen} />
         <Tab.Screen name="Profile" component={HomeScreen} />
