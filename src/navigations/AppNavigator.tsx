@@ -14,7 +14,7 @@ function AppNavigator() {
       <MainStack.Screen
         name="EventPage"
         component={EventPage}
-        options={{
+        options={({ navigation }) => ({
           headerShown: true,
           headerTitle: 'עמוד הפגנה',
           headerBackTitle: ' ',
@@ -25,8 +25,16 @@ function AppNavigator() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerLeft: () => <Icon name={'arrow-right'} size={28} color={'#fff'} style={{ marginLeft: 15 }} />,
-        }}
+          headerLeft: () => (
+            <Icon
+              name={'arrow-right'}
+              size={28}
+              color={'#fff'}
+              style={{ marginLeft: 15 }}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        })}
       />
     </MainStack.Navigator>
   );
