@@ -2,8 +2,8 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Feather';
 import { Box, Text } from '../../components';
+import EventPageDetail from './EventPageDetail';
 
 function EventPage() {
   const insets = useSafeAreaInsets();
@@ -18,14 +18,8 @@ function EventPage() {
             באנו חושך לגרש - הפגנת ענק בבלפור
           </Text>
           <Box flexDirection="row" justifyContent="space-evenly">
-            <Box flexDirection="row" alignItems="center">
-              <Icon name="map-pin" size={15} color="#000" style={{ marginRight: 4 }} />
-              <Text variant="text">כיכר פריז, ירושלים</Text>
-            </Box>
-            <Box flexDirection="row" alignItems="center">
-              <Icon name="clock" size={15} color="#000" style={{ marginRight: 4 }} />
-              <Text variant="text">יום שבת בשעה 19:00</Text>
-            </Box>
+            <EventPageDetail text="כיכר פריז, ירושלים" iconName="map-pin" />
+            <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
           </Box>
         </Box>
       </ScrollView>
