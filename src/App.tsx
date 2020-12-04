@@ -32,51 +32,49 @@ const Tab = createBottomTabNavigator();
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}>
-          <Tab.Navigator
-            screenOptions={({ route }) => ({
-              tabBarIcon: ({ focused, color, size }) => {
-                let iconName = '';
+      <NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName = '';
 
-                switch (route.name) {
-                  case 'Events':
-                    iconName = 'calendar';
-                    break;
+              switch (route.name) {
+                case 'Events':
+                  iconName = 'calendar';
+                  break;
 
-                  case 'Map':
-                    iconName = 'map';
-                    break;
+                case 'Map':
+                  iconName = 'map';
+                  break;
 
-                  case 'CheckIn':
-                    iconName = 'map-pin';
-                    break;
+                case 'CheckIn':
+                  iconName = 'map-pin';
+                  break;
 
-                  case 'Inbox':
-                    iconName = 'inbox';
-                    break;
-                  case 'Profile':
-                    iconName = 'user';
-                    break;
-                }
+                case 'Inbox':
+                  iconName = 'inbox';
+                  break;
+                case 'Profile':
+                  iconName = 'user';
+                  break;
+              }
 
-                return <Icon name={iconName} size={size} color={color} />;
-              },
-            })}
-            tabBarOptions={{
-              activeTintColor: '#6E7DFF',
-              inactiveTintColor: 'gray',
-              showLabel: false,
-            }}
-          >
-            <Tab.Screen name="Map" component={HomeScreen} options={{ title: 'מפה' }} />
-            <Tab.Screen name="Events" component={Events} options={{ title: 'אירועים' }} />
-            <Tab.Screen name="CheckIn" component={HomeScreen} />
-            <Tab.Screen name="Inbox" component={HomeScreen} />
-            <Tab.Screen name="Profile" component={HomeScreen} />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
+              return <Icon name={iconName} size={size} color={color} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: '#6E7DFF',
+            inactiveTintColor: 'gray',
+            showLabel: false,
+          }}
+        >
+          <Tab.Screen name="Map" component={HomeScreen} options={{ title: 'מפה' }} />
+          <Tab.Screen name="Events" component={Events} />
+          <Tab.Screen name="CheckIn" component={HomeScreen} />
+          <Tab.Screen name="Inbox" component={HomeScreen} />
+          <Tab.Screen name="Profile" component={HomeScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
     </ThemeProvider>
   );
 }
