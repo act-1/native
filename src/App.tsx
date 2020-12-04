@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { SafeAreaView, View, Text } from 'react-native';
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ThemeProvider } from '@shopify/restyle';
@@ -33,7 +33,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SafeAreaView style={{ flex: 1 }}>
-        <NavigationContainer>
+        <NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}>
           <Tab.Navigator
             screenOptions={({ route }) => ({
               tabBarIcon: ({ focused, color, size }) => {
