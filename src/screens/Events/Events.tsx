@@ -23,7 +23,7 @@ function EventsScreen() {
     >
       <EventsStack.Screen
         name="EventList"
-        options={{ title: 'הפגנות' }}
+        options={{ title: 'הפגנות קרובות' }}
         component={() => (
           <SafeAreaView>
             <StatusBar barStyle="light-content" backgroundColor="#6142b8" />

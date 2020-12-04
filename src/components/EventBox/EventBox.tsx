@@ -28,8 +28,8 @@ export default EventBox;
 
 const styles = StyleSheet.create({
   eventThumb: {
-    height: 50,
     width: 100,
+    height: 50,
     borderRadius: 10,
     marginRight: 10,
   },

@@ -48,7 +48,7 @@ const theme = createTheme({
       color: 'eventBoxDateColor',
     },
     eventBoxLocation: {
-      fontWeight: '400',
+      fontWeight: '100',
       fontSize: 15,
       color: 'lightText',
     },
