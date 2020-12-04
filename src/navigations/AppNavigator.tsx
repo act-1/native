@@ -1,52 +1,35 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import EventsNavigator from './EventsNavigator';
+import { createStackNavigator } from '@react-navigation/stack';
+import { EventPage } from '../screens';
 import Icon from 'react-native-vector-icons/Feather';
 
-const Tab = createBottomTabNavigator();
+const MainStack = createStackNavigator();
 
-const TabNav = () => (
-  <Tab.Navigator
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ color, size }) => {
-        let iconName = '';
+import AppTabs from './AppTabs';
 
-        switch (route.name) {
-          case 'Events':
-            iconName = 'calendar';
-            break;
+function AppNavigator() {
+  return (
+    <MainStack.Navigator screenOptions={{ headerShown: false }}>
+      <MainStack.Screen name="Home" component={AppTabs} />
+      <MainStack.Screen
+        name="EventPage"
+        component={EventPage}
+        options={{
+          headerShown: true,
+          headerTitle: 'עמוד הפגנה',
+          headerBackTitle: ' ',
+          headerStyle: {
+            backgroundColor: '#7254c8',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerLeft: () => <Icon name={'arrow-right'} size={28} color={'#fff'} style={{ marginLeft: 15 }} />,
+        }}
+      />
+    </MainStack.Navigator>
+  );
+}
 
-          case 'Map':
-            iconName = 'map';
-            break;
-
-          case 'CheckIn':
-            iconName = 'map-pin';
-            break;
-
-          case 'Inbox':
-            iconName = 'inbox';
-            break;
-          case 'Profile':
-            iconName = 'user';
-            break;
-        }
-
-        return <Icon name={iconName} size={size} color={color} />;
-      },
-    })}
-    tabBarOptions={{
-      activeTintColor: '#6E7DFF',
-      inactiveTintColor: 'gray',
-      showLabel: false,
-    }}
-  >
-    <Tab.Screen name="Map" component={EventsNavigator} />
-    <Tab.Screen name="Events" component={EventsNavigator} />
-    <Tab.Screen name="CheckIn" component={EventsNavigator} />
-    <Tab.Screen name="Inbox" component={EventsNavigator} />
-    <Tab.Screen name="Profile" component={EventsNavigator} />
-  </Tab.Navigator>
-);
-
-export default TabNav;
+export default AppNavigator;

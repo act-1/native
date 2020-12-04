@@ -14,6 +14,7 @@ const palette = {
   black: '#0B0B0B',
   white: '#F0F2F3',
   grey: '#737373',
+  lightgrey: '#f0f2f5',
 };
 
 const theme = createTheme({
@@ -23,6 +24,7 @@ const theme = createTheme({
     mainBackground: palette.white,
     cardPrimaryBackground: palette.purplePrimary,
     eventBoxDateColor: palette.redPrimary,
+    drawerBackground: palette.lightgrey,
   },
   spacing: {
     xs: 4,
@@ -39,21 +41,26 @@ const theme = createTheme({
   textVariants: {
     largeTitle: {
       fontFamily: 'Rubik-Bold',
-      fontSize: 24,
+      fontSize: 20,
+      color: 'primaryText',
+    },
+    text: {
+      fontFamily: 'Rubik-Regular',
+      fontSize: 14,
       color: 'primaryText',
     },
     eventBoxTitle: {
-      fontWeight: 'bold',
+      fontFamily: 'Rubik-Bold',
       fontSize: 16,
       color: 'primaryText',
     },
     eventBoxDate: {
-      fontWeight: 'bold',
+      fontFamily: 'Rubik-Medium',
       fontSize: 13,
       color: 'eventBoxDateColor',
     },
     eventBoxLocation: {
-      fontWeight: '100',
+      fontFamily: 'Rubik-Regular',
       fontSize: 15,
       color: 'lightText',
     },

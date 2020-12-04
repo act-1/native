@@ -18,7 +18,7 @@ function EventsNavigator() {
       }}
     >
       <EventsStack.Screen name="EventList" options={{ title: 'הפגנות קרובות' }} component={EventList} />
-      <EventsStack.Screen name="EventPage" options={{ headerShown: false }} component={EventPage} />
+      {/* <EventsStack.Screen name="EventPage" options={{ headerTitle: 'היי' }} component={EventPage} /> */}
     </EventsStack.Navigator>
   );
 }
