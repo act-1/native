@@ -37,6 +37,11 @@ const theme = createTheme({
     tablet: 768,
   },
   textVariants: {
+    largeTitle: {
+      fontFamily: 'Rubik-Bold',
+      fontSize: 24,
+      color: 'primaryText',
+    },
     eventBoxTitle: {
       fontWeight: 'bold',
       fontSize: 16,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Events } from '../screens';
+import { EventList, EventPage } from '../screens';
 
 const EventsStack = createStackNavigator();
 
@@ -17,7 +17,8 @@ function EventsNavigator() {
         },
       }}
     >
-      <EventsStack.Screen name="EventList" options={{ title: 'הפגנות קרובות' }} component={Events} />
+      <EventsStack.Screen name="EventList" options={{ title: 'הפגנות קרובות' }} component={EventList} />
+      <EventsStack.Screen name="EventPage" options={{ headerShown: false }} component={EventPage} />
     </EventsStack.Navigator>
   );
 }

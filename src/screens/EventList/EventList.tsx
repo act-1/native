@@ -5,7 +5,7 @@ import { Box, EventBox } from '../../components';
 const thumb = require('../../components/EventBox/event-thumb.jpg');
 const imageUrl = new URL(Image.resolveAssetSource(thumb).uri);
 
-function EventsScreen() {
+function EventList({ navigation }) {
   return (
     <SafeAreaView>
       <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
@@ -15,10 +15,11 @@ function EventsScreen() {
           dateTime="שבת בשעה 19:00"
           location="כיכר פריז, ירושלים"
           thumbnailUrl={imageUrl}
+          onPress={() => navigation.navigate('EventPage')}
         />
       </Box>
     </SafeAreaView>
   );
 }
 
-export default EventsScreen;
+export default EventList;
