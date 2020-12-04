@@ -2,15 +2,22 @@ import React from 'react';
 import { Pressable, Image, StyleSheet } from 'react-native';
 import { Box, Text } from '../';
 
-function EventBox() {
+type EventBoxProps = {
+  title: string;
+  dateTime: string;
+  location: string;
+  thumbnailUrl: URL;
+};
+
+function EventBox({ title, dateTime, location, thumbnailUrl }: EventBoxProps) {
   return (
     <Pressable style={({ pressed }) => [{ backgroundColor: pressed ? '#e4e4e4' : 'white' }]}>
       <Box flexDirection="row" padding="m">
-        <Image style={styles.eventThumb} source={require('./event-thumb.jpg')} />
+        <Image style={styles.eventThumb} source={{ uri: thumbnailUrl.href }} />
         <Box alignItems="flex-start" flex={1}>
-          <Text variant="eventBoxDate">שבת בשעה 19:00</Text>
-          <Text variant="eventBoxTitle">באנו חושך לגרש - הפגנת ענק בבלפור</Text>
-          <Text variant="eventBoxLocation">כיכר פריז, ירושלים</Text>
+          <Text variant="eventBoxDate">{dateTime}</Text>
+          <Text variant="eventBoxTitle">{title}</Text>
+          <Text variant="eventBoxLocation">{location}</Text>
         </Box>
       </Box>
     </Pressable>

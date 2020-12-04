@@ -39,7 +39,7 @@ const theme = createTheme({
   textVariants: {
     eventBoxTitle: {
       fontWeight: 'bold',
-      fontSize: 17,
+      fontSize: 16,
       color: 'primaryText',
     },
     eventBoxDate: {
