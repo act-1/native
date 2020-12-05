@@ -11,9 +11,14 @@ const palette = {
 
   redPrimary: '#E03616',
 
-  black: '#0B0B0B',
-  white: '#F0F2F3',
+  orange: '#FFC281',
+  orangeDark: '#632700',
+
+  white: '#fff',
+  porcelain: '#F0F2F3',
+  lightgrey: '#f0f2f5',
   grey: '#737373',
+  black: '#0B0B0B',
 };
 
 const theme = createTheme({
@@ -21,8 +26,12 @@ const theme = createTheme({
     primaryText: palette.black,
     lightText: palette.grey,
     mainBackground: palette.white,
+    mainForeground: palette.black,
     cardPrimaryBackground: palette.purplePrimary,
     eventBoxDateColor: palette.redPrimary,
+    dimmedBackground: palette.lightgrey,
+    attentionBackground: palette.orange,
+    attentionForeground: palette.orangeDark,
   },
   spacing: {
     xs: 4,
@@ -37,20 +46,39 @@ const theme = createTheme({
     tablet: 768,
   },
   textVariants: {
+    hugeTitle: {
+      fontFamily: 'Rubik-Bold',
+      fontSize: 28,
+      color: 'primaryText',
+    },
+    largeTitle: {
+      fontFamily: 'Rubik-Bold',
+      fontSize: 20,
+      color: 'primaryText',
+    },
+    text: {
+      fontFamily: 'Rubik-Regular',
+      fontSize: 14,
+      color: 'primaryText',
+    },
     eventBoxTitle: {
-      fontWeight: 'bold',
+      fontFamily: 'Rubik-Bold',
       fontSize: 16,
       color: 'primaryText',
     },
     eventBoxDate: {
-      fontWeight: 'bold',
+      fontFamily: 'Rubik-Medium',
       fontSize: 13,
       color: 'eventBoxDateColor',
     },
     eventBoxLocation: {
-      fontWeight: '100',
+      fontFamily: 'Rubik-Regular',
       fontSize: 15,
       color: 'lightText',
+    },
+    buttonText: {
+      fontFamily: 'Rubik-Bold',
+      fontSize: 18,
     },
   },
 });

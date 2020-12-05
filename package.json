@@ -23,9 +23,11 @@
     "react-native": "0.63.4",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-reanimated": "^1.13.2",
+    "react-native-render-html": "^4.2.4",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.15.0",
-    "react-native-vector-icons": "^7.1.0"
+    "react-native-vector-icons": "^7.1.0",
+    "react-native-webview": "^11.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -37,9 +39,9 @@
     "eslint": "^6.5.1",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
-    "react-test-renderer": "16.13.1"
-  },
-  "jest": {
-    "preset": "react-native"
+    "react-native-typescript-transformer": "^1.2.13",
+    "react-test-renderer": "16.13.1",
+    "ts-jest": "^26.4.npm4",
+    "typescript": "^4.1.2"
   }
 }
