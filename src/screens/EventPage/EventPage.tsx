@@ -21,6 +21,7 @@ function EventPage() {
             <EventPageDetail text="כיכר פריז, ירושלים" iconName="map-pin" />
             <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
           </Box>
+          <EventPageCounter number={4241} text="אישרו הגעה" />
         </Box>
       </ScrollView>
       <Box
@@ -28,7 +29,7 @@ function EventPage() {
         bottom={0}
         width="100%"
         height={60}
-        backgroundColor="drawerBackground"
+        backgroundColor="dimmedBackground"
         shadowColor="primaryText"
         shadowOpacity={1}
         shadowOffset={{ width: 0, height: 5 }}

@@ -24,7 +24,7 @@ const theme = createTheme({
     mainBackground: palette.white,
     cardPrimaryBackground: palette.purplePrimary,
     eventBoxDateColor: palette.redPrimary,
-    drawerBackground: palette.lightgrey,
+    dimmedBackground: palette.lightgrey,
   },
   spacing: {
     xs: 4,
