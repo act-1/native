@@ -7,6 +7,7 @@ const eventData = {
   dateTime: 'שבת בשעה 19:00',
   location: 'כיכר פריז, ירושלים',
   thumbnailUrl: new URL('https://plchldr.co/i/200x100'),
+  onPress: () => null,
 };
 
 // Test fails becuase of `restyle` lib issue.
