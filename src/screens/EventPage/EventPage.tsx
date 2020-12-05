@@ -1,10 +1,9 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, Image } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
 import HTML from 'react-native-render-html';
 import { Box, Text } from '../../components';
-import { EventPageDetail, EventPageCounter } from './';
+import { EventPageDetail, EventPageCounter, EventPageBottomDrawer } from './';
 
 const htmlContent = `
 <div style="textAlign: left;">
@@ -16,8 +15,6 @@ const htmlContent = `
 `;
 
 function EventPage() {
-  const insets = useSafeAreaInsets();
-
   return (
     <SafeAreaView>
       <ScrollView style={{ height: '100%' }}>
@@ -37,21 +34,7 @@ function EventPage() {
           </Box>
         </Box>
       </ScrollView>
-      <Box
-        position="absolute"
-        bottom={0}
-        width="100%"
-        height={60}
-        backgroundColor="dimmedBackground"
-        shadowColor="primaryText"
-        shadowOpacity={1}
-        shadowOffset={{ width: 0, height: 5 }}
-        shadowRadius={5}
-        elevation={2}
-        style={{ paddingBottom: insets.bottom }}
-      >
-        <Text>hi</Text>
-      </Box>
+      <EventPageBottomDrawer />
     </SafeAreaView>
   );
 }
