@@ -21,7 +21,6 @@ export default EventPageCounter;
 const styles = StyleSheet.create({
   counterBox: {
     height: 100,
-    marginHorizontal: 10,
     borderWidth: 1,
     borderRadius: 6,
     borderColor: '#cdcad6',
