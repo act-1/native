@@ -22,6 +22,7 @@ const theme = createTheme({
     primaryText: palette.black,
     lightText: palette.grey,
     mainBackground: palette.white,
+    mainForeground: palette.black,
     cardPrimaryBackground: palette.purplePrimary,
     eventBoxDateColor: palette.redPrimary,
     dimmedBackground: palette.lightgrey,
@@ -39,6 +40,11 @@ const theme = createTheme({
     tablet: 768,
   },
   textVariants: {
+    hugeTitle: {
+      fontFamily: 'Rubik-Bold',
+      fontSize: 28,
+      color: 'primaryText',
+    },
     largeTitle: {
       fontFamily: 'Rubik-Bold',
       fontSize: 20,

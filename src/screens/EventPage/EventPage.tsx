@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, StatusBar, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Box, Text } from '../../components';
-import EventPageDetail from './EventPageDetail';
+import { EventPageDetail, EventPageCounter } from './';
 
 function EventPage() {
   const insets = useSafeAreaInsets();
@@ -17,7 +17,7 @@ function EventPage() {
           <Text style={{ writingDirection: 'rtl' }} variant="largeTitle" marginBottom="m" textAlign="center">
             באנו חושך לגרש - הפגנת ענק בבלפור
           </Text>
-          <Box flexDirection="row" justifyContent="space-evenly">
+          <Box flexDirection="row" justifyContent="space-evenly" marginBottom="xm">
             <EventPageDetail text="כיכר פריז, ירושלים" iconName="map-pin" />
             <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
           </Box>
