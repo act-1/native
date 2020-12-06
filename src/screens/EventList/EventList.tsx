@@ -64,17 +64,17 @@ function EventList({ navigation }) {
   return (
     <SafeAreaView>
       <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
-      <Box justifyContent="center" marginTop="m" height="100%">
+      <Box justifyContent="center" height="100%">
         <SectionList
           sections={DATA}
           renderItem={({ item }) => <EventBox {...item} onPress={() => navigation.navigate('EventPage')} />}
           stickySectionHeadersEnabled={false}
           renderSectionHeader={({ section: { title } }) => (
-            <Box>
-              <Text fontSize={22} textAlign="left" paddingHorizontal="m" fontFamily="Rubik-Medium">
+            <Box marginTop="m" marginLeft="m">
+              <Text fontSize={22} textAlign="left" fontFamily="Rubik-Medium">
                 {title.day}
               </Text>
-              <Text fontSize={16} textAlign="left" paddingHorizontal="m" color="lightText" fontFamily="Rubik-Regular">
+              <Text fontSize={16} textAlign="left" color="lightText" fontFamily="Rubik-Regular">
                 {title.date}
               </Text>
             </Box>
