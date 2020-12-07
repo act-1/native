@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import HTML from 'react-native-render-html';
-import { Box, Text } from '../../components';
+import { Box, Text, CircularButton } from '../../components';
 import { EventPageDetail, EventPageCounter, EventPageBottomDrawer } from './';
 
 const htmlContent = `
@@ -32,6 +32,7 @@ function EventPage() {
           <Text variant="largeTitle" marginBottom="m">
             פרטים
           </Text>
+          <CircularButton iconName="check" color="#000" />
           <Box height={40} justifyContent="space-between" marginBottom="m">
             <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
             <EventPageDetail text="כיכר פריז, ירושלים" iconName="map-pin" />
