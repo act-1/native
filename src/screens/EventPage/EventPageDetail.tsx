@@ -10,7 +10,7 @@ type EventPageDetailProps = {
 function EventPageDetail({ iconName, text }: EventPageDetailProps) {
   return (
     <Box flexDirection="row" alignItems="center">
-      <Icon name={iconName} size={15} color="#000" style={{ marginRight: 4 }} />
+      <Icon name={iconName} size={15} color="#000" style={{ marginRight: 8 }} />
       <Text variant="text">{text}</Text>
     </Box>
   );

@@ -32,6 +32,7 @@ const theme = createTheme({
     dimmedBackground: palette.lightgrey,
     attentionBackground: palette.orange,
     attentionForeground: palette.orangeDark,
+    lightBorderColor: palette.lightgrey,
   },
   spacing: {
     xs: 4,
@@ -55,6 +56,7 @@ const theme = createTheme({
       fontFamily: 'Rubik-Bold',
       fontSize: 20,
       color: 'primaryText',
+      textAlign: 'left',
     },
     text: {
       fontFamily: 'Rubik-Regular',
