@@ -15,7 +15,7 @@ function AppNavigator() {
         name="EventPage"
         component={EventPage}
         options={({ navigation }) => ({
-          headerShown: true,
+          headerShown: false,
           headerTitle: 'עמוד הפגנה',
           headerBackTitle: ' ',
           headerStyle: {
