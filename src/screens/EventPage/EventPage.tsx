@@ -1,9 +1,9 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, StatusBar, Image } from 'react-native';
+import { StyleSheet, StatusBar, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import HTML from 'react-native-render-html';
 import { Box, Text, CircularButton } from '../../components';
-import { EventPageDetail, EventPageCounter, EventPageBottomDrawer } from './';
+import { EventPageDetail, EventPageCounter } from './';
 
 const htmlContent = `
 <div style="textAlign: left;">
@@ -28,15 +28,28 @@ function EventPage() {
         </Box>
 
         <EventPageCounter number={4241} text="אישרו הגעה" style={{ marginBottom: 12 }} />
+
+        <Box
+          flexDirection="row"
+          justifyContent="space-evenly"
+          backgroundColor="mainBackground"
+          paddingVertical="m"
+          marginBottom="m"
+        >
+          <CircularButton iconName="check" color="blue" text="אישור הגעה" />
+          <CircularButton iconName="check" color="blue" text="אישור הגעה" />
+        </Box>
+
         <Box padding="m" backgroundColor="mainBackground">
           <Text variant="largeTitle" marginBottom="m">
             פרטים
           </Text>
-          <CircularButton iconName="check" color="#000" />
+
           <Box height={40} justifyContent="space-between" marginBottom="m">
             <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
             <EventPageDetail text="כיכר פריז, ירושלים" iconName="map-pin" />
           </Box>
+
           <HTML
             html={htmlContent}
             tagsStyles={{ p: { marginBottom: 12, fontSize: 15, fontFamily: 'Rubik-Regular' } }}
