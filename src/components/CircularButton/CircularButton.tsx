@@ -23,6 +23,14 @@ const buttonColors: ColorsDict = {
     initialColor: '#3498ff',
     pressedColor: '#57abff',
   },
+  green: {
+    initialColor: '#08c236',
+    pressedColor: '#1ad348',
+  },
+  grey: {
+    initialColor: '#696a6c',
+    pressedColor: '#88898b',
+  },
 };
 
 function CircularButton({ iconName, color, text }: CircularButtonProps) {

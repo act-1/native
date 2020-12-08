@@ -36,8 +36,8 @@ function EventPage() {
           paddingVertical="m"
           marginBottom="m"
         >
-          <CircularButton iconName="check" color="blue" text="אישור הגעה" />
-          <CircularButton iconName="check" color="blue" text="אישור הגעה" />
+          <CircularButton iconName="check" color="green" text="אישור הגעה" />
+          <CircularButton iconName="share" color="blue" text="הזמנת חברים" />
         </Box>
 
         <Box padding="m" backgroundColor="mainBackground">
