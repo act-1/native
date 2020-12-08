@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, StatusBar, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import MapView from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { Box, Text, CircularButton } from '../../components';
 import { EventPageDetail, EventPageCounter } from './';
@@ -45,10 +46,22 @@ function EventPage() {
             פרטים
           </Text>
 
-          <Box height={50} justifyContent="space-between" marginBottom="m">
+          <Box height={50} justifyContent="space-between" marginBottom="xm">
             <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
             <EventPageDetail text="כיכר פריז, ירושלים" iconName="map-pin" />
           </Box>
+
+          <MapView
+            style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
+            scrollEnabled={false}
+            mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
 
           <HTML
             html={htmlContent}
