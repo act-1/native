@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 type CircularButtonProps = {
   iconName: string;
-  color: 'blue' | 'grey';
+  color: 'blue' | 'green' | 'grey';
   text?: string;
 };
 
@@ -47,7 +47,7 @@ function CircularButton({ iconName, color, text }: CircularButtonProps) {
       >
         <Icon name={iconName} size={25} color="white" />
       </Pressable>
-      <Text style={{ color: pressed ? pressedColor : initialColor }} testID="button-text">
+      <Text style={{ color: pressed ? pressedColor : initialColor }} variant="buttonText" testID="button-text">
         {text}
       </Text>
     </Box>
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   button: {
     width: 45,
     height: 45,
+    marginBottom: 6,
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
