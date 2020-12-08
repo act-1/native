@@ -1,9 +1,9 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, StatusBar, Image } from 'react-native';
+import { StyleSheet, StatusBar, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import HTML from 'react-native-render-html';
-import { Box, Text } from '../../components';
-import { EventPageDetail, EventPageCounter, EventPageBottomDrawer } from './';
+import { Box, Text, CircularButton } from '../../components';
+import { EventPageDetail, EventPageCounter } from './';
 
 const htmlContent = `
 <div style="textAlign: left;">
@@ -16,26 +16,47 @@ const htmlContent = `
 
 function EventPage() {
   return (
-    <SafeAreaView>
-      <ScrollView style={{ height: '100%' }}>
-        <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
-        <Image style={styles.eventThumb} source={require('../../components/EventBox/event-thumb.jpg')} />
-        <Box paddingVertical="xm" paddingHorizontal="l">
+    <ScrollView style={{ height: '100%' }}>
+      <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
+      <Image style={styles.eventThumb} source={require('../../components/EventBox/event-thumb.jpg')} />
+      <Box backgroundColor="dimmedBackground">
+        <Box paddingVertical="xm" marginBottom="m" backgroundColor="mainBackground" alignItems="center">
           <Text style={{ writingDirection: 'rtl' }} variant="largeTitle" marginBottom="m" textAlign="center">
             באנו חושך לגרש - הפגנת ענק בבלפור
           </Text>
-          <Box flexDirection="row" justifyContent="space-evenly" marginBottom="xm">
-            <EventPageDetail text="כיכר פריז, ירושלים" iconName="map-pin" />
-            <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
-          </Box>
-          <EventPageCounter number={4241} text="אישרו הגעה" />
-          <Box marginVertical="l">
-            <HTML html={htmlContent} tagsStyles={{ p: { marginBottom: 12, fontSize: 15 } }} />
-          </Box>
+          <Text variant="text">יום רביעי הקרוב בשעה 19:00</Text>
         </Box>
-      </ScrollView>
-      <EventPageBottomDrawer />
-    </SafeAreaView>
+
+        <EventPageCounter number={4241} text="אישרו הגעה" style={{ marginBottom: 12 }} />
+
+        <Box
+          flexDirection="row"
+          justifyContent="space-evenly"
+          backgroundColor="mainBackground"
+          paddingVertical="xm"
+          marginBottom="m"
+        >
+          <CircularButton iconName="check" color="grey" text="אישור הגעה" />
+          <CircularButton iconName="share" color="blue" text="הזמנת חברים" />
+        </Box>
+
+        <Box padding="m" backgroundColor="mainBackground">
+          <Text variant="largeTitle" marginBottom="m">
+            פרטים
+          </Text>
+
+          <Box height={50} justifyContent="space-between" marginBottom="m">
+            <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
+            <EventPageDetail text="כיכר פריז, ירושלים" iconName="map-pin" />
+          </Box>
+
+          <HTML
+            html={htmlContent}
+            tagsStyles={{ p: { marginBottom: 12, fontSize: 15, fontFamily: 'Rubik-Regular' } }}
+          />
+        </Box>
+      </Box>
+    </ScrollView>
   );
 }
 

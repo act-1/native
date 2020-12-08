@@ -32,6 +32,7 @@ const theme = createTheme({
     dimmedBackground: palette.lightgrey,
     attentionBackground: palette.orange,
     attentionForeground: palette.orangeDark,
+    lightBorderColor: palette.lightgrey,
   },
   spacing: {
     xs: 4,
@@ -48,17 +49,18 @@ const theme = createTheme({
   textVariants: {
     hugeTitle: {
       fontFamily: 'Rubik-Bold',
-      fontSize: 28,
+      fontSize: 30,
       color: 'primaryText',
     },
     largeTitle: {
       fontFamily: 'Rubik-Bold',
       fontSize: 20,
       color: 'primaryText',
+      textAlign: 'left',
     },
     text: {
       fontFamily: 'Rubik-Regular',
-      fontSize: 14,
+      fontSize: 16,
       color: 'primaryText',
     },
     eventBoxTitle: {
@@ -77,8 +79,8 @@ const theme = createTheme({
       color: 'lightText',
     },
     buttonText: {
-      fontFamily: 'Rubik-Bold',
-      fontSize: 18,
+      fontFamily: 'Rubik-Medium',
+      fontSize: 13,
     },
   },
 });
