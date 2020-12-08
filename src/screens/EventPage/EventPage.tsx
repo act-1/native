@@ -33,10 +33,10 @@ function EventPage() {
           flexDirection="row"
           justifyContent="space-evenly"
           backgroundColor="mainBackground"
-          paddingVertical="m"
+          paddingVertical="xm"
           marginBottom="m"
         >
-          <CircularButton iconName="check" color="green" text="אישור הגעה" />
+          <CircularButton iconName="check" color="grey" text="אישור הגעה" />
           <CircularButton iconName="share" color="blue" text="הזמנת חברים" />
         </Box>
 
@@ -45,7 +45,7 @@ function EventPage() {
             פרטים
           </Text>
 
-          <Box height={40} justifyContent="space-between" marginBottom="m">
+          <Box height={50} justifyContent="space-between" marginBottom="m">
             <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
             <EventPageDetail text="כיכר פריז, ירושלים" iconName="map-pin" />
           </Box>
