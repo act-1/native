@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, ViewStyle } from 'react-native';
 import { Box, Text } from '../';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -7,6 +7,7 @@ type CircularButtonProps = {
   iconName: string;
   color: 'blue' | 'green' | 'grey' | 'white';
   text?: string;
+  size?: 'small' | 'large';
 };
 
 type ButtonColors = {
@@ -39,16 +40,30 @@ const buttonColors: ColorsDict = {
   },
 };
 
-function CircularButton({ iconName, color, text }: CircularButtonProps) {
+function getButtonDimenions(size: string): ViewStyle {
+  if (size === 'small') {
+    return {
+      width: 35,
+      height: 35,
+    };
+  }
+  return {
+    width: 45,
+    height: 45,
+  };
+}
+
+function CircularButton({ iconName, color, text, size = 'large' }: CircularButtonProps) {
   const [pressed, setPressed] = useState(false);
   const { initialColor, pressedColor, iconColor } = buttonColors[color];
+  const buttonDimensions = getButtonDimenions(size);
 
   return (
     <Box justifyContent="center" alignItems="center" testID="button-container">
       <Pressable
         onPressIn={() => setPressed(true)}
         onPressOut={() => setPressed(false)}
-        style={{ backgroundColor: pressed ? pressedColor : initialColor, ...styles.button }}
+        style={{ backgroundColor: pressed ? pressedColor : initialColor, ...buttonDimensions, ...styles.button }}
         testID="button-pressable"
       >
         <Icon name={iconName} size={25} color={iconColor ? iconColor : 'white'} />
@@ -64,8 +79,6 @@ export default React.memo(CircularButton);
 
 const styles = StyleSheet.create({
   button: {
-    width: 45,
-    height: 45,
     marginBottom: 6,
     borderRadius: 25,
     alignItems: 'center',
