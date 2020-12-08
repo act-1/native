@@ -30,15 +30,18 @@ function CircularButton({ iconName, color, text }: CircularButtonProps) {
   const { initialColor, pressedColor } = buttonColors[color];
 
   return (
-    <Box justifyContent="center" alignItems="center">
+    <Box justifyContent="center" alignItems="center" testID="button-container">
       <Pressable
         onPressIn={() => setPressed(true)}
         onPressOut={() => setPressed(false)}
         style={{ backgroundColor: pressed ? pressedColor : initialColor, ...styles.button }}
+        testID="button-pressable"
       >
         <Icon name={iconName} size={25} color="white" />
       </Pressable>
-      <Text style={{ color: pressed ? pressedColor : initialColor }}>{text}</Text>
+      <Text style={{ color: pressed ? pressedColor : initialColor }} testID="button-text">
+        {text}
+      </Text>
     </Box>
   );
 }
