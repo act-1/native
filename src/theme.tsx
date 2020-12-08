@@ -62,6 +62,7 @@ const theme = createTheme({
       fontFamily: 'Rubik-Regular',
       fontSize: 16,
       color: 'primaryText',
+      textAlign: 'left',
     },
     eventBoxTitle: {
       fontFamily: 'Rubik-Bold',

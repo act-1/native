@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, StatusBar, Image } from 'react-native';
+import { StyleSheet, StatusBar, Image, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { Box, Text, CircularButton } from '../../components';
-import { EventPageDetail, EventPageCounter } from './';
+import { EventHeader, EventPageDetail, EventPageCounter } from './';
 
 const htmlContent = `
 <div style="textAlign: left;">
@@ -19,6 +19,7 @@ function EventPage() {
   return (
     <ScrollView style={{ height: '100%' }}>
       <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
+      <EventHeader />
       <Image style={styles.eventThumb} source={require('../../components/EventBox/event-thumb.jpg')} />
       <Box backgroundColor="dimmedBackground">
         <Box paddingVertical="xm" marginBottom="m" backgroundColor="mainBackground" alignItems="center">
@@ -41,7 +42,7 @@ function EventPage() {
           <CircularButton iconName="share" color="blue" text="הזמנת חברים" />
         </Box>
 
-        <Box padding="m" backgroundColor="mainBackground">
+        <Box padding="m" marginBottom="m" backgroundColor="mainBackground">
           <Text variant="largeTitle" marginBottom="m">
             פרטים
           </Text>
@@ -67,6 +68,19 @@ function EventPage() {
             html={htmlContent}
             tagsStyles={{ p: { marginBottom: 12, fontSize: 15, fontFamily: 'Rubik-Regular' } }}
           />
+        </Box>
+
+        <Box padding="m" backgroundColor="mainBackground">
+          <Text variant="largeTitle" marginBottom="m">
+            מארגנים
+          </Text>
+          <Box flexDirection="row" alignItems="center">
+            <Image
+              source={require('../../components/EventBox/event-thumb.jpg')}
+              style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
+            />
+            <Text variant="text">הדגלים השחורים</Text>
+          </Box>
         </Box>
       </Box>
     </ScrollView>
