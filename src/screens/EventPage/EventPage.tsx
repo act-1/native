@@ -17,7 +17,7 @@ const htmlContent = `
 
 function EventPage() {
   return (
-    <ScrollView style={{ height: '100%' }}>
+    <ScrollView style={{ height: '100%' }} showsVerticalScrollIndicator={false}>
       <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
       <EventHeader />
       <Image style={styles.eventThumb} source={require('../../components/EventBox/event-thumb.jpg')} />
