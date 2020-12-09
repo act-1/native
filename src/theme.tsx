@@ -79,7 +79,11 @@ const theme = createTheme({
       fontSize: 15,
       color: 'lightText',
     },
-    buttonText: {
+    roundedButtonText: {
+      fontFamily: 'Rubik-Bold',
+      fontSize: 16,
+    },
+    circularButtonText: {
       fontFamily: 'Rubik-Medium',
       fontSize: 13,
     },

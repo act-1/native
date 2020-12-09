@@ -71,7 +71,7 @@ function CircularButton({ iconName, color, text, onPress, size = 'large' }: Circ
       >
         <Icon name={iconName} size={25} color={iconColor ? iconColor : 'white'} />
       </Pressable>
-      <Text style={{ color: pressed ? pressedColor : initialColor }} variant="buttonText" testID="button-text">
+      <Text style={{ color: pressed ? pressedColor : initialColor }} variant="circularButtonText" testID="button-text">
         {text}
       </Text>
     </Box>

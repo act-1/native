@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { EventList, EventPage } from '../screens';
+import { EventList } from '../screens';
 
 const EventsStack = createStackNavigator();
 
@@ -9,7 +9,7 @@ function EventsNavigator() {
     <EventsStack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#7254c8',
+          backgroundColor: '#4B5ACD',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -18,7 +18,6 @@ function EventsNavigator() {
       }}
     >
       <EventsStack.Screen name="EventList" options={{ title: 'הפגנות קרובות' }} component={EventList} />
-      {/* <EventsStack.Screen name="EventPage" options={{ headerTitle: 'היי' }} component={EventPage} /> */}
     </EventsStack.Navigator>
   );
 }

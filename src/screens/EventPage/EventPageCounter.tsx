@@ -17,8 +17,12 @@ function EventPageCounter({ number, text, style }: EventPageCounterProps) {
       borderColor="lightBorderColor"
       style={[styles.counterBox, style]}
     >
-      <Text variant="hugeTitle">{number.toLocaleString()}</Text>
-      <Text variant="text">{text}</Text>
+      <Text variant="hugeTitle" color="mainBackground">
+        {number.toLocaleString()}
+      </Text>
+      <Text variant="text" color="mainBackground">
+        {text}
+      </Text>
     </Box>
   );
 }
@@ -28,6 +32,8 @@ export default EventPageCounter;
 const styles = StyleSheet.create({
   counterBox: {
     height: 100,
+    marginHorizontal: -2,
     borderWidth: 1,
+    backgroundColor: '#4B5ACD',
   },
 });
