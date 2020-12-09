@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, StatusBar, Image, Dimensions } from 'react-native';
+import { StyleSheet, StatusBar, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import HTML from 'react-native-render-html';
+import { EventPageProps } from '@types/navigation';
 import { Box, Text, CircularButton } from '../../components';
 import { EventHeader, EventPageDetail, EventPageCounter } from './';
 

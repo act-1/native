@@ -1,6 +1,13 @@
 {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
+    "baseUrl": ".",
+    "paths": {
+      "@types/*": ["./src/types/*"],
+      "_components": ["src/components"],
+      "_navigation": ["src/navigation"],
+      "_screens": ["src/screens"]
+    },
 
     /* Basic Options */
     // "incremental": true,                   /* Enable incremental compilation */

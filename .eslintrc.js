@@ -14,4 +14,9 @@ module.exports = {
     'spaced-comment': ['error', 'always', { exceptions: ['*'], markers: ['*'] }],
     'keyword-spacing': ['error', { before: true }],
   },
+  settings: {
+    'import/resolver': {
+      'babel-module': {},
+    },
+  },
 };
