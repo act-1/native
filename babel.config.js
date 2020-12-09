@@ -3,10 +3,11 @@ const plugins = [
     require.resolve('babel-plugin-module-resolver'),
     {
       alias: {
+        '@assets': './src/assets',
         '@types': './src/types',
-        _components: './components',
-        _navigation: './navigation',
-        _screens: './screens',
+        '@components': './src/components',
+        _navigation: './src/navigation',
+        _screens: './src/screens',
       },
     },
   ],

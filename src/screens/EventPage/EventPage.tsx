@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, StatusBar, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useModal, modalfy } from 'react-native-modalfy';
 import MapView from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { EventPageProps } from '@types/navigation';
@@ -17,6 +18,10 @@ const htmlContent = `
 `;
 
 function EventPage({ navigation }: EventPageProps) {
+  const { openModal } = useModal();
+
+  const attendEvent = () => openModal('AttendingModal');
+
   return (
     <ScrollView style={{ height: '100%' }} showsVerticalScrollIndicator={false}>
       <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
@@ -39,7 +44,7 @@ function EventPage({ navigation }: EventPageProps) {
           paddingVertical="xm"
           marginBottom="m"
         >
-          <CircularButton iconName="check" color="grey" text="אישור הגעה" />
+          <CircularButton iconName="check" color="grey" text="אישור הגעה" onPress={attendEvent} />
           <CircularButton iconName="share" color="blue" text="הזמנת חברים" />
         </Box>
 
