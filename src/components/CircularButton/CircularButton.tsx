@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 type CircularButtonProps = {
   iconName: string;
   color: 'blue' | 'green' | 'grey' | 'white';
+  onPress?: () => void;
   text?: string;
   size?: 'small' | 'large';
 };
@@ -47,13 +48,14 @@ function getButtonDimenions(size: string): ViewStyle {
       height: 35,
     };
   }
+
   return {
     width: 45,
     height: 45,
   };
 }
 
-function CircularButton({ iconName, color, text, size = 'large' }: CircularButtonProps) {
+function CircularButton({ iconName, color, text, onPress, size = 'large' }: CircularButtonProps) {
   const [pressed, setPressed] = useState(false);
   const { initialColor, pressedColor, iconColor } = buttonColors[color];
   const buttonDimensions = getButtonDimenions(size);
@@ -61,6 +63,7 @@ function CircularButton({ iconName, color, text, size = 'large' }: CircularButto
   return (
     <Box justifyContent="center" alignItems="center" testID="button-container">
       <Pressable
+        onPress={onPress}
         onPressIn={() => setPressed(true)}
         onPressOut={() => setPressed(false)}
         style={{ backgroundColor: pressed ? pressedColor : initialColor, ...buttonDimensions, ...styles.button }}

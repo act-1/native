@@ -2,7 +2,7 @@ import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Box, CircularButton } from '../../components';
 
-function EventHeader() {
+function EventHeader({ goBack }: { goBack: () => void }) {
   const insets = useSafeAreaInsets();
 
   return (
@@ -15,8 +15,7 @@ function EventHeader() {
       paddingHorizontal="m"
       zIndex={2}
     >
-      <CircularButton iconName="arrow-right" color="white" size="small" />
-      <CircularButton iconName="more-horizontal" color="white" size="small" />
+      <CircularButton onPress={goBack} iconName="arrow-right" color="white" size="small" />
     </Box>
   );
 }

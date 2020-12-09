@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { EventPage } from '../screens';
 import Icon from 'react-native-vector-icons/Feather';
 
-const MainStack = createStackNavigator();
+const MainStack = createStackNavigator<RootStackParamList>();
 
 import AppTabs from './AppTabs';
 

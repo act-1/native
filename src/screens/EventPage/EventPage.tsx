@@ -15,11 +15,11 @@ const htmlContent = `
 אנו נקיים את ההפגנה כמתוכנן ונתכנס לאירוע מחאה גדול, בהשתתפות *כל* ארגוני המחאה כדי הוציא את המדינה "מחושך לאור" ולהעביר מסר תקיף וחד משמעי: לנאשם במשרה מלאה אין ראש להיות ראש ממשלה. "אין אפשרות מלבד נבצרות"</p></div>
 `;
 
-function EventPage() {
+function EventPage({ navigation }: EventPageProps) {
   return (
     <ScrollView style={{ height: '100%' }} showsVerticalScrollIndicator={false}>
       <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
-      <EventHeader />
+      <EventHeader goBack={() => navigation.goBack()} />
       <Image style={styles.eventThumb} source={require('../../components/EventBox/event-thumb.jpg')} />
       <Box backgroundColor="dimmedBackground">
         <Box paddingVertical="xm" marginBottom="m" backgroundColor="mainBackground" alignItems="center">
