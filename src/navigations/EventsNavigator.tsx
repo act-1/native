@@ -9,7 +9,7 @@ function EventsNavigator() {
     <EventsStack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#4B5ACD',
+          backgroundColor: '#4e23bb',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
