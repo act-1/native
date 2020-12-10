@@ -18,20 +18,26 @@ const htmlContent = `
 אנו נקיים את ההפגנה כמתוכנן ונתכנס לאירוע מחאה גדול, בהשתתפות *כל* ארגוני המחאה כדי הוציא את המדינה "מחושך לאור" ולהעביר מסר תקיף וחד משמעי: לנאשם במשרה מלאה אין ראש להיות ראש ממשלה. "אין אפשרות מלבד נבצרות"</p></div>
 `;
 
-const HEADER_MAX_HEIGHT = 200;
-const HEADER_MIN_HEIGHT = 84;
-const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
-
 function EventPage({ navigation }: EventPageProps) {
   const { openModal } = useModal();
   const insets = useSafeAreaInsets();
   const scrollY = useRef(new Animated.Value(0)).current;
 
+  const HEADER_MAX_HEIGHT = 200;
+  const HEADER_MIN_HEIGHT = insets.top + 50;
+  const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+
   // Our header y-axis animated from 0 to HEADER_SCROLL_DISTANCE,
   // we move our element for -HEADER_SCROLL_DISTANCE at the same time.
   const headerTranslateY = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE],
-    outputRange: [0, -HEADER_SCROLL_DISTANCE + 10],
+    inputRange: [0, HEADER_SCROLL_DISTANCE + insets.top + 25],
+    outputRange: [0, -HEADER_SCROLL_DISTANCE],
+    extrapolate: 'clamp',
+  });
+
+  const headerScale = scrollY.interpolate({
+    inputRange: [-HEADER_SCROLL_DISTANCE, 0],
+    outputRange: [2, 1],
     extrapolate: 'clamp',
   });
 
@@ -43,22 +49,22 @@ function EventPage({ navigation }: EventPageProps) {
   });
 
   const imageTranslateY = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE],
-    outputRange: [0, 2],
+    inputRange: [-HEADER_SCROLL_DISTANCE, 0, HEADER_SCROLL_DISTANCE],
+    outputRange: [-1, 0, 3],
     extrapolate: 'clamp',
   });
 
   // Change header title size from 1 to 0.9
   const topBarTitleOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
+    inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE + 100],
     outputRange: [0, 0, 1],
     extrapolate: 'clamp',
   });
 
   // Change header title y-axis
   const titleTranslateY = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-    outputRange: [0, 0, -8],
+    inputRange: [0, HEADER_SCROLL_DISTANCE + 80 / 2, HEADER_SCROLL_DISTANCE + 50],
+    outputRange: [0, 0, 1],
     extrapolate: 'clamp',
   });
 
@@ -137,7 +143,12 @@ function EventPage({ navigation }: EventPageProps) {
           </Box>
         </Box>
       </Animated.ScrollView>
-      <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }] }]}>
+      <Animated.View
+        style={[
+          styles.header,
+          { transform: [{ translateY: headerTranslateY }, { scale: headerScale }], height: HEADER_MAX_HEIGHT },
+        ]}
+      >
         <Animated.Image
           style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
           source={require('../../components/EventBox/event-thumb.jpg')}
@@ -148,6 +159,7 @@ function EventPage({ navigation }: EventPageProps) {
         style={[
           styles.topBar,
           {
+            marginTop: insets.top + 5,
             transform: [{ translateY: titleTranslateY }],
           },
         ]}
@@ -163,7 +175,7 @@ function EventPage({ navigation }: EventPageProps) {
             color="mainBackground"
             textAlign="center"
           >
-            באנו חושך לגרש - הפגנת ענק בבלפור
+            מחאה מהנגב לירושלים
           </Text>
         </Animated.View>
       </Animated.View>
@@ -179,13 +191,11 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
+    height: 80,
     overflow: 'hidden',
-    height: HEADER_MAX_HEIGHT,
     backgroundColor: '#4e23bb',
   },
   topBar: {
-    marginTop: 40,
-    height: 50,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
