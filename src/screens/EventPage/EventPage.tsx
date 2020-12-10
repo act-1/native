@@ -26,6 +26,7 @@ function EventPage({ navigation }: EventPageProps) {
   const HEADER_MAX_HEIGHT = 200;
   const HEADER_MIN_HEIGHT = insets.top + 50;
   const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+  const HEADER_SCROLL_DISTANCE_PADDING = HEADER_SCROLL_DISTANCE + 60;
 
   // Our header y-axis animated from 0 to HEADER_SCROLL_DISTANCE,
   // we move our element for -HEADER_SCROLL_DISTANCE at the same time.
@@ -50,14 +51,14 @@ function EventPage({ navigation }: EventPageProps) {
 
   // Change header title size from 1 to 0.9
   const topBarTitleOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE + 100],
-    outputRange: [0, 0, 1],
+    inputRange: [0, HEADER_SCROLL_DISTANCE, HEADER_SCROLL_DISTANCE_PADDING],
+    outputRange: [0, 0.25, 1],
     extrapolate: 'clamp',
   });
 
   // Change header title y-axis
   const titleTranslateY = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE + 80 / 2, HEADER_SCROLL_DISTANCE + 50],
+    inputRange: [0, HEADER_SCROLL_DISTANCE, HEADER_SCROLL_DISTANCE_PADDING],
     outputRange: [0, 0, 1],
     extrapolate: 'clamp',
   });
