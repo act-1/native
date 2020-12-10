@@ -30,14 +30,8 @@ function EventPage({ navigation }: EventPageProps) {
   // Our header y-axis animated from 0 to HEADER_SCROLL_DISTANCE,
   // we move our element for -HEADER_SCROLL_DISTANCE at the same time.
   const headerTranslateY = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE + insets.top + 25],
-    outputRange: [0, -HEADER_SCROLL_DISTANCE],
-    extrapolate: 'clamp',
-  });
-
-  const headerScale = scrollY.interpolate({
-    inputRange: [-HEADER_SCROLL_DISTANCE, 0],
-    outputRange: [2, 1],
+    inputRange: [-HEADER_SCROLL_DISTANCE, 0, HEADER_SCROLL_DISTANCE],
+    outputRange: [HEADER_SCROLL_DISTANCE, 0, -HEADER_SCROLL_DISTANCE],
     extrapolate: 'clamp',
   });
 
@@ -144,10 +138,7 @@ function EventPage({ navigation }: EventPageProps) {
         </Box>
       </Animated.ScrollView>
       <Animated.View
-        style={[
-          styles.header,
-          { transform: [{ translateY: headerTranslateY }, { scale: headerScale }], height: HEADER_MAX_HEIGHT },
-        ]}
+        style={[styles.header, { transform: [{ translateY: headerTranslateY }], height: HEADER_MAX_HEIGHT }]}
       >
         <Animated.Image
           style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
@@ -175,7 +166,7 @@ function EventPage({ navigation }: EventPageProps) {
             color="mainBackground"
             textAlign="center"
           >
-            מחאה מהנגב לירושלים
+            הפגנת ענק בבלפור
           </Text>
         </Animated.View>
       </Animated.View>
