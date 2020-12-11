@@ -1,6 +1,6 @@
 module.exports = {
   preset: 'react-native',
-  setupFiles: ['./src/setupTests.tsx'],
+  setupFiles: ['./src/setupTests.ts'],
   setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transform: {
