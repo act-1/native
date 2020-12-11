@@ -81,7 +81,7 @@ function EventPage({ navigation }: EventPageProps) {
             </Text>
             <Box flexDirection="row" alignItems="center">
               <Image
-                source={require('../../components/EventBox/event-thumb.jpg')}
+                source={require('../../components/EventBox/balfur-5-dec.jpg')}
                 style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
               />
               <Text variant="text">הדגלים השחורים</Text>
