@@ -1,9 +1,21 @@
 import React from 'react';
 import { StatusBar, Image, SectionList, SafeAreaView } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 import { Box, Text, EventBox } from '../../components';
 
 const thumb = require('../../components/EventBox/event-thumb.jpg');
 const imageUrl = new URL(Image.resolveAssetSource(thumb).uri);
+
+firestore()
+  .collection('events')
+  .get()
+  .then((querySnapsot) => {
+    console.log('Documents Number: ', querySnapsot.size);
+
+    querySnapsot.forEach((documentSnapshot) => {
+      console.log(documentSnapshot.data());
+    });
+  });
 
 const DATA = [
   {
