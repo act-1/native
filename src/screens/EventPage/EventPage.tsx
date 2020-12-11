@@ -1,13 +1,11 @@
-import React, { useRef } from 'react';
-import { StyleSheet, Animated, StatusBar, Image } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useModal, modalfy } from 'react-native-modalfy';
+import React from 'react';
+import { StatusBar, Image } from 'react-native';
+import { useModal } from 'react-native-modalfy';
 import MapView from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { EventPageProps } from '@types/navigation';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Box, Text, CircularButton } from '../../components';
-import { EventHeader, EventPageDetail, EventPageCounter } from './';
+import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
+import { EventPageDetail, EventPageCounter } from './';
 
 const htmlContent = `
 <div style="textAlign: left;">
@@ -20,48 +18,6 @@ const htmlContent = `
 
 function EventPage({ navigation }: EventPageProps) {
   const { openModal } = useModal();
-  const insets = useSafeAreaInsets();
-  const scrollY = useRef(new Animated.Value(0)).current;
-
-  const HEADER_MAX_HEIGHT = 200;
-  const HEADER_MIN_HEIGHT = insets.top + 50;
-  const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
-  const HEADER_SCROLL_DISTANCE_PADDING = HEADER_SCROLL_DISTANCE + 60;
-
-  // Our header y-axis animated from 0 to HEADER_SCROLL_DISTANCE,
-  // we move our element for -HEADER_SCROLL_DISTANCE at the same time.
-  const headerTranslateY = scrollY.interpolate({
-    inputRange: [-HEADER_SCROLL_DISTANCE, 0, HEADER_SCROLL_DISTANCE],
-    outputRange: [HEADER_SCROLL_DISTANCE, 0, -HEADER_SCROLL_DISTANCE],
-    extrapolate: 'clamp',
-  });
-
-  // Our opacity animated from 0 to 1 and our opacity will be 0
-  const imageOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-    outputRange: [1, 1, 0],
-    extrapolate: 'clamp',
-  });
-
-  const imageTranslateY = scrollY.interpolate({
-    inputRange: [-HEADER_SCROLL_DISTANCE, 0, HEADER_SCROLL_DISTANCE],
-    outputRange: [-1, 0, 3],
-    extrapolate: 'clamp',
-  });
-
-  // Change header title size from 1 to 0.9
-  const topBarTitleOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE, HEADER_SCROLL_DISTANCE_PADDING],
-    outputRange: [0, 0.25, 1],
-    extrapolate: 'clamp',
-  });
-
-  // Change header title y-axis
-  const titleTranslateY = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE, HEADER_SCROLL_DISTANCE_PADDING],
-    outputRange: [0, 0, 1],
-    extrapolate: 'clamp',
-  });
 
   const attendEvent = () => openModal('AttendingModal');
 
@@ -69,12 +25,7 @@ function EventPage({ navigation }: EventPageProps) {
     <Box flex={1}>
       <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
 
-      <Animated.ScrollView
-        contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
-        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
-      >
+      <StickyHeaderScrollView goBack={() => navigation.goBack()} headerTitle="הפגנת ענק בבלפור">
         <Box backgroundColor="dimmedBackground">
           <Box paddingVertical="xm" marginBottom="m" backgroundColor="mainBackground" alignItems="center">
             <Text style={{ writingDirection: 'rtl' }} variant="largeTitle" marginBottom="m" textAlign="center">
@@ -137,66 +88,9 @@ function EventPage({ navigation }: EventPageProps) {
             </Box>
           </Box>
         </Box>
-      </Animated.ScrollView>
-      <Animated.View
-        style={[styles.header, { transform: [{ translateY: headerTranslateY }], height: HEADER_MAX_HEIGHT }]}
-      >
-        <Animated.Image
-          style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
-          source={require('../../components/EventBox/event-thumb.jpg')}
-        />
-      </Animated.View>
-
-      <Animated.View
-        style={[
-          styles.topBar,
-          {
-            marginTop: insets.top + 5,
-            transform: [{ translateY: titleTranslateY }],
-          },
-        ]}
-      >
-        <Box style={{ position: 'absolute', left: 14 }}>
-          <CircularButton onPress={() => navigation.goBack()} iconName="arrow-right" color="white" size="small" />
-        </Box>
-        <Animated.View style={{ opacity: topBarTitleOpacity }}>
-          <Text
-            allowFontScaling={false}
-            fontSize={16}
-            variant="eventBoxTitle"
-            color="mainBackground"
-            textAlign="center"
-          >
-            הפגנת ענק בבלפור
-          </Text>
-        </Animated.View>
-      </Animated.View>
+      </StickyHeaderScrollView>
     </Box>
   );
 }
 
 export default EventPage;
-
-const styles = StyleSheet.create({
-  header: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 80,
-    overflow: 'hidden',
-    backgroundColor: '#4e23bb',
-  },
-  topBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    top: 8,
-    width: '100%',
-  },
-  eventThumb: {
-    width: '100%',
-    height: 200,
-  },
-});
