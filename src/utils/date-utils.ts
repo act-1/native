@@ -1,4 +1,4 @@
-import { format, isToday, isTomorrow, parse } from 'date-fns';
+import { format, isToday, isTomorrow } from 'date-fns';
 const heLocale = require('date-fns/locale/he');
 
 /**
@@ -6,7 +6,7 @@ const heLocale = require('date-fns/locale/he');
  * JavaScript's `Date()` constructor parses strings using the ISO 8601 format (`YYYY-MM-DD`).
  * The function standarizes the local format `DD-MM-YYYY` to work with the `Date` constructor correctly.
  *
- * @param date - The date to parse.
+ * @param date {string} - The date to parse, formatted as dd/mm/yyyy.
  * @returns The date object to th.
  */
 export function parseLocalDate(date: string): Date {
@@ -19,7 +19,7 @@ export function parseLocalDate(date: string): Date {
 /**
  * Format the date to it's local day.
  * @param date - The date to format.
- * @returns The formatted day, e.g. ראשון, שני.
+ * @returns The formatted day, e.g. יום ראשון, יום שני.
  */
 export function formatLocalDay(date: Date): string {
   return format(date, 'iiii', { locale: heLocale });

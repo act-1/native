@@ -4,7 +4,6 @@ import { Box, Text } from '../';
 
 type EventBoxProps = {
   title: string;
-  date: string;
   localDay: string;
   time: string;
   locationName: string;
