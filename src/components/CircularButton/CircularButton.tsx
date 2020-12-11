@@ -9,6 +9,7 @@ type CircularButtonProps = {
   onPress?: () => void;
   text?: string;
   size?: 'small' | 'large';
+  style?: ViewStyle;
 };
 
 type ButtonColors = {
@@ -55,7 +56,7 @@ function getButtonDimenions(size: string): ViewStyle {
   };
 }
 
-function CircularButton({ iconName, color, text, onPress, size = 'large' }: CircularButtonProps) {
+function CircularButton({ iconName, color, text, onPress, size = 'large', style }: CircularButtonProps) {
   const [pressed, setPressed] = useState(false);
   const { initialColor, pressedColor, iconColor } = buttonColors[color];
   const buttonDimensions = getButtonDimenions(size);
@@ -66,14 +67,26 @@ function CircularButton({ iconName, color, text, onPress, size = 'large' }: Circ
         onPress={onPress}
         onPressIn={() => setPressed(true)}
         onPressOut={() => setPressed(false)}
-        style={{ backgroundColor: pressed ? pressedColor : initialColor, ...buttonDimensions, ...styles.button }}
+        style={{
+          backgroundColor: pressed ? pressedColor : initialColor,
+          ...buttonDimensions,
+          ...styles.button,
+          ...style,
+        }}
         testID="button-pressable"
       >
         <Icon name={iconName} size={25} color={iconColor ? iconColor : 'white'} />
       </Pressable>
-      <Text style={{ color: pressed ? pressedColor : initialColor }} variant="circularButtonText" testID="button-text">
-        {text}
-      </Text>
+      {text && (
+        <Text
+          style={{ color: pressed ? pressedColor : initialColor }}
+          marginTop="s"
+          variant="circularButtonText"
+          testID="button-text"
+        >
+          {text}
+        </Text>
+      )}
     </Box>
   );
 }
@@ -82,7 +95,6 @@ export default React.memo(CircularButton);
 
 const styles = StyleSheet.create({
   button: {
-    marginBottom: 6,
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
