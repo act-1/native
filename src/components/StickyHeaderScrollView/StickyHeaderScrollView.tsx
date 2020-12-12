@@ -69,7 +69,7 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
       >
         <Animated.Image
           style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
-          source={require('../../components/EventBox/event-thumb.jpg')}
+          source={require('../../components/EventBox/balfur-5-dec.jpg')}
         />
       </Animated.View>
 
