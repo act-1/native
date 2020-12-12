@@ -32,7 +32,6 @@ export function formatLocalDay(date: Date): string {
  * Today's date will return 'היום', tomorrow's date reeturns 'מחר' and the rest will display the local day.
  */
 export function formatUpcomingDate(date: Date): string {
-  console.log('Upcoming date:', date);
   if (isToday(date)) return 'היום';
   if (isTomorrow(date)) return 'מחר';
   return formatLocalDay(date);
