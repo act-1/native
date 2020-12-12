@@ -1,12 +1,8 @@
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackScreenProps } from '@react-navigation/stack';
 
-export type EventPageScreenProp = StackNavigationProp<RootStackParamList, 'EventPage'>;
-
-export type EventPageProps = {
-  navigation: EventPageScreenProp;
-};
+export type EventPageScreenProps = StackScreenProps<RootStackParamList, 'EventPage'>;
 
 export type RootStackParamList = {
-  EventList: undefined;
-  EventPage: undefined;
+  Home: undefined;
+  EventPage: { eventId: string };
 };

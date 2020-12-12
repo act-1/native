@@ -24,7 +24,9 @@ function EventList({ navigation }) {
         ) : (
           <SectionList
             sections={eventList}
-            renderItem={({ item }) => <EventBox {...item} onPress={() => navigation.navigate('EventPage')} />}
+            renderItem={({ item }) => (
+              <EventBox {...item} onPress={() => navigation.navigate('EventPage', { eventId: item.id })} />
+            )}
             stickySectionHeadersEnabled={false}
             renderSectionHeader={({ section: { title, subtitle } }) => (
               <Box marginTop="m" marginLeft="m">

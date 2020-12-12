@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { EventPage } from '../screens';
+import { RootStackParamList } from '../types/navigation';
 import Icon from 'react-native-vector-icons/Feather';
 
 const MainStack = createStackNavigator<RootStackParamList>();
