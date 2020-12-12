@@ -8,7 +8,7 @@ import { format, compareAsc } from 'date-fns';
 // TODO: Add typings
 async function getEventList() {
   const querySnapshot = await firestore().collection('events').get();
-  const documents = querySnapshot.docs.map((doc) => doc.data());
+  const documents = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id }));
 
   const events = documents.map((doc) => ({
     ...doc,
