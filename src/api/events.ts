@@ -1,16 +1,7 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import { IEvent } from '@types/event';
 import { formatLocalDay } from '../utils/date-utils';
 import { format } from 'date-fns';
-
-export type IEvent = {
-  id: string;
-  title: string;
-  locationName: string;
-  date: string;
-  localDay: string;
-  time: string;
-  thumbnail: URL;
-};
 
 export async function getEventList(): Promise<IEvent[]> {
   const querySnapshot = await firestore().collection('events').get();
