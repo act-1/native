@@ -48,7 +48,9 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               <Text style={{ writingDirection: 'rtl' }} variant="largeTitle" marginBottom="m" textAlign="center">
                 {event.title}
               </Text>
-              <Text variant="text">יום רביעי הקרוב בשעה 19:00</Text>
+              <Text variant="text">
+                {event.timestamp.toDate() > new Date() ? event.upcomingDate : event.date} בשעה {event.time}
+              </Text>
             </Box>
 
             <EventPageCounter number={4241} text="אישרו הגעה" style={{ marginBottom: 12 }} />
@@ -70,7 +72,10 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Text>
 
               <Box height={50} justifyContent="space-between" marginBottom="xm">
-                <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
+                <EventPageDetail
+                  text={`${event.upcomingDate}, ${event.shortDate} בשעה ${event.time}`}
+                  iconName="clock"
+                />
                 <EventPageDetail text={event.locationName} iconName="map-pin" />
               </Box>
 

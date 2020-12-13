@@ -1,6 +1,6 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { IEvent } from '@types/event';
-import { formatLocalDay } from '../utils/date-utils';
+import { formatLocalDay, formatShortDate, formatUpcomingDate, parseLocalDate } from '../utils/date-utils';
 import { format } from 'date-fns';
 
 export async function getEventList(): Promise<IEvent[]> {
@@ -15,8 +15,11 @@ export async function getEventList(): Promise<IEvent[]> {
       title: doc.title,
       locationName: doc.locationName,
       thumbnail: new URL(doc.thumbnail),
+      timestamp: doc.timestamp,
       date: format(doc.timestamp.toMillis(), 'dd/MM/yyyy'),
       time: format(doc.timestamp.toMillis(), 'HH:mm'),
+      upcomingDate: formatUpcomingDate(doc.timestamp.toDate()),
+      shortDate: formatShortDate(doc.timestamp.toDate()),
       localDay: formatLocalDay(doc.timestamp.toDate()),
     })
   );
