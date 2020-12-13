@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, SectionList, SafeAreaView } from 'react-native';
+import { ActivityIndicator, StatusBar, SectionList, SafeAreaView } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { EventListScreenProps } from '@types/navigation';
 import { Box, Text, EventBox } from '../../components';
@@ -21,7 +21,10 @@ function EventList({ navigation }: EventListScreenProps) {
       <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
       <Box justifyContent="center" height="100%">
         {eventList.length === 0 ? (
-          <Text>טוענת.. </Text>
+          <Box justifyContent="center" alignItems="center">
+            <ActivityIndicator size="small" color="#0000ff" />
+            <Text>טוענת..</Text>
+          </Box>
         ) : (
           <SectionList
             sections={eventList}

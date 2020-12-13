@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, Image } from 'react-native';
+import { ActivityIndicator, StatusBar, Image } from 'react-native';
 import { useModal } from 'react-native-modalfy';
 import MapView from 'react-native-maps';
 import HTML from 'react-native-render-html';
@@ -37,7 +37,10 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
     <Box flex={1}>
       <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
       {event === undefined ? (
-        <Text>טוענת..</Text>
+        <Box justifyContent="center" alignItems="center">
+          <ActivityIndicator size="small" color="#0000ff" />
+          <Text>טוענת..</Text>
+        </Box>
       ) : (
         <StickyHeaderScrollView goBack={() => navigation.goBack()} headerTitle="הפגנת ענק בבלפור">
           <Box backgroundColor="dimmedBackground">
