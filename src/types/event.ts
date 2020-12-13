@@ -11,4 +11,5 @@ export type IEvent = {
   shortDate: string;
   time: string;
   thumbnail: URL;
+  content: string;
 };

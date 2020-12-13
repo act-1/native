@@ -16,6 +16,7 @@ export async function getEventList(): Promise<IEvent[]> {
       locationName: doc.locationName,
       thumbnail: new URL(doc.thumbnail),
       timestamp: doc.timestamp,
+      content: doc.content,
       date: format(doc.timestamp.toMillis(), 'dd/MM/yyyy'),
       time: format(doc.timestamp.toMillis(), 'HH:mm'),
       upcomingDate: formatUpcomingDate(doc.timestamp.toDate()),

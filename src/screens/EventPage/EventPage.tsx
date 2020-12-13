@@ -10,21 +10,12 @@ import { IEvent } from '@types/event';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 
-const htmlContent = `
-<div style="textAlign: left;">
-<p>ב 05/12/20 - "העם יקום על רגליו" </p>
-<p>במוצ"ש הקרוב 05/12/20 כל תנועות המחאה בבלפור נפגשות בבלפור!!!</p>
-<p>במשך שלושה חדשים ספרנו לאחור עד חידוש משפטו של הנאשם נתניהו, וכמו שהזהרנו, הוא שוב הצליח לדחות את התייצבותו להמשך משפטו, וזכה לעוד הארכה.</p>
-<p>אבל אנחנו לא ניגרר למשחקי הדחיינות והבכיינות של הנאשם.
-אנו נקיים את ההפגנה כמתוכנן ונתכנס לאירוע מחאה גדול, בהשתתפות *כל* ארגוני המחאה כדי הוציא את המדינה "מחושך לאור" ולהעביר מסר תקיף וחד משמעי: לנאשם במשרה מלאה אין ראש להיות ראש ממשלה. "אין אפשרות מלבד נבצרות"</p></div>
-`;
-
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const store = useStore();
   const [event, setEvent] = useState<IEvent>();
   const { openModal } = useModal();
   const attendEvent = () => openModal('AttendingModal');
-
+  console.log(event?.content);
   useEffect(() => {
     if (route.params?.eventId && store.events.length > 0) {
       const eventData = store.events.find((e: IEvent) => e.id === route.params.eventId);
@@ -92,7 +83,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               />
 
               <HTML
-                html={htmlContent}
+                html={event.content}
                 tagsStyles={{ p: { marginBottom: 12, fontSize: 15, fontFamily: 'Rubik-Regular' } }}
               />
             </Box>
