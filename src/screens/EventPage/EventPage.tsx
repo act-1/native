@@ -92,13 +92,15 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               <Text variant="largeTitle" marginBottom="m">
                 מארגנים
               </Text>
-              <Box flexDirection="row" alignItems="center">
-                <Image
-                  source={require('../../components/EventBox/balfur-5-dec.jpg')}
-                  style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
-                />
-                <Text variant="text">הדגלים השחורים</Text>
-              </Box>
+              {event.organizations.map((org: { id: string; thumbnail: string; title: string }) => (
+                <Box flexDirection="row" alignItems="center" key={org.id}>
+                  <Image
+                    source={{ uri: org.thumbnail }}
+                    style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
+                  />
+                  <Text variant="text">{org.title}</Text>
+                </Box>
+              ))}
             </Box>
           </Box>
         </StickyHeaderScrollView>
