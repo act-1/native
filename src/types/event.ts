@@ -13,4 +13,6 @@ export type IEvent = {
   thumbnail: URL;
   content: string;
   organizations: { id: string; thumbnail: string; title: string };
+  attendingCount: number;
+  coordinates: FirebaseFirestoreTypes.GeoPoint;
 };

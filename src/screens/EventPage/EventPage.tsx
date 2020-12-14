@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, StatusBar, Image } from 'react-native';
 import { useModal } from 'react-native-modalfy';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
@@ -15,11 +15,10 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   const [event, setEvent] = useState<IEvent>();
   const { openModal } = useModal();
   const attendEvent = () => openModal('AttendingModal');
-  console.log(event?.content);
+
   useEffect(() => {
     if (route.params?.eventId && store.events.length > 0) {
       const eventData = store.events.find((e: IEvent) => e.id === route.params.eventId);
-      console.log('Event data: ', eventData);
       if (eventData) setEvent(eventData);
     }
   }, [store.events, route.params]);
@@ -44,7 +43,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Text>
             </Box>
 
-            <EventPageCounter number={4241} text="אישרו הגעה" style={{ marginBottom: 12 }} />
+            <EventPageCounter number={event.attendingCount} text="אישרו הגעה" style={{ marginBottom: 12 }} />
 
             <Box
               flexDirection="row"
@@ -72,15 +71,20 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
               <MapView
                 style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
-                scrollEnabled={false}
+                maxZoomLevel={15}
+                minZoomLevel={12}
                 mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
                 initialRegion={{
-                  latitude: 37.78825,
-                  longitude: -122.4324,
+                  latitude: event.coordinates._latitude,
+                  longitude: event.coordinates._longitude,
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}
-              />
+              >
+                <Marker
+                  coordinate={{ latitude: event.coordinates._latitude, longitude: event.coordinates._longitude }}
+                />
+              </MapView>
 
               <HTML
                 html={event.content}

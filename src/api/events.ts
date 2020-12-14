@@ -18,6 +18,8 @@ export async function getEventList(): Promise<IEvent[]> {
       timestamp: doc.timestamp,
       content: doc.content,
       organizations: doc.organizations,
+      attendingCount: doc.attendingCount,
+      coordinates: doc.coordinates,
       date: format(doc.timestamp.toMillis(), 'dd/MM/yyyy'),
       time: format(doc.timestamp.toMillis(), 'HH:mm'),
       upcomingDate: formatUpcomingDate(doc.timestamp.toDate()),
