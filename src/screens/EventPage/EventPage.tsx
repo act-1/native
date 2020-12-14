@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, Image } from 'react-native';
+import { ActivityIndicator, StatusBar, Image } from 'react-native';
 import { useModal } from 'react-native-modalfy';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
@@ -9,15 +9,6 @@ import { EventPageDetail, EventPageCounter } from './';
 import { IEvent } from '@types/event';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-
-const htmlContent = `
-<div style="textAlign: left;">
-<p>ב 05/12/20 - "העם יקום על רגליו" </p>
-<p>במוצ"ש הקרוב 05/12/20 כל תנועות המחאה בבלפור נפגשות בבלפור!!!</p>
-<p>במשך שלושה חדשים ספרנו לאחור עד חידוש משפטו של הנאשם נתניהו, וכמו שהזהרנו, הוא שוב הצליח לדחות את התייצבותו להמשך משפטו, וזכה לעוד הארכה.</p>
-<p>אבל אנחנו לא ניגרר למשחקי הדחיינות והבכיינות של הנאשם.
-אנו נקיים את ההפגנה כמתוכנן ונתכנס לאירוע מחאה גדול, בהשתתפות *כל* ארגוני המחאה כדי הוציא את המדינה "מחושך לאור" ולהעביר מסר תקיף וחד משמעי: לנאשם במשרה מלאה אין ראש להיות ראש ממשלה. "אין אפשרות מלבד נבצרות"</p></div>
-`;
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const store = useStore();
@@ -28,7 +19,6 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   useEffect(() => {
     if (route.params?.eventId && store.events.length > 0) {
       const eventData = store.events.find((e: IEvent) => e.id === route.params.eventId);
-      console.log('Event data: ', eventData);
       if (eventData) setEvent(eventData);
     }
   }, [store.events, route.params]);
@@ -37,7 +27,10 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
     <Box flex={1}>
       <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
       {event === undefined ? (
-        <Text>טוענת..</Text>
+        <Box justifyContent="center" alignItems="center">
+          <ActivityIndicator size="small" color="#0000ff" />
+          <Text>טוענת..</Text>
+        </Box>
       ) : (
         <StickyHeaderScrollView goBack={() => navigation.goBack()} headerTitle="הפגנת ענק בבלפור">
           <Box backgroundColor="dimmedBackground">
@@ -45,10 +38,12 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               <Text style={{ writingDirection: 'rtl' }} variant="largeTitle" marginBottom="m" textAlign="center">
                 {event.title}
               </Text>
-              <Text variant="text">יום רביעי הקרוב בשעה 19:00</Text>
+              <Text variant="text">
+                {event.timestamp.toDate() > new Date() ? event.upcomingDate : event.date} בשעה {event.time}
+              </Text>
             </Box>
 
-            <EventPageCounter number={4241} text="אישרו הגעה" style={{ marginBottom: 12 }} />
+            <EventPageCounter number={event.attendingCount} text="אישרו הגעה" style={{ marginBottom: 12 }} />
 
             <Box
               flexDirection="row"
@@ -67,24 +62,32 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Text>
 
               <Box height={50} justifyContent="space-between" marginBottom="xm">
-                <EventPageDetail text="יום שבת בשעה 19:00" iconName="clock" />
+                <EventPageDetail
+                  text={`${event.upcomingDate}, ${event.shortDate} בשעה ${event.time}`}
+                  iconName="clock"
+                />
                 <EventPageDetail text={event.locationName} iconName="map-pin" />
               </Box>
 
               <MapView
                 style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
-                scrollEnabled={false}
+                maxZoomLevel={15}
+                minZoomLevel={12}
                 mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
                 initialRegion={{
-                  latitude: 37.78825,
-                  longitude: -122.4324,
+                  latitude: event.coordinates._latitude,
+                  longitude: event.coordinates._longitude,
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}
-              />
+              >
+                <Marker
+                  coordinate={{ latitude: event.coordinates._latitude, longitude: event.coordinates._longitude }}
+                />
+              </MapView>
 
               <HTML
-                html={htmlContent}
+                html={event.content}
                 tagsStyles={{ p: { marginBottom: 12, fontSize: 15, fontFamily: 'Rubik-Regular' } }}
               />
             </Box>
@@ -93,13 +96,15 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               <Text variant="largeTitle" marginBottom="m">
                 מארגנים
               </Text>
-              <Box flexDirection="row" alignItems="center">
-                <Image
-                  source={require('../../components/EventBox/balfur-5-dec.jpg')}
-                  style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
-                />
-                <Text variant="text">הדגלים השחורים</Text>
-              </Box>
+              {event.organizations.map((org: { id: string; thumbnail: string; title: string }) => (
+                <Box flexDirection="row" alignItems="center" key={org.id}>
+                  <Image
+                    source={{ uri: org.thumbnail }}
+                    style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
+                  />
+                  <Text variant="text">{org.title}</Text>
+                </Box>
+              ))}
             </Box>
           </Box>
         </StickyHeaderScrollView>
