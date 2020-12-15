@@ -19,12 +19,21 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   const { openModal } = useModal();
 
   const attendEvent = async (event: IEvent) => {
-    try {
+    if (!isAttending) {
       const { attended } = await EventsAPI.attendEvent(event.id, event.timestamp);
       if (attended) {
         openModal('AttendingModal');
+        setAttending(true);
         setEvent({ ...event, attendingCount: event.attendingCount + 1 });
       }
+    } else {
+      const { attendenceRemoved } = await EventsAPI.attendenceRemoval(event.id);
+      if (attendenceRemoved) {
+        setAttending(false);
+        setEvent({ ...event, attendingCount: event.attendingCount - 1 });
+      }
+    }
+    try {
     } catch (err) {
       console.error(err);
     }

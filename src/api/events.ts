@@ -68,6 +68,42 @@ export async function attendEvent(eventId: string, eventDate: FirebaseFirestoreT
   }
 }
 
+export async function attendenceRemoval(eventId) {
+  try {
+    const user = auth().currentUser;
+    if (user) {
+      // Ensure the user isn't attending the event already.
+      const attendingRef = await firestore()
+        .collection('users')
+        .doc(user.uid)
+        .collection('attendingEvents')
+        .doc(eventId);
+      const attendingDoc = await attendingRef.get();
+
+      if (attendingDoc.exists) {
+        const batch = firestore().batch();
+
+        // Delete the user attending document
+        batch.delete(attendingRef);
+
+        // Decrease the event attending counter
+        const eventRef = firestore().collection('events').doc(eventId);
+        batch.update(eventRef, { attendingCount: firestore.FieldValue.increment(-1) });
+
+        // Commit both changes atomically
+        await batch.commit();
+
+        return { attendenceRemoved: true };
+      } else {
+        // TODO: Fix ESLint condition error
+        throw new Error('The user is not attending the event.');
+      }
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
 export async function getUserEvents(userId: string) {
   try {
     const { docs: attendingListDocs } = await firestore()
@@ -88,4 +124,5 @@ export async function getUserEvents(userId: string) {
 export default {
   getEventList,
   attendEvent,
+  attendenceRemoval,
 };

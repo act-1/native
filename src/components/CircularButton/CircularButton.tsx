@@ -62,7 +62,7 @@ function CircularButton({ iconName, color, text, onPress, size = 'large', style 
   const buttonDimensions = getButtonDimenions(size);
 
   return (
-    <Box justifyContent="center" alignItems="center" testID="button-container">
+    <Box justifyContent="center" alignItems="center" testID="button-container" flex={1}>
       <Pressable
         onPress={onPress}
         onPressIn={() => setPressed(true)}
