@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { getEventList, IEvent } from '../api/events';
+import { getEventList } from '../api/events';
+import { IEvent } from '@types/event';
 
 class RootStore {
   events: IEvent[] | [] = [];
