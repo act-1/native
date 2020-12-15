@@ -15,22 +15,19 @@ class RootStore {
     makeAutoObservable(this);
     this.getEvents();
 
-    auth().onAuthStateChanged((user) => {
-      this.user = user;
+    auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
+      if (user) this.user = user;
+      else this.signInAnonymously();
     });
-
-    this.signInAnonymously();
   }
 
-  signInAnonymously() {
-    auth()
-      .signInAnonymously()
-      .then((result) => {
-        console.log('User signed in anonymously', result.user._user.uid);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  async signInAnonymously() {
+    try {
+      const { user } = await auth().signInAnonymously();
+      await createAnonymousUser(user.uid);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async getEvents() {
