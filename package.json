@@ -27,7 +27,7 @@
     "mobx-react-lite": "^3.1.6",
     "react": "16.13.1",
     "react-native": "0.63.4",
-    "react-native-device-info": "^7.2.1",
+    "react-native-device-info": "7.3.1",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-maps": "0.27.1",
     "react-native-modalfy": "^2.1.0",

@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { getEventList } from '../api/events';
+import { createAnonymousUser } from '../api/user';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { IEvent } from '@types/event';
 
@@ -24,8 +25,8 @@ class RootStore {
   signInAnonymously() {
     auth()
       .signInAnonymously()
-      .then(() => {
-        console.log('User signed in anonymously');
+      .then((result) => {
+        console.log('User signed in anonymously', result.user._user.uid);
       })
       .catch((error) => {
         console.error(error);
