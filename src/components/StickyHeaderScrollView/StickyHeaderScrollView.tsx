@@ -1,5 +1,5 @@
 import React, { useRef, ReactNode } from 'react';
-import { StyleSheet, Animated } from 'react-native';
+import { StyleSheet, Animated, RefreshControl } from 'react-native';
 import { Box, Text, CircularButton } from '../';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -10,7 +10,17 @@ type StickyHeaderScrollViewProps = {
 };
 
 function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderScrollViewProps) {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   const insets = useSafeAreaInsets();
+
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const HEADER_MAX_HEIGHT = 200;
@@ -21,8 +31,14 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
   // Our header y-axis animated from 0 to HEADER_SCROLL_DISTANCE,
   // we move our element for -HEADER_SCROLL_DISTANCE at the same time.
   const headerTranslateY = scrollY.interpolate({
-    inputRange: [-HEADER_SCROLL_DISTANCE, 0, HEADER_SCROLL_DISTANCE],
-    outputRange: [HEADER_SCROLL_DISTANCE, 0, -HEADER_SCROLL_DISTANCE],
+    inputRange: [-HEADER_SCROLL_DISTANCE - 80, 0, HEADER_SCROLL_DISTANCE],
+    outputRange: [HEADER_SCROLL_DISTANCE + 80, 0, -HEADER_SCROLL_DISTANCE],
+    extrapolate: 'clamp',
+  });
+
+  const headerBGColor = scrollY.interpolate({
+    inputRange: [-HEADER_SCROLL_DISTANCE, HEADER_SCROLL_DISTANCE + 80],
+    outputRange: ['transparent', '#4e23bb'],
     extrapolate: 'clamp',
   });
 
@@ -34,7 +50,7 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
   });
 
   const imageTranslateY = scrollY.interpolate({
-    inputRange: [-HEADER_SCROLL_DISTANCE, 0, HEADER_SCROLL_DISTANCE],
+    inputRange: [-HEADER_SCROLL_DISTANCE - 40, 0, HEADER_SCROLL_DISTANCE],
     outputRange: [-1, 0, 3],
     extrapolate: 'clamp',
   });
@@ -59,7 +75,8 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
         contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
-        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} enabled={true} />}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }])}
       >
         {children}
       </Animated.ScrollView>
