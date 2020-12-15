@@ -1,4 +1,5 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 import { IEvent } from '@types/event';
 import { formatLocalDay, formatShortDate, formatUpcomingDate, parseLocalDate } from '../utils/date-utils';
 import { format } from 'date-fns';
@@ -30,3 +31,61 @@ export async function getEventList(): Promise<IEvent[]> {
   console.log('EE', events);
   return events;
 }
+
+export async function attendEvent(eventId: string, eventDate: FirebaseFirestoreTypes.Timestamp) {
+  try {
+    const user = auth().currentUser;
+    if (user) {
+      // Ensure the user isn't attending the event already.
+      const attendingRef = await firestore()
+        .collection('users')
+        .doc(user.uid)
+        .collection('attendingEvents')
+        .doc(eventId);
+      const attendingDoc = await attendingRef.get();
+
+      if (!attendingDoc.exists) {
+        const batch = firestore().batch();
+
+        // Create a user attending document
+        batch.set(attendingRef, { eventDate: eventDate, attendedAt: firestore.FieldValue.serverTimestamp() });
+
+        // Increase the event attending counter
+        const eventRef = firestore().collection('events').doc(eventId);
+        batch.update(eventRef, { attendingCount: firestore.FieldValue.increment(1) });
+
+        // Commit both changes atomically
+        await batch.commit();
+
+        return { attended: true };
+      } else {
+        // TODO: Fix ESLint condition error
+        throw new Error('The user is already attending the event.');
+      }
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getUserEvents(userId: string) {
+  try {
+    const { docs: attendingListDocs } = await firestore()
+      .collection('users')
+      .doc(userId)
+      .collection('attendingEvents')
+      .where('eventDate', '>=', new Date())
+      .get();
+
+    const attendingEventIds = attendingListDocs.map((doc) => doc.id);
+
+    return attendingEventIds;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export default {
+  getEventList,
+  attendEvent,
+};

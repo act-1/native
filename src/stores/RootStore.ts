@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { getEventList } from '../api/events';
+import { getEventList, getUserEvents } from '../api/events';
 import { createAnonymousUser } from '../api/user';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { IEvent } from '@types/event';
@@ -10,14 +10,19 @@ class RootStore {
   events: IEvent[] | [] = [];
   initializing = true;
   user: FirebaseAuthTypes.User | null = null;
+  userUpcomingEventIds: string[] = [];
 
   constructor() {
     makeAutoObservable(this);
     this.getEvents();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
-      if (user) this.user = user;
-      else this.signInAnonymously();
+      if (user) {
+        this.user = user;
+        getUserEvents(user.uid).then((events) => {
+          this.userUpcomingEventIds = events;
+        });
+      } else this.signInAnonymously();
     });
   }
 
