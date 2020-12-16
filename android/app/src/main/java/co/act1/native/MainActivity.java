@@ -1,4 +1,4 @@
-package com.codenamemerry;
+package co.act1.native;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "CodenameMerry";
+    return "Act1";
   }
 }

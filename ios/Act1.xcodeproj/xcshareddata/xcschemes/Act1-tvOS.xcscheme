@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "CodenameMerry-tvOS.app"
-               BlueprintName = "CodenameMerry-tvOS"
-               ReferencedContainer = "container:CodenameMerry.xcodeproj">
+               BuildableName = "Act1-tvOS.app"
+               BlueprintName = "Act1-tvOS"
+               ReferencedContainer = "container:Act1.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "CodenameMerry-tvOSTests.xctest"
-               BlueprintName = "CodenameMerry-tvOSTests"
-               ReferencedContainer = "container:CodenameMerry.xcodeproj">
+               BuildableName = "Act1-tvOSTests.xctest"
+               BlueprintName = "Act1-tvOSTests"
+               ReferencedContainer = "container:Act1.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "CodenameMerry-tvOS.app"
-            BlueprintName = "CodenameMerry-tvOS"
-            ReferencedContainer = "container:CodenameMerry.xcodeproj">
+            BuildableName = "Act1-tvOS.app"
+            BlueprintName = "Act1-tvOS"
+            ReferencedContainer = "container:Act1.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "CodenameMerry-tvOS.app"
-            BlueprintName = "CodenameMerry-tvOS"
-            ReferencedContainer = "container:CodenameMerry.xcodeproj">
+            BuildableName = "Act1-tvOS.app"
+            BlueprintName = "Act1-tvOS"
+            ReferencedContainer = "container:Act1.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
