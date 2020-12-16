@@ -1155,6 +1155,11 @@
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
+"@react-native-firebase/auth@^10.2.0":
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-10.2.0.tgz#78a8967f72f0b94b3a438e2dc0789ceccdcf01b9"
+  integrity sha512-8oMa6tMkouS2BoGPC/Sbq5kYVXGscp/QXSBWc0JNanxlPbq5TKS7P9+dMCNKTPdPeOz3GM8y/8hjSspOQft40g==
+
 "@react-native-firebase/firestore@^10.2.0":
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-10.2.0.tgz#64e51f16840b5050a53c8d9294a5121a0404fac2"
@@ -6309,10 +6314,15 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
-react-native-device-info@^7.2.1:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-7.2.1.tgz#06a71703af744a30a1eb621cf20e95b43b3bbf85"
-  integrity sha512-7zn2cASst13qlSSGsKOhGsPpeX2yV0O69s7o0kc/4E00VqWrlpx241YB09AL2ZerCPsVOPdKcAvXM+wcJ9xQTw==
+react-native-device-info@7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-7.3.1.tgz#6c4b0120d57872a2f7534332323306b386828a3d"
+  integrity sha512-RQP3etbmXsOlcaxHeHNug68nRli02S9iGC7TbaXpkvyyevIuRogfnrI71sWtqmlT91kdpYAOYKmNfRL9LOSKVw==
+
+react-native-fast-image@^8.3.4:
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.3.4.tgz#79edca177e30311b19d59ff335625bcbe22650d7"
+  integrity sha512-LpzAdjUphihUpVEBn5fEv5AILe55rHav0YiZroPZ1rumKDhAl4u2cG01ku2Pb7l8sayjTsNu7FuURAlXUUDsow==
 
 react-native-gesture-handler@^1.9.0:
   version "1.9.0"
