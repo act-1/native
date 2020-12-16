@@ -22,7 +22,7 @@
 		C1631C26257A94640099756B /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C22257A94640099756B /* Rubik-Bold.ttf */; };
 		C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C23257A94640099756B /* Rubik-Medium.ttf */; };
 		C1631C28257A94640099756B /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C24257A94640099756B /* Rubik-Regular.ttf */; };
-		C18E01932583711200C87E54 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C18E01922583711200C87E54 /* GoogleService-Info.plist */; };
+		C17BE592258A455400E381F9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C17BE591258A455400E381F9 /* GoogleService-Info.plist */; };
 		F4CC12AD715BF3310D1152A3 /* libPods-Act1-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E802883A0F5ECFA9DEB2F6D /* libPods-Act1-tvOSTests.a */; };
 		F906F208824FFFBC1077D36B /* libPods-Act1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC78ECDB0BC66909D52DE1 /* libPods-Act1.a */; };
 /* End PBXBuildFile section */
@@ -73,7 +73,7 @@
 		C1631C22257A94640099756B /* Rubik-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Bold.ttf"; sourceTree = "<group>"; };
 		C1631C23257A94640099756B /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		C1631C24257A94640099756B /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
-		C18E01922583711200C87E54 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C17BE591258A455400E381F9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C609DF5B0AD1C4B63C9D39EF /* libPods-Act1-Act1Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Act1-Act1Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -184,7 +184,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				C18E01922583711200C87E54 /* GoogleService-Info.plist */,
+				C17BE591258A455400E381F9 /* GoogleService-Info.plist */,
 				C1631C20257A94640099756B /* fonts */,
 				13B07FAE1A68108700A75B9A /* Act1 */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -321,6 +321,7 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = UE6BVYPPFX;
 						LastSwiftMigration = 1120;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -374,7 +375,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C1631C25257A94640099756B /* Feather.ttf in Resources */,
 				C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */,
-				C18E01932583711200C87E54 /* GoogleService-Info.plist in Resources */,
+				C17BE592258A455400E381F9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,6 +695,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9c324a90-422d-4adc-a5da-73ab7ee3f14f";
+				PROVISIONING_PROFILE_SPECIFIER = "co.act1.native AppStore";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Act1.app/Act1";
 			};
 			name = Release;
@@ -704,19 +707,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "Don't Code Sign";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Act1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.01;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = co.act1.native;
 				PRODUCT_NAME = Act1;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -729,18 +737,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				INFOPLIST_FILE = Act1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.01;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = co.act1.native;
 				PRODUCT_NAME = Act1;
+				PROVISIONING_PROFILE = "9c324a90-422d-4adc-a5da-73ab7ee3f14f";
+				PROVISIONING_PROFILE_SPECIFIER = "co.act1.native AppStore";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -798,6 +812,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Act1-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9c324a90-422d-4adc-a5da-73ab7ee3f14f";
+				PROVISIONING_PROFILE_SPECIFIER = "co.act1.native AppStore";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
@@ -854,6 +870,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Act1-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9c324a90-422d-4adc-a5da-73ab7ee3f14f";
+				PROVISIONING_PROFILE_SPECIFIER = "co.act1.native AppStore";
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Act1-tvOS.app/Act1-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
