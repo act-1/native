@@ -586,7 +586,7 @@ PODS:
     - React-jsi (= 0.63.4)
   - RNCMaskedView (0.1.10):
     - React
-  - RNDeviceInfo (7.2.1):
+  - RNDeviceInfo (7.3.1):
     - React-Core
   - RNFBApp (10.2.0):
     - Firebase/CoreOnly (~> 7.2.0)
@@ -820,7 +820,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
-  RNDeviceInfo: ae953cf4af2775e45597304fc9513a7931ef81ff
+  RNDeviceInfo: 6ecb1d1c87d20e4c62354be0348de23362824dcd
   RNFBApp: e3a0a4a783064c49764d1deb6ce61de5857c42ca
   RNFBFirestore: 0d6929011fee27de7f1dd9a7664a447c521cf9d1
   RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
@@ -829,6 +829,6 @@ SPEC CHECKSUMS:
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 5b6ccc7d0b63d3c553e235a98022faaca4802178
+PODFILE CHECKSUM: b82e94bd751aabd8860e46cda4b6639e7964b607
 
 COCOAPODS: 1.10.0

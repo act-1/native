@@ -7,24 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* CodenameMerryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CodenameMerryTests.m */; };
+		00E356F31AD99517003FC87E /* Act1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Act1Tests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1570B59D58990008090141EA /* libPods-CodenameMerry-CodenameMerryTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C609DF5B0AD1C4B63C9D39EF /* libPods-CodenameMerry-CodenameMerryTests.a */; };
+		1570B59D58990008090141EA /* libPods-Act1-Act1Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C609DF5B0AD1C4B63C9D39EF /* libPods-Act1-Act1Tests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* CodenameMerryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CodenameMerryTests.m */; };
-		4336DFC828A8C9ADA355787C /* libPods-CodenameMerry-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A27DE9EA7CC25AB71900BD8 /* libPods-CodenameMerry-tvOS.a */; };
+		2DCD954D1E0B4F2C00145EB5 /* Act1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Act1Tests.m */; };
+		4336DFC828A8C9ADA355787C /* libPods-Act1-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A27DE9EA7CC25AB71900BD8 /* libPods-Act1-tvOS.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C1631C25257A94640099756B /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C21257A94640099756B /* Feather.ttf */; };
 		C1631C26257A94640099756B /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C22257A94640099756B /* Rubik-Bold.ttf */; };
 		C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C23257A94640099756B /* Rubik-Medium.ttf */; };
 		C1631C28257A94640099756B /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C24257A94640099756B /* Rubik-Regular.ttf */; };
 		C18E01932583711200C87E54 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C18E01922583711200C87E54 /* GoogleService-Info.plist */; };
-		F4CC12AD715BF3310D1152A3 /* libPods-CodenameMerry-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E802883A0F5ECFA9DEB2F6D /* libPods-CodenameMerry-tvOSTests.a */; };
-		F906F208824FFFBC1077D36B /* libPods-CodenameMerry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC78ECDB0BC66909D52DE1 /* libPods-CodenameMerry.a */; };
+		F4CC12AD715BF3310D1152A3 /* libPods-Act1-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E802883A0F5ECFA9DEB2F6D /* libPods-Act1-tvOSTests.a */; };
+		F906F208824FFFBC1077D36B /* libPods-Act1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC78ECDB0BC66909D52DE1 /* libPods-Act1.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,48 +33,48 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = CodenameMerry;
+			remoteInfo = Act1;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "CodenameMerry-tvOS";
+			remoteInfo = "Act1-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* CodenameMerryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodenameMerryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* Act1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Act1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* CodenameMerryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodenameMerryTests.m; sourceTree = "<group>"; };
-		04D676CC8B4BF506FD97F343 /* Pods-CodenameMerry-CodenameMerryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodenameMerry-CodenameMerryTests.debug.xcconfig"; path = "Target Support Files/Pods-CodenameMerry-CodenameMerryTests/Pods-CodenameMerry-CodenameMerryTests.debug.xcconfig"; sourceTree = "<group>"; };
-		0D946633B471DEA96B0944C9 /* Pods-CodenameMerry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodenameMerry.debug.xcconfig"; path = "Target Support Files/Pods-CodenameMerry/Pods-CodenameMerry.debug.xcconfig"; sourceTree = "<group>"; };
-		10493C66F242B81234324AAF /* Pods-CodenameMerry-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodenameMerry-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-CodenameMerry-tvOSTests/Pods-CodenameMerry-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* CodenameMerry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodenameMerry.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = CodenameMerry/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = CodenameMerry/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = CodenameMerry/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CodenameMerry/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CodenameMerry/main.m; sourceTree = "<group>"; };
-		23F47CC52264CDB08718F471 /* Pods-CodenameMerry-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodenameMerry-tvOS.release.xcconfig"; path = "Target Support Files/Pods-CodenameMerry-tvOS/Pods-CodenameMerry-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		2A27DE9EA7CC25AB71900BD8 /* libPods-CodenameMerry-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CodenameMerry-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E47B1E0B4A5D006451C7 /* CodenameMerry-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CodenameMerry-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* CodenameMerry-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CodenameMerry-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		31A5C193D10A67FC59FAF851 /* Pods-CodenameMerry-CodenameMerryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodenameMerry-CodenameMerryTests.release.xcconfig"; path = "Target Support Files/Pods-CodenameMerry-CodenameMerryTests/Pods-CodenameMerry-CodenameMerryTests.release.xcconfig"; sourceTree = "<group>"; };
-		33CC78ECDB0BC66909D52DE1 /* libPods-CodenameMerry.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CodenameMerry.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4BE5308CEF903BACD7D5712F /* Pods-CodenameMerry-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodenameMerry-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-CodenameMerry-tvOSTests/Pods-CodenameMerry-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		4E802883A0F5ECFA9DEB2F6D /* libPods-CodenameMerry-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CodenameMerry-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = CodenameMerry/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A549150FE2EFE2ED3FE5DEBD /* Pods-CodenameMerry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodenameMerry.release.xcconfig"; path = "Target Support Files/Pods-CodenameMerry/Pods-CodenameMerry.release.xcconfig"; sourceTree = "<group>"; };
-		B4F62E6427F80F1CF9609214 /* Pods-CodenameMerry-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodenameMerry-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-CodenameMerry-tvOS/Pods-CodenameMerry-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* Act1Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Act1Tests.m; sourceTree = "<group>"; };
+		04D676CC8B4BF506FD97F343 /* Pods-Act1-Act1Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1-Act1Tests.debug.xcconfig"; path = "Target Support Files/Pods-Act1-Act1Tests/Pods-Act1-Act1Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		0D946633B471DEA96B0944C9 /* Pods-Act1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1.debug.xcconfig"; path = "Target Support Files/Pods-Act1/Pods-Act1.debug.xcconfig"; sourceTree = "<group>"; };
+		10493C66F242B81234324AAF /* Pods-Act1-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Act1-tvOSTests/Pods-Act1-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Act1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Act1.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Act1/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Act1/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Act1/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Act1/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Act1/main.m; sourceTree = "<group>"; };
+		23F47CC52264CDB08718F471 /* Pods-Act1-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Act1-tvOS/Pods-Act1-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		2A27DE9EA7CC25AB71900BD8 /* libPods-Act1-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Act1-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* Act1-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Act1-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* Act1-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Act1-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		31A5C193D10A67FC59FAF851 /* Pods-Act1-Act1Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1-Act1Tests.release.xcconfig"; path = "Target Support Files/Pods-Act1-Act1Tests/Pods-Act1-Act1Tests.release.xcconfig"; sourceTree = "<group>"; };
+		33CC78ECDB0BC66909D52DE1 /* libPods-Act1.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Act1.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BE5308CEF903BACD7D5712F /* Pods-Act1-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Act1-tvOSTests/Pods-Act1-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		4E802883A0F5ECFA9DEB2F6D /* libPods-Act1-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Act1-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Act1/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A549150FE2EFE2ED3FE5DEBD /* Pods-Act1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1.release.xcconfig"; path = "Target Support Files/Pods-Act1/Pods-Act1.release.xcconfig"; sourceTree = "<group>"; };
+		B4F62E6427F80F1CF9609214 /* Pods-Act1-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Act1-tvOS/Pods-Act1-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		C1631C21257A94640099756B /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
 		C1631C22257A94640099756B /* Rubik-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Bold.ttf"; sourceTree = "<group>"; };
 		C1631C23257A94640099756B /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		C1631C24257A94640099756B /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		C18E01922583711200C87E54 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C609DF5B0AD1C4B63C9D39EF /* libPods-CodenameMerry-CodenameMerryTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CodenameMerry-CodenameMerryTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C609DF5B0AD1C4B63C9D39EF /* libPods-Act1-Act1Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Act1-Act1Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -84,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1570B59D58990008090141EA /* libPods-CodenameMerry-CodenameMerryTests.a in Frameworks */,
+				1570B59D58990008090141EA /* libPods-Act1-Act1Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F906F208824FFFBC1077D36B /* libPods-CodenameMerry.a in Frameworks */,
+				F906F208824FFFBC1077D36B /* libPods-Act1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4336DFC828A8C9ADA355787C /* libPods-CodenameMerry-tvOS.a in Frameworks */,
+				4336DFC828A8C9ADA355787C /* libPods-Act1-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,20 +108,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4CC12AD715BF3310D1152A3 /* libPods-CodenameMerry-tvOSTests.a in Frameworks */,
+				F4CC12AD715BF3310D1152A3 /* libPods-Act1-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* CodenameMerryTests */ = {
+		00E356EF1AD99517003FC87E /* Act1Tests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* CodenameMerryTests.m */,
+				00E356F21AD99517003FC87E /* Act1Tests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = CodenameMerryTests;
+			path = Act1Tests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -132,7 +132,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* CodenameMerry */ = {
+		13B07FAE1A68108700A75B9A /* Act1 */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -143,20 +143,20 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = CodenameMerry;
+			name = Act1;
 			sourceTree = "<group>";
 		};
 		20C024B4811F91AD7CEF0D24 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0D946633B471DEA96B0944C9 /* Pods-CodenameMerry.debug.xcconfig */,
-				A549150FE2EFE2ED3FE5DEBD /* Pods-CodenameMerry.release.xcconfig */,
-				04D676CC8B4BF506FD97F343 /* Pods-CodenameMerry-CodenameMerryTests.debug.xcconfig */,
-				31A5C193D10A67FC59FAF851 /* Pods-CodenameMerry-CodenameMerryTests.release.xcconfig */,
-				B4F62E6427F80F1CF9609214 /* Pods-CodenameMerry-tvOS.debug.xcconfig */,
-				23F47CC52264CDB08718F471 /* Pods-CodenameMerry-tvOS.release.xcconfig */,
-				10493C66F242B81234324AAF /* Pods-CodenameMerry-tvOSTests.debug.xcconfig */,
-				4BE5308CEF903BACD7D5712F /* Pods-CodenameMerry-tvOSTests.release.xcconfig */,
+				0D946633B471DEA96B0944C9 /* Pods-Act1.debug.xcconfig */,
+				A549150FE2EFE2ED3FE5DEBD /* Pods-Act1.release.xcconfig */,
+				04D676CC8B4BF506FD97F343 /* Pods-Act1-Act1Tests.debug.xcconfig */,
+				31A5C193D10A67FC59FAF851 /* Pods-Act1-Act1Tests.release.xcconfig */,
+				B4F62E6427F80F1CF9609214 /* Pods-Act1-tvOS.debug.xcconfig */,
+				23F47CC52264CDB08718F471 /* Pods-Act1-tvOS.release.xcconfig */,
+				10493C66F242B81234324AAF /* Pods-Act1-tvOSTests.debug.xcconfig */,
+				4BE5308CEF903BACD7D5712F /* Pods-Act1-tvOSTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -166,10 +166,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				33CC78ECDB0BC66909D52DE1 /* libPods-CodenameMerry.a */,
-				C609DF5B0AD1C4B63C9D39EF /* libPods-CodenameMerry-CodenameMerryTests.a */,
-				2A27DE9EA7CC25AB71900BD8 /* libPods-CodenameMerry-tvOS.a */,
-				4E802883A0F5ECFA9DEB2F6D /* libPods-CodenameMerry-tvOSTests.a */,
+				33CC78ECDB0BC66909D52DE1 /* libPods-Act1.a */,
+				C609DF5B0AD1C4B63C9D39EF /* libPods-Act1-Act1Tests.a */,
+				2A27DE9EA7CC25AB71900BD8 /* libPods-Act1-tvOS.a */,
+				4E802883A0F5ECFA9DEB2F6D /* libPods-Act1-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -186,9 +186,9 @@
 			children = (
 				C18E01922583711200C87E54 /* GoogleService-Info.plist */,
 				C1631C20257A94640099756B /* fonts */,
-				13B07FAE1A68108700A75B9A /* CodenameMerry */,
+				13B07FAE1A68108700A75B9A /* Act1 */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* CodenameMerryTests */,
+				00E356EF1AD99517003FC87E /* Act1Tests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				20C024B4811F91AD7CEF0D24 /* Pods */,
@@ -201,10 +201,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* CodenameMerry.app */,
-				00E356EE1AD99517003FC87E /* CodenameMerryTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* CodenameMerry-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* CodenameMerry-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* Act1.app */,
+				00E356EE1AD99517003FC87E /* Act1Tests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* Act1-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* Act1-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -224,9 +224,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* CodenameMerryTests */ = {
+		00E356ED1AD99517003FC87E /* Act1Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "CodenameMerryTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Act1Tests" */;
 			buildPhases = (
 				C95887BA61E6241D397F40B5 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -239,14 +239,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = CodenameMerryTests;
-			productName = CodenameMerryTests;
-			productReference = 00E356EE1AD99517003FC87E /* CodenameMerryTests.xctest */;
+			name = Act1Tests;
+			productName = Act1Tests;
+			productReference = 00E356EE1AD99517003FC87E /* Act1Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* CodenameMerry */ = {
+		13B07F861A680F5B00A75B9A /* Act1 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "CodenameMerry" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Act1" */;
 			buildPhases = (
 				CCEE982BCDB1329B8C2BB33C /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -261,14 +261,14 @@
 			);
 			dependencies = (
 			);
-			name = CodenameMerry;
-			productName = CodenameMerry;
-			productReference = 13B07F961A680F5B00A75B9A /* CodenameMerry.app */;
+			name = Act1;
+			productName = Act1;
+			productReference = 13B07F961A680F5B00A75B9A /* Act1.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* CodenameMerry-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* Act1-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "CodenameMerry-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Act1-tvOS" */;
 			buildPhases = (
 				A232758B700CA44E467D74E7 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -281,14 +281,14 @@
 			);
 			dependencies = (
 			);
-			name = "CodenameMerry-tvOS";
-			productName = "CodenameMerry-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* CodenameMerry-tvOS.app */;
+			name = "Act1-tvOS";
+			productName = "Act1-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* Act1-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* CodenameMerry-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* Act1-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "CodenameMerry-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Act1-tvOSTests" */;
 			buildPhases = (
 				C284ADF968234DC2BB0534B4 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -300,9 +300,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "CodenameMerry-tvOSTests";
-			productName = "CodenameMerry-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* CodenameMerry-tvOSTests.xctest */;
+			name = "Act1-tvOSTests";
+			productName = "Act1-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* Act1-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -335,7 +335,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "CodenameMerry" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Act1" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -348,10 +348,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* CodenameMerry */,
-				00E356ED1AD99517003FC87E /* CodenameMerryTests */,
-				2D02E47A1E0B4A5D006451C7 /* CodenameMerry-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* CodenameMerry-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* Act1 */,
+				00E356ED1AD99517003FC87E /* Act1Tests */,
+				2D02E47A1E0B4A5D006451C7 /* Act1-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* Act1-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -430,7 +430,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CodenameMerry/Pods-CodenameMerry-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Act1/Pods-Act1-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates-Cpp.bundle",
 			);
@@ -441,7 +441,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CodenameMerry/Pods-CodenameMerry-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Act1/Pods-Act1-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7DD8BF12A5B3C23B9CE54405 /* [CP-User] [RNFB] Core Configuration */ = {
@@ -469,7 +469,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CodenameMerry-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Act1-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -482,7 +482,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CodenameMerry-CodenameMerryTests/Pods-CodenameMerry-CodenameMerryTests-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Act1-Act1Tests/Pods-Act1-Act1Tests-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates-Cpp.bundle",
 			);
@@ -493,7 +493,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CodenameMerry-CodenameMerryTests/Pods-CodenameMerry-CodenameMerryTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Act1-Act1Tests/Pods-Act1-Act1Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C284ADF968234DC2BB0534B4 /* [CP] Check Pods Manifest.lock */ = {
@@ -511,7 +511,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CodenameMerry-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Act1-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -533,7 +533,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CodenameMerry-CodenameMerryTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Act1-Act1Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -555,7 +555,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CodenameMerry-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Act1-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -607,7 +607,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* CodenameMerryTests.m in Sources */,
+				00E356F31AD99517003FC87E /* Act1Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,7 +633,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* CodenameMerryTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* Act1Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -642,12 +642,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* CodenameMerry */;
+			target = 13B07F861A680F5B00A75B9A /* Act1 */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* CodenameMerry-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* Act1-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -655,7 +655,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 04D676CC8B4BF506FD97F343 /* Pods-CodenameMerry-CodenameMerryTests.debug.xcconfig */;
+			baseConfigurationReference = 04D676CC8B4BF506FD97F343 /* Pods-Act1-Act1Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
@@ -663,7 +663,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = CodenameMerryTests/Info.plist;
+				INFOPLIST_FILE = Act1Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -673,18 +673,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodenameMerry.app/CodenameMerry";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Act1.app/Act1";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31A5C193D10A67FC59FAF851 /* Pods-CodenameMerry-CodenameMerryTests.release.xcconfig */;
+			baseConfigurationReference = 31A5C193D10A67FC59FAF851 /* Pods-Act1-Act1Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
-				INFOPLIST_FILE = CodenameMerryTests/Info.plist;
+				INFOPLIST_FILE = Act1Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -694,20 +694,20 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodenameMerry.app/CodenameMerry";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Act1.app/Act1";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D946633B471DEA96B0944C9 /* Pods-CodenameMerry.debug.xcconfig */;
+			baseConfigurationReference = 0D946633B471DEA96B0944C9 /* Pods-Act1.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = CodenameMerry/Info.plist;
+				INFOPLIST_FILE = Act1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -716,7 +716,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = CodenameMerry;
+				PRODUCT_NAME = Act1;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -725,13 +725,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A549150FE2EFE2ED3FE5DEBD /* Pods-CodenameMerry.release.xcconfig */;
+			baseConfigurationReference = A549150FE2EFE2ED3FE5DEBD /* Pods-Act1.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
-				INFOPLIST_FILE = CodenameMerry/Info.plist;
+				INFOPLIST_FILE = Act1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -740,7 +740,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = CodenameMerry;
+				PRODUCT_NAME = Act1;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -748,7 +748,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B4F62E6427F80F1CF9609214 /* Pods-CodenameMerry-tvOS.debug.xcconfig */;
+			baseConfigurationReference = B4F62E6427F80F1CF9609214 /* Pods-Act1-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -760,14 +760,14 @@
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "CodenameMerry-tvOS/Info.plist";
+				INFOPLIST_FILE = "Act1-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.CodenameMerry-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Act1-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -777,7 +777,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23F47CC52264CDB08718F471 /* Pods-CodenameMerry-tvOS.release.xcconfig */;
+			baseConfigurationReference = 23F47CC52264CDB08718F471 /* Pods-Act1-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -789,14 +789,14 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "CodenameMerry-tvOS/Info.plist";
+				INFOPLIST_FILE = "Act1-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.CodenameMerry-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Act1-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -806,7 +806,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10493C66F242B81234324AAF /* Pods-CodenameMerry-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 10493C66F242B81234324AAF /* Pods-Act1-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -817,24 +817,24 @@
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "CodenameMerry-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "Act1-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.CodenameMerry-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Act1-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodenameMerry-tvOS.app/CodenameMerry-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Act1-tvOS.app/Act1-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4BE5308CEF903BACD7D5712F /* Pods-CodenameMerry-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 4BE5308CEF903BACD7D5712F /* Pods-Act1-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -845,17 +845,17 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "CodenameMerry-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "Act1-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.CodenameMerry-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Act1-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodenameMerry-tvOS.app/CodenameMerry-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Act1-tvOS.app/Act1-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -976,7 +976,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "CodenameMerryTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Act1Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -985,7 +985,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "CodenameMerry" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Act1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -994,7 +994,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "CodenameMerry-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Act1-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -1003,7 +1003,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "CodenameMerry-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Act1-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1012,7 +1012,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "CodenameMerry" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Act1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
