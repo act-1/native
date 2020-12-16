@@ -58,7 +58,11 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
           <Text>טוענת..</Text>
         </Box>
       ) : (
-        <StickyHeaderScrollView goBack={() => navigation.goBack()} headerTitle="הפגנת ענק בבלפור">
+        <StickyHeaderScrollView
+          goBack={() => navigation.goBack()}
+          headerTitle="הפגנת ענק בבלפור"
+          thumbnail={event.thumbnail}
+        >
           <Box backgroundColor="dimmedBackground">
             <Box paddingVertical="xm" marginBottom="m" backgroundColor="mainBackground" alignItems="center">
               <Text style={{ writingDirection: 'rtl' }} variant="largeTitle" marginBottom="m" textAlign="center">

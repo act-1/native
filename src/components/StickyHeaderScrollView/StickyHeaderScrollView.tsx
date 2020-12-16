@@ -1,15 +1,19 @@
 import React, { useRef, ReactNode } from 'react';
 import { StyleSheet, Animated, RefreshControl } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { Box, Text, CircularButton } from '../';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const AnimatedImage = Animated.createAnimatedComponent(FastImage);
 
 type StickyHeaderScrollViewProps = {
   children: ReactNode;
   headerTitle: string;
+  thumbnail: URL;
   goBack?: () => void;
 };
 
-function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderScrollViewProps) {
+function StickyHeaderScrollView({ children, goBack, headerTitle, thumbnail }: StickyHeaderScrollViewProps) {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -33,12 +37,6 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
   const headerTranslateY = scrollY.interpolate({
     inputRange: [-HEADER_SCROLL_DISTANCE - 80, 0, HEADER_SCROLL_DISTANCE],
     outputRange: [HEADER_SCROLL_DISTANCE + 80, 0, -HEADER_SCROLL_DISTANCE],
-    extrapolate: 'clamp',
-  });
-
-  const headerBGColor = scrollY.interpolate({
-    inputRange: [-HEADER_SCROLL_DISTANCE, HEADER_SCROLL_DISTANCE + 80],
-    outputRange: ['transparent', '#4e23bb'],
     extrapolate: 'clamp',
   });
 
@@ -76,7 +74,7 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} enabled={true} />}
-        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }])}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
       >
         {children}
       </Animated.ScrollView>
@@ -84,9 +82,9 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
       <Animated.View
         style={[styles.header, { transform: [{ translateY: headerTranslateY }], height: HEADER_MAX_HEIGHT }]}
       >
-        <Animated.Image
+        <AnimatedImage
           style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
-          source={require('../../components/EventBox/balfur-5-dec.jpg')}
+          source={{ uri: thumbnail.href }}
         />
       </Animated.View>
 
