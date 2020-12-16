@@ -3,25 +3,50 @@ import { ActivityIndicator, StatusBar, Image } from 'react-native';
 import { useModal } from 'react-native-modalfy';
 import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
+import { IEvent } from '@types/event';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
 import { EventPageDetail, EventPageCounter } from './';
-import { IEvent } from '@types/event';
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../stores';
+import EventsAPI from '../../api/events';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const store = useStore();
   const [event, setEvent] = useState<IEvent>();
+  const [isAttending, setAttending] = useState(false);
   const { openModal } = useModal();
-  const attendEvent = () => openModal('AttendingModal');
+
+  const attendEvent = async (event: IEvent) => {
+    if (!isAttending) {
+      const { attended } = await EventsAPI.attendEvent(event.id, event.timestamp);
+      if (attended) {
+        openModal('AttendingModal');
+        setAttending(true);
+        setEvent({ ...event, attendingCount: event.attendingCount + 1 });
+      }
+    } else {
+      const { attendenceRemoved } = await EventsAPI.attendenceRemoval(event.id);
+      if (attendenceRemoved) {
+        setAttending(false);
+        setEvent({ ...event, attendingCount: event.attendingCount - 1 });
+      }
+    }
+    try {
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     if (route.params?.eventId && store.events.length > 0) {
       const eventData = store.events.find((e: IEvent) => e.id === route.params.eventId);
       if (eventData) setEvent(eventData);
+      if (store.userEventIds.includes(eventData.id)) {
+        setAttending(true);
+      }
     }
-  }, [store.events, route.params]);
+  }, [store.events, route.params, store.userEventIds]);
 
   return (
     <Box flex={1}>
@@ -32,7 +57,11 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
           <Text>טוענת..</Text>
         </Box>
       ) : (
-        <StickyHeaderScrollView goBack={() => navigation.goBack()} headerTitle="הפגנת ענק בבלפור">
+        <StickyHeaderScrollView
+          goBack={() => navigation.goBack()}
+          headerTitle="הפגנת ענק בבלפור"
+          thumbnail={event.thumbnail}
+        >
           <Box backgroundColor="dimmedBackground">
             <Box paddingVertical="xm" marginBottom="m" backgroundColor="mainBackground" alignItems="center">
               <Text style={{ writingDirection: 'rtl' }} variant="largeTitle" marginBottom="m" textAlign="center">
@@ -52,7 +81,12 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               paddingVertical="xm"
               marginBottom="m"
             >
-              <CircularButton iconName="check" color="grey" text="אישור הגעה" onPress={attendEvent} />
+              <CircularButton
+                iconName="check"
+                color={isAttending ? 'green' : 'grey'}
+                text={isAttending ? 'אני שם!' : 'אישור הגעה'}
+                onPress={() => attendEvent(event)}
+              />
               <CircularButton iconName="share" color="blue" text="הזמנת חברים" />
             </Box>
 

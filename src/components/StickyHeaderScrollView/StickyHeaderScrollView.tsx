@@ -1,16 +1,30 @@
 import React, { useRef, ReactNode } from 'react';
-import { StyleSheet, Animated } from 'react-native';
+import { StyleSheet, Animated, RefreshControl } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { Box, Text, CircularButton } from '../';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const AnimatedImage = Animated.createAnimatedComponent(FastImage);
 
 type StickyHeaderScrollViewProps = {
   children: ReactNode;
   headerTitle: string;
+  thumbnail: URL;
   goBack?: () => void;
 };
 
-function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderScrollViewProps) {
+function StickyHeaderScrollView({ children, goBack, headerTitle, thumbnail }: StickyHeaderScrollViewProps) {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   const insets = useSafeAreaInsets();
+
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const HEADER_MAX_HEIGHT = 200;
@@ -21,8 +35,8 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
   // Our header y-axis animated from 0 to HEADER_SCROLL_DISTANCE,
   // we move our element for -HEADER_SCROLL_DISTANCE at the same time.
   const headerTranslateY = scrollY.interpolate({
-    inputRange: [-HEADER_SCROLL_DISTANCE, 0, HEADER_SCROLL_DISTANCE],
-    outputRange: [HEADER_SCROLL_DISTANCE, 0, -HEADER_SCROLL_DISTANCE],
+    inputRange: [-HEADER_SCROLL_DISTANCE - 80, 0, HEADER_SCROLL_DISTANCE],
+    outputRange: [HEADER_SCROLL_DISTANCE + 80, 0, -HEADER_SCROLL_DISTANCE],
     extrapolate: 'clamp',
   });
 
@@ -34,7 +48,7 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
   });
 
   const imageTranslateY = scrollY.interpolate({
-    inputRange: [-HEADER_SCROLL_DISTANCE, 0, HEADER_SCROLL_DISTANCE],
+    inputRange: [-HEADER_SCROLL_DISTANCE - 40, 0, HEADER_SCROLL_DISTANCE],
     outputRange: [-1, 0, 3],
     extrapolate: 'clamp',
   });
@@ -59,6 +73,7 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
         contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} enabled={true} />}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
       >
         {children}
@@ -67,9 +82,9 @@ function StickyHeaderScrollView({ children, headerTitle, goBack }: StickyHeaderS
       <Animated.View
         style={[styles.header, { transform: [{ translateY: headerTranslateY }], height: HEADER_MAX_HEIGHT }]}
       >
-        <Animated.Image
+        <AnimatedImage
           style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
-          source={require('../../components/EventBox/balfur-5-dec.jpg')}
+          source={{ uri: thumbnail.href }}
         />
       </Animated.View>
 
