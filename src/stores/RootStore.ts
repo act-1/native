@@ -10,7 +10,7 @@ class RootStore {
   events: IEvent[] | [] = [];
   initializing = true;
   user: FirebaseAuthTypes.User | null = null;
-  userUpcomingEventIds: string[] = [];
+  userEventIds: string[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -18,9 +18,10 @@ class RootStore {
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user) {
+        alert(2);
         this.user = user;
         getUserEvents(user.uid).then((events) => {
-          this.userUpcomingEventIds = events;
+          this.userEventIds = events;
         });
       } else this.signInAnonymously();
     });

@@ -28,7 +28,7 @@ export async function getEventList(): Promise<IEvent[]> {
       localDay: formatLocalDay(doc.timestamp.toDate()),
     })
   );
-  console.log('EE', events);
+
   return events;
 }
 
@@ -110,7 +110,6 @@ export async function getUserEvents(userId: string) {
       .collection('users')
       .doc(userId)
       .collection('attendingEvents')
-      .where('eventDate', '>=', new Date())
       .get();
 
     const attendingEventIds = attendingListDocs.map((doc) => doc.id);
