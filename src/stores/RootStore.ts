@@ -18,7 +18,6 @@ class RootStore {
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user) {
-        alert(2);
         this.user = user;
         getUserEvents(user.uid).then((events) => {
           this.userEventIds = events;
@@ -42,6 +41,7 @@ class RootStore {
       runInAction(() => {
         this.events = events;
       });
+      return events;
     } catch (err) {
       console.error(err);
     }

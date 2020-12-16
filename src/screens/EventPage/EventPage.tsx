@@ -5,7 +5,6 @@ import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { IEvent } from '@types/event';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
@@ -43,11 +42,11 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
     if (route.params?.eventId && store.events.length > 0) {
       const eventData = store.events.find((e: IEvent) => e.id === route.params.eventId);
       if (eventData) setEvent(eventData);
-      if (store.userUpcomingEventIds.includes(eventData.id)) {
+      if (store.userEventIds.includes(eventData.id)) {
         setAttending(true);
       }
     }
-  }, [store.events, route.params, store.userUpcomingEventIds]);
+  }, [store.events, route.params, store.userEventIds]);
 
   return (
     <Box flex={1}>

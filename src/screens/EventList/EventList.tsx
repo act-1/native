@@ -8,7 +8,15 @@ import { useStore } from '../../stores';
 
 function EventList({ navigation }: EventListScreenProps) {
   const [eventList, setEventList] = useState<EventsSectionListItem[]>([]);
+  const [refreshing, setRefreshing] = React.useState(false);
   const store = useStore();
+
+  const onRefresh = async () => {
+    // TODO: Handle refresh failure
+    setRefreshing(true);
+    await store.getEvents();
+    setRefreshing(false);
+  };
 
   useEffect(() => {
     const list = formatEventsForSectionList(store.events);
@@ -31,6 +39,9 @@ function EventList({ navigation }: EventListScreenProps) {
               <EventBox {...item} onPress={() => navigation.navigate('EventPage', { eventId: item.id })} />
             )}
             stickySectionHeadersEnabled={false}
+            progressViewOffset={100}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
             renderSectionHeader={({ section: { title, subtitle } }) => (
               <Box marginTop="m" marginLeft="m">
                 <Text fontSize={22} textAlign="left" fontFamily="Rubik-Medium">
