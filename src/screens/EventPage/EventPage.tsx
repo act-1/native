@@ -59,7 +59,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
       ) : (
         <StickyHeaderScrollView
           goBack={() => navigation.goBack()}
-          headerTitle="הפגנת ענק בבלפור"
+          headerTitle={event.title}
           thumbnail={event.thumbnail}
         >
           <Box backgroundColor="dimmedBackground">
@@ -122,24 +122,29 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
               <HTML
                 html={event.content}
-                tagsStyles={{ p: { marginBottom: 12, fontSize: 15, fontFamily: 'Rubik-Regular' } }}
+                tagsStyles={{
+                  p: { marginBottom: 12, fontSize: 15, fontFamily: 'Rubik-Regular' },
+                  div: { textAlign: 'left', fontFamily: 'Rubik-Regular', fontSize: 15 },
+                }}
               />
             </Box>
+            {event.organizations?.length > 0 && (
+              <Box padding="m" backgroundColor="mainBackground">
+                <Text variant="largeTitle" marginBottom="m">
+                  מארגנים
+                </Text>
 
-            <Box padding="m" backgroundColor="mainBackground">
-              <Text variant="largeTitle" marginBottom="m">
-                מארגנים
-              </Text>
-              {event.organizations.map((org: { id: string; thumbnail: string; title: string }) => (
-                <Box flexDirection="row" alignItems="center" key={org.id}>
-                  <Image
-                    source={{ uri: org.thumbnail }}
-                    style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
-                  />
-                  <Text variant="text">{org.title}</Text>
-                </Box>
-              ))}
-            </Box>
+                {event.organizations.map((org: { id: string; thumbnail: string; title: string }) => (
+                  <Box flexDirection="row" alignItems="center" key={org.id}>
+                    <Image
+                      source={{ uri: org.thumbnail }}
+                      style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
+                    />
+                    <Text variant="text">{org.title}</Text>
+                  </Box>
+                ))}
+              </Box>
+            )}
           </Box>
         </StickyHeaderScrollView>
       )}

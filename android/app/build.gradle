@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "co.act1.native"
+        applicationId "co.act1.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

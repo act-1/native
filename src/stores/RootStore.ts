@@ -14,11 +14,11 @@ class RootStore {
 
   constructor() {
     makeAutoObservable(this);
-    this.getEvents();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user) {
         this.user = user;
+        this.getEvents();
         getUserEvents(user.uid).then((events) => {
           this.userEventIds = events;
         });

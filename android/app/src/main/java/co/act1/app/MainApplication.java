@@ -1,4 +1,4 @@
-package co.act1.native;
+package co.act1.app;
 
 import android.app.Application;
 import android.content.Context;
@@ -67,7 +67,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("co.act1.native.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("co.act1.app.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

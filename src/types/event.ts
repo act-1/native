@@ -12,7 +12,7 @@ export type IEvent = {
   time: string;
   thumbnail: URL;
   content: string;
-  organizations: { id: string; thumbnail: string; title: string };
+  organizations: { id: string; thumbnail: string; title: string }[];
   attendingCount: number;
   coordinates: FirebaseFirestoreTypes.GeoPoint;
 };
