@@ -32,7 +32,13 @@ export async function getEventList(): Promise<IEvent[]> {
   return events;
 }
 
-export async function attendEvent(eventId: string, eventDate: FirebaseFirestoreTypes.Timestamp) {
+export async function attendEvent({
+  eventId,
+  eventDate,
+}: {
+  eventId: string;
+  eventDate: FirebaseFirestoreTypes.Timestamp;
+}): Promise<{ attended: boolean }> {
   try {
     const user = auth().currentUser;
     if (user) {
@@ -63,12 +69,13 @@ export async function attendEvent(eventId: string, eventDate: FirebaseFirestoreT
         throw new Error('The user is already attending the event.');
       }
     }
+    throw new Error('Not authenticated.');
   } catch (err) {
     throw err;
   }
 }
 
-export async function attendenceRemoval(eventId) {
+export async function attendenceRemoval({ eventId }: { eventId: string }): Promise<{ removed: boolean }> {
   try {
     const user = auth().currentUser;
     if (user) {
@@ -93,12 +100,13 @@ export async function attendenceRemoval(eventId) {
         // Commit both changes atomically
         await batch.commit();
 
-        return { attendenceRemoved: true };
+        return { removed: true };
       } else {
         // TODO: Fix ESLint condition error
         throw new Error('The user is not attending the event.');
       }
     }
+    throw new Error('Not authnticated');
   } catch (err) {
     throw err;
   }
@@ -122,6 +130,7 @@ export async function getUserEvents(userId: string) {
 
 export default {
   getEventList,
+  getUserEvents,
   attendEvent,
   attendenceRemoval,
 };

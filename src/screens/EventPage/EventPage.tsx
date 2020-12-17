@@ -18,16 +18,17 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   const { openModal } = useModal();
 
   const attendEvent = async (event: IEvent) => {
+    const { id: eventId, timestamp: eventDate } = event;
     if (!isAttending) {
-      const { attended } = await EventsAPI.attendEvent(event.id, event.timestamp);
+      const { attended } = await store.attendEvent({ eventId, eventDate, type: 'attend' });
       if (attended) {
         openModal('AttendingModal');
         setAttending(true);
         setEvent({ ...event, attendingCount: event.attendingCount + 1 });
       }
     } else {
-      const { attendenceRemoved } = await EventsAPI.attendenceRemoval(event.id);
-      if (attendenceRemoved) {
+      const { removed } = await store.attendEvent({ eventId, type: 'remove' });
+      if (removed) {
         setAttending(false);
         setEvent({ ...event, attendingCount: event.attendingCount - 1 });
       }

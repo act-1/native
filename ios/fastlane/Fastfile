@@ -40,6 +40,9 @@ platform :ios do
       teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
     )
 
+    cert
+    sigh(force: true)
+
     build_app(workspace: "Act1.xcworkspace", scheme: "Act1", 
       clean: true,
       export_method: "app-store",
