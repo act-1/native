@@ -133,7 +133,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "0.01"
         multiDexEnabled true
 
         Properties properties = new Properties()
@@ -143,8 +143,12 @@ android {
 
         // Inject the Maps API key into the manifest
         manifestPlaceholders = [ mapsApiKey : properties.getProperty("MAPS_API_KEY", "") ]
-
     }
+
+    dexOptions {
+       javaMaxHeapSize "3g"
+    }
+
     splits {
         abi {
             reset()
@@ -240,3 +244,8 @@ apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services' // <- Add this line
+
+dependencies { 
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation "tools.fastlane:screengrab:2.0.0"
+}

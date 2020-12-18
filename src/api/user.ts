@@ -2,14 +2,21 @@ import firestore from '@react-native-firebase/firestore';
 import { getDeviceId } from 'react-native-device-info';
 
 export async function createAnonymousUser(userId: string) {
-  const userRef = firestore().collection('users').doc(userId);
-  const userDoc = await userRef.get();
+  try {
+    const userRef = firestore().collection('users').doc(userId);
+    const userDoc = await userRef.get();
 
-  if (!userDoc.exists) {
-    userRef.set({
-      isAnonymous: true,
-      deviceId: getDeviceId(),
-      createdAt: firestore.FieldValue.serverTimestamp(),
-    });
+    if (!userDoc.exists) {
+      const result = await userRef.set({
+        isAnonymous: true,
+        deviceId: getDeviceId(),
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      });
+      console.log(result);
+      return result;
+    }
+    throw new Error('User already exists.');
+  } catch (err) {
+    throw err;
   }
 }

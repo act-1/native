@@ -64,3 +64,4 @@ google-services.json
 GoogleService-Info.plist
 
 local.properties
+android/service-key.json
