@@ -4,6 +4,7 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import EventsAPI from '../api/events';
 import { createAnonymousUser } from '../api/user';
 import { IEvent } from '@types/event';
+import functions from '@react-native-firebase/functions';
 
 // TODO: Create AuthStore and EventStore
 
@@ -20,6 +21,11 @@ class RootStore {
       if (user) {
         this.user = user;
         this.getEvents();
+
+        // functions()
+        //   .httpsCallable('attendEvent')()
+        //   .then((res) => console.log(res))
+        //   .catch((err) => console.error(err.code, err.message, err.details));
         EventsAPI.getUserEvents(user.uid).then((events) => {
           this.userEventIds = events;
         });
