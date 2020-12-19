@@ -5,7 +5,7 @@ import { formatLocalDay, formatShortDate, formatUpcomingDate, parseLocalDate } f
 import { format } from 'date-fns';
 
 export async function getEventList(): Promise<IEvent[]> {
-  const querySnapshot = await firestore().collection('events').get();
+  const querySnapshot = await firestore().collection('events').orderBy('timestamp').get();
   const documents = querySnapshot.docs.map(
     (doc): FirebaseFirestoreTypes.DocumentData => ({ ...doc.data(), id: doc.id })
   );
