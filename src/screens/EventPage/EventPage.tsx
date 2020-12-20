@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, StatusBar, Image } from 'react-native';
+import { ActivityIndicator, StatusBar, Image, Platform } from 'react-native';
 import { useModal } from 'react-native-modalfy';
+import messaging from '@react-native-firebase/messaging';
 import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { observer } from 'mobx-react-lite';
@@ -22,9 +23,16 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
     if (!isAttending) {
       const { attended } = await store.attendEvent({ eventId, eventDate, type: 'attend' });
       if (attended) {
-        openModal('AttendingModal');
         setAttending(true);
         setEvent({ ...event, attendingCount: event.attendingCount + 1 });
+
+        // Open modal only if need to request notification permissions.
+        if (Platform.OS === 'ios') {
+          const authorizationStatus = await messaging().hasPermission();
+          if (authorizationStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
+            openModal('AttendingModal');
+          }
+        }
       }
     } else {
       const { removed } = await store.attendEvent({ eventId, type: 'remove' });
