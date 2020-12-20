@@ -18,11 +18,11 @@
 		2DCD954D1E0B4F2C00145EB5 /* Act1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Act1Tests.m */; };
 		4336DFC828A8C9ADA355787C /* libPods-Act1-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A27DE9EA7CC25AB71900BD8 /* libPods-Act1-tvOS.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		C10BDA2D258F527300A658CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C10BDA2C258F527300A658CB /* GoogleService-Info.plist */; };
 		C1631C25257A94640099756B /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C21257A94640099756B /* Feather.ttf */; };
 		C1631C26257A94640099756B /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C22257A94640099756B /* Rubik-Bold.ttf */; };
 		C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C23257A94640099756B /* Rubik-Medium.ttf */; };
 		C1631C28257A94640099756B /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C24257A94640099756B /* Rubik-Regular.ttf */; };
-		C17BE592258A455400E381F9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C17BE591258A455400E381F9 /* GoogleService-Info.plist */; };
 		F4CC12AD715BF3310D1152A3 /* libPods-Act1-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E802883A0F5ECFA9DEB2F6D /* libPods-Act1-tvOSTests.a */; };
 		F906F208824FFFBC1077D36B /* libPods-Act1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC78ECDB0BC66909D52DE1 /* libPods-Act1.a */; };
 /* End PBXBuildFile section */
@@ -69,11 +69,11 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Act1/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A549150FE2EFE2ED3FE5DEBD /* Pods-Act1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1.release.xcconfig"; path = "Target Support Files/Pods-Act1/Pods-Act1.release.xcconfig"; sourceTree = "<group>"; };
 		B4F62E6427F80F1CF9609214 /* Pods-Act1-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Act1-tvOS/Pods-Act1-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		C10BDA2C258F527300A658CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1631C21257A94640099756B /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
 		C1631C22257A94640099756B /* Rubik-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Bold.ttf"; sourceTree = "<group>"; };
 		C1631C23257A94640099756B /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		C1631C24257A94640099756B /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
-		C17BE591258A455400E381F9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C609DF5B0AD1C4B63C9D39EF /* libPods-Act1-Act1Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Act1-Act1Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -184,7 +184,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				C17BE591258A455400E381F9 /* GoogleService-Info.plist */,
+				C10BDA2C258F527300A658CB /* GoogleService-Info.plist */,
 				C1631C20257A94640099756B /* fonts */,
 				13B07FAE1A68108700A75B9A /* Act1 */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -375,7 +375,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C1631C25257A94640099756B /* Feather.ttf in Resources */,
 				C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */,
-				C17BE592258A455400E381F9 /* GoogleService-Info.plist in Resources */,
+				C10BDA2D258F527300A658CB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
