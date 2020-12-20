@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import { Box, Text } from '../../components';
+import Ticker from 'react-native-ticker';
 
 type EventPageCounterProps = {
   number: number;
@@ -17,9 +18,7 @@ function EventPageCounter({ number, text, style }: EventPageCounterProps) {
       borderColor="lightBorderColor"
       style={[styles.counterBox, style]}
     >
-      <Text variant="hugeTitle" color="mainBackground">
-        {number.toLocaleString()}
-      </Text>
+      <Ticker textStyle={styles.countTextStyle}>{number.toLocaleString()}</Ticker>
       <Text variant="text" color="mainBackground">
         {text}
       </Text>
@@ -35,5 +34,10 @@ const styles = StyleSheet.create({
     marginHorizontal: -2,
     borderWidth: 1,
     backgroundColor: '#7254c8',
+  },
+  countTextStyle: {
+    fontFamily: 'Rubik-Bold',
+    fontSize: 30,
+    color: '#fff',
   },
 });

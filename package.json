@@ -34,10 +34,11 @@
     "react-native-gesture-handler": "^1.9.0",
     "react-native-maps": "0.27.1",
     "react-native-modalfy": "^2.1.0",
-    "react-native-reanimated": "^1.13.2",
+    "react-native-reanimated": "^2.0.0-alpha.9.2",
     "react-native-render-html": "^4.2.4",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.15.0",
+    "react-native-ticker": "^3.2.0",
     "react-native-url-polyfill": "^1.2.0",
     "react-native-vector-icons": "^7.1.0",
     "react-native-webview": "^11.0.0"

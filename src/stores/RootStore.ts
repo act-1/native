@@ -68,7 +68,9 @@ class RootStore {
         if (this.userEventIds.includes(eventId)) {
           result = await EventsAPI.attendenceRemoval({ eventId });
           const updatedUserEventIds = this.userEventIds.filter((id) => id !== eventId);
-          this.userEventIds = updatedUserEventIds;
+          runInAction(() => {
+            this.userEventIds = updatedUserEventIds;
+          });
         }
       }
 
