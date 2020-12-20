@@ -12,7 +12,7 @@ export async function createAnonymousUser(userId: string) {
         deviceId: getDeviceId(),
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
-      console.log(result);
+
       return result;
     }
     throw new Error('User already exists.');
