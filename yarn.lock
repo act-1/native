@@ -7616,7 +7616,7 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
-ts-jest@^26.4.npm4:
+ts-jest@27.0.0-next.2:
   version "27.0.0-next.2"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-27.0.0-next.2.tgz#0d9f5ba74a1cfd20fd5df1939aa81770687ad4f9"
   integrity sha512-hGtQmhX1NjyOsxFgn2/8QX5bK5xxm/WYIhYijwFLABW0TR/uYEIiEH6dZBs0CwUMlmdU6fELH/o9u5XU1tf+WQ==
