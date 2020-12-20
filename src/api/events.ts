@@ -1,5 +1,6 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import functions from '@react-native-firebase/functions';
 import { IEvent } from '@types/event';
 import { formatLocalDay, formatShortDate, formatUpcomingDate, parseLocalDate } from '../utils/date-utils';
 import { format } from 'date-fns';
@@ -40,73 +41,24 @@ export async function attendEvent({
   eventDate: FirebaseFirestoreTypes.Timestamp;
 }): Promise<{ attended: boolean }> {
   try {
-    const user = auth().currentUser;
-    if (user) {
-      // Ensure the user isn't attending the event already.
-      const attendingRef = await firestore()
-        .collection('users')
-        .doc(user.uid)
-        .collection('attendingEvents')
-        .doc(eventId);
-      const attendingDoc = await attendingRef.get();
-
-      if (!attendingDoc.exists) {
-        const batch = firestore().batch();
-
-        // Create a user attending document
-        batch.set(attendingRef, { eventDate: eventDate, attendedAt: firestore.FieldValue.serverTimestamp() });
-
-        // Increase the event attending counter
-        const eventRef = firestore().collection('events').doc(eventId);
-        batch.update(eventRef, { attendingCount: firestore.FieldValue.increment(1) });
-
-        // Commit both changes atomically
-        await batch.commit();
-
-        return { attended: true };
-      } else {
-        // TODO: Fix ESLint condition error
-        throw new Error('The user is already attending the event.');
-      }
+    const result = await functions().httpsCallable('attendEvent')({ eventId, eventDate });
+    if (result.data.ok) {
+      return { attended: true };
     }
-    throw new Error('Not authenticated.');
+    throw new Error('Unexpected error.');
   } catch (err) {
+    console.error(err);
     throw err;
   }
 }
 
 export async function attendenceRemoval({ eventId }: { eventId: string }): Promise<{ removed: boolean }> {
   try {
-    const user = auth().currentUser;
-    if (user) {
-      // Ensure the user isn't attending the event already.
-      const attendingRef = await firestore()
-        .collection('users')
-        .doc(user.uid)
-        .collection('attendingEvents')
-        .doc(eventId);
-      const attendingDoc = await attendingRef.get();
-
-      if (attendingDoc.exists) {
-        const batch = firestore().batch();
-
-        // Delete the user attending document
-        batch.delete(attendingRef);
-
-        // Decrease the event attending counter
-        const eventRef = firestore().collection('events').doc(eventId);
-        batch.update(eventRef, { attendingCount: firestore.FieldValue.increment(-1) });
-
-        // Commit both changes atomically
-        await batch.commit();
-
-        return { removed: true };
-      } else {
-        // TODO: Fix ESLint condition error
-        throw new Error('The user is not attending the event.');
-      }
+    const result = await functions().httpsCallable('unattendEvent')({ eventId });
+    if (result.data.ok) {
+      return { removed: true };
     }
-    throw new Error('Not authnticated');
+    throw new Error('Unexpected error.');
   } catch (err) {
     throw err;
   }
