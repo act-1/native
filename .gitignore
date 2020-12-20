@@ -65,3 +65,4 @@ GoogleService-Info.plist
 
 local.properties
 android/service-key.json
+*.cer
