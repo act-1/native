@@ -16,33 +16,39 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   const store = useStore();
   const [event, setEvent] = useState<IEvent>();
   const [isAttending, setAttending] = useState(false);
+  const [attendingRequestInProgress, setAttendingRequestInProgress] = useState(false);
   const { openModal } = useModal();
 
   const attendEvent = async (event: IEvent) => {
-    const { id: eventId, timestamp: eventDate } = event;
-    if (!isAttending) {
-      const { attended } = await store.attendEvent({ eventId, eventDate, type: 'attend' });
-      if (attended) {
-        setAttending(true);
-        setEvent({ ...event, attendingCount: event.attendingCount + 1 });
+    try {
+      const { id: eventId, timestamp: eventDate } = event;
+      setAttendingRequestInProgress(true);
 
-        // Open modal only if need to request notification permissions.
-        if (Platform.OS === 'ios') {
-          const authorizationStatus = await messaging().hasPermission();
-          if (authorizationStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
-            openModal('AttendingModal');
+      if (!isAttending) {
+        const { attended } = await store.attendEvent({ eventId, eventDate, type: 'attend' });
+        if (attended) {
+          setAttendingRequestInProgress(false);
+          setAttending(true);
+          setEvent({ ...event, attendingCount: event.attendingCount + 1 });
+
+          // Open modal only if need to request notification permissions.
+          if (Platform.OS === 'ios') {
+            const authorizationStatus = await messaging().hasPermission();
+            if (authorizationStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
+              openModal('AttendingModal');
+            }
           }
         }
+      } else {
+        const { removed } = await store.attendEvent({ eventId, type: 'remove' });
+        if (removed) {
+          setAttendingRequestInProgress(false);
+          setAttending(false);
+          setEvent({ ...event, attendingCount: event.attendingCount - 1 });
+        }
       }
-    } else {
-      const { removed } = await store.attendEvent({ eventId, type: 'remove' });
-      if (removed) {
-        setAttending(false);
-        setEvent({ ...event, attendingCount: event.attendingCount - 1 });
-      }
-    }
-    try {
     } catch (err) {
+      setAttendingRequestInProgress(false);
       console.error(err);
     }
   };
@@ -94,6 +100,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
                 iconName="check"
                 color={isAttending ? 'green' : 'grey'}
                 text={isAttending ? 'אני שם!' : 'אישור הגעה'}
+                loading={attendingRequestInProgress}
                 onPress={() => attendEvent(event)}
               />
               <CircularButton iconName="share" color="blue" text="הזמנת חברים" />

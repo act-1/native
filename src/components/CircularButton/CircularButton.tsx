@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, ViewStyle, ActivityIndicator } from 'react-native';
 import { Box, Text } from '../';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -9,6 +9,7 @@ type CircularButtonProps = {
   onPress?: () => void;
   text?: string;
   size?: 'small' | 'large';
+  loading: boolean;
   style?: ViewStyle;
 };
 
@@ -56,7 +57,7 @@ function getButtonDimenions(size: string): ViewStyle {
   };
 }
 
-function CircularButton({ iconName, color, text, onPress, size = 'large', style }: CircularButtonProps) {
+function CircularButton({ iconName, color, text, onPress, size = 'large', loading, style }: CircularButtonProps) {
   const [pressed, setPressed] = useState(false);
   const { initialColor, pressedColor, iconColor } = buttonColors[color];
   const buttonDimensions = getButtonDimenions(size);
@@ -75,7 +76,11 @@ function CircularButton({ iconName, color, text, onPress, size = 'large', style 
         }}
         testID="button-pressable"
       >
-        <Icon name={iconName} size={25} color={iconColor ? iconColor : 'white'} />
+        {loading ? (
+          <ActivityIndicator color={iconColor ? iconColor : 'white'} />
+        ) : (
+          <Icon name={iconName} size={25} color={iconColor ? iconColor : 'white'} />
+        )}
       </Pressable>
       {text && (
         <Text
