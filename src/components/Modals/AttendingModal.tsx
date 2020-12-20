@@ -1,14 +1,22 @@
 import React from 'react';
-import { Button, Image, StyleSheet, Dimensions, Easing } from 'react-native';
+import { Image, StyleSheet, Dimensions } from 'react-native';
 import { Box, Text } from '../';
 import { RoundedButton } from '../Buttons';
-import { ModalComponentWithOptions, ModalComponentProp } from 'react-native-modalfy';
+import messaging from '@react-native-firebase/messaging';
 import { modalfy } from 'react-native-modalfy';
 
 const modalWidth = Dimensions.get('screen').width * 0.8;
 const modalHeight = Dimensions.get('screen').height * 0.55;
 
-function AttendingModal({ modal: { closeModal } }) {
+function AttendingModal() {
+  const notificationPermissionsRequest = async () => {
+    const authorizationStatus = await messaging().requestPermission();
+
+    if (authorizationStatus) {
+      modalfy().closeModal('AttendingModal');
+    }
+  };
+
   return (
     <Box
       width={modalWidth}
@@ -30,7 +38,7 @@ function AttendingModal({ modal: { closeModal } }) {
       <Text variant="text" fontWeight="300" textAlign="center" marginBottom="m">
         תרצו לקבל עדכונים על ההפגנה?
       </Text>
-      <RoundedButton text="הפעלת התראות" color="yellow" onPress={closeModal} />
+      <RoundedButton text="הפעלת התראות" color="yellow" onPress={() => notificationPermissionsRequest()} />
       <Text variant="text" fontSize={15} fontWeight="300" textAlign="center" marginVertical="m">
         זה נטו להודעות חשובות ועדכונים בלוחות זמנים. לא חופרים, באמא.{' '}
       </Text>
