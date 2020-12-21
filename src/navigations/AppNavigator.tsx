@@ -1,16 +1,18 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { EventPage } from '../screens';
+import { SelectLocation } from '../screens/CheckIn';
 import { RootStackParamList } from '../types/navigation';
 import Icon from 'react-native-vector-icons/Feather';
 
 const MainStack = createStackNavigator<RootStackParamList>();
+const RootStack = createStackNavigator();
 
 import AppTabs from './AppTabs';
 
-function AppNavigator() {
+function MainStackScreen() {
   return (
-    <MainStack.Navigator screenOptions={{ headerShown: false }}>
+    <MainStack.Navigator>
       <MainStack.Screen name="Home" component={AppTabs} />
       <MainStack.Screen
         name="EventPage"
@@ -38,6 +40,15 @@ function AppNavigator() {
         })}
       />
     </MainStack.Navigator>
+  );
+}
+
+function AppNavigator() {
+  return (
+    <RootStack.Navigator screenOptions={{ headerShown: false }} mode="modal">
+      <RootStack.Screen name="Main" component={MainStackScreen} />
+      <RootStack.Screen name="CheckIn" component={SelectLocation} />
+    </RootStack.Navigator>
   );
 }
 

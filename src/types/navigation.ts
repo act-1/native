@@ -7,4 +7,5 @@ export type RootStackParamList = {
   Home: undefined;
   EventList: undefined;
   EventPage: { eventId: string };
+  CheckIn: undefined;
 };
