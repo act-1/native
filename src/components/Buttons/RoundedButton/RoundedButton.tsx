@@ -4,7 +4,7 @@ import { Box, Text } from '../..';
 import { buttonColors } from '../ButtonColors';
 
 type RoundedButtonProps = {
-  color: 'blue' | 'green' | 'yellow' | 'grey' | 'porcelain' | 'white';
+  color: 'blue' | 'green' | 'yellow' | 'grey' | 'porcelain' | 'white' | 'black';
   onPress?: () => void;
   text?: string;
   size?: 'small' | 'large';
@@ -21,7 +21,7 @@ function getButtonDimenions(size: string): ViewStyle {
   }
 
   return {
-    width: 210,
+    width: 250,
     height: 45,
   };
 }

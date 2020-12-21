@@ -32,11 +32,11 @@ function CheckInPage() {
           רוצים לעשות צ׳ק אין עם תמונה?
         </Text>
         <Text variant="text" marginBottom="m">
-          התחברו אל- Act1:
+          התחברו אל Act1:
         </Text>
         <RoundedButton text="התחברות דרך פייסבוק" color="blue" style={{ marginBottom: 4 }} />
         <RoundedButton text="התחברות דרך גוגל" color="yellow" style={{ marginBottom: 4 }} />
-        <RoundedButton text="התחברות דרך אפל" color="white" style={{ marginBottom: 4 }} />
+        <RoundedButton text="התחברות דרך אפל" color="black" style={{ marginBottom: 4 }} />
       </Box>
     </Box>
   );

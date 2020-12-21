@@ -39,4 +39,10 @@ export const buttonColors: ColorsDict = {
     pressedColor: '#88898b',
     iconColor: '#000',
   },
+  black: {
+    initialColor: '#0B0B0B',
+    pressedColor: '#252525',
+    iconColor: '#fff',
+    textColor: '#fff',
+  },
 };
