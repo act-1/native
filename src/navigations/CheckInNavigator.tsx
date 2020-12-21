@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SelectLocation } from '../screens/CheckIn';
+import { SelectLocation, CheckInPage } from '../screens/CheckIn';
 
 const EventsStack = createStackNavigator();
 
@@ -8,6 +8,7 @@ function EventsNavigator() {
   return (
     <EventsStack.Navigator
       screenOptions={{
+        title: 'צ׳ק אין',
         headerStyle: {
           backgroundColor: '#697CFF',
         },
@@ -17,7 +18,8 @@ function EventsNavigator() {
         },
       }}
     >
-      <EventsStack.Screen name="CheckInLocation" options={{ title: 'צ׳ק אין' }} component={SelectLocation} />
+      <EventsStack.Screen name="CheckInSelectLocation" component={SelectLocation} />
+      <EventsStack.Screen name="CheckInPage" component={CheckInPage} />
     </EventsStack.Navigator>
   );
 }

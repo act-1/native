@@ -14,16 +14,6 @@ type CircularButtonProps = {
   style?: ViewStyle;
 };
 
-type ButtonColors = {
-  initialColor: string;
-  pressedColor: string;
-  iconColor?: string;
-};
-
-type ColorsDict = {
-  [index: string]: ButtonColors;
-};
-
 function getButtonDimenions(size: string): ViewStyle {
   if (size === 'small') {
     return {

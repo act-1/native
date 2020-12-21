@@ -11,8 +11,9 @@ type ColorsDict = {
 
 export const buttonColors: ColorsDict = {
   blue: {
-    initialColor: '#3498ff',
-    pressedColor: '#57abff',
+    initialColor: '#017eff',
+    pressedColor: '#3498ff',
+    textColor: '#fff',
   },
   green: {
     initialColor: '#08c236',
