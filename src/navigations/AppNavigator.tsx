@@ -12,7 +12,7 @@ import AppTabs from './AppTabs';
 
 function MainStackScreen() {
   return (
-    <MainStack.Navigator>
+    <MainStack.Navigator screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="Home" component={AppTabs} />
       <MainStack.Screen
         name="EventPage"
@@ -22,7 +22,7 @@ function MainStackScreen() {
           headerTitle: 'עמוד הפגנה',
           headerBackTitle: ' ',
           headerStyle: {
-            backgroundColor: '#7254c8',
+            backgroundColor: '#697CFF',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -46,7 +46,7 @@ function MainStackScreen() {
 function AppNavigator() {
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }} mode="modal">
-      <RootStack.Screen name="Main" component={MainStackScreen} />
+      <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
       <RootStack.Screen name="CheckIn" component={SelectLocation} />
     </RootStack.Navigator>
   );

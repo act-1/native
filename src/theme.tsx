@@ -52,6 +52,12 @@ const theme = createTheme({
       fontSize: 30,
       color: 'primaryText',
     },
+    extraLargeTitle: {
+      fontFamily: 'Rubik-Bold',
+      fontSize: 26,
+      color: 'primaryText',
+      textAlign: 'left',
+    },
     largeTitle: {
       fontFamily: 'Rubik-Bold',
       fontSize: 20,
@@ -61,6 +67,12 @@ const theme = createTheme({
     text: {
       fontFamily: 'Rubik-Regular',
       fontSize: 16,
+      color: 'primaryText',
+      textAlign: 'left',
+    },
+    smallText: {
+      fontFamily: 'Rubik-Regular',
+      fontSize: 14,
       color: 'primaryText',
       textAlign: 'left',
     },

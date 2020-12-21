@@ -1,6 +1,7 @@
 import React from 'react';
+import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import EventsNavigator from './EventsNavigator';
+import { EventsNavigator, CheckInNavigator } from './';
 import Icon from 'react-native-vector-icons/Feather';
 
 const Tab = createBottomTabNavigator();
@@ -43,7 +44,7 @@ const AppTabs = () => (
   >
     <Tab.Screen name="Map" component={EventsNavigator} />
     <Tab.Screen name="Events" component={EventsNavigator} />
-    <Tab.Screen name="CheckIn" component={EventsNavigator} />
+    <Tab.Screen name="CheckIn" component={CheckInNavigator} />
     <Tab.Screen name="Inbox" component={EventsNavigator} />
     <Tab.Screen name="Profile" component={EventsNavigator} />
   </Tab.Navigator>

@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     right: 0,
     height: 80,
     overflow: 'hidden',
-    backgroundColor: '#4e23bb',
+    backgroundColor: '#697CFF',
   },
   topBar: {
     flexDirection: 'row',

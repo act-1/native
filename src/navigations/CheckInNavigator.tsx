@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { EventList } from '../screens';
+import { SelectLocation } from '../screens/CheckIn';
 
 const EventsStack = createStackNavigator();
 
@@ -17,7 +17,7 @@ function EventsNavigator() {
         },
       }}
     >
-      <EventsStack.Screen name="EventList" options={{ title: 'הפגנות קרובות' }} component={EventList} />
+      <EventsStack.Screen name="CheckInLocation" options={{ title: 'צ׳ק אין' }} component={SelectLocation} />
     </EventsStack.Navigator>
   );
 }
