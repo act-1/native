@@ -18,7 +18,7 @@ const palette = {
   porcelain: '#F0F2F3',
   lightgrey: '#f0f2f5',
   grey: '#737373',
-  black: '#0B0B0B',
+  black: '#040506',
 };
 
 const theme = createTheme({

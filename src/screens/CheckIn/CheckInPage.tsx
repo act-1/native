@@ -3,8 +3,26 @@ import { StyleSheet, Image } from 'react-native';
 import MapView from 'react-native-maps';
 import { Box, Text } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
+import { addCheckInEntry } from '../../api/liveFeed';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
+import { CheckInPageProps } from '@types/navigation';
 
-function CheckInPage() {
+function CheckInPage({ navigation, route }: CheckInPageProps) {
+  const store = useStore();
+
+  const checkIn = (type: string) => {
+    const checkInData = {
+      locationName: 'צומת פרדסיה',
+      locationId: route.params.locationId,
+      // coordinates: [32.305138, ]
+    };
+
+    if (type === 'annonymous') {
+      addCheckInEntry(checkInData);
+    }
+  };
+
   return (
     <Box flex={1} width="100%">
       <MapView
@@ -27,7 +45,12 @@ function CheckInPage() {
         <Text variant="largeTitle" fontWeight="500" color="lightText" marginBottom="m">
           85 עכשיו בהפגנה
         </Text>
-        <RoundedButton text="צ׳ק אין אנונימי" color="grey" style={{ marginBottom: 8 }} />
+        <RoundedButton
+          text="צ׳ק אין אנונימי"
+          color="grey"
+          style={{ marginBottom: 8 }}
+          onPress={() => checkIn('annonymous')}
+        />
         <Text variant="text" marginBottom="xs">
           רוצים לעשות צ׳ק אין עם תמונה?
         </Text>
@@ -42,7 +65,7 @@ function CheckInPage() {
   );
 }
 
-export default CheckInPage;
+export default observer(CheckInPage);
 
 const styles = StyleSheet.create({
   mapPin: {

@@ -6,7 +6,7 @@ import { RoundedButton } from '../../components/Buttons';
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   return (
     <Box flex={1} width="100%">
-      <Box alignItems="center" justifyContent="center" marginTop="xl" paddingHorizontal="m">
+      <Box alignItems="center" justifyContent="center" marginTop="xl">
         <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
           יצאתן להפגין? עשו צ׳ק אין!
         </Text>
@@ -24,7 +24,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
           textStyle={{ fontWeight: 'bold' }}
         />
 
-        <LocationBox name="צומת פרדסיה" address="ביתחי" onPress={() => alert('click')} />
+        <LocationBox name="צומת פרדסיה" address="ביתחי" onPress={() => navigation.navigate('CheckInPage')} />
       </Box>
     </Box>
   );
