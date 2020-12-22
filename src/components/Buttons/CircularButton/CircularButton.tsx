@@ -10,7 +10,7 @@ type CircularButtonProps = {
   onPress?: () => void;
   text?: string;
   size?: 'small' | 'large';
-  loading: boolean;
+  loading?: boolean;
   style?: ViewStyle;
 };
 
