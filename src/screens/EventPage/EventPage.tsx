@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, StatusBar, Image, Platform } from 'react-native';
 import { useModal } from 'react-native-modalfy';
 import messaging from '@react-native-firebase/messaging';
+import { useActionSheet } from '@expo/react-native-action-sheet';
 import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { observer } from 'mobx-react-lite';
@@ -10,6 +11,13 @@ import { IEvent } from '@types/event';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
 import { EventPageDetail, EventPageCounter } from './';
+import LaunchNavigator from 'react-native-launch-navigator';
+
+const navigateApp = () => {
+  LaunchNavigator.navigate('London, UK')
+    .then(() => console.log('Launched navigator'))
+    .catch((err) => console.error('Error launching navigator: ' + err));
+};
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
@@ -17,6 +25,20 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   const [isAttending, setAttending] = useState(false);
   const [attendingRequestInProgress, setAttendingRequestInProgress] = useState(false);
   const { openModal } = useModal();
+  const { showActionSheetWithOptions } = useActionSheet();
+
+  const options = ['Google Maps', 'Moovit', 'Cancel'];
+  const cancelButtonIndex = 2;
+
+  showActionSheetWithOptions(
+    {
+      options,
+      cancelButtonIndex,
+    },
+    (buttonIndex) => {
+      // Do something here depending on the button index selected
+    }
+  );
 
   const attendEvent = async (event: IEvent) => {
     try {
@@ -120,6 +142,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
               <MapView
                 style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
+                onPress={() => navigateApp()}
                 maxZoomLevel={15}
                 minZoomLevel={12}
                 mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}

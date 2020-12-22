@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { Easing } from 'react-native';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { StoreProvider } from './stores';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from '@shopify/restyle';
@@ -23,9 +24,11 @@ function App() {
     <StoreProvider>
       <ThemeProvider theme={theme}>
         <ModalProvider stack={stack}>
-          <NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}>
-            <AppNavigator />
-          </NavigationContainer>
+          <ActionSheetProvider>
+            <NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}>
+              <AppNavigator />
+            </NavigationContainer>
+          </ActionSheetProvider>
         </ModalProvider>
       </ThemeProvider>
     </StoreProvider>
