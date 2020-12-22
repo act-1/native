@@ -16,7 +16,6 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
         <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
           על מנת לראות את ההפגנות באיזורך, יש לאשר שימוש בשירותי המיקום.
         </Text>
-        <LocationBox name="צומת פרדסיה" address="ביתחי" onPress={() => alert('click')} />
 
         <RoundedButton
           text="איתור הפגנות באיזורי"
@@ -25,9 +24,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
           textStyle={{ fontWeight: 'bold' }}
         />
 
-        <Box>
-          <LocationBox name="צומת פרדסיה" address="ביתחי" onPress={() => alert('click')} />
-        </Box>
+        <LocationBox name="צומת פרדסיה" address="ביתחי" onPress={() => alert('click')} />
       </Box>
     </Box>
   );
