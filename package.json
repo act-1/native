@@ -32,6 +32,7 @@
     "react-native-device-info": "7.3.1",
     "react-native-fast-image": "^8.3.4",
     "react-native-gesture-handler": "^1.9.0",
+    "react-native-launch-navigator": "^1.0.8",
     "react-native-maps": "0.27.1",
     "react-native-modalfy": "^2.1.0",
     "react-native-reanimated": "^2.0.0-alpha.9.2",
