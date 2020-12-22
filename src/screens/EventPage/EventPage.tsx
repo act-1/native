@@ -27,20 +27,23 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   const { openModal } = useModal();
   const { showActionSheetWithOptions } = useActionSheet();
 
-  const options = ['Google Maps', 'Moovit', 'Cancel'];
-  const cancelButtonIndex = 2;
+  const onMapClick = () => {
+    const options = ['Google Maps', 'Moovit', 'Cancel'];
+    const cancelButtonIndex = 2;
 
-  showActionSheetWithOptions(
-    {
-      options,
-      cancelButtonIndex,
-    },
-    (buttonIndex) => {
-      if (buttonIndex === 1) {
-        navigateApp();
+    showActionSheetWithOptions(
+      {
+        options,
+        message: 'נווטו אל מיקום ההפגנה',
+        cancelButtonIndex,
+      },
+      (buttonIndex) => {
+        if (buttonIndex === 1) {
+          navigateApp();
+        }
       }
-    }
-  );
+    );
+  };
 
   const attendEvent = async (event: IEvent) => {
     try {
@@ -144,9 +147,11 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
               <MapView
                 style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
-                onPress={() => navigateApp()}
-                maxZoomLevel={15}
-                minZoomLevel={12}
+                onPress={() => onMapClick()}
+                pitchEnabled={false}
+                rotateEnabled={false}
+                zoomEnabled={false}
+                scrollEnabled={false}
                 mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
                 initialRegion={{
                   latitude: event.coordinates._latitude,
