@@ -14,7 +14,8 @@ function CheckInPage({ navigation, route }: CheckInPageProps) {
   const checkIn = (type: string) => {
     const checkInData = {
       locationName: 'צומת פרדסיה',
-      locationId: route.params.locationId,
+      locationId: 'pardesyia',
+      eventId: 'balfur-19-dec',
       // coordinates: [32.305138, ]
     };
 

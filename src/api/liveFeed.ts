@@ -16,9 +16,17 @@ export async function addCheckInEntry(checkInData) {
   // address
 
   // city
-  console.log(checkInData);
   const checkInRef = await database.ref('checkIns').push();
   await checkInRef.set({ createdAt: Firebase.database.ServerValue.TIMESTAMP, ...checkInData });
-  console.log('1', checkInRef);
+
+  // Increase location check in count
+  const { locationId, eventId } = checkInData;
+  await database.ref(`locationCheckInCounter/${locationId}`).set(firebase.database.ServerValue.increment(1));
+
+  // Increase event check in count
+  if (eventId) {
+    await database.ref(`eventCheckInCounter/${eventId}`).set(firebase.database.ServerValue.increment(1));
+  }
+
   return checkInRef;
 }
