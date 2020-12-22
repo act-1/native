@@ -9,19 +9,19 @@ import { useStore } from '../../stores';
 function EventList({ navigation }: EventListScreenProps) {
   const [eventList, setEventList] = useState<EventsSectionListItem[]>([]);
   const [refreshing, setRefreshing] = React.useState(false);
-  const store = useStore();
+  const { eventStore } = useStore();
 
   const onRefresh = async () => {
     // TODO: Handle refresh failure
     setRefreshing(true);
-    await store.getEvents();
+    await eventStore.getEvents();
     setRefreshing(false);
   };
 
   useEffect(() => {
-    const list = formatEventsForSectionList(store.events);
+    const list = formatEventsForSectionList(eventStore.events);
     setEventList(list);
-  }, [store.events]);
+  }, [eventStore.events]);
 
   return (
     <SafeAreaView>
