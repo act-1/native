@@ -1,41 +1,17 @@
-import { makeAutoObservable, runInAction } from 'mobx';
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import EventsAPI from '../api/events';
-import { createAnonymousUser } from '../api/user';
+import { makeAutoObservable } from 'mobx';
 import eventStore from './EventStore';
+import userStore from './UserStore';
 
 // TODO: Create AuthStore and EventStore
 
 class RootStore {
-  initializing = true;
-  user: FirebaseAuthTypes.User | null = null;
-  userEventIds: string[] = [];
   eventStore: null | eventStore = null;
+  userStore: null | userStore = null;
 
   constructor() {
     makeAutoObservable(this);
     this.eventStore = new eventStore(this);
-
-    auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
-      if (user) {
-        this.user = user;
-        this.eventStore?.getEvents();
-        EventsAPI.getUserEvents(user.uid).then((events) => {
-          runInAction(() => {
-            this.userEventIds = events;
-          });
-        });
-      } else this.signInAnonymously();
-    });
-  }
-
-  async signInAnonymously() {
-    try {
-      const { user } = await auth().signInAnonymously();
-      await createAnonymousUser(user.uid);
-    } catch (err) {
-      console.error(err);
-    }
+    this.userStore = new userStore(this);
   }
 }
 

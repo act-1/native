@@ -5,9 +5,8 @@ import EventsAPI from '../api/events';
 import { createAnonymousUser } from '../api/user';
 import { IEvent } from '@types/event';
 import rootStore from './RootStore';
-// TODO: Create AuthStore and EventStore
 
-class RootStore {
+class EventStore {
   rootStore: null | rootStore = null;
   events: IEvent[] | [] = [];
   userEventIds: string[] = [];
@@ -62,4 +61,4 @@ class RootStore {
   }
 }
 
-export default RootStore;
+export default EventStore;

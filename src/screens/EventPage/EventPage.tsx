@@ -13,7 +13,7 @@ import { EventPageDetail, EventPageCounter } from './';
 import EventsAPI from '../../api/events';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
-  const store = useStore();
+  const { userStore, eventStore } = useStore();
   const [event, setEvent] = useState<IEvent>();
   const [isAttending, setAttending] = useState(false);
   const [attendingRequestInProgress, setAttendingRequestInProgress] = useState(false);
@@ -25,7 +25,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
       setAttendingRequestInProgress(true);
 
       if (!isAttending) {
-        const { attended } = await store.attendEvent({ eventId, eventDate, type: 'attend' });
+        const { attended } = await eventStore.attendEvent({ eventId, eventDate, type: 'attend' });
         if (attended) {
           setAttendingRequestInProgress(false);
           setAttending(true);
@@ -40,7 +40,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
           }
         }
       } else {
-        const { removed } = await store.attendEvent({ eventId, type: 'remove' });
+        const { removed } = await eventStore.attendEvent({ eventId, type: 'remove' });
         if (removed) {
           setAttendingRequestInProgress(false);
           setAttending(false);
@@ -54,14 +54,14 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   };
 
   useEffect(() => {
-    if (route.params?.eventId && store.events.length > 0) {
-      const eventData = store.events.find((e: IEvent) => e.id === route.params.eventId);
+    if (route.params?.eventId && eventStore.events.length > 0) {
+      const eventData = eventStore.events.find((e: IEvent) => e.id === route.params.eventId);
       if (eventData) setEvent(eventData);
-      if (store.userEventIds.includes(eventData.id)) {
+      if (userStore.userEventIds.includes(eventData.id)) {
         setAttending(true);
       }
     }
-  }, [store.events, route.params, store.userEventIds]);
+  }, [eventStore.events, route.params, userStore.userEventIds]);
 
   return (
     <Box flex={1}>
