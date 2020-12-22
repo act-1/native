@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import EventsAPI from '../api/events';
 import { createAnonymousUser } from '../api/user';
@@ -19,8 +19,11 @@ class RootStore {
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user) {
         this.user = user;
+        this.eventStore?.getEvents();
         EventsAPI.getUserEvents(user.uid).then((events) => {
-          this.userEventIds = events;
+          runInAction(() => {
+            this.userEventIds = events;
+          });
         });
       } else this.signInAnonymously();
     });
