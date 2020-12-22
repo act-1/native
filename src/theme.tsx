@@ -76,17 +76,17 @@ const theme = createTheme({
       color: 'primaryText',
       textAlign: 'left',
     },
-    eventBoxTitle: {
+    boxTitle: {
       fontFamily: 'Rubik-Bold',
       fontSize: 16,
       color: 'primaryText',
     },
-    eventBoxDate: {
+    boxInfo: {
       fontFamily: 'Rubik-Medium',
       fontSize: 13,
       color: 'eventBoxDateColor',
     },
-    eventBoxLocation: {
+    boxSubtitle: {
       fontFamily: 'Rubik-Regular',
       fontSize: 15,
       color: 'lightText',

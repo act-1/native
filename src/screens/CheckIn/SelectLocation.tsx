@@ -1,6 +1,6 @@
 import React from 'react';
 import { SelectLocationScreenProps } from '@types/navigation';
-import { Box, Text } from '../../components';
+import { Box, Text, LocationBox } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
@@ -16,6 +16,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
         <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
           על מנת לראות את ההפגנות באיזורך, יש לאשר שימוש בשירותי המיקום.
         </Text>
+        <LocationBox name="צומת פרדסיה" address="ביתחי" onPress={() => alert('click')} />
 
         <RoundedButton
           text="איתור הפגנות באיזורי"
@@ -23,6 +24,10 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
           color="blue"
           textStyle={{ fontWeight: 'bold' }}
         />
+
+        <Box>
+          <LocationBox name="צומת פרדסיה" address="ביתחי" onPress={() => alert('click')} />
+        </Box>
       </Box>
     </Box>
   );
