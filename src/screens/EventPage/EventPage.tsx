@@ -36,7 +36,9 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
       cancelButtonIndex,
     },
     (buttonIndex) => {
-      // Do something here depending on the button index selected
+      if (buttonIndex === 1) {
+        navigateApp();
+      }
     }
   );
 
