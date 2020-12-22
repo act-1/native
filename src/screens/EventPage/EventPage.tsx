@@ -10,7 +10,6 @@ import { IEvent } from '@types/event';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
 import { EventPageDetail, EventPageCounter } from './';
-import EventsAPI from '../../api/events';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
