@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image, AppState, AppStateStatus } from 'react-native';
 import { openSettings } from 'react-native-permissions';
 import { SelectLocationScreenProps } from '@types/navigation';
 import { Box, Text, LocationBox, EventBox } from '../../components';
@@ -12,6 +12,20 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userLocationPermission, userCurrentPosition } = userStore;
   const [locations, setLocations] = useState([]);
 
+  useEffect(() => {
+    function handleAppStateChange(appState: AppStateStatus) {
+      if (appState === 'active') {
+        userStore.updateLocationPermission();
+      }
+    }
+
+    AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange);
+    };
+  }, []);
+
   const requestLocation = async () => {
     try {
       await userStore.getUserCoordinates();
@@ -19,6 +33,45 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       console.error(err);
     }
   };
+
+  let LocationPermissionMessage = null;
+
+  if (userLocationPermission === 'blocked') {
+    LocationPermissionMessage = (
+      <>
+        <Box backgroundColor="importantLight" width={250} padding="xm" paddingBottom="s" marginBottom="m" borderRadius={3}>
+          <Text variant="importantText" textAlign="center" marginBottom="xm">
+            שירותי המיקום מנוטרלים.
+          </Text>
+          <Text variant="importantText" fontWeight="500" textAlign="center" marginBottom="xm">
+            על מנת למצוא הפגנות באיזורכם, יש לאפשר שימוש בשירותי המיקום בהגדרות המכשיר.
+          </Text>
+        </Box>
+
+        <RoundedButton
+          text="פתיחת הגדרות המכשיר"
+          onPress={() => openSettings()}
+          color="grey"
+          style={{ marginBottom: 8 }}
+          textStyle={{ fontWeight: 'bold' }}
+        />
+      </>
+    );
+  } else if (userLocationPermission !== 'granted' || userCurrentPosition?.length === 0) {
+    LocationPermissionMessage = (
+      <>
+        <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
+          על מנת לראות את ההפגנות באיזורך, יש לאשר שימוש בשירותי המיקום.
+        </Text>
+        <RoundedButton
+          text="איתור הפגנות באיזורי"
+          onPress={() => requestLocation()}
+          color="blue"
+          textStyle={{ fontWeight: 'bold' }}
+        />
+      </>
+    );
+  }
 
   return (
     <Box flex={1} width="100%">
@@ -31,40 +84,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
           ביחד נראה לכל הארץ כמה המחאה שלנו גדולה.
         </Text>
 
-        {userLocationPermission === 'blocked' && (
-          <>
-            <Box backgroundColor="importantLight" width={250} padding="xm" paddingBottom="s" marginBottom="m" borderRadius={3}>
-              <Text variant="importantText" textAlign="center" marginBottom="xm">
-                שירותי המיקום מנוטרלים.
-              </Text>
-              <Text variant="importantText" fontWeight="500" textAlign="center" marginBottom="xm">
-                על מנת למצוא הפגנות באיזורכם, יש לאפשר שימוש בשירותי המיקום בהגדרות המכשיר.
-              </Text>
-            </Box>
-
-            <RoundedButton
-              text="פתיחת הגדרות המכשיר"
-              onPress={() => openSettings()}
-              color="grey"
-              style={{ marginBottom: 8 }}
-              textStyle={{ fontWeight: 'bold' }}
-            />
-          </>
-        )}
-
-        {userLocationPermission !== 'granted' || userCurrentPosition?.length === 0 ? (
-          <>
-            <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
-              על מנת לראות את ההפגנות באיזורך, יש לאשר שימוש בשירותי המיקום.
-            </Text>
-            <RoundedButton
-              text="איתור הפגנות באיזורי"
-              onPress={() => requestLocation()}
-              color="blue"
-              textStyle={{ fontWeight: 'bold' }}
-            />
-          </>
-        ) : (
+        {LocationPermissionMessage || (
           <Box marginTop="m" width="100%">
             <EventBox
               time="18:00"

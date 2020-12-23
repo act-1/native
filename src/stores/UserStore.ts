@@ -43,10 +43,18 @@ class UserStore {
     }
   }
 
+  // Updates the location permission status and return the result.
+  async updateLocationPermission() {
+    const permission = await checkLocationPermission();
+    runInAction(() => {
+      this.userLocationPermission = permission;
+    });
+    return permission;
+  }
+
   async initUserLocation() {
     try {
-      const permission = await checkLocationPermission();
-      this.userLocationPermission = permission;
+      const permission = await this.updateLocationPermission();
 
       if (permission === 'granted') {
         const coordinates = await getCurrentPosition();
