@@ -31,8 +31,8 @@ export const buttonColors: ColorsDict = {
   },
   porcelain: {
     initialColor: '#F0F2F5',
-    pressedColor: '#F8F8F8',
-    textColor: '#666666',
+    pressedColor: '#e0e0e0',
+    textColor: '#2d3436',
   },
   white: {
     initialColor: '#d4d4d4',
