@@ -58,9 +58,9 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           <RoundedButton text="הזמנת חברים" size="huge" icon={require('@assets/icons/hands-together.png')} />
 
           <Box flexDirection="row" width="100%" marginTop="m">
-            <RoundedButton text="גלריית הפגנה" size="huge" icon={require('@assets/icons/camera.png')} style={{ flex: 1 }} />
-            <Box flex={0.075} />
             <RoundedButton text="העלאת תמונה" size="huge" icon={require('@assets/icons/gallery.png')} style={{ flex: 1 }} />
+            <Box flex={0.075} />
+            <RoundedButton text="גלריית הפגנה" size="huge" icon={require('@assets/icons/camera.png')} style={{ flex: 1 }} />
           </Box>
         </Box>
       </Box>
