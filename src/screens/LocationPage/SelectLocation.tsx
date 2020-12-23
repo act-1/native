@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { Image } from 'react-native';
-import { check, PERMISSIONS, request } from 'react-native-permissions';
+import { openSettings } from 'react-native-permissions';
 import { SelectLocationScreenProps } from '@types/navigation';
 import { Box, Text, LocationBox, EventBox } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
+  const { userStore } = useStore();
+  const { userLocationPermission, userCurrentPosition } = userStore;
   const [locations, setLocations] = useState([]);
 
   const requestLocation = async () => {
     try {
-      const status = await Geolocation.requestAuthorization('whenInUse');
-      console.log(status);
+      await userStore.getUserCoordinates();
     } catch (err) {
       console.error(err);
     }
@@ -27,12 +30,33 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
         <Text variant="text" textAlign="center" color="lightText" marginBottom="xm">
           ביחד נראה לכל הארץ כמה המחאה שלנו גדולה.
         </Text>
-        {locations.length === 0 ? (
+
+        {userLocationPermission === 'blocked' && (
+          <>
+            <Box backgroundColor="importantLight" width={250} padding="xm" paddingBottom="s" marginBottom="m" borderRadius={3}>
+              <Text variant="importantText" textAlign="center" marginBottom="xm">
+                שירותי המיקום מנוטרלים.
+              </Text>
+              <Text variant="importantText" fontWeight="500" textAlign="center" marginBottom="xm">
+                על מנת למצוא הפגנות באיזורכם, יש לאפשר שימוש בשירותי המיקום בהגדרות המכשיר.
+              </Text>
+            </Box>
+
+            <RoundedButton
+              text="פתיחת הגדרות המכשיר"
+              onPress={() => openSettings()}
+              color="grey"
+              style={{ marginBottom: 8 }}
+              textStyle={{ fontWeight: 'bold' }}
+            />
+          </>
+        )}
+
+        {userLocationPermission !== 'granted' || userCurrentPosition.length === 0 ? (
           <>
             <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
               על מנת לראות את ההפגנות באיזורך, יש לאשר שימוש בשירותי המיקום.
             </Text>
-
             <RoundedButton
               text="איתור הפגנות באיזורי"
               onPress={() => requestLocation()}
@@ -64,4 +88,4 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   );
 }
 
-export default SelectLocation;
+export default observer(SelectLocation);

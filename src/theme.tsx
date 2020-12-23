@@ -9,7 +9,8 @@ const palette = {
   greenPrimary: '#0ECD9D',
   greenDark: '#0A906E',
 
-  redPrimary: '#E03616',
+  redLight: '#ffe7e5',
+  redPrimary: '#f0040d',
 
   orange: '#FFC281',
   orangeDark: '#632700',
@@ -32,6 +33,8 @@ const theme = createTheme({
     cardPrimaryBackground: palette.purplePrimary,
     eventBoxDateColor: palette.redPrimary,
     dimmedBackground: palette.lightgrey,
+    important: palette.redPrimary,
+    importantLight: palette.redLight,
     attentionBackground: palette.orange,
     attentionForeground: palette.orangeDark,
     lightBorderColor: palette.lightgrey,
@@ -100,6 +103,13 @@ const theme = createTheme({
     circularButtonText: {
       fontFamily: 'Rubik-Medium',
       fontSize: 13,
+    },
+    importantText: {
+      fontFamily: 'Rubik-Regular',
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: 'important',
+      textAlign: 'left',
     },
   },
 });
