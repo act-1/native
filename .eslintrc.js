@@ -14,6 +14,7 @@ module.exports = {
     ],
     'spaced-comment': ['error', 'always', { exceptions: ['*'], markers: ['*'] }],
     'keyword-spacing': ['error', { before: true }],
+    'import/no-duplicates': ['error'],
   },
   settings: {
     'import/resolver': {

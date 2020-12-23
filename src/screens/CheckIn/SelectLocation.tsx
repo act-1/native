@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-native';
 import { SelectLocationScreenProps } from '@types/navigation';
 import { Box, Text, LocationBox } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
@@ -7,6 +8,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   return (
     <Box flex={1} width="100%">
       <Box alignItems="center" justifyContent="center" marginTop="xl">
+        <Image source={require('@assets/illustrations/power-deluxe.png')} style={{ marginBottom: 16 }} />
         <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
           יצאתן להפגין? עשו צ׳ק אין!
         </Text>
@@ -19,12 +21,16 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
         <RoundedButton
           text="איתור הפגנות באיזורי"
-          onPress={() => navigation.navigate('CheckInPage')}
+          onPress={() => navigation.navigate('LocationPage')}
           color="blue"
           textStyle={{ fontWeight: 'bold' }}
         />
 
-        <LocationBox name="צומת פרדסיה" address="ביתחי" onPress={() => navigation.navigate('CheckInPage')} />
+        <LocationBox
+          name="צומת פרדסיה"
+          address="ביתחי"
+          onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
+        />
       </Box>
     </Box>
   );

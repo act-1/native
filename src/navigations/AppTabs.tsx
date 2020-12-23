@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { EventsNavigator, CheckInNavigator } from './';
+import { EventsNavigator, LocationPageNavigator } from './';
 import Icon from 'react-native-vector-icons/Feather';
 
 const Tab = createBottomTabNavigator();
@@ -15,17 +15,14 @@ const AppTabs = () => (
           case 'Events':
             iconName = 'calendar';
             break;
-
-          case 'Map':
-            iconName = 'map';
+          case 'Home':
+            iconName = 'home';
             break;
-
           case 'CheckIn':
             iconName = 'map-pin';
             break;
-
-          case 'Inbox':
-            iconName = 'inbox';
+          case 'Feed':
+            iconName = 'radio';
             break;
           case 'Profile':
             iconName = 'user';
@@ -41,10 +38,10 @@ const AppTabs = () => (
       showLabel: false,
     }}
   >
-    <Tab.Screen name="Map" component={EventsNavigator} />
+    <Tab.Screen name="Home" component={EventsNavigator} />
     <Tab.Screen name="Events" component={EventsNavigator} />
-    <Tab.Screen name="CheckIn" component={CheckInNavigator} />
-    <Tab.Screen name="Inbox" component={EventsNavigator} />
+    <Tab.Screen name="CheckIn" component={LocationPageNavigator} />
+    <Tab.Screen name="Feed" component={EventsNavigator} />
     <Tab.Screen name="Profile" component={EventsNavigator} />
   </Tab.Navigator>
 );

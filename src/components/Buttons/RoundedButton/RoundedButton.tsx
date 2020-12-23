@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { Pressable, StyleSheet, ViewStyle, TextStyle, Image, ImageSourcePropType } from 'react-native';
 import { Box, Text } from '../..';
 import { buttonColors } from '../ButtonColors';
 
 type RoundedButtonProps = {
-  color: 'blue' | 'green' | 'yellow' | 'grey' | 'porcelain' | 'white' | 'black';
+  color?: 'blue' | 'green' | 'yellow' | 'grey' | 'porcelain' | 'white' | 'black';
+  icon?: ImageSourcePropType;
   onPress?: () => void;
   text?: string;
-  size?: 'small' | 'large';
+  size?: 'small' | 'large' | 'huge';
   style?: ViewStyle;
   textStyle?: TextStyle;
 };
@@ -20,13 +21,20 @@ function getButtonDimenions(size: string): ViewStyle {
     };
   }
 
+  if (size === 'huge') {
+    return {
+      width: '100%',
+      height: 130,
+    };
+  }
+
   return {
     width: 250,
     height: 45,
   };
 }
 
-function RoundedButton({ color, text, onPress, size = 'large', style, textStyle }: RoundedButtonProps) {
+function RoundedButton({ color = 'porcelain', icon, text, onPress, size = 'large', style, textStyle }: RoundedButtonProps) {
   const [pressed, setPressed] = useState(false);
   const { initialColor, pressedColor, textColor } = buttonColors[color];
   const buttonDimensions = getButtonDimenions(size);
@@ -37,6 +45,7 @@ function RoundedButton({ color, text, onPress, size = 'large', style, textStyle 
       alignItems="center"
       testID="button-container"
       width={buttonDimensions.width}
+      height={buttonDimensions.height}
       style={style}
     >
       <Pressable
@@ -45,6 +54,7 @@ function RoundedButton({ color, text, onPress, size = 'large', style, textStyle 
         onPressOut={() => setPressed(false)}
         style={{ backgroundColor: pressed ? pressedColor : initialColor, ...buttonDimensions, ...styles.button }}
       >
+        {icon && <Image source={icon} style={{ marginBottom: 12 }} />}
         <Text style={{ color: textColor, ...textStyle }} variant="roundedButtonText" testID="button-text">
           {text}
         </Text>
