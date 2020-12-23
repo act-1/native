@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Alert } from 'react-native';
 import MapView from 'react-native-maps';
 import { Box, Text } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
@@ -11,16 +11,17 @@ import { LocationScreenProps } from '@types/navigation';
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const store = useStore();
 
-  const checkIn = (type: string) => {
-    const checkInData = {
-      locationName: 'צומת פרדסיה',
-      locationId: 'pardesyia',
-      eventId: 'balfur-19-dec',
-    };
-
-    if (type === 'annonymous') {
-      addCheckInEntry(checkInData);
-    }
+  const confirmCheckIn = () => {
+    Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
+      {
+        text: 'לא עכשיו',
+        onPress: () => console.log('Cancel Pressed'),
+      },
+      {
+        text: 'אישור',
+        onPress: () => console.log('Ask me later pressed'),
+      },
+    ]);
   };
 
   return (
@@ -42,7 +43,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
         <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
           צומת פרדסיה
         </Text>
-        <Text variant="largeTitle" fontWeight="500" color="lightText" marginBottom="m">
+        <Text variant="largeTitle" fontWeight="500" color="lightText" marginBottom="xm">
           85 עכשיו בהפגנה
         </Text>
 
@@ -52,13 +53,14 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             size="huge"
             icon={require('@assets/icons/location-icon.png')}
             style={{ marginBottom: 12 }}
+            onPress={() => confirmCheckIn()}
           />
           <RoundedButton text="הזמנת חברים" size="huge" icon={require('@assets/icons/hands-together.png')} />
 
           <Box flexDirection="row" width="100%" marginTop="m">
             <RoundedButton text="גלריית הפגנה" size="huge" icon={require('@assets/icons/camera.png')} style={{ flex: 1 }} />
             <Box flex={0.075} />
-            <RoundedButton text="העלאת תמונה" size="huge" icon={require('@assets/icons/location-icon.png')} style={{ flex: 1 }} />
+            <RoundedButton text="העלאת תמונה" size="huge" icon={require('@assets/icons/gallery.png')} style={{ flex: 1 }} />
           </Box>
         </Box>
       </Box>
