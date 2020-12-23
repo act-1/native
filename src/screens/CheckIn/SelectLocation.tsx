@@ -19,12 +19,16 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
         <RoundedButton
           text="איתור הפגנות באיזורי"
-          onPress={() => navigation.navigate('CheckInPage')}
+          onPress={() => navigation.navigate('LocationPage')}
           color="blue"
           textStyle={{ fontWeight: 'bold' }}
         />
 
-        <LocationBox name="צומת פרדסיה" address="ביתחי" onPress={() => navigation.navigate('CheckInPage')} />
+        <LocationBox
+          name="צומת פרדסיה"
+          address="ביתחי"
+          onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
+        />
       </Box>
     </Box>
   );

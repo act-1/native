@@ -9,8 +9,6 @@ export async function addCheckInEntry(checkInData) {
 
   // Profile Picture ?
 
-  // eventId
-
   // locationName
 
   // address
