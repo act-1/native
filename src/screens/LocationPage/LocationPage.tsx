@@ -68,8 +68,8 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             alignItems="center"
             justifyContent="center"
           >
-            <Image source={require('@assets/icons/location-icon.png')} style={{ marginBottom: 12 }} />
-            <Text variant="boxTitle">צ׳ק אין</Text>
+            <Image source={require('@assets/icons/hands-together.png')} style={{ marginBottom: 12 }} />
+            <Text variant="boxTitle">הזמנת חברים</Text>
           </Box>
           <Box flexDirection="row" width="100%" marginTop="m">
             <Box
@@ -80,8 +80,8 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
               justifyContent="center"
               flex={1}
             >
-              <Image source={require('@assets/icons/location-icon.png')} style={{ marginBottom: 12 }} />
-              <Text variant="boxTitle">צ׳ק אין</Text>
+              <Image source={require('@assets/icons/camera.png')} style={{ marginBottom: 12 }} />
+              <Text variant="boxTitle">העלאת תמונה</Text>
             </Box>
             <Box flex={0.1} />
             <Box
@@ -92,8 +92,8 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
               justifyContent="center"
               flex={1}
             >
-              <Image source={require('@assets/icons/location-icon.png')} style={{ marginBottom: 12 }} />
-              <Text variant="boxTitle">צ׳ק אין</Text>
+              <Image source={require('@assets/icons/gallery.png')} style={{ marginBottom: 12 }} />
+              <Text variant="boxTitle">גלריית הפגנה</Text>
             </Box>
           </Box>
         </Box>
