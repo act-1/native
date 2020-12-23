@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SelectLocation } from '@screens/CheckIn';
-import { LocationPage } from '@screens/LocationPage';
+import { SelectLocation, LocationPage } from '@screens/LocationPage';
 
 const LocationStack = createStackNavigator();
 
@@ -19,7 +18,7 @@ function LocationPageNavigator() {
         },
       }}
     >
-      <LocationStack.Screen name="CheckInSelectLocation" component={SelectLocation} />
+      <LocationStack.Screen name="SelectLocation" component={SelectLocation} />
       <LocationStack.Screen name="LocationPage" component={LocationPage} options={{ headerShown: false }} />
     </LocationStack.Navigator>
   );

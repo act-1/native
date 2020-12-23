@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>המיקום שלך נחוץ למציאת אירועים באיזורך וביצוע צ׳ק אין להפגנות </string>
+	<string>נשתמש במיקום למציאת הפגנות ואירועים באיזורך</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Feather.ttf</string>

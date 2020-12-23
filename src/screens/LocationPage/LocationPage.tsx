@@ -39,7 +39,9 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
         }}
       />
       <Box alignItems="center" justifyContent="center" paddingHorizontal="m" style={{ marginTop: -60 }}>
-        <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
+        <Box shadowOpacity={0.5} shadowOffset={{ width: 0, height: 0 }} shadowRadius={3}>
+          <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
+        </Box>
         <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
           צומת פרדסיה
         </Text>

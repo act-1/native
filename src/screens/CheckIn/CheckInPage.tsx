@@ -46,12 +46,7 @@ function CheckInPage({ navigation, route }: CheckInPageProps) {
         <Text variant="largeTitle" fontWeight="500" color="lightText" marginBottom="m">
           85 עכשיו בהפגנה
         </Text>
-        <RoundedButton
-          text="צ׳ק אין אנונימי"
-          color="grey"
-          style={{ marginBottom: 8 }}
-          onPress={() => checkIn('annonymous')}
-        />
+        <RoundedButton text="צ׳ק אין אנונימי" color="grey" style={{ marginBottom: 8 }} onPress={() => checkIn('annonymous')} />
         <Text variant="text" marginBottom="xs">
           רוצים לעשות צ׳ק אין עם תמונה?
         </Text>

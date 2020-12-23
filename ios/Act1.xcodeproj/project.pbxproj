@@ -23,6 +23,7 @@
 		C1631C26257A94640099756B /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C22257A94640099756B /* Rubik-Bold.ttf */; };
 		C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C23257A94640099756B /* Rubik-Medium.ttf */; };
 		C1631C28257A94640099756B /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C24257A94640099756B /* Rubik-Regular.ttf */; };
+		C1DDF64825938C4E0063C069 /* Swifty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDF64725938C4E0063C069 /* Swifty.swift */; };
 		F4CC12AD715BF3310D1152A3 /* libPods-Act1-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E802883A0F5ECFA9DEB2F6D /* libPods-Act1-tvOSTests.a */; };
 		F906F208824FFFBC1077D36B /* libPods-Act1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC78ECDB0BC66909D52DE1 /* libPods-Act1.a */; };
 /* End PBXBuildFile section */
@@ -75,6 +76,8 @@
 		C1631C22257A94640099756B /* Rubik-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Bold.ttf"; sourceTree = "<group>"; };
 		C1631C23257A94640099756B /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		C1631C24257A94640099756B /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
+		C1DDF64625938C4E0063C069 /* Act1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Act1-Bridging-Header.h"; sourceTree = "<group>"; };
+		C1DDF64725938C4E0063C069 /* Swifty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swifty.swift; sourceTree = "<group>"; };
 		C609DF5B0AD1C4B63C9D39EF /* libPods-Act1-Act1Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Act1-Act1Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -186,6 +189,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				C1DDF64725938C4E0063C069 /* Swifty.swift */,
 				C10BDA2C258F527300A658CB /* GoogleService-Info.plist */,
 				C1631C20257A94640099756B /* fonts */,
 				13B07FAE1A68108700A75B9A /* Act1 */,
@@ -194,6 +198,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				20C024B4811F91AD7CEF0D24 /* Pods */,
+				C1DDF64625938C4E0063C069 /* Act1-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -322,7 +327,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = UE6BVYPPFX;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1220;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -618,6 +623,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1DDF64825938C4E0063C069 /* Swifty.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -660,6 +666,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 04D676CC8B4BF506FD97F343 /* Pods-Act1-Act1Tests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -684,6 +691,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 31A5C193D10A67FC59FAF851 /* Pods-Act1-Act1Tests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = UE6BVYPPFX;
@@ -728,6 +736,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = co.act1.native;
 				PRODUCT_NAME = Act1;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Act1-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -758,6 +767,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = co.act1.native;
 				PRODUCT_NAME = Act1;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Act1-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

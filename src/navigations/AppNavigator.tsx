@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { EventPage } from '../screens';
-import { SelectLocation } from '../screens/CheckIn';
 import { RootStackParamList } from '../types/navigation';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -29,13 +28,7 @@ function MainStackScreen() {
             fontWeight: 'bold',
           },
           headerLeft: () => (
-            <Icon
-              name={'arrow-right'}
-              size={28}
-              color={'#fff'}
-              style={{ marginLeft: 15 }}
-              onPress={() => navigation.goBack()}
-            />
+            <Icon name={'arrow-right'} size={28} color={'#fff'} style={{ marginLeft: 15 }} onPress={() => navigation.goBack()} />
           ),
         })}
       />
@@ -47,7 +40,6 @@ function AppNavigator() {
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }} mode="modal">
       <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-      <RootStack.Screen name="CheckIn" component={SelectLocation} />
     </RootStack.Navigator>
   );
 }

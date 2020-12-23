@@ -18,12 +18,14 @@ const palette = {
   porcelain: '#F0F2F3',
   lightgrey: '#f0f2f5',
   grey: '#737373',
+  metal: '#2d3436',
   black: '#040506',
 };
 
 const theme = createTheme({
   colors: {
     primaryText: palette.black,
+    subText: palette.metal,
     lightText: palette.grey,
     mainBackground: palette.white,
     mainForeground: palette.black,
