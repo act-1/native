@@ -47,54 +47,18 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
         </Text>
 
         <Box width="100%" paddingHorizontal="xm">
-          <Box
-            backgroundColor="dimmedBackground"
-            height={130}
-            borderRadius={4}
-            alignItems="center"
-            justifyContent="center"
-            marginBottom="m"
-          >
-            <Image
-              source={require('@assets/icons/location-icon.png')}
-              style={{ marginBottom: 12, width: 65, height: 65 }}
-            />
-            <Text variant="boxTitle">צ׳ק אין</Text>
-          </Box>
-          <Box
-            backgroundColor="dimmedBackground"
-            height={130}
-            borderRadius={4}
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Image source={require('@assets/icons/hands-together.png')} style={{ marginBottom: 12 }} />
-            <Text variant="boxTitle">הזמנת חברים</Text>
-          </Box>
+          <RoundedButton
+            text="צ׳ק אין"
+            size="huge"
+            icon={require('@assets/icons/location-icon.png')}
+            style={{ marginBottom: 12 }}
+          />
+          <RoundedButton text="הזמנת חברים" size="huge" icon={require('@assets/icons/hands-together.png')} />
+
           <Box flexDirection="row" width="100%" marginTop="m">
-            <Box
-              backgroundColor="dimmedBackground"
-              height={130}
-              borderRadius={4}
-              alignItems="center"
-              justifyContent="center"
-              flex={1}
-            >
-              <Image source={require('@assets/icons/camera.png')} style={{ marginBottom: 12 }} />
-              <Text variant="boxTitle">העלאת תמונה</Text>
-            </Box>
-            <Box flex={0.1} />
-            <Box
-              backgroundColor="dimmedBackground"
-              height={130}
-              borderRadius={4}
-              alignItems="center"
-              justifyContent="center"
-              flex={1}
-            >
-              <Image source={require('@assets/icons/gallery.png')} style={{ marginBottom: 12 }} />
-              <Text variant="boxTitle">גלריית הפגנה</Text>
-            </Box>
+            <RoundedButton text="גלריית הפגנה" size="huge" icon={require('@assets/icons/camera.png')} style={{ flex: 1 }} />
+            <Box flex={0.075} />
+            <RoundedButton text="העלאת תמונה" size="huge" icon={require('@assets/icons/location-icon.png')} style={{ flex: 1 }} />
           </Box>
         </Box>
       </Box>
