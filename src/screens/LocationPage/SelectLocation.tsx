@@ -52,7 +52,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
           </>
         )}
 
-        {userLocationPermission !== 'granted' || userCurrentPosition.length === 0 ? (
+        {userLocationPermission !== 'granted' || userCurrentPosition?.length === 0 ? (
           <>
             <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
               על מנת לראות את ההפגנות באיזורך, יש לאשר שימוש בשירותי המיקום.
