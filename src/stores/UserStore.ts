@@ -1,9 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { Platform } from 'react-native';
-import { check, PERMISSIONS, request, PermissionStatus } from 'react-native-permissions';
-import Geolocation from 'react-native-geolocation-service';
+import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { checkLocationPermission, getCurrentPosition } from '@utils/location-utils';
+import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
 import rootStore from './RootStore';
 import EventsAPI from '../api/events';
 import { createAnonymousUser } from '../api/user';
@@ -61,22 +59,18 @@ class UserStore {
 
   async getUserCoordinates() {
     try {
-      if (Platform.OS === 'ios') {
-        const status = await Geolocation.requestAuthorization('whenInUse');
-        console.log('iOS Location Permission: ', status);
+      const permission = await requestLocationPermission();
 
-        if (['granted', 'restricted'].includes(status) !== true) {
-        }
+      if (permission === 'granted') {
+        const coordinates = await getCurrentPosition();
+        runInAction(() => {
+          this.userCurrentPosition = coordinates;
+        });
       }
 
-      Geolocation.getCurrentPosition(
-        (position) => {
-          console.log(position);
-        },
-        (err) => {
-          console.error(err);
-        }
-      );
+      runInAction(() => {
+        this.userLocationPermission = permission;
+      });
     } catch (err) {
       console.error(err);
     }
