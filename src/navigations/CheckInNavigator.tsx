@@ -19,7 +19,7 @@ function EventsNavigator() {
       }}
     >
       <EventsStack.Screen name="CheckInSelectLocation" component={SelectLocation} />
-      <EventsStack.Screen name="CheckInPage" component={CheckInPage} />
+      <EventsStack.Screen name="CheckInPage" component={CheckInPage} options={{ headerShown: false }} />
     </EventsStack.Navigator>
   );
 }
