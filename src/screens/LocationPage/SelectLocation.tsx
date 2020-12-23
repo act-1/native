@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Image } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
+import { check, PERMISSIONS, request } from 'react-native-permissions';
 import { SelectLocationScreenProps } from '@types/navigation';
 import { Box, Text, LocationBox, EventBox } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
-import { UrlTile } from 'react-native-maps';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const [locations, setLocations] = useState([]);
