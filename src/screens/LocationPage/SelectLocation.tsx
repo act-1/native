@@ -10,7 +10,6 @@ import { useStore } from '../../stores';
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore } = useStore();
   const { userLocationPermission, userCurrentPosition } = userStore;
-  const [locations, setLocations] = useState([]);
 
   useEffect(() => {
     function handleAppStateChange(appState: AppStateStatus) {
