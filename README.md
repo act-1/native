@@ -14,24 +14,20 @@ Here we write code to bring back the power to the people.
 Wanna join us? Take a look over at our [up for grabs](https://github.com/act-1/native/labels/up%20for%20grabs) issue list and [visit our discord](https://discord.gg/3jGSYeBuHj)!
 
 ### Introduction
-The project is written using React Native - if you have expereience with it you should be okay!  
+The project is written using React Native.  
 The main libraries we use:
-- React Native Firebase helps us interact with Firebase.
-- MobX ensures we have a single source of truth.
-- React Navigation will take us to the right place.
-- restyle provides us with theming toolkit and a supercharged `Box` (View) & `Text` components.
+- [React Native Firebase](https://rnfirebase.io/) helps us interact with Firebase.
+- [MobX](https://mobx.js.org/README.html) ensures we have a single source of truth.
+- [React Navigation](https://reactnavigation.org/docs/getting-started) will take us to the right place.
+- [restyle](https://github.com/Shopify/restyle) provides a theming toolkit and a supercharged `Box` (View) & `Text` components.
 
 ### Installation
-We have to configue
 - Fork the repo and clone to your machine.
 - Run `yarn install`
 - Run `cd ios && pod install`
 
-Now let's configure firebase:
+Now let's configure Firebase:
 
 - Create a firebase project and setup it on iOS & Android according to [React Native Firebase](https://rnfirebase.io/#2-android-setup) docs
-- Go to fire
-> TODO: Add firebase functions emulator instructions
+- Clone our [cloud functions](https://github.com/act-1/cloud-functions) repo, install it and run the emulator (more info at the repo)
 
-### Ready to act?
-Grab yourself an issue from our up for grabs issue list and submit your first PR!
