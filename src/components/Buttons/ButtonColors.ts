@@ -11,8 +11,9 @@ type ColorsDict = {
 
 export const buttonColors: ColorsDict = {
   blue: {
-    initialColor: '#3498ff',
-    pressedColor: '#57abff',
+    initialColor: '#017eff',
+    pressedColor: '#3498ff',
+    textColor: '#fff',
   },
   green: {
     initialColor: '#08c236',
@@ -30,12 +31,18 @@ export const buttonColors: ColorsDict = {
   },
   porcelain: {
     initialColor: '#F0F2F5',
-    pressedColor: '#F8F8F8',
-    textColor: '#666666',
+    pressedColor: '#e0e0e0',
+    textColor: '#2d3436',
   },
   white: {
     initialColor: '#d4d4d4',
     pressedColor: '#88898b',
     iconColor: '#000',
+  },
+  black: {
+    initialColor: '#0B0B0B',
+    pressedColor: '#252525',
+    iconColor: '#fff',
+    textColor: '#fff',
   },
 };

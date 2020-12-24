@@ -1,5 +1,4 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 import functions from '@react-native-firebase/functions';
 import { IEvent } from '@types/event';
 import { formatLocalDay, formatShortDate, formatUpcomingDate, parseLocalDate } from '../utils/date-utils';

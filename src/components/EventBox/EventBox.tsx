@@ -18,13 +18,13 @@ function EventBox({ title, localDay, time, locationName, thumbnail, onPress }: E
       <Box flexDirection="row" padding="m">
         <FastImage style={styles.eventThumb} source={{ uri: thumbnail.href }} />
         <Box alignItems="flex-start" flex={1}>
-          <Text variant="eventBoxDate" style={styles.textRTL}>
+          <Text variant="boxInfo" style={styles.textRTL}>
             {localDay} בשעה {time}
           </Text>
-          <Text variant="eventBoxTitle" style={styles.textRTL}>
+          <Text variant="boxTitle" style={styles.textRTL}>
             {title}
           </Text>
-          <Text variant="eventBoxLocation" style={styles.textRTL}>
+          <Text variant="boxSubtitle" style={styles.textRTL}>
             {locationName}
           </Text>
         </Box>

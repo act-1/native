@@ -9,7 +9,8 @@ const palette = {
   greenPrimary: '#0ECD9D',
   greenDark: '#0A906E',
 
-  redPrimary: '#E03616',
+  redLight: '#ffe7e5',
+  redPrimary: '#f0040d',
 
   orange: '#FFC281',
   orangeDark: '#632700',
@@ -18,18 +19,22 @@ const palette = {
   porcelain: '#F0F2F3',
   lightgrey: '#f0f2f5',
   grey: '#737373',
-  black: '#0B0B0B',
+  metal: '#2d3436',
+  black: '#040506',
 };
 
 const theme = createTheme({
   colors: {
     primaryText: palette.black,
+    subText: palette.metal,
     lightText: palette.grey,
     mainBackground: palette.white,
     mainForeground: palette.black,
     cardPrimaryBackground: palette.purplePrimary,
     eventBoxDateColor: palette.redPrimary,
     dimmedBackground: palette.lightgrey,
+    important: palette.redPrimary,
+    importantLight: palette.redLight,
     attentionBackground: palette.orange,
     attentionForeground: palette.orangeDark,
     lightBorderColor: palette.lightgrey,
@@ -52,6 +57,12 @@ const theme = createTheme({
       fontSize: 30,
       color: 'primaryText',
     },
+    extraLargeTitle: {
+      fontFamily: 'Rubik-Bold',
+      fontSize: 26,
+      color: 'primaryText',
+      textAlign: 'left',
+    },
     largeTitle: {
       fontFamily: 'Rubik-Bold',
       fontSize: 20,
@@ -64,17 +75,23 @@ const theme = createTheme({
       color: 'primaryText',
       textAlign: 'left',
     },
-    eventBoxTitle: {
+    smallText: {
+      fontFamily: 'Rubik-Regular',
+      fontSize: 14,
+      color: 'primaryText',
+      textAlign: 'left',
+    },
+    boxTitle: {
       fontFamily: 'Rubik-Bold',
       fontSize: 16,
       color: 'primaryText',
     },
-    eventBoxDate: {
+    boxInfo: {
       fontFamily: 'Rubik-Medium',
       fontSize: 13,
       color: 'eventBoxDateColor',
     },
-    eventBoxLocation: {
+    boxSubtitle: {
       fontFamily: 'Rubik-Regular',
       fontSize: 15,
       color: 'lightText',
@@ -86,6 +103,13 @@ const theme = createTheme({
     circularButtonText: {
       fontFamily: 'Rubik-Medium',
       fontSize: 13,
+    },
+    importantText: {
+      fontFamily: 'Rubik-Regular',
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: 'important',
+      textAlign: 'left',
     },
   },
 });

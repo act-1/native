@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, ViewStyle, ActivityIndicator } from 'react-native';
-import { Box, Text } from '../';
+import { Box, Text } from '../..';
 import Icon from 'react-native-vector-icons/Feather';
+import { buttonColors } from '../ButtonColors';
 
 type CircularButtonProps = {
   iconName: string;
@@ -11,36 +12,6 @@ type CircularButtonProps = {
   size?: 'small' | 'large';
   loading?: boolean;
   style?: ViewStyle;
-};
-
-type ButtonColors = {
-  initialColor: string;
-  pressedColor: string;
-  iconColor?: string;
-};
-
-type ColorsDict = {
-  [index: string]: ButtonColors;
-};
-
-const buttonColors: ColorsDict = {
-  blue: {
-    initialColor: '#3498ff',
-    pressedColor: '#57abff',
-  },
-  green: {
-    initialColor: '#08c236',
-    pressedColor: '#1ad348',
-  },
-  grey: {
-    initialColor: '#696a6c',
-    pressedColor: '#88898b',
-  },
-  white: {
-    initialColor: '#d4d4d4',
-    pressedColor: '#88898b',
-    iconColor: '#000',
-  },
 };
 
 function getButtonDimenions(size: string): ViewStyle {

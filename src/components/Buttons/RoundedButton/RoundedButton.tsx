@@ -1,43 +1,61 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, ViewStyle, TextStyle, Image, ImageSourcePropType } from 'react-native';
 import { Box, Text } from '../..';
 import { buttonColors } from '../ButtonColors';
 
 type RoundedButtonProps = {
-  color: 'blue' | 'green' | 'yellow' | 'grey' | 'porcelain' | 'white';
+  color?: 'blue' | 'green' | 'yellow' | 'grey' | 'porcelain' | 'white' | 'black';
+  icon?: ImageSourcePropType;
   onPress?: () => void;
   text?: string;
-  size?: 'small' | 'large';
+  size?: 'small' | 'large' | 'huge';
+  style?: ViewStyle;
+  textStyle?: TextStyle;
 };
 
 function getButtonDimenions(size: string): ViewStyle {
   if (size === 'small') {
     return {
-      width: 35,
+      width: 150,
       height: 35,
     };
   }
 
+  if (size === 'huge') {
+    return {
+      width: '100%',
+      height: 130,
+    };
+  }
+
   return {
-    width: 45,
+    width: 250,
     height: 45,
   };
 }
 
-function RoundedButton({ color, text, onPress, size = 'large' }: RoundedButtonProps) {
+function RoundedButton({ color = 'porcelain', icon, text, onPress, size = 'large', style, textStyle }: RoundedButtonProps) {
   const [pressed, setPressed] = useState(false);
   const { initialColor, pressedColor, textColor } = buttonColors[color];
   const buttonDimensions = getButtonDimenions(size);
 
   return (
-    <Box justifyContent="center" alignItems="center" testID="button-container">
+    <Box
+      justifyContent="center"
+      alignItems="center"
+      testID="button-container"
+      width={buttonDimensions.width}
+      height={buttonDimensions.height}
+      style={style}
+    >
       <Pressable
         onPress={onPress}
         onPressIn={() => setPressed(true)}
         onPressOut={() => setPressed(false)}
         style={{ backgroundColor: pressed ? pressedColor : initialColor, ...buttonDimensions, ...styles.button }}
       >
-        <Text style={{ color: textColor }} variant="roundedButtonText" testID="button-text">
+        {icon && <Image source={icon} style={{ marginBottom: 12 }} />}
+        <Text style={{ color: textColor, ...textStyle }} variant="roundedButtonText" testID="button-text">
           {text}
         </Text>
       </Pressable>
@@ -51,7 +69,6 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 6,
     borderRadius: 3,
-    width: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },

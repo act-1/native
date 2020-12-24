@@ -103,13 +103,7 @@ function StickyHeaderScrollView({ children, goBack, headerTitle, thumbnail }: St
           </Box>
         )}
         <Animated.View style={{ opacity: topBarTitleOpacity }}>
-          <Text
-            allowFontScaling={false}
-            fontSize={16}
-            variant="eventBoxTitle"
-            color="mainBackground"
-            textAlign="center"
-          >
+          <Text allowFontScaling={false} fontSize={16} variant="boxTitle" color="mainBackground" textAlign="center">
             {headerTitle}
           </Text>
         </Animated.View>
@@ -128,7 +122,7 @@ const styles = StyleSheet.create({
     right: 0,
     height: 80,
     overflow: 'hidden',
-    backgroundColor: '#4e23bb',
+    backgroundColor: '#697CFF',
   },
   topBar: {
     flexDirection: 'row',

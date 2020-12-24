@@ -5,10 +5,11 @@ import { RootStackParamList } from '../types/navigation';
 import Icon from 'react-native-vector-icons/Feather';
 
 const MainStack = createStackNavigator<RootStackParamList>();
+const RootStack = createStackNavigator();
 
 import AppTabs from './AppTabs';
 
-function AppNavigator() {
+function MainStackScreen() {
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="Home" component={AppTabs} />
@@ -20,24 +21,26 @@ function AppNavigator() {
           headerTitle: 'עמוד הפגנה',
           headerBackTitle: ' ',
           headerStyle: {
-            backgroundColor: '#7254c8',
+            backgroundColor: '#697CFF',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
           headerLeft: () => (
-            <Icon
-              name={'arrow-right'}
-              size={28}
-              color={'#fff'}
-              style={{ marginLeft: 15 }}
-              onPress={() => navigation.goBack()}
-            />
+            <Icon name={'arrow-right'} size={28} color={'#fff'} style={{ marginLeft: 15 }} onPress={() => navigation.goBack()} />
           ),
         })}
       />
     </MainStack.Navigator>
+  );
+}
+
+function AppNavigator() {
+  return (
+    <RootStack.Navigator screenOptions={{ headerShown: false }} mode="modal">
+      <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
+    </RootStack.Navigator>
   );
 }
 
