@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 import Ticker from 'react-native-ticker';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Feather';
@@ -10,13 +10,14 @@ type PostBoxProps = {
   authorPicture: URL;
   content: string;
   image?: URL;
+  style?: ViewStyle;
   timestamp: string;
 };
 
 function PostBox(props: PostBoxProps) {
-  const { authorName, authorPicture, content, timestamp } = props;
+  const { authorName, authorPicture, content, timestamp, style } = props;
   return (
-    <Box backgroundColor="mainBackground" alignItems="flex-start" padding="m">
+    <Box backgroundColor="mainBackground" alignItems="flex-start" padding="m" style={style}>
       <Box flexDirection="row" marginBottom="s">
         <FastImage
           source={{
