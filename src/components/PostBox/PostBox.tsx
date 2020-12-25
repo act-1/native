@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import Ticker from 'react-native-ticker';
 import FastImage from 'react-native-fast-image';
+import Icon from 'react-native-vector-icons/Feather';
 import { Box, Text } from '../../components';
 
 function PostBox() {
@@ -19,10 +21,15 @@ function PostBox() {
           <Text variant="boxSubtitle">לפני 4 שעות</Text>
         </Box>
       </Box>
-      <Box alignItems="flex-start">
+      <Box alignItems="flex-start" marginBottom="m">
         <Text variant="text" fontFamily="Arial">
           המחאה פירקה את הליכוד. ובעזרת השם גם תפרק את הממשלה הכושלת הזו עוד הלילה.
         </Text>
+      </Box>
+      <Box width="100%" height={2} backgroundColor="seperator" marginBottom="m" />
+      <Box flexDirection="row" justifyContent="center" alignItems="center" width="100%">
+        <Ticker textStyle={styles.likeCount}>52</Ticker>
+        <Icon name="heart" color="#999999" size={22.5} style={{ marginLeft: 6 }} />
       </Box>
     </Box>
   );
@@ -36,5 +43,9 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 25,
     marginRight: 8,
+  },
+  likeCount: {
+    color: '#999999',
+    fontFamily: 'Rubik-Bold',
   },
 });

@@ -38,6 +38,7 @@ const theme = createTheme({
     attentionBackground: palette.orange,
     attentionForeground: palette.orangeDark,
     lightBorderColor: palette.lightgrey,
+    seperator: palette.porcelain,
   },
   spacing: {
     xs: 4,
