@@ -18,7 +18,7 @@ function EventBox({ title, localDay, time, locationName, thumbnail, variant = 'l
     <Pressable
       style={({ pressed }) => [
         { backgroundColor: pressed ? '#e4e4e4' : 'white' },
-        { transform: [{ scale: pressed && variant === 'thumbBox' ? 0.985 : 1 }] },
+        { transform: [{ scale: pressed && variant === 'thumbBox' ? 0.99 : 1 }] },
         styles[variant],
       ]}
       onPress={onPress}
@@ -45,9 +45,9 @@ const styles = StyleSheet.create({
   thumbBox: {
     width: 250,
     shadowColor: '#000',
-    shadowOffset: { height: -2, width: 0 },
+    shadowOffset: { height: 2, width: 0 },
     shadowOpacity: 0.3,
-    shadowRadius: 5,
+    shadowRadius: 3,
     borderRadius: 10,
     marginRight: 16,
   },
@@ -63,12 +63,12 @@ const styles = StyleSheet.create({
   },
   listBoxImage: {
     width: 100,
-    height: 50,
+    height: 54,
     borderRadius: 10,
     marginRight: 10,
   },
   thumbBoxInfo: {
-    height: 100,
+    height: 95,
     padding: 5,
     paddingHorizontal: 8,
     paddingVertical: 8,
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   listBoxInfo: {},
   textRTL: {
     writingDirection: 'rtl',
+    marginBottom: 1,
   },
 });
 

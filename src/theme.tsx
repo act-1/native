@@ -15,6 +15,8 @@ const palette = {
   orange: '#FFC281',
   orangeDark: '#632700',
 
+  blue: '#0078F8',
+
   white: '#fff',
   porcelain: '#F0F2F3',
   lightgrey: '#f0f2f5',
@@ -39,6 +41,7 @@ const theme = createTheme({
     attentionForeground: palette.orangeDark,
     lightBorderColor: palette.lightgrey,
     seperator: palette.porcelain,
+    link: palette.blue,
   },
   spacing: {
     xs: 4,

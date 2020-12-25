@@ -24,7 +24,7 @@ function Home({ navigation }: HomeScreenProps) {
   return (
     <ScrollView>
       <HomeHeader />
-      <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500">
+      <Text variant="largeTitle" paddingHorizontal="m" color="lightText">
         הפגנות קרובות
       </Text>
       <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
@@ -32,6 +32,13 @@ function Home({ navigation }: HomeScreenProps) {
           <EventBox variant="thumbBox" {...event} onPress={() => navigation.navigate('EventPage', { eventId: event.id })} />
         ))}
       </ScrollView>
+      <Text variant="importantText" textAlign="center" color="link" fontWeight="500">
+        לכל ההפגנות
+      </Text>
+      <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500">
+        פיד מחאה
+      </Text>
+
       <PostFeed posts={posts} />
     </ScrollView>
   );
@@ -49,6 +56,6 @@ const styles = StyleSheet.create({
   },
   featuredEvents: {
     paddingVertical: 16,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
   },
 });
