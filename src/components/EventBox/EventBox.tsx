@@ -17,7 +17,7 @@ function EventBox({ title, localDay, time, locationName, thumbnail, variant = 'l
   return (
     <Pressable
       style={({ pressed }) => [
-        { backgroundColor: pressed ? '#e4e4e4' : 'white' },
+        { backgroundColor: pressed ? '#e4e4e4' : '#fff' },
         { transform: [{ scale: pressed && variant === 'thumbBox' ? 0.99 : 1 }] },
         styles[variant],
       ]}
@@ -46,8 +46,9 @@ const styles = StyleSheet.create({
     width: 250,
     shadowColor: '#000',
     shadowOffset: { height: 2, width: 0 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 2,
     borderRadius: 10,
     marginRight: 16,
   },
