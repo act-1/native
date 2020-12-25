@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { ScrollView, StyleSheet } from 'react-native';
-import { Box, EventBox, PostBox } from '../../components';
+import { Box, Text, EventBox, PostBox } from '../../components';
 import { useStore } from '../../stores';
 import PostFeed from './PostFeed';
 import { HomeScreenProps } from '@types/navigation';
@@ -24,7 +24,10 @@ function Home({ navigation }: HomeScreenProps) {
   return (
     <ScrollView>
       <HomeHeader />
-      <ScrollView contentContainerStyle={styles.featuredEvents} horizontal={true}>
+      <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500">
+        הפגנות קרובות
+      </Text>
+      <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
         {eventStore.events.map((event: IEvent) => (
           <EventBox variant="thumbBox" {...event} onPress={() => navigation.navigate('EventPage', { eventId: event.id })} />
         ))}
@@ -46,6 +49,6 @@ const styles = StyleSheet.create({
   },
   featuredEvents: {
     paddingVertical: 16,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
   },
 });

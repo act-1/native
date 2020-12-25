@@ -15,20 +15,25 @@ type EventBoxProps = {
 
 function EventBox({ title, localDay, time, locationName, thumbnail, variant = 'listBox', onPress }: EventBoxProps) {
   return (
-    <Pressable style={({ pressed }) => [{ backgroundColor: pressed ? '#e4e4e4' : 'white' }]} onPress={onPress}>
-      <Box style={styles[variant]}>
-        <FastImage style={imageStyle[variant]} source={{ uri: thumbnail.href }} />
-        <Box alignItems="flex-start" flex={1} style={eventInfo[variant]}>
-          <Text variant="boxInfo" style={styles.textRTL}>
-            {localDay} בשעה {time}
-          </Text>
-          <Text variant="boxTitle" style={styles.textRTL}>
-            {title}
-          </Text>
-          <Text variant="boxSubtitle" style={styles.textRTL}>
-            {locationName}
-          </Text>
-        </Box>
+    <Pressable
+      style={({ pressed }) => [
+        { backgroundColor: pressed ? '#e4e4e4' : 'white' },
+        { transform: [{ scale: pressed && variant === 'thumbBox' ? 0.985 : 1 }] },
+        styles[variant],
+      ]}
+      onPress={onPress}
+    >
+      <FastImage style={imageStyle[variant]} source={{ uri: thumbnail.href }} />
+      <Box alignItems="flex-start" flex={1} style={eventInfo[variant]}>
+        <Text variant="boxInfo" style={styles.textRTL}>
+          {localDay} בשעה {time}
+        </Text>
+        <Text variant="boxTitle" style={styles.textRTL}>
+          {title}
+        </Text>
+        <Text variant="boxSubtitle" style={styles.textRTL}>
+          {locationName}
+        </Text>
       </Box>
     </Pressable>
   );
@@ -38,12 +43,12 @@ export default React.memo(EventBox);
 
 const styles = StyleSheet.create({
   thumbBox: {
-    width: 225,
-    borderRadius: 5,
+    width: 250,
     shadowColor: '#000',
-    shadowOffset: { height: -1, width: 0 },
+    shadowOffset: { height: -2, width: 0 },
     shadowOpacity: 0.3,
-    backgroundColor: '#F0F2F5',
+    shadowRadius: 5,
+    borderRadius: 10,
     marginRight: 16,
   },
   listBox: {
@@ -67,6 +72,7 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingHorizontal: 8,
     paddingVertical: 8,
+    borderRadius: 10,
   },
   listBoxInfo: {},
   textRTL: {
