@@ -15,6 +15,8 @@ const palette = {
   orange: '#FFC281',
   orangeDark: '#632700',
 
+  blue: '#0078F8',
+
   white: '#fff',
   porcelain: '#F0F2F3',
   lightgrey: '#f0f2f5',
@@ -38,6 +40,8 @@ const theme = createTheme({
     attentionBackground: palette.orange,
     attentionForeground: palette.orangeDark,
     lightBorderColor: palette.lightgrey,
+    seperator: palette.porcelain,
+    link: palette.blue,
   },
   spacing: {
     xs: 4,
@@ -95,6 +99,11 @@ const theme = createTheme({
       fontFamily: 'Rubik-Regular',
       fontSize: 15,
       color: 'lightText',
+    },
+    appLink: {
+      fontFamily: 'Rubik-Regular',
+      fontSize: 15,
+      color: 'link',
     },
     roundedButtonText: {
       fontFamily: 'Rubik-Bold',

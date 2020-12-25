@@ -1,6 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { EventsNavigator, LocationPageNavigator } from './';
+import { Home } from '@screens/';
+// import { Home } from '../sceens';
 import Icon from 'react-native-vector-icons/Feather';
 
 const Tab = createBottomTabNavigator();
@@ -12,7 +14,7 @@ const AppTabs = () => (
         let iconName = '';
 
         switch (route.name) {
-          case 'Events':
+          case 'EventList':
             iconName = 'calendar';
             break;
           case 'Home':
@@ -38,8 +40,8 @@ const AppTabs = () => (
       showLabel: false,
     }}
   >
-    <Tab.Screen name="Home" component={EventsNavigator} />
-    <Tab.Screen name="Events" component={EventsNavigator} />
+    <Tab.Screen name="Home" component={Home} />
+    <Tab.Screen name="EventList" component={EventsNavigator} />
     <Tab.Screen name="CheckIn" component={LocationPageNavigator} />
     <Tab.Screen name="Feed" component={EventsNavigator} />
     <Tab.Screen name="Profile" component={EventsNavigator} />

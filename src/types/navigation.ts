@@ -1,5 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 
+export type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
 export type EventPageScreenProps = StackScreenProps<RootStackParamList, 'EventPage'>;
 export type EventListScreenProps = StackScreenProps<RootStackParamList, 'EventList'>;
 export type SelectLocationScreenProps = StackScreenProps<RootStackParamList, 'CheckInSelectLocation'>;
