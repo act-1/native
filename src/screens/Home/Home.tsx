@@ -6,7 +6,7 @@ import { useStore } from '../../stores';
 import PostFeed from './PostFeed';
 import { HomeScreenProps } from '@types/navigation';
 import { IEvent } from '@types/event';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, NavigationHelpersContext } from '@react-navigation/native';
 
 const posts = [1, 2, 3];
 
@@ -17,24 +17,33 @@ const HomeHeader = () => {
 function Home({ navigation }: HomeScreenProps) {
   const { eventStore } = useStore();
 
+  // TODO: Display loading indicator
   if (eventStore.events.length === 0) {
     return <Box />;
   }
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <HomeHeader />
-      <Text variant="largeTitle" paddingHorizontal="m" color="lightText">
-        הפגנות קרובות
-      </Text>
+      <Box flexDirection="row" justifyContent="space-between" alignItems="center" paddingHorizontal="m">
+        <Text variant="largeTitle" color="lightText">
+          הפגנות קרובות
+        </Text>
+        <Text variant="appLink" textAlign="center" fontWeight="500" onPress={() => navigation.navigate('EventList')}>
+          לרשימת ההפגנות
+        </Text>
+      </Box>
       <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
         {eventStore.events.map((event: IEvent) => (
-          <EventBox variant="thumbBox" {...event} onPress={() => navigation.navigate('EventPage', { eventId: event.id })} />
+          <EventBox
+            variant="thumbBox"
+            {...event}
+            onPress={() => navigation.navigate('EventPage', { eventId: event.id })}
+            key={event.id}
+          />
         ))}
       </ScrollView>
-      <Text variant="importantText" textAlign="center" color="link" fontWeight="500">
-        לכל ההפגנות
-      </Text>
+
       <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500">
         פיד מחאה
       </Text>
@@ -50,7 +59,7 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     width: '100%',
-    height: 200,
+    height: 150,
     marginBottom: 12,
     backgroundColor: '#304BFF',
   },

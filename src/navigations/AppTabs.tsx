@@ -14,7 +14,7 @@ const AppTabs = () => (
         let iconName = '';
 
         switch (route.name) {
-          case 'Events':
+          case 'EventList':
             iconName = 'calendar';
             break;
           case 'Home':
@@ -41,7 +41,7 @@ const AppTabs = () => (
     }}
   >
     <Tab.Screen name="Home" component={Home} />
-    <Tab.Screen name="Events" component={EventsNavigator} />
+    <Tab.Screen name="EventList" component={EventsNavigator} />
     <Tab.Screen name="CheckIn" component={LocationPageNavigator} />
     <Tab.Screen name="Feed" component={EventsNavigator} />
     <Tab.Screen name="Profile" component={EventsNavigator} />

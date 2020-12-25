@@ -100,6 +100,11 @@ const theme = createTheme({
       fontSize: 15,
       color: 'lightText',
     },
+    appLink: {
+      fontFamily: 'Rubik-Regular',
+      fontSize: 15,
+      color: 'link',
+    },
     roundedButtonText: {
       fontFamily: 'Rubik-Bold',
       fontSize: 16,
