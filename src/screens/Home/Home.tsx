@@ -28,7 +28,7 @@ function Home({ navigation }: HomeScreenProps) {
   }
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#f0f2f5' }}>
       <HomeHeader />
       <Box flexDirection="row" justifyContent="space-between" alignItems="center" paddingHorizontal="m">
         <Text variant="largeTitle" color="lightText">
