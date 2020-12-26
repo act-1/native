@@ -11,9 +11,9 @@ type LocationBoxProps = {
 
 function LocationBox({ name, address, onPress, style }: LocationBoxProps) {
   return (
-    <Pressable style={({ pressed }) => [{ backgroundColor: pressed ? '#e4e4e4' : 'white' }]} onPress={onPress}>
-      <Box flexDirection="row" paddingVertical="s" paddingHorizontal="m" width="100%" style={style}>
-        <Image style={styles.eventThumb} source={require('../../assets/icons/map-pin-rounded.png')} />
+    <Pressable style={({ pressed }) => [{ backgroundColor: pressed ? '#e4e4e4' : '#fff' }]} onPress={onPress}>
+      <Box flexDirection="row" paddingVertical="s" paddingHorizontal="m" style={style}>
+        <Image style={styles.locationPin} source={require('../../assets/icons/map-pin-rounded.png')} />
         <Box alignItems="flex-start" flex={1}>
           <Text variant="boxTitle" color="subText" fontSize={16}>
             {name}
@@ -30,7 +30,7 @@ function LocationBox({ name, address, onPress, style }: LocationBoxProps) {
 export default LocationBox;
 
 const styles = StyleSheet.create({
-  eventThumb: {
+  locationPin: {
     marginRight: 10,
   },
 });
