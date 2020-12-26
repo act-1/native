@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, StatusBar, SectionList, SafeAreaView } from 'react-native';
 import { observer } from 'mobx-react-lite';
+import analytics from '@react-native-firebase/analytics';
 import { EventListScreenProps } from '@types/navigation';
 import { Box, Text, EventBox } from '../../components';
 import { formatEventsForSectionList, EventsSectionListItem } from './event-list-utils';
@@ -15,6 +16,7 @@ function EventList({ navigation }: EventListScreenProps) {
     // TODO: Handle refresh failure
     setRefreshing(true);
     await eventStore.getEvents();
+    analytics().logEvent('event_list_refresh');
     setRefreshing(false);
   };
 
@@ -36,7 +38,13 @@ function EventList({ navigation }: EventListScreenProps) {
           <SectionList
             sections={eventList}
             renderItem={({ item }) => (
-              <EventBox {...item} onPress={() => navigation.navigate('EventPage', { eventId: item.id })} />
+              <EventBox
+                {...item}
+                onPress={() => {
+                  navigation.navigate('EventPage', { eventId: item.id });
+                  analytics().logEvent('event_list_event_press', { event_id: item.id });
+                }}
+              />
             )}
             stickySectionHeadersEnabled={false}
             progressViewOffset={100}

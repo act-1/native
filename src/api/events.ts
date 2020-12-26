@@ -1,14 +1,13 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
+import analytics from '@react-native-firebase/analytics';
 import { IEvent } from '@types/event';
-import { formatLocalDay, formatShortDate, formatUpcomingDate, parseLocalDate } from '../utils/date-utils';
+import { formatLocalDay, formatShortDate, formatUpcomingDate } from '../utils/date-utils';
 import { format } from 'date-fns';
 
 export async function getEventList(): Promise<IEvent[]> {
   const querySnapshot = await firestore().collection('events').orderBy('timestamp').get();
-  const documents = querySnapshot.docs.map(
-    (doc): FirebaseFirestoreTypes.DocumentData => ({ ...doc.data(), id: doc.id })
-  );
+  const documents = querySnapshot.docs.map((doc): FirebaseFirestoreTypes.DocumentData => ({ ...doc.data(), id: doc.id }));
 
   const events = documents.map(
     (doc): IEvent => ({
@@ -42,6 +41,7 @@ export async function attendEvent({
   try {
     const result = await functions().httpsCallable('attendEvent')({ eventId, eventDate });
     if (result.data.ok) {
+      await analytics().logEvent('attend_event', { event_id: eventId });
       return { attended: true };
     }
     throw new Error('Unexpected error.');
@@ -55,6 +55,7 @@ export async function attendenceRemoval({ eventId }: { eventId: string }): Promi
   try {
     const result = await functions().httpsCallable('unattendEvent')({ eventId });
     if (result.data.ok) {
+      await analytics().logEvent('unattend_event', { event_id: eventId });
       return { removed: true };
     }
     throw new Error('Unexpected error.');
@@ -65,11 +66,7 @@ export async function attendenceRemoval({ eventId }: { eventId: string }): Promi
 
 export async function getUserEvents(userId: string) {
   try {
-    const { docs: attendingListDocs } = await firestore()
-      .collection('users')
-      .doc(userId)
-      .collection('attendingEvents')
-      .get();
+    const { docs: attendingListDocs } = await firestore().collection('users').doc(userId).collection('attendingEvents').get();
 
     const attendingEventIds = attendingListDocs.map((doc) => doc.id);
 

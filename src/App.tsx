@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+import analytics from '@react-native-firebase/analytics';
 import { Easing } from 'react-native';
 import { StoreProvider } from './stores';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
@@ -19,11 +20,32 @@ const defaultOptions: ModalOptions = {
 const stack = createModalStack(modalConfig, defaultOptions);
 
 function App() {
+  const routeNameRef = React.useRef();
+  const navigationRef = React.useRef();
+
   return (
     <StoreProvider>
       <ThemeProvider theme={theme}>
         <ModalProvider stack={stack}>
-          <NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}>
+          <NavigationContainer
+            ref={navigationRef}
+            theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}
+            onReady={() => (routeNameRef.current = navigationRef.current.getCurrentRoute().name)}
+            onStateChange={async () => {
+              const previousRouteName = routeNameRef.current;
+              const currentRouteName = navigationRef.current.getCurrentRoute().name;
+
+              if (previousRouteName !== currentRouteName) {
+                await analytics().logScreenView({
+                  screen_name: currentRouteName,
+                  screen_class: currentRouteName,
+                });
+              }
+
+              // Save the current route name for later comparision
+              routeNameRef.current = currentRouteName;
+            }}
+          >
             <AppNavigator />
           </NavigationContainer>
         </ModalProvider>

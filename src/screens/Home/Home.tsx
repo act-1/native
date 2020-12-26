@@ -1,12 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { ScrollView, StyleSheet } from 'react-native';
-import { Box, Text, EventBox, PostBox } from '../../components';
+import analytics from '@react-native-firebase/analytics';
+import { Box, Text, EventBox } from '../../components';
 import { useStore } from '../../stores';
 import PostFeed from './PostFeed';
 import { HomeScreenProps } from '@types/navigation';
 import { IEvent } from '@types/event';
-import { NavigationContainer, NavigationHelpersContext } from '@react-navigation/native';
 
 const posts = [1, 2, 3];
 
@@ -16,6 +16,11 @@ const HomeHeader = () => {
 
 function Home({ navigation }: HomeScreenProps) {
   const { eventStore } = useStore();
+
+  const onEventPress = (eventId: string, index: number) => {
+    navigation.navigate('EventPage', { eventId });
+    analytics().logEvent('home_event_pressed', { event_id: eventId, featured_event_index: index + 1 });
+  };
 
   // TODO: Display loading indicator
   if (eventStore.events.length === 0) {
@@ -29,18 +34,21 @@ function Home({ navigation }: HomeScreenProps) {
         <Text variant="largeTitle" color="lightText">
           הפגנות קרובות
         </Text>
-        <Text variant="appLink" textAlign="center" fontWeight="500" onPress={() => navigation.navigate('EventList')}>
+        <Text
+          variant="appLink"
+          textAlign="center"
+          fontWeight="500"
+          onPress={() => {
+            analytics().logEvent('home_event_list_link_press');
+            navigation.navigate('EventList');
+          }}
+        >
           לרשימת ההפגנות
         </Text>
       </Box>
       <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
-        {eventStore.events.map((event: IEvent) => (
-          <EventBox
-            variant="thumbBox"
-            {...event}
-            onPress={() => navigation.navigate('EventPage', { eventId: event.id })}
-            key={event.id}
-          />
+        {eventStore.events.map((event: IEvent, index: number) => (
+          <EventBox variant="thumbBox" {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
         ))}
       </ScrollView>
 
