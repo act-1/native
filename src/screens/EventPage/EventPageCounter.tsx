@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import { Box, Text } from '../../components';
-import Ticker from 'react-native-ticker';
+import Ticker from '@components/Ticker';
 
 type EventPageCounterProps = {
   number: number;

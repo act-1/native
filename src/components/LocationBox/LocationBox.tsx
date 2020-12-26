@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, Pressable, StyleSheet, ViewStyle } from 'react-native';
+import Ticker from '@components/Ticker';
 import { Box, Text } from '../';
 
 type LocationBoxProps = {
@@ -23,7 +24,7 @@ function LocationBox({ name, address, counter, onPress, style }: LocationBoxProp
             {address}
           </Text>
         </Box>
-        <Box>{counter && <Text variant="counter">{counter}</Text>}</Box>
+        <Box>{counter && <Ticker textStyle={styles.counterStyle}>{counter}</Ticker>}</Box>
       </Box>
     </Pressable>
   );
@@ -34,5 +35,11 @@ export default LocationBox;
 const styles = StyleSheet.create({
   locationPin: {
     marginRight: 10,
+  },
+  counterStyle: {
+    writingDirection: 'rtl',
+    fontFamily: 'Rubik-Bold',
+    fontSize: 16,
+    color: '#737373',
   },
 });
