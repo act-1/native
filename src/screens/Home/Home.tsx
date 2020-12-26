@@ -37,7 +37,6 @@ function Home({ navigation }: HomeScreenProps) {
         <Text
           variant="appLink"
           textAlign="center"
-          fontWeight="500"
           onPress={() => {
             analytics().logEvent('home_event_list_link_press');
             navigation.navigate('EventList');
@@ -52,12 +51,12 @@ function Home({ navigation }: HomeScreenProps) {
         ))}
       </ScrollView>
 
-      <Text variant="largeTitle" color="lightText" fontWeight="500" paddingHorizontal="m">
+      <Text variant="largeTitle" color="lightText" fontWeight="500" paddingHorizontal="m" marginBottom="m">
         מפגינים עכשיו
       </Text>
       <LiveCheckIns />
 
-      <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500">
+      <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500" marginBottom="m">
         פיד מחאה
       </Text>
       <PostFeed posts={posts} />
