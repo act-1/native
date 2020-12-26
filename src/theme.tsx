@@ -101,7 +101,7 @@ const theme = createTheme({
       color: 'lightText',
     },
     appLink: {
-      fontFamily: 'Rubik-Regular',
+      fontFamily: 'Rubik-Medium',
       fontSize: 15,
       color: 'link',
     },
@@ -114,9 +114,8 @@ const theme = createTheme({
       fontSize: 13,
     },
     importantText: {
-      fontFamily: 'Rubik-Regular',
+      fontFamily: 'Rubik-Bold',
       fontSize: 16,
-      fontWeight: 'bold',
       color: 'important',
       textAlign: 'left',
     },
