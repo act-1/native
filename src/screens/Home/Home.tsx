@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { Box, Text, EventBox } from '../../components';
 import { useStore } from '../../stores';
-import PostFeed from './PostFeed';
+import { LiveCheckIns, PostFeed } from './';
 import { HomeScreenProps } from '@types/navigation';
 import { IEvent } from '@types/event';
 
@@ -53,9 +53,13 @@ function Home({ navigation }: HomeScreenProps) {
       </ScrollView>
 
       <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500">
+        מפגינים עכשיו
+      </Text>
+      <LiveCheckIns />
+
+      <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500">
         פיד מחאה
       </Text>
-
       <PostFeed posts={posts} />
     </ScrollView>
   );
