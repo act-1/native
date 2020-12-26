@@ -119,12 +119,6 @@ const theme = createTheme({
       color: 'important',
       textAlign: 'left',
     },
-    counter: {
-      fontFamily: 'Rubik-Medium',
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: 'lightText',
-    },
   },
 });
 
