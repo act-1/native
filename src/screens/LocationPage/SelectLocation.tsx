@@ -87,17 +87,19 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
           <Box marginTop="m" width="100%">
             <EventBox
               time="18:00"
-              localDay="יום ראשון"
-              locationName="בלפור"
-              title="טקס פרישה לדורון ידיד"
+              localDay="יום שבת"
+              locationName="כיכר פריז, ירושלים"
+              title="מוצ״ש בבלפור"
               thumbnail={
-                new URL('https://res.cloudinary.com/onekm/image/upload/v1608277882/event_thumbs/balfur-19-dec_oi3uhh.jpg')
+                new URL(
+                  'https://res.cloudinary.com/onekm/image/upload/v1609003582/event_thumbs/132223595_181504143674568_5409743636926973174_o_d3qec1.jpg'
+                )
               }
               onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
             />
             <LocationBox
-              name="צומת פרדסיה"
-              address="בית חי"
+              name="גשר המיתרים"
+              address="ירושלים"
               onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
             />
           </Box>

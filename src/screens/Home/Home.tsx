@@ -51,15 +51,25 @@ function Home({ navigation }: HomeScreenProps) {
         ))}
       </ScrollView>
 
-      <Text variant="largeTitle" color="lightText" fontWeight="500" paddingHorizontal="m" marginBottom="m">
-        מפגינים עכשיו
-      </Text>
+      <Box flexDirection="row" alignItems="center" justifyContent="space-between" paddingHorizontal="m" marginBottom="m">
+        <Text variant="largeTitle" color="lightText" fontWeight="500">
+          עכשיו בהפגנה
+        </Text>
+        <Box backgroundColor="important" paddingHorizontal="xm" paddingVertical="xs" borderRadius={25}>
+          <Text color="mainBackground" fontFamily="Rubik-Medium">
+            LIVE
+          </Text>
+        </Box>
+      </Box>
       <LiveCheckIns />
 
       <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500" marginBottom="m">
         פיד מחאה
       </Text>
       <PostFeed posts={posts} />
+      <Text variant="appLink" textAlign="center">
+        לפיד המלא{' >'}
+      </Text>
     </ScrollView>
   );
 }

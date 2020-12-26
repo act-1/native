@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, Alert } from 'react-native';
 import MapView from 'react-native-maps';
 import { Box, Text } from '../../components';
@@ -7,9 +7,24 @@ import { addCheckInEntry } from '../../api/liveFeed';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
+import database from '@react-native-firebase/database';
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const store = useStore();
+  const [balfur, setBalfur] = useState('3,415');
+
+  useEffect(() => {
+    const balfurCount = database().ref('balfurCount');
+
+    balfurCount.on('value', (snapshot) => {
+      setBalfur(snapshot.val().toLocaleString());
+      console.log('Balfur count: ', snapshot.val());
+    });
+
+    return () => {
+      balfurCount.off();
+    };
+  }, []);
 
   const confirmCheckIn = () => {
     Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
@@ -19,7 +34,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
       },
       {
         text: 'אישור',
-        onPress: () => console.log('Ask me later pressed'),
+        onPress: () => addCheckInEntry(),
       },
     ]);
   };
@@ -32,8 +47,8 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
         minZoomLevel={14}
         mapPadding={{ right: -25, top: 0, bottom: 0, left: 15 }}
         initialRegion={{
-          latitude: 32.305138,
-          longitude: 34.9031153,
+          latitude: 31.7749882,
+          longitude: 35.2197916,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -43,10 +58,10 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
         </Box>
         <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
-          צומת פרדסיה
+          כיכר פריז
         </Text>
         <Text variant="largeTitle" fontWeight="500" color="lightText" marginBottom="xm">
-          85 עכשיו בהפגנה
+          {balfur} עכשיו בהפגנה
         </Text>
 
         <Box width="100%" paddingHorizontal="xm">

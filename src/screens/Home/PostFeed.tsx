@@ -14,7 +14,6 @@ function PostFeed({ posts }) {
           }
           content="המחאה פירקה את הליכוד. ובעזרת השם גם תפרק את הממשלה הכושלת הזו עוד הלילה."
           key={Math.random()}
-          style={{ marginBottom: 12 }}
         />
       ))}
     </Box>

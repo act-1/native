@@ -6,6 +6,7 @@ import { EventListScreenProps } from '@types/navigation';
 import { Box, Text, EventBox } from '../../components';
 import { formatEventsForSectionList, EventsSectionListItem } from './event-list-utils';
 import { useStore } from '../../stores';
+import database from '@react-native-firebase/database';
 
 function EventList({ navigation }: EventListScreenProps) {
   const [eventList, setEventList] = useState<EventsSectionListItem[]>([]);

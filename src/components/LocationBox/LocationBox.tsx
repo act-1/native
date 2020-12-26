@@ -24,7 +24,14 @@ function LocationBox({ name, address, counter, onPress, style }: LocationBoxProp
             {address}
           </Text>
         </Box>
-        <Box>{counter && <Ticker textStyle={styles.counterStyle}>{counter}</Ticker>}</Box>
+        <Box>
+          {counter && (
+            <Box flexDirection="row-reverse" alignItems="center">
+              <Image source={require('@assets/icons/people-protest.png')} style={styles.protestersIcon} />
+              <Ticker textStyle={styles.counterStyle}>{counter}</Ticker>
+            </Box>
+          )}
+        </Box>
       </Box>
     </Pressable>
   );
@@ -36,10 +43,12 @@ const styles = StyleSheet.create({
   locationPin: {
     marginRight: 10,
   },
+  protestersIcon: {
+    marginLeft: 8,
+  },
   counterStyle: {
-    writingDirection: 'rtl',
     fontFamily: 'Rubik-Bold',
     fontSize: 16,
-    color: '#737373',
+    color: '#8b8b8b',
   },
 });
