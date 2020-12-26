@@ -59,9 +59,10 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     width: '100%',
-    height: 150,
+    height: 500,
+    marginTop: -350,
     marginBottom: 12,
-    backgroundColor: '#304BFF',
+    backgroundColor: '#334df8',
   },
   featuredEvents: {
     paddingVertical: 16,
