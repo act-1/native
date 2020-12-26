@@ -52,7 +52,7 @@ function Home({ navigation }: HomeScreenProps) {
         ))}
       </ScrollView>
 
-      <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500">
+      <Text variant="largeTitle" color="lightText" fontWeight="500" paddingHorizontal="m">
         מפגינים עכשיו
       </Text>
       <LiveCheckIns />
