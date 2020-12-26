@@ -6,10 +6,11 @@ type LocationBoxProps = {
   name: string;
   address?: string;
   style?: ViewStyle;
-  onPress: () => void;
+  counter?: string;
+  onPress?: () => void;
 };
 
-function LocationBox({ name, address, onPress, style }: LocationBoxProps) {
+function LocationBox({ name, address, counter, onPress, style }: LocationBoxProps) {
   return (
     <Pressable style={({ pressed }) => [{ backgroundColor: pressed ? '#e4e4e4' : '#fff' }]} onPress={onPress}>
       <Box flexDirection="row" alignItems="center" paddingVertical="s" paddingHorizontal="m" style={style}>
@@ -22,9 +23,7 @@ function LocationBox({ name, address, onPress, style }: LocationBoxProps) {
             {address}
           </Text>
         </Box>
-        <Box>
-          <Text variant="counter">23</Text>
-        </Box>
+        <Box>{counter && <Text variant="counter">{counter}</Text>}</Box>
       </Box>
     </Pressable>
   );
