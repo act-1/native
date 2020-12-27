@@ -7,7 +7,9 @@ export type SelectLocationScreenProps = StackScreenProps<RootStackParamList, 'Ch
 export type LocationScreenProps = StackScreenProps<RootStackParamList, 'LocationPage'>;
 
 export type RootStackParamList = {
+  AppTabs: undefined;
   Home: undefined;
+  EventsNavigator: undefined;
   EventList: undefined;
   EventPage: { eventId: string };
   CheckInSelectLocation: undefined;

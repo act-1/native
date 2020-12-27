@@ -67,7 +67,7 @@ function Home({ navigation }: HomeScreenProps) {
         פיד מחאה
       </Text>
       <PostFeed posts={posts} />
-      <Text variant="appLink" textAlign="center">
+      <Text variant="appLink" textAlign="center" marginVertical="m">
         לפיד המלא{' >'}
       </Text>
     </ScrollView>
