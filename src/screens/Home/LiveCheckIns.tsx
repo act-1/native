@@ -20,6 +20,16 @@ function LiveCheckIns() {
 
   return (
     <Box>
+      <Box flexDirection="row" alignItems="center" justifyContent="space-between" paddingHorizontal="m" marginBottom="m">
+        <Text variant="largeTitle" color="lightText" fontWeight="500">
+          עכשיו בהפגנה
+        </Text>
+        <Box backgroundColor="important" paddingHorizontal="xm" paddingVertical="xs" borderRadius={25}>
+          <Text color="mainBackground" fontFamily="Rubik-Medium">
+            LIVE
+          </Text>
+        </Box>
+      </Box>
       <Box marginBottom="m">
         <LocationBox name="כיכר פריז" address="ירושלים" counter={balfur} />
         <LocationBox name="כיכר רבין" address="תל אביב" counter={'1,421'} />

@@ -51,16 +51,6 @@ function Home({ navigation }: HomeScreenProps) {
         ))}
       </ScrollView>
 
-      <Box flexDirection="row" alignItems="center" justifyContent="space-between" paddingHorizontal="m" marginBottom="m">
-        <Text variant="largeTitle" color="lightText" fontWeight="500">
-          עכשיו בהפגנה
-        </Text>
-        <Box backgroundColor="important" paddingHorizontal="xm" paddingVertical="xs" borderRadius={25}>
-          <Text color="mainBackground" fontFamily="Rubik-Medium">
-            LIVE
-          </Text>
-        </Box>
-      </Box>
       <LiveCheckIns />
 
       <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500" marginBottom="m">
