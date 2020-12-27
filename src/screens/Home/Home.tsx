@@ -2,11 +2,11 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { ScrollView, StyleSheet } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
-import { Box, Text, EventBox } from '../../components';
+import { Box, Text } from '../../components';
 import { useStore } from '../../stores';
-import { LiveCheckIns, PostFeed } from './';
+import PostFeed from './PostFeed';
+import { EventsWidget } from './Feed/Widgets';
 import { HomeScreenProps } from '@types/navigation';
-import { IEvent } from '@types/event';
 
 const posts = [1, 2, 3];
 
@@ -28,38 +28,10 @@ function Home({ navigation }: HomeScreenProps) {
   }
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#f0f2f5' }}>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <HomeHeader />
-      <Box flexDirection="row" justifyContent="space-between" alignItems="center" paddingHorizontal="m">
-        <Text variant="largeTitle" color="lightText">
-          הפגנות קרובות
-        </Text>
-        <Text
-          variant="appLink"
-          textAlign="center"
-          onPress={() => {
-            analytics().logEvent('home_event_list_link_press');
-            navigation.navigate('EventList');
-          }}
-        >
-          לרשימת ההפגנות
-        </Text>
-      </Box>
-      <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
-        {eventStore.events.map((event: IEvent, index: number) => (
-          <EventBox variant="thumbBox" {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
-        ))}
-      </ScrollView>
-
-      <LiveCheckIns />
-
-      <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500" marginBottom="m">
-        פיד מחאה
-      </Text>
+      <EventsWidget onEventPress={onEventPress} goToEventList={() => navigation.navigate('EventList')} />
       <PostFeed posts={posts} />
-      <Text variant="appLink" textAlign="center" marginVertical="m">
-        לפיד המלא{' >'}
-      </Text>
     </ScrollView>
   );
 }
@@ -74,9 +46,5 @@ const styles = StyleSheet.create({
     marginTop: -350,
     marginBottom: 12,
     backgroundColor: '#334df8',
-  },
-  featuredEvents: {
-    paddingVertical: 16,
-    paddingHorizontal: 12,
   },
 });
