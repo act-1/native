@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image, Pressable, StyleSheet, ViewStyle } from 'react-native';
-import Ticker from '@components/Ticker';
-import { Box, Text } from '../';
+import { Box, Text, Ticker } from '../';
 
 type LocationBoxProps = {
   name: string;
