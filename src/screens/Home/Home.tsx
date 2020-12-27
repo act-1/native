@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { Box, Text } from '../../components';
 import { useStore } from '../../stores';
@@ -11,7 +11,13 @@ import { HomeScreenProps } from '@types/navigation';
 const posts = [1, 2, 3];
 
 const HomeHeader = () => {
-  return <Box style={styles.header} />;
+  return (
+    <SafeAreaView style={styles.header}>
+      <Text variant="hugeTitle" fontSize={24} style={{ color: '#6E7DFF' }}>
+        Act1
+      </Text>
+    </SafeAreaView>
+  );
 };
 
 function Home({ navigation }: HomeScreenProps) {
@@ -28,11 +34,12 @@ function Home({ navigation }: HomeScreenProps) {
   }
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <>
       <HomeHeader />
-      <EventsWidget onEventPress={onEventPress} goToEventList={() => navigation.navigate('EventList')} />
-      <PostFeed posts={posts} />
-    </ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#f2f2f2' }}>
+        <PostFeed posts={posts} />
+      </ScrollView>
+    </>
   );
 }
 
@@ -40,11 +47,16 @@ export default observer(Home);
 
 const styles = StyleSheet.create({
   header: {
-    flex: 1,
     width: '100%',
-    height: 500,
-    marginTop: -350,
-    marginBottom: 12,
-    backgroundColor: '#334df8',
+    height: 92,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { height: 1, width: 0 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+    zIndex: 2,
   },
 });

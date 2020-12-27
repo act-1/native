@@ -44,6 +44,7 @@ const theme = createTheme({
     link: palette.blue,
   },
   spacing: {
+    xxs: 2,
     xs: 4,
     s: 8,
     m: 12,
