@@ -1,7 +1,7 @@
 import { createTheme } from '@shopify/restyle';
 
 const palette = {
-  purpleLight: '#8C6FF7',
+  purpleLight: '#6E7DFF',
   purplePrimary: '#5A31F4',
   purpleDark: '#3F22AB',
 
@@ -32,13 +32,13 @@ const theme = createTheme({
     lightText: palette.grey,
     mainBackground: palette.white,
     mainForeground: palette.black,
-    cardPrimaryBackground: palette.purplePrimary,
     eventBoxDateColor: palette.redPrimary,
     dimmedBackground: palette.lightgrey,
     important: palette.redPrimary,
     importantLight: palette.redLight,
     attentionBackground: palette.orange,
     attentionForeground: palette.orangeDark,
+    screenTitle: palette.purpleLight,
     lightBorderColor: palette.lightgrey,
     seperator: palette.porcelain,
     link: palette.blue,
@@ -60,6 +60,7 @@ const theme = createTheme({
       fontFamily: 'Rubik-Bold',
       fontSize: 30,
       color: 'primaryText',
+      textAlign: 'left',
     },
     extraLargeTitle: {
       fontFamily: 'Rubik-Bold',
@@ -101,7 +102,7 @@ const theme = createTheme({
       color: 'lightText',
     },
     appLink: {
-      fontFamily: 'Rubik-Regular',
+      fontFamily: 'Rubik-Medium',
       fontSize: 15,
       color: 'link',
     },
@@ -114,9 +115,8 @@ const theme = createTheme({
       fontSize: 13,
     },
     importantText: {
-      fontFamily: 'Rubik-Regular',
+      fontFamily: 'Rubik-Bold',
       fontSize: 16,
-      fontWeight: 'bold',
       color: 'important',
       textAlign: 'left',
     },

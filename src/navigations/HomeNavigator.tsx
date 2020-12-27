@@ -1,19 +1,18 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { EventPage } from '../screens';
+import { Home, EventList, EventPage } from '../screens';
 import { RootStackParamList } from '../types/navigation';
+import EventsNavigator from '../navigations/EventsNavigator';
 import Icon from 'react-native-vector-icons/Feather';
 
-const MainStack = createStackNavigator<RootStackParamList>();
-const RootStack = createStackNavigator();
+const HomeStack = createStackNavigator<RootStackParamList>();
 
-import AppTabs from './AppTabs';
-
-function MainStackScreen() {
+function HomeNavigator() {
   return (
-    <MainStack.Navigator screenOptions={{ headerShown: false }}>
-      <MainStack.Screen name="AppTabs" component={AppTabs} />
-      <MainStack.Screen
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="EventList" options={{ title: 'הפגנות קרובות' }} component={EventList} />
+      <HomeStack.Screen
         name="EventPage"
         component={EventPage}
         options={({ navigation }) => ({
@@ -32,16 +31,8 @@ function MainStackScreen() {
           ),
         })}
       />
-    </MainStack.Navigator>
+    </HomeStack.Navigator>
   );
 }
 
-function AppNavigator() {
-  return (
-    <RootStack.Navigator screenOptions={{ headerShown: false }} mode="modal">
-      <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-    </RootStack.Navigator>
-  );
-}
-
-export default AppNavigator;
+export default HomeNavigator;

@@ -71,11 +71,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
           <Text>טוענת..</Text>
         </Box>
       ) : (
-        <StickyHeaderScrollView
-          goBack={() => navigation.goBack()}
-          headerTitle={event.title}
-          thumbnail={event.thumbnail}
-        >
+        <StickyHeaderScrollView goBack={() => navigation.goBack()} headerTitle={event.title} thumbnail={event.thumbnail}>
           <Box backgroundColor="dimmedBackground">
             <Box paddingVertical="xm" marginBottom="m" backgroundColor="mainBackground" alignItems="center">
               <Text style={{ writingDirection: 'rtl' }} variant="largeTitle" marginBottom="m" textAlign="center">
@@ -111,10 +107,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Text>
 
               <Box height={50} justifyContent="space-between" marginBottom="xm">
-                <EventPageDetail
-                  text={`${event.upcomingDate}, ${event.shortDate} בשעה ${event.time}`}
-                  iconName="clock"
-                />
+                <EventPageDetail text={`${event.upcomingDate}, ${event.shortDate} בשעה ${event.time}`} iconName="clock" />
                 <EventPageDetail text={event.locationName} iconName="map-pin" />
               </Box>
 
@@ -130,15 +123,13 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
                   longitudeDelta: 0.0421,
                 }}
               >
-                <Marker
-                  coordinate={{ latitude: event.coordinates._latitude, longitude: event.coordinates._longitude }}
-                />
+                <Marker coordinate={{ latitude: event.coordinates._latitude, longitude: event.coordinates._longitude }} />
               </MapView>
 
               <HTML
                 html={event.content}
                 tagsStyles={{
-                  p: { marginBottom: 12, fontSize: 15, fontFamily: 'Rubik-Regular' },
+                  p: { textAlign: 'left', marginBottom: 12, fontSize: 15, fontFamily: 'Rubik-Regular' },
                   div: { textAlign: 'left', fontFamily: 'Rubik-Regular', fontSize: 15 },
                 }}
               />
@@ -151,10 +142,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
                 {event.organizations.map((org: { id: string; thumbnail: string; title: string }) => (
                   <Box flexDirection="row" alignItems="center" key={org.id}>
-                    <Image
-                      source={{ uri: org.thumbnail }}
-                      style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
-                    />
+                    <Image source={{ uri: org.thumbnail }} style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }} />
                     <Text variant="text">{org.title}</Text>
                   </Box>
                 ))}

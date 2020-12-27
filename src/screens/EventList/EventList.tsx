@@ -6,6 +6,7 @@ import { EventListScreenProps } from '@types/navigation';
 import { Box, Text, EventBox } from '../../components';
 import { formatEventsForSectionList, EventsSectionListItem } from './event-list-utils';
 import { useStore } from '../../stores';
+import database from '@react-native-firebase/database';
 
 function EventList({ navigation }: EventListScreenProps) {
   const [eventList, setEventList] = useState<EventsSectionListItem[]>([]);
@@ -27,8 +28,11 @@ function EventList({ navigation }: EventListScreenProps) {
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
+      <StatusBar barStyle="dark-content" backgroundColor="#7254c8" />
       <Box justifyContent="center" height="100%">
+        <Text variant="hugeTitle" color="screenTitle" paddingHorizontal="m">
+          אירועים קרובים
+        </Text>
         {eventList.length === 0 ? (
           <Box justifyContent="center" alignItems="center">
             <ActivityIndicator size="small" color="#0000ff" />

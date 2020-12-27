@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { Box, Text, EventBox } from '../../components';
 import { useStore } from '../../stores';
-import PostFeed from './PostFeed';
+import { LiveCheckIns, PostFeed } from './';
 import { HomeScreenProps } from '@types/navigation';
 import { IEvent } from '@types/event';
 
@@ -28,7 +28,7 @@ function Home({ navigation }: HomeScreenProps) {
   }
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#f0f2f5' }}>
       <HomeHeader />
       <Box flexDirection="row" justifyContent="space-between" alignItems="center" paddingHorizontal="m">
         <Text variant="largeTitle" color="lightText">
@@ -37,7 +37,6 @@ function Home({ navigation }: HomeScreenProps) {
         <Text
           variant="appLink"
           textAlign="center"
-          fontWeight="500"
           onPress={() => {
             analytics().logEvent('home_event_list_link_press');
             navigation.navigate('EventList');
@@ -52,11 +51,15 @@ function Home({ navigation }: HomeScreenProps) {
         ))}
       </ScrollView>
 
-      <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500">
+      <LiveCheckIns />
+
+      <Text variant="largeTitle" paddingHorizontal="m" color="lightText" fontWeight="500" marginBottom="m">
         פיד מחאה
       </Text>
-
       <PostFeed posts={posts} />
+      <Text variant="appLink" textAlign="center" marginVertical="m">
+        לפיד המלא{' >'}
+      </Text>
     </ScrollView>
   );
 }

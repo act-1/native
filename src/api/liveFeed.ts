@@ -13,18 +13,20 @@ export async function addCheckInEntry(checkInData) {
 
   // address
 
-  // city
-  const checkInRef = await database.ref('checkIns').push();
-  await checkInRef.set({ createdAt: Firebase.database.ServerValue.TIMESTAMP, ...checkInData });
+  await database.ref('balfurCount').set(firebase.database.ServerValue.increment(1));
 
-  // Increase location check in count
-  const { locationId, eventId } = checkInData;
-  await database.ref(`locationCheckInCounter/${locationId}`).set(firebase.database.ServerValue.increment(1));
+  // City
+  // const checkInRef = await database.ref('checkIns').push();
+  // await checkInRef.set({ createdAt: Firebase.database.ServerValue.TIMESTAMP, ...checkInData });
 
-  // Increase event check in count
-  if (eventId) {
-    await database.ref(`eventCheckInCounter/${eventId}`).set(firebase.database.ServerValue.increment(1));
-  }
+  // // Increase location check in count
+  // const { locationId, eventId } = checkInData;
+  // await database.ref(`locationCheckInCounter/${locationId}`).set(firebase.database.ServerValue.increment(1));
 
-  return checkInRef;
+  // // Increase event check in count
+  // if (eventId) {
+  //   await database.ref(`eventCheckInCounter/${eventId}`).set(firebase.database.ServerValue.increment(1));
+  // }
+
+  // return checkInRef;
 }
