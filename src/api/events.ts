@@ -7,8 +7,8 @@ import { format } from 'date-fns';
 
 export async function getEventList(): Promise<IEvent[]> {
   const today = new Date();
-  today.setHours(today.getHours() - 8);
-  const querySnapshot = await firestore().collection('events').orderBy('timestamp', 'desc').get();
+  today.setHours(today.getHours() - 6); // So the event won't disappear while it's ongoing
+  const querySnapshot = await firestore().collection('events').where('timestamp', '>', today).orderBy('timestamp').get();
   const documents = querySnapshot.docs.map((doc): FirebaseFirestoreTypes.DocumentData => ({ ...doc.data(), id: doc.id }));
 
   const events = documents.map(
