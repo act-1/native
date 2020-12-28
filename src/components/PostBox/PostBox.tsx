@@ -15,11 +15,12 @@ type PostBoxProps = {
   content: string;
   image?: URL;
   style?: ViewStyle;
+  liked: boolean;
   timestamp: string;
 };
 
 function PostBox(props: PostBoxProps) {
-  const { authorName, authorPicture, content, timestamp, style } = props;
+  const { authorName, authorPicture, content, liked, timestamp, style } = props;
   console.log(timestamp);
   return (
     <Box backgroundColor="mainBackground" alignItems="flex-start" style={style}>
@@ -53,7 +54,7 @@ function PostBox(props: PostBoxProps) {
             </Box>
 
             <Box flexDirection="row" alignItems="center" width="100%" marginTop="xs">
-              <Icon name="heart" color="#999999" size={18} style={{ marginRight: 6 }} />
+              <Icon name="heart" color={liked ? 'red' : '#999999'} size={18} style={{ marginRight: 6 }} />
               <Ticker textStyle={styles.likeCount}>52</Ticker>
             </Box>
           </Box>

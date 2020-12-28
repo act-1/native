@@ -10,6 +10,7 @@ function PostFeed() {
       setPosts(posts);
     });
   }, []);
+
   return <Box flex={1}>{posts.length > 0 && posts.map((post) => <PostBox {...post} key={post.id} />)}</Box>;
 }
 
