@@ -1,9 +1,8 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
-import Ticker from 'react-native-ticker';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Feather';
-import { Box, Text } from '../../components';
+import { Box, Text, Ticker } from '../../components';
 
 type PostBoxProps = {
   authorName: string;

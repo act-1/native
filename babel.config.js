@@ -11,7 +11,6 @@ const plugins = [
         '@screens': './src/screens',
       },
     },
-    'react-native-reanimated/plugin',
   ],
 ];
 
