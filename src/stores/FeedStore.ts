@@ -33,46 +33,24 @@ class FeedStore {
     }
   }
 
-  async addPostLike(postId: string) {
+  async updatePostLike(postId: string, liked: boolean) {
     const initialPosts = this.posts;
     const postIndex = initialPosts.findIndex((post) => post.id === postId);
     const postObj = initialPosts[postIndex];
 
-    // Update the UI instantly. Revert later if request failed.
-    this.posts = updateArrayObject(initialPosts, postId, { liked: true, likeCounter: postObj.likeCounter + 1 });
+    const likeCounter = liked ? postObj.likeCounter + 1 : postObj.likeCounter - 1;
+
+    // Update the UI instantly. Revert later if the request failed.
+    this.posts = updateArrayObject(initialPosts, postId, { liked, likeCounter });
 
     try {
-      const { liked } = await likePost(postId);
-      if (liked) {
-        return { liked: true };
-      } else {
-        throw new Error('Unexpected error occured.');
-      }
+      const updateFunction = liked ? likePost : unlikePost;
+      return await updateFunction(postId);
     } catch (err) {
-      // Revert to initial posts if request failed.
-      this.posts = initialPosts;
-      throw err;
-    }
-  }
-
-  async removePostLike(postId: string) {
-    const initialPosts = this.posts;
-    const postIndex = initialPosts.findIndex((post) => post.id === postId);
-    const postObj = initialPosts[postIndex];
-
-    // Update the UI instantly. Revert later if request failed.
-    this.posts = updateArrayObject(initialPosts, postId, { liked: false, likeCounter: postObj.likeCounter - 1 });
-
-    try {
-      const { unliked } = await unlikePost(postId);
-      if (unliked) {
-        return { unliked: true };
-      } else {
-        throw new Error('Unexpected error occured.');
-      }
-    } catch (err) {
-      // Revert to initial posts if request failed.
-      this.posts = initialPosts;
+      // Revert to the initial posts if the request has failed.
+      runInAction(() => {
+        this.posts = initialPosts;
+      });
       throw err;
     }
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
@@ -25,13 +25,8 @@ function PostBox(props: PostBoxProps) {
 
   const likePress = async () => {
     try {
-      if (!liked) {
-        const r = await feedStore.addPostLike(postId);
-        console.log(r);
-      } else {
-        const r = await feedStore.removePostLike(postId);
-        console.log(r);
-      }
+      // Update post like with it's opposite like state.
+      await feedStore.updatePostLike(postId, !liked);
     } catch (err) {
       console.log(err);
     }
@@ -68,10 +63,12 @@ function PostBox(props: PostBoxProps) {
               />
             </Box>
 
-            <Box width="100%" flexDirection="row" alignItems="center" marginBottom="s">
-              <Icon onPress={likePress} name="heart" color={liked ? 'red' : '#999999'} size={18} style={{ marginRight: 6 }} />
-              <Ticker textStyle={{ ...styles.likeCount, color: liked ? 'red' : '#999999' }}>{likeCounter}</Ticker>
-            </Box>
+            <Pressable onPress={likePress}>
+              <Box width="100%" flexDirection="row" alignItems="center" marginBottom="s">
+                <Icon name="heart" color={liked ? 'red' : '#999999'} size={18} style={{ marginRight: 6 }} />
+                <Ticker textStyle={{ ...styles.likeCount, color: liked ? 'red' : '#999999' }}>{likeCounter}</Ticker>
+              </Box>
+            </Pressable>
           </Box>
         </Box>
       </Box>

@@ -46,12 +46,12 @@ async function checkUserPostLike(postId: string, userId: string): Promise<boolea
   }
 }
 
-export async function likePost(postId: string): Promise<{ liked: boolean }> {
+export async function likePost(postId: string): Promise<{ updated: boolean }> {
   try {
     const result = await functions().httpsCallable('likePost')({ postId });
     if (result.data.ok) {
       await analytics().logEvent('post_like', { post_id: postId });
-      return { liked: true };
+      return { updated: true };
     }
     throw new Error('Unkown error occured while requesting like.');
   } catch (err) {
@@ -59,12 +59,12 @@ export async function likePost(postId: string): Promise<{ liked: boolean }> {
   }
 }
 
-export async function unlikePost(postId: string): Promise<{ unliked: boolean }> {
+export async function unlikePost(postId: string): Promise<{ updated: boolean }> {
   try {
     const result = await functions().httpsCallable('unlikePost')({ postId });
     if (result.data.ok) {
       await analytics().logEvent('post_unlike', { post_id: postId });
-      return { unliked: true };
+      return { updated: true };
     }
     throw new Error('Unkown error occured while requesting unlike.');
   } catch (err) {
