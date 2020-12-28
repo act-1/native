@@ -3,7 +3,11 @@ import { StyleSheet, ViewStyle } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Feather';
 import { Box, Text, Ticker } from '../../components';
+import * as timeago from 'timeago.js';
 import HTML from 'react-native-render-html';
+
+import he from 'timeago.js/lib/lang/he';
+timeago.register('he', he);
 
 type PostBoxProps = {
   authorName: string;
@@ -16,6 +20,7 @@ type PostBoxProps = {
 
 function PostBox(props: PostBoxProps) {
   const { authorName, authorPicture, content, timestamp, style } = props;
+  console.log(timestamp);
   return (
     <Box backgroundColor="mainBackground" alignItems="flex-start" style={style}>
       <Box flexDirection="row" paddingHorizontal="m">
@@ -32,7 +37,7 @@ function PostBox(props: PostBoxProps) {
                 {authorName}
               </Text>
               <Text variant="boxSubtitle" fontSize={15}>
-                לפני 4 שעות
+                {timeago.format(timestamp, 'he')}
               </Text>
             </Box>
           </Box>

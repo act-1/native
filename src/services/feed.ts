@@ -3,7 +3,7 @@ import firestore from '@react-native-firebase/firestore';
 export async function getAllPosts() {
   try {
     const postsQuerySnapshot = await firestore().collection('posts').get();
-    const posts = postsQuerySnapshot.docs.map((doc) => ({ ...doc.data() }));
+    const posts = postsQuerySnapshot.docs.map((doc) => ({ ...doc.data(), timestamp: doc.data().timestamp.toDate() }));
     return posts;
   } catch (err) {
     throw err;
