@@ -8,8 +8,6 @@ import PostFeed from './PostFeed';
 import { EventsWidget } from './Feed/Widgets';
 import { HomeScreenProps } from '@types/navigation';
 
-const posts = [1, 2, 3];
-
 const HomeHeader = () => {
   return (
     <SafeAreaView style={styles.header}>
@@ -37,7 +35,7 @@ function Home({ navigation }: HomeScreenProps) {
     <>
       <HomeHeader />
       <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#f2f2f2' }}>
-        <PostFeed posts={posts} />
+        <PostFeed />
       </ScrollView>
     </>
   );
