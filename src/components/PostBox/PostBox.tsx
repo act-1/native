@@ -3,10 +3,11 @@ import { StyleSheet, ViewStyle } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Feather';
 import { Box, Text, Ticker } from '../../components';
+import HTML from 'react-native-render-html';
 
 type PostBoxProps = {
   authorName: string;
-  authorPicture: URL;
+  authorPicture: string;
   content: string;
   image?: URL;
   style?: ViewStyle;
@@ -20,7 +21,7 @@ function PostBox(props: PostBoxProps) {
       <Box flexDirection="row" paddingHorizontal="m">
         <FastImage
           source={{
-            uri: authorPicture.href,
+            uri: authorPicture,
           }}
           style={styles.authorImage}
         />
@@ -36,9 +37,16 @@ function PostBox(props: PostBoxProps) {
             </Box>
           </Box>
           <Box alignItems="flex-start">
-            <Text variant="text" fontFamily="Arial" fontSize={15} paddingRight="xl" style={{ lineHeight: 20 }}>
-              {content}
-            </Text>
+            <Box paddingRight="xl">
+              <HTML
+                html={content}
+                tagsStyles={{
+                  p: { textAlign: 'left', fontSize: 15 },
+                  div: { textAlign: 'left', fontSize: 15 },
+                }}
+              />
+            </Box>
+
             <Box flexDirection="row" alignItems="center" width="100%" marginTop="xs">
               <Icon name="heart" color="#999999" size={18} style={{ marginRight: 6 }} />
               <Ticker textStyle={styles.likeCount}>52</Ticker>
