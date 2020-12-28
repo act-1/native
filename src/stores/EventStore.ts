@@ -23,12 +23,12 @@ class EventStore {
     const geocollection = GeoFirestore.collection('locations');
 
     // Add a GeoDocument to a GeoCollection
-    const doc = geocollection.doc('ahlon');
-    doc.set({
-      name: 'צומת קדימה',
-      address: 'קדימה', // The coordinates field must be a GeoPoint!
-      coordinates: new firestore.GeoPoint(32.283406, 34.896686),
-    });
+    // const doc = geocollection.doc('ahlon');
+    // doc.set({
+    //   name: 'צומת קדימה',
+    //   address: 'קדימה', // The coordinates field must be a GeoPoint!
+    //   coordinates: new firestore.GeoPoint(32.283406, 34.896686),
+    // });
   }
 
   async getEvents() {

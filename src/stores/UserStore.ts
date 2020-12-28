@@ -25,6 +25,7 @@ class UserStore {
       if (user) {
         this.user = user;
         rootStore.eventStore?.getEvents(); // Only authed users can fetch the event list
+        rootStore.feedStore?.getPosts();
         EventsAPI.getUserEvents(user.uid).then((events) => {
           runInAction(() => {
             this.userEventIds = events;

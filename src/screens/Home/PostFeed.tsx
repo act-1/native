@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { Box, PostBox } from '../../components';
-import { getAllPosts } from '@services/feed';
-import { EventsWidget } from './Feed/Widgets';
+import { EventsWidget, LiveCheckIns } from './Feed/Widgets';
 
 function PostFeed() {
-  const { userStore } = useStore();
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    if (userStore.user.uid)
-      getAllPosts(userStore.user.uid).then((posts) => {
-        setPosts(posts);
-      });
-  }, [userStore.user]);
+  const { feedStore } = useStore();
+  const { posts } = feedStore;
 
   return (
     <Box flex={1}>

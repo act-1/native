@@ -19,7 +19,6 @@ export async function getAllPosts(userId: string) {
     });
 
     const posts = await Promise.all(withUserLikes);
-    console.log(posts);
 
     return posts;
   } catch (err) {

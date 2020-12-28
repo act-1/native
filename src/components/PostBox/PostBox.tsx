@@ -1,35 +1,36 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
+import HTML from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/Feather';
 import { Box, Text, Ticker } from '../../components';
-import * as timeago from 'timeago.js';
-import HTML from 'react-native-render-html';
 import { likePost, unlikePost } from '@services/feed';
-
+import { IPost } from '@types/post';
+import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
 timeago.register('he', he);
 
-type PostBoxProps = {
+type PostBoxProps = IPost & {
   id: string;
-  authorName: string;
-  authorPicture: string;
-  content: string;
   image?: URL;
   style?: ViewStyle;
   liked: boolean;
-  timestamp: string;
 };
 
 function PostBox(props: PostBoxProps) {
-  const { id: postId, authorName, authorPicture, content, liked, timestamp, style } = props;
+  const { feedStore } = useStore();
+  const { id: postId, authorName, authorPicture, content, likeCounter, liked, timestamp, style } = props;
 
   const likePress = async () => {
     try {
       if (!liked) {
-        await likePost(postId);
+        const r = await feedStore.addPostLike(postId);
+        console.log(r);
       } else {
-        await unlikePost(postId);
+        const r = await feedStore.removePostLike(postId);
+        console.log(r);
       }
     } catch (err) {
       console.log(err);
@@ -69,7 +70,7 @@ function PostBox(props: PostBoxProps) {
 
             <Box width="100%" flexDirection="row" alignItems="center" marginBottom="s">
               <Icon onPress={likePress} name="heart" color={liked ? 'red' : '#999999'} size={18} style={{ marginRight: 6 }} />
-              <Ticker textStyle={{ ...styles.likeCount, color: liked ? 'red' : '#999999' }}>52</Ticker>
+              <Ticker textStyle={{ ...styles.likeCount, color: liked ? 'red' : '#999999' }}>{likeCounter}</Ticker>
             </Box>
           </Box>
         </Box>
@@ -80,7 +81,7 @@ function PostBox(props: PostBoxProps) {
   );
 }
 
-export default PostBox;
+export default observer(PostBox);
 
 const styles = StyleSheet.create({
   authorImage: {
