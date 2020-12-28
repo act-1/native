@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { StatusBar, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { Box, Text } from '../../components';
 import { useStore } from '../../stores';
@@ -11,6 +11,7 @@ import { HomeScreenProps } from '@types/navigation';
 const HomeHeader = () => {
   return (
     <SafeAreaView style={styles.header}>
+      <StatusBar barStyle="dark-content" networkActivityIndicatorVisible={false} />
       <Text variant="hugeTitle" fontSize={24} style={{ color: '#6E7DFF' }}>
         Act1
       </Text>

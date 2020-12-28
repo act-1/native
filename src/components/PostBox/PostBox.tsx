@@ -5,11 +5,13 @@ import Icon from 'react-native-vector-icons/Feather';
 import { Box, Text, Ticker } from '../../components';
 import * as timeago from 'timeago.js';
 import HTML from 'react-native-render-html';
+import { likePost, unlikePost } from '@services/feed';
 
 import he from 'timeago.js/lib/lang/he';
 timeago.register('he', he);
 
 type PostBoxProps = {
+  id: string;
   authorName: string;
   authorPicture: string;
   content: string;
@@ -20,8 +22,20 @@ type PostBoxProps = {
 };
 
 function PostBox(props: PostBoxProps) {
-  const { authorName, authorPicture, content, liked, timestamp, style } = props;
-  console.log(timestamp);
+  const { id: postId, authorName, authorPicture, content, liked, timestamp, style } = props;
+
+  const likePress = async () => {
+    try {
+      if (!liked) {
+        await likePost(postId);
+      } else {
+        await unlikePost(postId);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Box backgroundColor="mainBackground" alignItems="flex-start" style={style}>
       <Box flexDirection="row" paddingHorizontal="m">
@@ -43,7 +57,7 @@ function PostBox(props: PostBoxProps) {
             </Box>
           </Box>
           <Box alignItems="flex-start">
-            <Box paddingRight="xl">
+            <Box paddingRight="xl" marginBottom="s">
               <HTML
                 html={content}
                 tagsStyles={{
@@ -53,15 +67,15 @@ function PostBox(props: PostBoxProps) {
               />
             </Box>
 
-            <Box flexDirection="row" alignItems="center" width="100%" marginTop="xs">
-              <Icon name="heart" color={liked ? 'red' : '#999999'} size={18} style={{ marginRight: 6 }} />
-              <Ticker textStyle={styles.likeCount}>52</Ticker>
+            <Box width="100%" flexDirection="row" alignItems="center" marginBottom="s">
+              <Icon onPress={likePress} name="heart" color={liked ? 'red' : '#999999'} size={18} style={{ marginRight: 6 }} />
+              <Ticker textStyle={{ ...styles.likeCount, color: liked ? 'red' : '#999999' }}>52</Ticker>
             </Box>
           </Box>
         </Box>
       </Box>
 
-      <Box width="100%" height={2} backgroundColor="seperator" marginTop="m" />
+      <Box width="100%" height={2} backgroundColor="seperator" />
     </Box>
   );
 }
@@ -78,7 +92,7 @@ const styles = StyleSheet.create({
   },
   likeCount: {
     color: '#999999',
-    fontFamily: 'Rubik-Bold',
+    fontFamily: 'Rubik-Medium',
     fontSize: 12,
   },
 });
