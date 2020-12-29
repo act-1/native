@@ -3,11 +3,9 @@ import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
+import EventsAPI from '@services/events';
+import { getUserFCMToken, createUserFCMToken } from '@services/user';
 import rootStore from './RootStore';
-import EventsAPI from '../services/events';
-import { createAnonymousUser, getUserFCMToken, createUserFCMToken } from '../services/user';
-
-// TODO: Create AuthStore and EventStore
 
 class UserStore {
   rootStore: null | rootStore = null;
@@ -25,8 +23,11 @@ class UserStore {
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user && this.user?.uid !== user.uid) {
+        console.log(user);
         this.user = user;
         this.initAppOnAuth();
+      } else if (!user) {
+        this.signInAnonymously();
       }
     });
   }
@@ -46,7 +47,7 @@ class UserStore {
     const FCMToken = await messaging().getToken();
     const userFCMToken = await getUserFCMToken(this.user?.uid!, FCMToken);
     if (userFCMToken.exists) {
-      // update token
+      // In the future we might want to update the active state.
     } else {
       await createUserFCMToken(this.user?.uid!, FCMToken);
     }
@@ -54,8 +55,7 @@ class UserStore {
 
   async signInAnonymously() {
     try {
-      const { user } = await auth().signInAnonymously();
-      await createAnonymousUser(user.uid);
+      await auth().signInAnonymously();
     } catch (err) {
       console.error(err);
     }
