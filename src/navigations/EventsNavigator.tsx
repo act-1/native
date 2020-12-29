@@ -1,23 +1,14 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { EventList } from '../screens';
+import { EventList, EventPage } from '../screens';
 
 const EventsStack = createStackNavigator();
 
 function EventsNavigator() {
   return (
-    <EventsStack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: '#697CFF',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }}
-    >
-      <EventsStack.Screen name="EventList" options={{ title: 'הפגנות קרובות' }} component={EventList} />
+    <EventsStack.Navigator headerMode="none">
+      <EventsStack.Screen name="EventList" component={EventList} />
+      <EventsStack.Screen name="EventPage" component={EventPage} />
     </EventsStack.Navigator>
   );
 }

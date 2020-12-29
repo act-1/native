@@ -30,7 +30,7 @@ function EventList({ navigation }: EventListScreenProps) {
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor="#7254c8" />
       <Box justifyContent="center" height="100%">
-        <Text variant="hugeTitle" color="screenTitle" paddingHorizontal="m">
+        <Text variant="hugeTitle" color="screenTitle" paddingTop="m" paddingHorizontal="m">
           אירועים קרובים
         </Text>
         {eventList.length === 0 ? (

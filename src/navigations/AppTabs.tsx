@@ -19,11 +19,8 @@ const AppTabs = () => (
           case 'CheckIn':
             iconName = 'map-pin';
             break;
-          case 'Feed':
-            iconName = 'radio';
-            break;
-          case 'Profile':
-            iconName = 'user';
+          case 'Events':
+            iconName = 'calendar';
             break;
         }
 
@@ -38,8 +35,7 @@ const AppTabs = () => (
   >
     <Tab.Screen name="Home" component={HomeNavigator} />
     <Tab.Screen name="CheckIn" component={LocationPageNavigator} />
-    <Tab.Screen name="Feed" component={EventsNavigator} />
-    <Tab.Screen name="Profile" component={EventsNavigator} />
+    <Tab.Screen name="Events" component={EventsNavigator} />
   </Tab.Navigator>
 );
 
