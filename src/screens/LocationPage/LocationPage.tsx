@@ -3,7 +3,7 @@ import { StyleSheet, Image, Alert } from 'react-native';
 import MapView from 'react-native-maps';
 import { Box, Text } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
-import { addCheckInEntry } from '../../api/liveFeed';
+import { addCheckInEntry } from '../../services/liveFeed';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';

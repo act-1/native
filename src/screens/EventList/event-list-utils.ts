@@ -1,4 +1,4 @@
-import { IEvent } from '../../api/events';
+import { IEvent } from '@types/event';
 import { formatShortDate, formatUpcomingDate, parseLocalDate } from '../../utils/date-utils';
 
 export type EventsSectionListItem = {

@@ -32,7 +32,7 @@ function LiveCheckIns() {
       </Box>
       <Box marginBottom="m">
         <LocationBox name="כיכר פריז" address="ירושלים" counter={balfur} />
-        <LocationBox name="כיכר רבין" address="תל אביב" counter={'1,421'} />
+        <LocationBox name="כיכר רבין" address="תל אביב" counter={'1,422'} />
         <LocationBox name="בית הנאשם" address="קיסריה" counter={'981'} />
         <LocationBox name="צומת פרדסיה" address="פרדסיה" counter={'59'} />
       </Box>

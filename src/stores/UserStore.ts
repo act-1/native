@@ -3,8 +3,8 @@ import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
 import rootStore from './RootStore';
-import EventsAPI from '../api/events';
-import { createAnonymousUser } from '../api/user';
+import EventsAPI from '../services/events';
+import { createAnonymousUser } from '../services/user';
 
 // TODO: Create AuthStore and EventStore
 
@@ -25,6 +25,7 @@ class UserStore {
       if (user) {
         this.user = user;
         rootStore.eventStore?.getEvents(); // Only authed users can fetch the event list
+        rootStore.feedStore?.getPosts();
         EventsAPI.getUserEvents(user.uid).then((events) => {
           runInAction(() => {
             this.userEventIds = events;

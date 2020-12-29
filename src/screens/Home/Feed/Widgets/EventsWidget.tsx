@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores';
 import { Box, Text, EventBox } from '@components/';
@@ -8,13 +8,14 @@ import { IEvent } from '@types/event';
 type EventsWidgetProps = {
   onEventPress: (eventId: string, index: number) => void;
   goToEventList: () => void;
+  style?: ViewStyle;
 };
 
-function EventsWidget({ onEventPress, goToEventList }: EventsWidgetProps) {
+function EventsWidget({ onEventPress, goToEventList, style }: EventsWidgetProps) {
   const { eventStore } = useStore();
 
   return (
-    <Box>
+    <Box style={style}>
       <Box flexDirection="row" justifyContent="space-between" alignItems="center" paddingHorizontal="m">
         <Text variant="largeTitle" color="lightText">
           הפגנות קרובות

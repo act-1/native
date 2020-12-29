@@ -1,8 +1,8 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import EventsAPI from '../api/events';
-import { createAnonymousUser } from '../api/user';
+import EventsAPI from '../services/events';
+import { createAnonymousUser } from '../services/user';
 import { IEvent } from '@types/event';
 import rootStore from './RootStore';
 import * as geofirestore from 'geofirestore';
@@ -23,12 +23,12 @@ class EventStore {
     const geocollection = GeoFirestore.collection('locations');
 
     // Add a GeoDocument to a GeoCollection
-    const doc = geocollection.doc('ahlon');
-    doc.set({
-      name: 'צומת קדימה',
-      address: 'קדימה', // The coordinates field must be a GeoPoint!
-      coordinates: new firestore.GeoPoint(32.283406, 34.896686),
-    });
+    // const doc = geocollection.doc('ahlon');
+    // doc.set({
+    //   name: 'צומת קדימה',
+    //   address: 'קדימה', // The coordinates field must be a GeoPoint!
+    //   coordinates: new firestore.GeoPoint(32.283406, 34.896686),
+    // });
   }
 
   async getEvents() {

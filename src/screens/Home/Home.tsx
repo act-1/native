@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { StatusBar, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { Box, Text } from '../../components';
 import { useStore } from '../../stores';
@@ -8,11 +8,10 @@ import PostFeed from './PostFeed';
 import { EventsWidget } from './Feed/Widgets';
 import { HomeScreenProps } from '@types/navigation';
 
-const posts = [1, 2, 3];
-
 const HomeHeader = () => {
   return (
     <SafeAreaView style={styles.header}>
+      <StatusBar barStyle="dark-content" networkActivityIndicatorVisible={false} />
       <Text variant="hugeTitle" fontSize={24} style={{ color: '#6E7DFF' }}>
         Act1
       </Text>
@@ -37,7 +36,7 @@ function Home({ navigation }: HomeScreenProps) {
     <>
       <HomeHeader />
       <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#f2f2f2' }}>
-        <PostFeed posts={posts} />
+        <PostFeed />
       </ScrollView>
     </>
   );

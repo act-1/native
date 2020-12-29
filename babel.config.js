@@ -9,9 +9,9 @@ const plugins = [
         '@utils': './src/utils',
         '@navigation': './src/navigation',
         '@screens': './src/screens',
+        '@services': './src/services',
       },
     },
-    'react-native-reanimated/plugin',
   ],
 ];
 
