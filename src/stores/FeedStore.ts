@@ -1,21 +1,12 @@
-import { makeAutoObservable, runInAction, toJS } from 'mobx';
-import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { getAllPosts, likePost, unlikePost } from '@services/feed';
+import { IPost } from '@types/post';
+import { updateArrayItem } from '@utils/array-utils';
 import rootStore from './RootStore';
-
-function updateArrayObject(arr, id, updatedFields) {
-  const index = arr.findIndex((item: any) => item.id === id);
-  if (index === -1) throw new Error('Array item not found.');
-
-  const obj = arr[index];
-  const updateObj = { ...obj, ...updatedFields };
-  const updatedArray = [...arr.slice(0, index), updateObj, ...arr.slice(index + 1)];
-  return updatedArray;
-}
 
 class FeedStore {
   rootStore: null | rootStore = null;
-  posts: any[] = [];
+  posts: IPost[] = [];
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -35,13 +26,18 @@ class FeedStore {
 
   async updatePostLike(postId: string, liked: boolean) {
     const initialPosts = this.posts;
+
+    // Find the post object in the posts array.
     const postIndex = initialPosts.findIndex((post) => post.id === postId);
-    const postObj = initialPosts[postIndex];
+    const postObject = initialPosts[postIndex];
 
-    const likeCounter = liked ? postObj.likeCounter + 1 : postObj.likeCounter - 1;
+    // Create a new post object with the updated like counter & like status.
+    const likeCounter = liked ? postObject.likeCounter + 1 : postObject.likeCounter - 1;
+    const updatedPostObject = { ...postObject, liked, likeCounter };
 
-    // Update the UI instantly. Revert later if the request failed.
-    this.posts = updateArrayObject(initialPosts, postId, { liked, likeCounter });
+    // Update the posts array with the updated object.
+    // This updates the UI instantly. We'll revert later if the request fails.
+    this.posts = updateArrayItem(initialPosts, postIndex, updatedPostObject);
 
     try {
       const updateFunction = liked ? likePost : unlikePost;

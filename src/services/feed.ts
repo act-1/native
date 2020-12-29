@@ -1,24 +1,29 @@
-import firestore from '@react-native-firebase/firestore';
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
 import analytics from '@react-native-firebase/analytics';
+import { IPost } from '@types/post';
 
-export async function getAllPosts(userId: string) {
+export async function getAllPosts(userId: string): Promise<IPost[]> {
   try {
     const postsQuerySnapshot = await firestore().collection('posts').orderBy('timestamp', 'desc').get();
-    const postsDocuments = postsQuerySnapshot.docs.map((doc) => ({
-      ...doc.data(),
-      timestamp: doc.data().timestamp.toDate(),
-      id: doc.id,
-    }));
+    const postsDocuments = postsQuerySnapshot.docs.map(
+      (doc): FirebaseFirestoreTypes.DocumentData => ({
+        ...doc.data(),
+        timestamp: doc.data().timestamp.toDate(),
+        id: doc.id,
+      })
+    );
 
     // Check if the user has liked each post
-    const withUserLikes = postsDocuments.map(async (post) => {
-      // TODO: Update with the current user id
-      const liked = await checkUserPostLike(post.id, userId);
-      return { ...post, liked };
-    });
+    const withUserLikes = postsDocuments.map(
+      async (post): IPost => {
+        // TODO: Update with the current user id
+        const liked = await checkUserPostLike(post.id, userId);
+        return { ...post, liked };
+      }
+    );
 
-    const posts = await Promise.all(withUserLikes);
+    const posts: IPost[] = await Promise.all(withUserLikes);
 
     return posts;
   } catch (err) {
@@ -46,27 +51,19 @@ async function checkUserPostLike(postId: string, userId: string): Promise<boolea
   }
 }
 
-export async function likePost(postId: string): Promise<{ updated: boolean }> {
+export async function likePost(postId: string): Promise<{ updated: boolean; action: string }> {
   try {
     const result = await functions().httpsCallable('likePost')({ postId });
-    if (result.data.ok) {
-      await analytics().logEvent('post_like', { post_id: postId });
-      return { updated: true };
-    }
-    throw new Error('Unkown error occured while requesting like.');
+    return result.data;
   } catch (err) {
     throw err;
   }
 }
 
-export async function unlikePost(postId: string): Promise<{ updated: boolean }> {
+export async function unlikePost(postId: string): Promise<{ updated: boolean; action: string }> {
   try {
     const result = await functions().httpsCallable('unlikePost')({ postId });
-    if (result.data.ok) {
-      await analytics().logEvent('post_unlike', { post_id: postId });
-      return { updated: true };
-    }
-    throw new Error('Unkown error occured while requesting unlike.');
+    return result.data;
   } catch (err) {
     throw err;
   }

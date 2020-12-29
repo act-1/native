@@ -3,7 +3,7 @@ module.exports = {
   extends: '@react-native-community',
   rules: {
     'react-native/no-inline-styles': 0,
-    curly: ['error', 'multi'],
+    curly: ['error', 'multi-line'],
     'capitalized-comments': [
       'error',
       'always',
