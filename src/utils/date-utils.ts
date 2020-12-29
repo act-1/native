@@ -10,7 +10,7 @@ const heLocale = require('date-fns/locale/he');
  * @returns The date object to th.
  */
 export function parseLocalDate(date: string): Date {
-  const dateParts = date.split('/').map((p) => Number(p));
+  const dateParts = date.split('/');
   const [day, month, year] = dateParts;
   const standardDate = `${year}-${month}-${day}`;
   return new Date(standardDate);
