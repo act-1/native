@@ -1,10 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
 import rootStore from './RootStore';
 import EventsAPI from '../services/events';
-import { createAnonymousUser } from '../services/user';
+import { createAnonymousUser, getUserFCMToken, createUserFCMToken } from '../services/user';
 
 // TODO: Create AuthStore and EventStore
 
@@ -18,21 +19,37 @@ class UserStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
+    console.log('hi?');
 
     this.initUserLocation();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
-      if (user) {
+      if (user && this.user?.uid !== user.uid) {
         this.user = user;
-        rootStore.eventStore?.getEvents(); // Only authed users can fetch the event list
-        rootStore.feedStore?.getPosts();
-        EventsAPI.getUserEvents(user.uid).then((events) => {
-          runInAction(() => {
-            this.userEventIds = events;
-          });
-        });
-      } else this.signInAnonymously();
+        this.initAppOnAuth();
+      }
     });
+  }
+
+  initAppOnAuth() {
+    this.rootStore?.eventStore?.getEvents();
+    this.rootStore?.feedStore?.getPosts();
+    this.refreshFCMToken();
+    EventsAPI.getUserEvents(this.user?.uid!).then((events) => {
+      runInAction(() => {
+        this.userEventIds = events;
+      });
+    });
+  }
+
+  async refreshFCMToken() {
+    const FCMToken = await messaging().getToken();
+    const userFCMToken = await getUserFCMToken(this.user?.uid!, FCMToken);
+    if (userFCMToken.exists) {
+      // update token
+    } else {
+      await createUserFCMToken(this.user?.uid!, FCMToken);
+    }
   }
 
   async signInAnonymously() {
