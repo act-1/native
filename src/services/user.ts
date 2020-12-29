@@ -1,21 +1,22 @@
 import firestore from '@react-native-firebase/firestore';
-import { getDeviceId } from 'react-native-device-info';
+import functions from '@react-native-firebase/functions';
+import { getDeviceId, getUniqueId } from 'react-native-device-info';
 
-export async function createAnonymousUser(userId: string) {
+export async function getUserFCMToken(userId: string, fcmToken: string) {
   try {
-    const userRef = firestore().collection('users').doc(userId);
-    const userDoc = await userRef.get();
+    return await firestore().collection(`users/${userId}/devices`).doc(fcmToken).get();
+  } catch (err) {
+    throw err;
+  }
+}
 
-    if (!userDoc.exists) {
-      const result = await userRef.set({
-        isAnonymous: true,
-        deviceId: getDeviceId(),
-        createdAt: firestore.FieldValue.serverTimestamp(),
-      });
+export async function createUserFCMToken(userId: string, fcmToken: string) {
+  try {
+    const deviceId = getUniqueId();
+    const deviceName = getDeviceId();
 
-      return result;
-    }
-    throw new Error('User already exists.');
+    const result = await functions().httpsCallable('createUserFCMToken')({ userId, fcmToken, deviceId, deviceName });
+    console.log(result);
   } catch (err) {
     throw err;
   }

@@ -1,12 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
+import EventsAPI from '@services/events';
+import { getUserFCMToken, createUserFCMToken } from '@services/user';
 import rootStore from './RootStore';
-import EventsAPI from '../services/events';
-import { createAnonymousUser } from '../services/user';
-
-// TODO: Create AuthStore and EventStore
 
 class UserStore {
   rootStore: null | rootStore = null;
@@ -18,27 +17,45 @@ class UserStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
+    console.log('hi?');
 
     this.initUserLocation();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
-      if (user) {
+      if (user && this.user?.uid !== user.uid) {
+        console.log(user);
         this.user = user;
-        rootStore.eventStore?.getEvents(); // Only authed users can fetch the event list
-        rootStore.feedStore?.getPosts();
-        EventsAPI.getUserEvents(user.uid).then((events) => {
-          runInAction(() => {
-            this.userEventIds = events;
-          });
-        });
-      } else this.signInAnonymously();
+        this.initAppOnAuth();
+      } else if (!user) {
+        this.signInAnonymously();
+      }
     });
+  }
+
+  initAppOnAuth() {
+    this.rootStore?.eventStore?.getEvents();
+    this.rootStore?.feedStore?.getPosts();
+    this.refreshFCMToken();
+    EventsAPI.getUserEvents(this.user?.uid!).then((events) => {
+      runInAction(() => {
+        this.userEventIds = events;
+      });
+    });
+  }
+
+  async refreshFCMToken() {
+    const FCMToken = await messaging().getToken();
+    const userFCMToken = await getUserFCMToken(this.user?.uid!, FCMToken);
+    if (userFCMToken.exists) {
+      // In the future we might want to update the active state.
+    } else {
+      await createUserFCMToken(this.user?.uid!, FCMToken);
+    }
   }
 
   async signInAnonymously() {
     try {
-      const { user } = await auth().signInAnonymously();
-      await createAnonymousUser(user.uid);
+      await auth().signInAnonymously();
     } catch (err) {
       console.error(err);
     }
