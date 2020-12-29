@@ -29,12 +29,12 @@ function EventList({ navigation }: EventListScreenProps) {
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor="#7254c8" />
-      <Box justifyContent="center" height="100%">
+      <Box height="100%">
         <Text variant="hugeTitle" color="screenTitle" paddingTop="m" paddingHorizontal="m">
           אירועים קרובים
         </Text>
         {eventList.length === 0 ? (
-          <Box justifyContent="center" alignItems="center">
+          <Box marginTop="xl" justifyContent="center" alignItems="center">
             <ActivityIndicator size="small" color="#0000ff" />
             <Text>טוענת..</Text>
           </Box>
