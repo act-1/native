@@ -3,7 +3,7 @@ import { StyleSheet, Image, Alert } from 'react-native';
 import MapView from 'react-native-maps';
 import { Box, Text } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
-import { addCheckInEntry } from '../../services/liveFeed';
+import { createUserCheckIn } from '../../services/checkIn';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
@@ -11,20 +11,6 @@ import database from '@react-native-firebase/database';
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const store = useStore();
-  const [balfur, setBalfur] = useState('3,415');
-
-  useEffect(() => {
-    const balfurCount = database().ref('balfurCount');
-
-    balfurCount.on('value', (snapshot) => {
-      setBalfur(snapshot.val().toLocaleString());
-      console.log('Balfur count: ', snapshot.val());
-    });
-
-    return () => {
-      balfurCount.off();
-    };
-  }, []);
 
   const confirmCheckIn = () => {
     Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
@@ -34,7 +20,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
       },
       {
         text: 'אישור',
-        onPress: () => addCheckInEntry(),
+        onPress: () => createUserCheckIn('pardesiya'),
       },
     ]);
   };
@@ -61,7 +47,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           כיכר פריז
         </Text>
         <Text variant="largeTitle" fontWeight="500" color="lightText" marginBottom="xm">
-          {balfur} עכשיו בהפגנה
+          5555 עכשיו בהפגנה
         </Text>
 
         <Box width="100%" paddingHorizontal="xm">
