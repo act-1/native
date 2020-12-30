@@ -11,7 +11,7 @@ import { HomeScreenProps } from '@types/navigation';
 
 const HomeHeader = () => {
   const insets = useSafeAreaInsets();
-  console.log(insets.top);
+
   return (
     <SafeAreaView style={[styles.header, { height: 46 + insets.top }]}>
       <StatusBar backgroundColor="#fafafa" barStyle="dark-content" networkActivityIndicatorVisible={false} />
