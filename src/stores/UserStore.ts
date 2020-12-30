@@ -17,13 +17,11 @@ class UserStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
-    console.log('hi?');
 
     this.initUserLocation();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user && this.user?.uid !== user.uid) {
-        console.log(user);
         this.user = user;
         this.initAppOnAuth();
       } else if (!user) {
@@ -44,12 +42,16 @@ class UserStore {
   }
 
   async refreshFCMToken() {
-    const FCMToken = await messaging().getToken();
-    const userFCMToken = await getUserFCMToken(this.user?.uid!, FCMToken);
-    if (userFCMToken.exists) {
-      // In the future we might want to update the active state.
-    } else {
-      await createUserFCMToken(this.user?.uid!, FCMToken);
+    try {
+      const FCMToken = await messaging().getToken();
+      const userFCMToken = await getUserFCMToken(this.user?.uid!, FCMToken);
+      if (userFCMToken.exists) {
+        // In the future we might want to update the active state.
+      } else {
+        await createUserFCMToken(this.user?.uid!, FCMToken);
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 
