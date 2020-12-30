@@ -20,10 +20,6 @@ function MainStackScreen() {
           headerShown: false,
           headerTitle: 'עמוד הפגנה',
           headerBackTitle: ' ',
-          headerStyle: {
-            backgroundColor: '#697CFF',
-          },
-          headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
           },

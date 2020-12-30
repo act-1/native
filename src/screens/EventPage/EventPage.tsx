@@ -64,7 +64,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
   return (
     <Box flex={1}>
-      <StatusBar barStyle="light-content" backgroundColor="#7254c8" />
+      <StatusBar barStyle="light-content" backgroundColor="#697CFF" />
       {event === undefined ? (
         <Box justifyContent="center" alignItems="center">
           <ActivityIndicator size="small" color="#0000ff" />

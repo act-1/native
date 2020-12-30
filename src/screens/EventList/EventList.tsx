@@ -13,15 +13,16 @@ function renderEventSectionHeader({ title, subtitle }: SectionListData<IEvent, E
     <Box
       flexDirection="row"
       justifyContent="space-between"
-      alignItems="baseline"
+      alignItems="center"
       paddingVertical="s"
       paddingHorizontal="m"
       backgroundColor="sectionListSeperator"
+      elevation={1}
     >
-      <Text fontSize={16} fontWeight="500" textAlign="left">
+      <Text fontSize={16} fontWeight="100" textAlign="left">
         {title}
       </Text>
-      <Text marginLeft="xs" fontSize={12} color="lightText">
+      <Text fontSize={12} color="lightText">
         {subtitle}
       </Text>
     </Box>
@@ -43,16 +44,17 @@ function EventList({ navigation }: EventListScreenProps) {
 
   useEffect(() => {
     const list = formatEventsForSectionList(eventStore.events);
-    setEventList(list);
+    setEventList([...list, ...list, ...list]);
   }, [eventStore.events]);
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="dark-content" backgroundColor="#7254c8" />
+      <StatusBar barStyle="dark-content" />
       <Box height="100%">
         <Text variant="hugeTitle" color="screenTitle" paddingTop="m" paddingHorizontal="m" marginBottom="m">
           אירועים קרובים
         </Text>
+
         {eventList.length === 0 ? (
           <Box marginTop="xl" justifyContent="center" alignItems="center">
             <ActivityIndicator size="small" color="#0000ff" />

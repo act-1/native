@@ -53,10 +53,11 @@ const theme = createTheme({
     xm: 16,
     l: 24,
     xl: 40,
+    xxl: 48,
   },
   breakpoints: {
     phone: 0,
-    tablet: 768,
+    widePhone: 412,
   },
   textVariants: {
     hugeTitle: {

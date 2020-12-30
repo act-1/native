@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, ViewStyle, Dimensions } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
@@ -18,6 +18,12 @@ type PostBoxProps = IPost & {
   style?: ViewStyle;
   liked: boolean;
 };
+
+const windowWidth = Dimensions.get('window').width;
+let fontSize = 15.5;
+if (windowWidth > 400) {
+  fontSize = 16;
+}
 
 function PostBox(props: PostBoxProps) {
   const { feedStore } = useStore();
@@ -44,21 +50,20 @@ function PostBox(props: PostBoxProps) {
         <Box marginTop="m" marginLeft="s">
           <Box flexDirection="row" marginBottom="xxs">
             <Box flexDirection="row" alignItems="center">
-              <Text variant="boxTitle" fontSize={15} marginRight="s">
+              <Text variant="boxTitle" fontSize={fontSize} marginRight="s">
                 {authorName}
               </Text>
-              <Text variant="boxSubtitle" fontSize={15}>
+              <Text variant="boxSubtitle" fontSize={fontSize}>
                 {timeago.format(timestamp, 'he')}
               </Text>
             </Box>
           </Box>
           <Box alignItems="flex-start">
-            <Box paddingRight="xl" marginBottom="s">
+            <Box paddingRight="xxl" marginBottom="s">
               <HTML
                 html={content}
                 tagsStyles={{
-                  p: { textAlign: 'left', fontSize: 15 },
-                  div: { textAlign: 'left', fontSize: 15 },
+                  p: { textAlign: 'left', fontSize },
                 }}
               />
             </Box>

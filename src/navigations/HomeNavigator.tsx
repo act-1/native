@@ -12,25 +12,6 @@ function HomeNavigator() {
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="EventList" options={{ title: 'הפגנות קרובות' }} component={EventList} />
-      <HomeStack.Screen
-        name="EventPage"
-        component={EventPage}
-        options={({ navigation }) => ({
-          headerShown: false,
-          headerTitle: 'עמוד הפגנה',
-          headerBackTitle: ' ',
-          headerStyle: {
-            backgroundColor: '#697CFF',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerLeft: () => (
-            <Icon name={'arrow-right'} size={28} color={'#fff'} style={{ marginLeft: 15 }} onPress={() => navigation.goBack()} />
-          ),
-        })}
-      />
     </HomeStack.Navigator>
   );
 }

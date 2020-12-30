@@ -6,12 +6,15 @@ import { Box, Text } from '../../components';
 import { useStore } from '../../stores';
 import PostFeed from './PostFeed';
 import { EventsWidget } from './Feed/Widgets';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeScreenProps } from '@types/navigation';
 
 const HomeHeader = () => {
+  const insets = useSafeAreaInsets();
+  console.log(insets.top);
   return (
-    <SafeAreaView style={styles.header}>
-      <StatusBar barStyle="dark-content" networkActivityIndicatorVisible={false} />
+    <SafeAreaView style={[styles.header, { height: 46 + insets.top }]}>
+      <StatusBar backgroundColor="#fafafa" barStyle="dark-content" networkActivityIndicatorVisible={false} />
       <Text variant="hugeTitle" fontSize={24} style={{ color: '#6E7DFF' }}>
         Act1
       </Text>
@@ -50,12 +53,10 @@ const styles = StyleSheet.create({
     height: 92,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
-    shadowColor: '#000',
-    shadowOffset: { height: 1, width: 0 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 2,
+    backgroundColor: '#fafafa',
+    borderBottomColor: '#ebebeb',
+    borderBottomWidth: 1,
+    elevation: 5,
     zIndex: 2,
   },
 });

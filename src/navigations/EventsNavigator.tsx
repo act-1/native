@@ -8,7 +8,6 @@ function EventsNavigator() {
   return (
     <EventsStack.Navigator headerMode="none">
       <EventsStack.Screen name="EventList" component={EventList} />
-      <EventsStack.Screen name="EventPage" component={EventPage} />
     </EventsStack.Navigator>
   );
 }
