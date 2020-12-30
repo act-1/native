@@ -25,9 +25,10 @@ function App() {
   const navigationRef = React.useRef();
 
   useEffect(() => {
-    (async () => {
+    // TODO: Check if the app has been initialized with data
+    setTimeout(async () => {
       await RNBootSplash.hide({ fade: true });
-    })();
+    }, 800);
   }, []);
 
   return (
