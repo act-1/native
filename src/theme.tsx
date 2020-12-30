@@ -18,6 +18,7 @@ const palette = {
   blue: '#0078F8',
 
   white: '#fff',
+  barleyWhite: '#f6f6f6',
   porcelain: '#F0F2F3',
   lightgrey: '#f0f2f5',
   grey: '#737373',
@@ -34,6 +35,7 @@ const theme = createTheme({
     mainForeground: palette.black,
     eventBoxDateColor: palette.redPrimary,
     dimmedBackground: palette.lightgrey,
+    sectionListSeperator: palette.lightgrey,
     important: palette.redPrimary,
     importantLight: palette.redLight,
     attentionBackground: palette.orange,

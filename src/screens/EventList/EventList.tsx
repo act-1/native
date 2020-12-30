@@ -1,12 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, StatusBar, SectionList, SafeAreaView } from 'react-native';
+import React, { useState, useEffect, ReactElement } from 'react';
+import { ActivityIndicator, StatusBar, SectionList, SafeAreaView, SectionListData } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import analytics from '@react-native-firebase/analytics';
 import { EventListScreenProps } from '@types/navigation';
+import { IEvent } from '@types/event';
 import { Box, Text, EventBox } from '../../components';
 import { formatEventsForSectionList, EventsSectionListItem } from './event-list-utils';
 import { useStore } from '../../stores';
-import database from '@react-native-firebase/database';
+
+function renderEventSectionHeader({ title, subtitle }: SectionListData<IEvent, EventsSectionListItem>): ReactElement {
+  return (
+    <Box
+      flexDirection="row"
+      justifyContent="space-between"
+      alignItems="baseline"
+      paddingVertical="s"
+      paddingHorizontal="m"
+      backgroundColor="sectionListSeperator"
+    >
+      <Text fontSize={16} fontWeight="500" textAlign="left">
+        {title}
+      </Text>
+      <Text marginLeft="xs" fontSize={12} color="lightText">
+        {subtitle}
+      </Text>
+    </Box>
+  );
+}
 
 function EventList({ navigation }: EventListScreenProps) {
   const [eventList, setEventList] = useState<EventsSectionListItem[]>([]);
@@ -30,7 +50,7 @@ function EventList({ navigation }: EventListScreenProps) {
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor="#7254c8" />
       <Box height="100%">
-        <Text variant="hugeTitle" color="screenTitle" paddingTop="m" paddingHorizontal="m">
+        <Text variant="hugeTitle" color="screenTitle" paddingTop="m" paddingHorizontal="m" marginBottom="m">
           אירועים קרובים
         </Text>
         {eventList.length === 0 ? (
@@ -50,20 +70,11 @@ function EventList({ navigation }: EventListScreenProps) {
                 }}
               />
             )}
-            stickySectionHeadersEnabled={false}
+            stickySectionHeadersEnabled={true}
             progressViewOffset={100}
             refreshing={refreshing}
             onRefresh={onRefresh}
-            renderSectionHeader={({ section: { title, subtitle } }) => (
-              <Box marginTop="m" marginLeft="m">
-                <Text fontSize={22} textAlign="left" fontFamily="Rubik-Medium">
-                  {title}
-                </Text>
-                <Text fontSize={16} textAlign="left" color="lightText" fontFamily="Rubik-Regular">
-                  {subtitle}
-                </Text>
-              </Box>
-            )}
+            renderSectionHeader={({ section }) => renderEventSectionHeader(section)}
           />
         )}
       </Box>
