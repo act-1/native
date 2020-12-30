@@ -7,6 +7,8 @@
 #import <React/RCTRootView.h>
 #import <React/RCTI18nUtil.h> 
 
+#import "RNBootSplash.h"
+
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -51,6 +53,9 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
+  
   return YES;
 }
 

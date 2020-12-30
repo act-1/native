@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import analytics from '@react-native-firebase/analytics';
 import { Easing } from 'react-native';
 import { StoreProvider } from './stores';
@@ -9,6 +9,7 @@ import { ModalProvider, createModalStack, ModalOptions } from 'react-native-moda
 import { AttendingModal } from './components/Modals';
 import theme from './theme';
 import AppNavigator from './navigations/AppNavigator';
+import RNBootSplash from 'react-native-bootsplash';
 
 const modalConfig = { AttendingModal };
 const defaultOptions: ModalOptions = {
@@ -22,6 +23,13 @@ const stack = createModalStack(modalConfig, defaultOptions);
 function App() {
   const routeNameRef = React.useRef();
   const navigationRef = React.useRef();
+
+  useEffect(() => {
+    // TODO: Check if the app has been initialized with data
+    setTimeout(async () => {
+      await RNBootSplash.hide({ fade: true });
+    }, 800);
+  }, []);
 
   return (
     <StoreProvider>
