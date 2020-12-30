@@ -23,6 +23,7 @@
 		C1631C26257A94640099756B /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C22257A94640099756B /* Rubik-Bold.ttf */; };
 		C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C23257A94640099756B /* Rubik-Medium.ttf */; };
 		C1631C28257A94640099756B /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C24257A94640099756B /* Rubik-Regular.ttf */; };
+		C1D19D18259CDE2000AC4746 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1D19D17259CDE2000AC4746 /* BootSplash.storyboard */; };
 		C1DDF64825938C4E0063C069 /* Swifty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDF64725938C4E0063C069 /* Swifty.swift */; };
 		F4CC12AD715BF3310D1152A3 /* libPods-Act1-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E802883A0F5ECFA9DEB2F6D /* libPods-Act1-tvOSTests.a */; };
 		F906F208824FFFBC1077D36B /* libPods-Act1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC78ECDB0BC66909D52DE1 /* libPods-Act1.a */; };
@@ -76,6 +77,7 @@
 		C1631C22257A94640099756B /* Rubik-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Bold.ttf"; sourceTree = "<group>"; };
 		C1631C23257A94640099756B /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		C1631C24257A94640099756B /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
+		C1D19D17259CDE2000AC4746 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Act1/BootSplash.storyboard; sourceTree = "<group>"; };
 		C1DDF64625938C4E0063C069 /* Act1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Act1-Bridging-Header.h"; sourceTree = "<group>"; };
 		C1DDF64725938C4E0063C069 /* Swifty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swifty.swift; sourceTree = "<group>"; };
 		C609DF5B0AD1C4B63C9D39EF /* libPods-Act1-Act1Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Act1-Act1Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +148,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				C1D19D17259CDE2000AC4746 /* BootSplash.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = Act1;
@@ -379,6 +382,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				C1631C28257A94640099756B /* Rubik-Regular.ttf in Resources */,
 				C1631C26257A94640099756B /* Rubik-Bold.ttf in Resources */,
+				C1D19D18259CDE2000AC4746 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C1631C25257A94640099756B /* Feather.ttf in Resources */,
 				C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */,
