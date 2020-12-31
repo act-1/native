@@ -110,6 +110,7 @@ class UserStore {
     try {
       const { checkIn } = await createUserCheckIn(locationId);
       this.lastCheckIn = checkIn;
+      return checkIn;
     } catch (err) {
       throw err;
     }
