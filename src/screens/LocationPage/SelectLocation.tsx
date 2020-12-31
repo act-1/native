@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Alert, Image, AppState, AppStateStatus } from 'react-native';
 import { openSettings } from 'react-native-permissions';
 import { SelectLocationScreenProps } from '@types/navigation';
-import { createUserCheckIn } from '@services/checkIn';
 import { Box, Text, LocationBox, EventBox } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
 import { observer } from 'mobx-react-lite';
@@ -12,22 +11,19 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore } = useStore();
   const { userLocationPermission, userCurrentPosition } = userStore;
 
-  const onLocationPress = (locationId: string) => {
-    async function createCheckIn(locId: string) {
-      try {
-        const checkIn = await createUserCheckIn(locId);
-        console.log(checkIn);
-        navigation.navigate('LocationPage', { locationId: 'pardesiya ' });
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
+  const onLocationPress = async (locationId: string) => {
     Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
       { text: 'לא עכשיו' },
       {
         text: 'אישור',
-        onPress: () => createCheckIn(locationId),
+        onPress: () =>
+          userStore
+            .checkIn(locationId)
+            .then((result) => {
+              navigation.navigate('LocationPage', { locationId });
+              console.log(result);
+            })
+            .catch((err) => console.error(err)),
       },
     ]);
   };

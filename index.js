@@ -9,7 +9,7 @@ import { name as appName } from './app.json';
 
 // Use a local emulator in development
 if (__DEV__) {
-  // functions().useFunctionsEmulator('http://localhost:5001');
+  functions().useFunctionsEmulator('http://localhost:5001');
   // auth().useEmulator('http://localhost:9099');
   // const db = firestore();
   // db.settings({ host: 'http://localhost:8080', ssl: false });

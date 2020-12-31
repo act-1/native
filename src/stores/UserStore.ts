@@ -5,6 +5,7 @@ import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
 import EventsAPI from '@services/events';
 import { getUserFCMToken, createUserFCMToken } from '@services/user';
+import { createUserCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
 
 class UserStore {
@@ -13,6 +14,7 @@ class UserStore {
   userEventIds: string[] = [];
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
+  lastCheckIn = {};
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -101,6 +103,15 @@ class UserStore {
       });
     } catch (err) {
       console.error(err);
+    }
+  }
+
+  async checkIn(locationId: string) {
+    try {
+      const { checkIn } = await createUserCheckIn(locationId);
+      this.lastCheckIn = checkIn;
+    } catch (err) {
+      throw err;
     }
   }
 }
