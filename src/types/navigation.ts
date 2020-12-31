@@ -1,9 +1,11 @@
 import { StackScreenProps } from '@react-navigation/stack';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
+export type TabBarProps = BottomTabScreenProps<TabBarParamList>;
 export type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
 export type EventPageScreenProps = StackScreenProps<RootStackParamList, 'EventPage'>;
 export type EventListScreenProps = StackScreenProps<RootStackParamList, 'EventList'>;
-export type SelectLocationScreenProps = StackScreenProps<RootStackParamList, 'CheckInSelectLocation'>;
+export type SelectLocationScreenProps = BottomTabScreenProps<RootStackParamList, 'CheckInSelectLocation'>;
 export type LocationScreenProps = StackScreenProps<RootStackParamList, 'LocationPage'>;
 
 export type RootStackParamList = {
@@ -14,4 +16,10 @@ export type RootStackParamList = {
   EventPage: { eventId: string };
   CheckInSelectLocation: undefined;
   LocationPage: { locationId: string };
+};
+
+type TabBarParamList = {
+  Home: undefined;
+  CheckIn: undefined;
+  Events: undefined;
 };
