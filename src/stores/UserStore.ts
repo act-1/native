@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, runInAction, computed } from 'mobx';
 import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
@@ -7,6 +7,7 @@ import EventsAPI from '@services/events';
 import { getUserFCMToken, createUserFCMToken } from '@services/user';
 import { createUserCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
+import { persist } from 'mobx-persist';
 
 class UserStore {
   rootStore: null | rootStore = null;
@@ -14,7 +15,7 @@ class UserStore {
   userEventIds: string[] = [];
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
-  lastCheckIn = {};
+  @persist('object') lastCheckIn = {};
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -24,23 +25,25 @@ class UserStore {
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user && this.user?.uid !== user.uid) {
-        this.user = user;
-        this.initAppOnAuth();
+        runInAction(() => {
+          this.user = user;
+        });
       } else if (!user) {
         this.signInAnonymously();
       }
     });
   }
 
-  initAppOnAuth() {
-    this.rootStore?.eventStore?.getEvents();
-    this.rootStore?.feedStore?.getPosts();
-    this.refreshFCMToken();
-    EventsAPI.getUserEvents(this.user?.uid!).then((events) => {
+  async getUserEvents() {
+    try {
+      const events = await EventsAPI.getUserEvents(this.user?.uid!);
       runInAction(() => {
         this.userEventIds = events;
+        return events;
       });
-    });
+    } catch (err) {
+      throw err;
+    }
   }
 
   async refreshFCMToken() {
@@ -49,8 +52,10 @@ class UserStore {
       const userFCMToken = await getUserFCMToken(this.user?.uid!, FCMToken);
       if (userFCMToken.exists) {
         // In the future we might want to update the active state.
+        return userFCMToken;
       } else {
-        await createUserFCMToken(this.user?.uid!, FCMToken);
+        const token = await createUserFCMToken(this.user?.uid!, FCMToken);
+        return token;
       }
     } catch (err) {
       console.log(err);

@@ -44,7 +44,7 @@ function EventList({ navigation }: EventListScreenProps) {
 
   useEffect(() => {
     const list = formatEventsForSectionList(eventStore.events);
-    setEventList([...list, ...list, ...list]);
+    setEventList([...list]);
   }, [eventStore.events]);
 
   return (

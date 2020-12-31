@@ -13,14 +13,19 @@ class FeedStore {
     this.rootStore = rootStore;
   }
 
-  getPosts() {
-    const userId = this.rootStore?.userStore?.user?.uid;
-    if (userId) {
-      getAllPosts(userId).then((posts) => {
-        runInAction(() => {
-          this.posts = posts;
+  async getPosts() {
+    try {
+      const userId = this.rootStore?.userStore?.user?.uid;
+      if (userId) {
+        getAllPosts(userId).then((posts) => {
+          runInAction(() => {
+            this.posts = posts;
+            return posts;
+          });
         });
-      });
+      }
+    } catch (err) {
+      throw err;
     }
   }
 

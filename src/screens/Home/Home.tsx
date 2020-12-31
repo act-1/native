@@ -23,17 +23,10 @@ const HomeHeader = () => {
 };
 
 function Home({ navigation }: HomeScreenProps) {
-  const { eventStore } = useStore();
-
   const onEventPress = (eventId: string, index: number) => {
     navigation.navigate('EventPage', { eventId });
     analytics().logEvent('home_event_pressed', { event_id: eventId, featured_event_index: index + 1 });
   };
-
-  // TODO: Display loading indicator
-  if (eventStore.events.length === 0) {
-    return <Box />;
-  }
 
   return (
     <>
