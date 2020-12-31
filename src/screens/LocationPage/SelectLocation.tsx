@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Image, AppState, AppStateStatus } from 'react-native';
+import { Alert, Image, AppState, AppStateStatus } from 'react-native';
 import { openSettings } from 'react-native-permissions';
 import { SelectLocationScreenProps } from '@types/navigation';
+import { createUserCheckIn } from '@services/checkIn';
 import { Box, Text, LocationBox, EventBox } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
 import { observer } from 'mobx-react-lite';
@@ -10,6 +11,26 @@ import { useStore } from '../../stores';
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore } = useStore();
   const { userLocationPermission, userCurrentPosition } = userStore;
+
+  const onLocationPress = (locationId: string) => {
+    async function createCheckIn(locId: string) {
+      try {
+        const checkIn = await createUserCheckIn(locId);
+        console.log(checkIn);
+        navigation.navigate('LocationPage', { locationId: 'pardesiya ' });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
+      { text: 'לא עכשיו' },
+      {
+        text: 'אישור',
+        onPress: () => createCheckIn(locationId),
+      },
+    ]);
+  };
 
   useEffect(() => {
     function handleAppStateChange(appState: AppStateStatus) {
@@ -99,8 +120,9 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
             />
             <LocationBox
               name="גשר המיתרים"
+              locationId="pardesiya"
               address="ירושלים"
-              onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
+              onPress={() => onLocationPress('pardesiya')}
             />
           </Box>
         )}

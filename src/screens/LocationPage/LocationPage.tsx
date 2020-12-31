@@ -20,7 +20,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
       },
       {
         text: 'אישור',
-        onPress: () => createUserCheckIn('pardesiya'),
+        onPress: () => createUserCheckIn('zoran'),
       },
     ]);
   };
@@ -58,7 +58,12 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             style={{ marginBottom: 12 }}
             onPress={() => confirmCheckIn()}
           />
-          <RoundedButton text="הזמנת חברים" size="huge" icon={require('@assets/icons/hands-together.png')} />
+          <RoundedButton
+            text="הזמנת חברים"
+            onPress={() => manualRefreshCheckIns()}
+            size="huge"
+            icon={require('@assets/icons/hands-together.png')}
+          />
 
           <Box flexDirection="row" width="100%" marginTop="m">
             <RoundedButton text="העלאת תמונה" size="huge" icon={require('@assets/icons/camera.png')} style={{ flex: 1 }} />
