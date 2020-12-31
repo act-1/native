@@ -15,7 +15,7 @@ const HomeHeader = () => {
   return (
     <SafeAreaView style={[styles.header, { height: 46 + insets.top }]}>
       <StatusBar backgroundColor="#fafafa" barStyle="dark-content" networkActivityIndicatorVisible={false} />
-      <Text variant="hugeTitle" fontSize={24} style={{ color: '#6E7DFF' }}>
+      <Text variant="hugeTitle" fontFamily="Rubik-Medium" fontWeight="500" fontSize={18} style={{ color: '#6E7DFF' }}>
         Act1
       </Text>
     </SafeAreaView>

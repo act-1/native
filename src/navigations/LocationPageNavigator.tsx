@@ -10,8 +10,13 @@ function LocationPageNavigator() {
       screenOptions={{
         title: 'צ׳ק אין',
         headerTintColor: '#697CFF',
+        headerStyle: {
+          backgroundColor: '#fafafa',
+        },
+
         headerTitleStyle: {
-          fontFamily: 'Rubik-Bold',
+          fontFamily: 'Rubik-Medium',
+          fontWeight: '600',
         },
       }}
     >
