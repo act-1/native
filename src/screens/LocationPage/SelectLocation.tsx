@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Image, AppState, AppStateStatus } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 import { openSettings } from 'react-native-permissions';
 import { SelectLocationScreenProps } from '@types/navigation';
 import { Box, Text, LocationBox, EventBox } from '../../components';
@@ -16,14 +17,22 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       { text: 'לא עכשיו' },
       {
         text: 'אישור',
-        onPress: () =>
+        onPress: () => {
           userStore
             .checkIn(locationId)
             .then((result) => {
-              navigation.navigate('LocationPage', { locationId });
+              navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
               console.log(result);
             })
-            .catch((err) => console.error(err)),
+            .catch((err) => {
+              // TODO: Add crashlytics report here
+              if (err.code === 'already-exists') {
+                Alert.alert("נראה שיש לך כבר צ'ק אין פעיל 🤭");
+              }
+
+              console.error(err);
+            });
+        },
       },
     ]);
   };

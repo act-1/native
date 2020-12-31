@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { SelectLocation, LocationPage } from '@screens/LocationPage';
 
 const LocationStack = createStackNavigator();
@@ -9,17 +9,21 @@ function LocationPageNavigator() {
     <LocationStack.Navigator
       screenOptions={{
         title: 'צ׳ק אין',
-        headerStyle: {
-          backgroundColor: '#697CFF',
-        },
-        headerTintColor: '#fff',
+        headerTintColor: '#697CFF',
         headerTitleStyle: {
-          fontWeight: 'bold',
+          fontFamily: 'Rubik-Bold',
         },
       }}
     >
       <LocationStack.Screen name="SelectLocation" component={SelectLocation} />
-      <LocationStack.Screen name="LocationPage" component={LocationPage} options={{ headerShown: false }} />
+      <LocationStack.Screen
+        name="LocationPage"
+        component={LocationPage}
+        options={{
+          headerShown: false,
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+        }}
+      />
     </LocationStack.Navigator>
   );
 }
