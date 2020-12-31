@@ -7,6 +7,7 @@ import EventsAPI from '@services/events';
 import { getUserFCMToken, createUserFCMToken } from '@services/user';
 import { createUserCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class UserStore {
   rootStore: null | rootStore = null;
@@ -27,10 +28,26 @@ class UserStore {
         runInAction(() => {
           this.user = user;
         });
+
+        // TODO: Extract to function
+        runInAction(async () => {
+          const checkIn = await AsyncStorage.getItem('lastCheckIn');
+          console.log(checkIn);
+          if (checkIn) {
+            const lastCheckIn = JSON.parse(checkIn);
+            await AsyncStorage.clear();
+
+            this.lastCheckIn = lastCheckIn;
+          }
+        });
       } else if (!user) {
         this.signInAnonymously();
       }
     });
+  }
+
+  get hasActiveCheckIn() {
+    return new Date() < new Date(this.lastCheckIn.expireAt);
   }
 
   async getUserEvents() {
@@ -38,8 +55,8 @@ class UserStore {
       const events = await EventsAPI.getUserEvents(this.user?.uid!);
       runInAction(() => {
         this.userEventIds = events;
-        return events;
       });
+      return events;
     } catch (err) {
       throw err;
     }
@@ -114,6 +131,7 @@ class UserStore {
     try {
       const { checkIn } = await createUserCheckIn(locationId);
       this.lastCheckIn = checkIn;
+      await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return checkIn;
     } catch (err) {
       throw err;

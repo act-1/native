@@ -1,12 +1,16 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LocationScreenProps } from '@types/navigation';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '@stores/index';
 import { HomeNavigator, EventsNavigator, LocationPageNavigator } from './';
 import Icon from 'react-native-vector-icons/Feather';
 
 const Tab = createBottomTabNavigator();
 
 const AppTabs = () => {
+  const { userStore } = useStore();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -42,8 +46,11 @@ const AppTabs = () => {
           tabPress: (e) => {
             // Go directly to location page if the user has an active check in session.
             e.preventDefault();
-
-            navigation.navigate('CheckIn', { screen: 'LocationPage' });
+            if (userStore.hasActiveCheckIn) {
+              navigation.navigate('CheckIn', { screen: 'LocationPage' });
+            } else {
+              navigation.navigate('CheckIn', { screen: 'SelectLocation' });
+            }
           },
         })}
       />
@@ -52,4 +59,4 @@ const AppTabs = () => {
   );
 };
 
-export default AppTabs;
+export default observer(AppTabs);
