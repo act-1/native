@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, computed } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
@@ -7,7 +7,6 @@ import EventsAPI from '@services/events';
 import { getUserFCMToken, createUserFCMToken } from '@services/user';
 import { createUserCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
-import { persist } from 'mobx-persist';
 
 class UserStore {
   rootStore: null | rootStore = null;
@@ -15,7 +14,7 @@ class UserStore {
   userEventIds: string[] = [];
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
-  @persist('object') lastCheckIn = {};
+  lastCheckIn = {};
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });

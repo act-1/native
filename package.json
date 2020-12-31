@@ -31,7 +31,6 @@
     "geofirestore": "^4.4.1",
     "hermes-engine": "0.5.2-rc1",
     "mobx": "^6.0.4",
-    "mobx-persist": "^0.4.1",
     "mobx-react-lite": "^3.1.6",
     "react": "16.13.1",
     "react-native": "0.63.4",
