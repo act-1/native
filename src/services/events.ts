@@ -6,27 +6,29 @@ import { formatLocalDay, formatShortDate, formatUpcomingDate } from '../utils/da
 import { format } from 'date-fns';
 
 export async function getEventList(): Promise<IEvent[]> {
-  const today = new Date();
-  today.setHours(today.getHours() - 6); // So the event won't disappear while it's ongoing
-  const querySnapshot = await firestore().collection('events').where('timestamp', '>', today).orderBy('timestamp').get();
+  const now = new Date();
+  now.setHours(now.getHours() - 6); // So the event won't disappear while it's ongoing
+  console.log(now);
+  const querySnapshot = await firestore().collection('events').where('startDate', '>', now).orderBy('startDate').get();
   const documents = querySnapshot.docs.map((doc): FirebaseFirestoreTypes.DocumentData => ({ ...doc.data(), id: doc.id }));
-
+  console.log(documents);
   const events = documents.map(
     (doc): IEvent => ({
       id: doc.id,
       title: doc.title,
       locationName: doc.locationName,
       thumbnail: new URL(doc.thumbnail),
-      timestamp: doc.timestamp,
       content: doc.content,
       organizations: doc.organizations,
       attendingCount: doc.attendingCount,
       coordinates: doc.coordinates,
-      date: format(doc.timestamp.toMillis(), 'dd/MM/yyyy'),
-      time: format(doc.timestamp.toMillis(), 'HH:mm'),
-      upcomingDate: formatUpcomingDate(doc.timestamp.toDate()),
-      shortDate: formatShortDate(doc.timestamp.toDate()),
-      localDay: formatLocalDay(doc.timestamp.toDate()),
+      startDate: doc.startDate,
+      endDate: doc.endDate,
+      date: format(doc.startDate.toMillis(), 'dd/MM/yyyy'),
+      time: format(doc.startDate.toMillis(), 'HH:mm'),
+      upcomingDate: formatUpcomingDate(doc.startDate.toDate()),
+      shortDate: formatShortDate(doc.startDate.toDate()),
+      localDay: formatLocalDay(doc.startDate.toDate()),
     })
   );
 

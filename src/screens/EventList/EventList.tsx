@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement } from 'react';
-import { ActivityIndicator, StatusBar, SectionList, SafeAreaView, SectionListData } from 'react-native';
+import { StatusBar, SectionList, SafeAreaView, SectionListData } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import analytics from '@react-native-firebase/analytics';
 import { EventListScreenProps } from '@types/navigation';
