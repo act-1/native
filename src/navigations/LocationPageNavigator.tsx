@@ -18,6 +18,7 @@ function LocationPageNavigator() {
           fontFamily: 'Rubik-Medium',
           fontWeight: '600',
         },
+        headerLeft: false,
       }}
     >
       <LocationStack.Screen name="SelectLocation" component={SelectLocation} />
