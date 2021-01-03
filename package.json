@@ -18,6 +18,7 @@
     "@react-native-firebase/database": "^10.3.1",
     "@react-native-firebase/firestore": "10.3.1",
     "@react-native-firebase/functions": "^10.3.1",
+    "@react-native-firebase/in-app-messaging": "^10.4.0",
     "@react-native-firebase/messaging": "10.3.1",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
