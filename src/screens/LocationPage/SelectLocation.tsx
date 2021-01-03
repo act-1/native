@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Image, AppState, AppStateStatus } from 'react-native';
+import { Alert, Image, AppState, AppStateStatus } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 import { openSettings } from 'react-native-permissions';
 import { SelectLocationScreenProps } from '@types/navigation';
 import { Box, Text, LocationBox, EventBox } from '../../components';
@@ -10,6 +11,31 @@ import { useStore } from '../../stores';
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore } = useStore();
   const { userLocationPermission, userCurrentPosition } = userStore;
+
+  const onLocationPress = async (locationId: string) => {
+    Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
+      { text: 'לא עכשיו' },
+      {
+        text: 'אישור',
+        onPress: () => {
+          userStore
+            .checkIn(locationId)
+            .then((result) => {
+              navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
+              console.log(result);
+            })
+            .catch((err) => {
+              // TODO: Add crashlytics report here
+              if (err.code === 'already-exists') {
+                Alert.alert("נראה שיש לך כבר צ'ק אין פעיל 🤭");
+              }
+
+              console.error(err);
+            });
+        },
+      },
+    ]);
+  };
 
   useEffect(() => {
     function handleAppStateChange(appState: AppStateStatus) {
@@ -99,8 +125,9 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
             />
             <LocationBox
               name="גשר המיתרים"
+              locationId="pardesiya"
               address="ירושלים"
-              onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
+              onPress={() => onLocationPress('pardesiya')}
             />
           </Box>
         )}

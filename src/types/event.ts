@@ -4,7 +4,8 @@ export type IEvent = {
   id: string;
   title: string;
   locationName: string;
-  timestamp: FirebaseFirestoreTypes.Timestamp;
+  startDate: FirebaseFirestoreTypes.Timestamp;
+  endDate: FirebaseFirestoreTypes.Timestamp;
   date: string;
   localDay: string;
   upcomingDate: string;

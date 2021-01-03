@@ -8,6 +8,7 @@
       "@navigation/*": ["./src/navigation/*"],
       "@screens/*": ["./src/screens/*"],
       "@services/*": ["./src/services/*"],
+      "@stores/*": ["./src/stores/*"],
       "@assets/*": ["./src/assets/*"],
       "@utils/*": ["./src/utils/*"]
     },
@@ -70,7 +71,8 @@
     // "inlineSources": true,                 /* Emit the source alongside the sourcemaps within a single file; requires '--inlineSourceMap' or '--sourceMap' to be set. */
 
     /* Experimental Options */
-    // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
+    // "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
+    // "useDefineForClassFields": true,
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
 
     /* Advanced Options */

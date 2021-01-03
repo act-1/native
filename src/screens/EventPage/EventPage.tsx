@@ -20,7 +20,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
   const attendEvent = async (event: IEvent) => {
     try {
-      const { id: eventId, timestamp: eventDate } = event;
+      const { id: eventId, startDate: eventDate } = event;
       setAttendingRequestInProgress(true);
 
       if (!isAttending) {
@@ -78,7 +78,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
                 {event.title}
               </Text>
               <Text variant="text">
-                {event.timestamp.toDate() > new Date() ? event.upcomingDate : event.date} בשעה {event.time}
+                {event.startDate.toDate() > new Date() ? event.upcomingDate : event.date} בשעה {event.time}
               </Text>
             </Box>
 

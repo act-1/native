@@ -1,3 +1,4 @@
+import firestore from '@react-native-firebase/firestore';
 import { format, isToday, isTomorrow } from 'date-fns';
 const heLocale = require('date-fns/locale/he');
 
@@ -44,4 +45,11 @@ export function formatUpcomingDate(date: Date): string {
  */
 export function formatShortDate(date: Date): string {
   return format(new Date(date), 'd בMMMM', { locale: heLocale });
+}
+
+/**
+ * Creates a firestore timestamp object.
+ */
+export function createTimestamp(seconds: number, nanoseconds: number) {
+  return new firestore.Timestamp(seconds, nanoseconds);
 }

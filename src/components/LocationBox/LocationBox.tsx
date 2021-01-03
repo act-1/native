@@ -4,13 +4,14 @@ import { Box, Text, Ticker } from '../';
 
 type LocationBoxProps = {
   name: string;
+  locationId: string;
   address?: string;
   style?: ViewStyle;
   counter?: string;
   onPress?: () => void;
 };
 
-function LocationBox({ name, address, counter, onPress, style }: LocationBoxProps) {
+function LocationBox({ name, address, locationId, counter, onPress, style }: LocationBoxProps) {
   return (
     <Pressable style={({ pressed }) => [{ backgroundColor: pressed ? '#e4e4e4' : '#fff' }]} onPress={onPress}>
       <Box flexDirection="row" alignItems="center" paddingVertical="s" paddingHorizontal="m" style={style}>

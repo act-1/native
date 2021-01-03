@@ -5,7 +5,9 @@ import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
 import EventsAPI from '@services/events';
 import { getUserFCMToken, createUserFCMToken } from '@services/user';
+import { createUserCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class UserStore {
   rootStore: null | rootStore = null;
@@ -13,43 +15,66 @@ class UserStore {
   userEventIds: string[] = [];
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
+  lastCheckIn = {};
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
-    console.log('hi?');
 
     this.initUserLocation();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user && this.user?.uid !== user.uid) {
-        console.log(user);
-        this.user = user;
-        this.initAppOnAuth();
+        runInAction(() => {
+          this.user = user;
+        });
+
+        // TODO: Extract to function
+        runInAction(async () => {
+          const checkIn = await AsyncStorage.getItem('lastCheckIn');
+          console.log(checkIn);
+          if (checkIn) {
+            const lastCheckIn = JSON.parse(checkIn);
+            await AsyncStorage.clear();
+
+            this.lastCheckIn = lastCheckIn;
+          }
+        });
       } else if (!user) {
         this.signInAnonymously();
       }
     });
   }
 
-  initAppOnAuth() {
-    this.rootStore?.eventStore?.getEvents();
-    this.rootStore?.feedStore?.getPosts();
-    this.refreshFCMToken();
-    EventsAPI.getUserEvents(this.user?.uid!).then((events) => {
+  get hasActiveCheckIn() {
+    return new Date() < new Date(this.lastCheckIn.expireAt);
+  }
+
+  async getUserEvents() {
+    try {
+      const events = await EventsAPI.getUserEvents(this.user?.uid!);
       runInAction(() => {
         this.userEventIds = events;
       });
-    });
+      return events;
+    } catch (err) {
+      throw err;
+    }
   }
 
   async refreshFCMToken() {
-    const FCMToken = await messaging().getToken();
-    const userFCMToken = await getUserFCMToken(this.user?.uid!, FCMToken);
-    if (userFCMToken.exists) {
-      // In the future we might want to update the active state.
-    } else {
-      await createUserFCMToken(this.user?.uid!, FCMToken);
+    try {
+      const FCMToken = await messaging().getToken();
+      const userFCMToken = await getUserFCMToken(this.user?.uid!, FCMToken);
+      if (userFCMToken.exists) {
+        // In the future we might want to update the active state.
+        return userFCMToken;
+      } else {
+        const token = await createUserFCMToken(this.user?.uid!, FCMToken);
+        return token;
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -99,6 +124,17 @@ class UserStore {
       });
     } catch (err) {
       console.error(err);
+    }
+  }
+
+  async checkIn(locationId: string) {
+    try {
+      const { checkIn } = await createUserCheckIn(locationId);
+      this.lastCheckIn = checkIn;
+      await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
+      return checkIn;
+    } catch (err) {
+      throw err;
     }
   }
 }

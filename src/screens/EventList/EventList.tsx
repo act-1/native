@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement } from 'react';
-import { ActivityIndicator, StatusBar, SectionList, SafeAreaView, SectionListData } from 'react-native';
+import { StatusBar, SectionList, SafeAreaView, SectionListData } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import analytics from '@react-native-firebase/analytics';
 import { EventListScreenProps } from '@types/navigation';
@@ -44,7 +44,7 @@ function EventList({ navigation }: EventListScreenProps) {
 
   useEffect(() => {
     const list = formatEventsForSectionList(eventStore.events);
-    setEventList([...list, ...list, ...list]);
+    setEventList([...list]);
   }, [eventStore.events]);
 
   return (
@@ -55,30 +55,30 @@ function EventList({ navigation }: EventListScreenProps) {
           אירועים קרובים
         </Text>
 
-        {eventList.length === 0 ? (
-          <Box marginTop="xl" justifyContent="center" alignItems="center">
-            <ActivityIndicator size="small" color="#0000ff" />
-            <Text>טוענת..</Text>
-          </Box>
-        ) : (
-          <SectionList
-            sections={eventList}
-            renderItem={({ item }) => (
-              <EventBox
-                {...item}
-                onPress={() => {
-                  navigation.navigate('EventPage', { eventId: item.id });
-                  analytics().logEvent('event_list_event_press', { event_id: item.id });
-                }}
-              />
-            )}
-            stickySectionHeadersEnabled={true}
-            progressViewOffset={100}
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            renderSectionHeader={({ section }) => renderEventSectionHeader(section)}
-          />
-        )}
+        <SectionList
+          sections={eventList}
+          renderItem={({ item }) => (
+            <EventBox
+              {...item}
+              onPress={() => {
+                navigation.navigate('EventPage', { eventId: item.id });
+                analytics().logEvent('event_list_event_press', { event_id: item.id });
+              }}
+            />
+          )}
+          stickySectionHeadersEnabled={true}
+          progressViewOffset={100}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          renderSectionHeader={({ section }) => renderEventSectionHeader(section)}
+          ListEmptyComponent={() => (
+            <Box marginTop="xxl" justifyContent="center" alignItems="center">
+              <Text variant="smallText" color="lightText">
+                לא נמצאו אירועים קרובים.
+              </Text>
+            </Box>
+          )}
+        />
       </Box>
     </SafeAreaView>
   );

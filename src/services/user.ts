@@ -16,7 +16,7 @@ export async function createUserFCMToken(userId: string, fcmToken: string) {
     const deviceName = getDeviceId();
 
     const result = await functions().httpsCallable('createUserFCMToken')({ userId, fcmToken, deviceId, deviceName });
-    console.log(result);
+    return result.data;
   } catch (err) {
     throw err;
   }

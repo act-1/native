@@ -10,6 +10,7 @@ const plugins = [
         '@navigation': './src/navigation',
         '@screens': './src/screens',
         '@services': './src/services',
+        '@stores': './src/stores',
       },
     },
   ],

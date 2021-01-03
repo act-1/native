@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { toJS } from 'mobx';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { Box, PostBox } from '../../components';
