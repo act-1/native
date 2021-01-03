@@ -2,6 +2,7 @@ import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-fireb
 import { GeoQuerySnapshot } from 'geofirestore-core';
 import * as geofirestore from 'geofirestore';
 import { IEvent } from '@types/event';
+import { ILocation } from '@types/location';
 
 // Create a GeoFirestore reference
 const GeoFirestore = geofirestore.initializeApp(firestore());
@@ -57,26 +58,30 @@ export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: Nearby
 
 /**
  * Get location & events around the provided position.
+ * If a location has an ongoing event, it'll be filtered.
  * @param position The position to fetch locations around.
 
  */
-export async function fetchNearbyEventsAndLocations({ position }: NearbyLocationsParams): Promise<GeoQuerySnapshot> {
+export async function fetchNearbyEventsAndLocations({ position }: NearbyLocationsParams): Promise<(IEvent | ILocation)[]> {
   try {
     const [locationsSnapshot, eventsSnapshot] = await Promise.all([
       fetchNearbyLocations({ position }),
       fetchNearbyUpcomingEvents({ position }),
     ]);
-    const locationsData = locationsSnapshot.docs.map((doc) => ({ ...doc.data(), type: 'location' }));
+    const locationsData = locationsSnapshot.docs.map((doc: any): ILocation => ({ ...doc.data(), type: 'location' }));
 
     // Since geofirestore doesn't allow us to filter by date, we need to do this by ourselves.
     const now = new Date();
-    const before5Hours = new Date().setHours(now.getHours() - 2); // So events will show up 2 hours from their start;
+    const before2Hours = new Date().setHours(now.getHours() - 2); // So events will show up 2 hours from their start;
 
     const eventsData = eventsSnapshot.docs
       .map((doc: any): IEvent => ({ ...doc.data(), type: 'event' }))
-      .filter((event: IEvent) => event.startDate.toMillis() > before5Hours);
+      .filter((event: IEvent) => event.startDate.toMillis() > before2Hours);
+    const eventIds = eventsData.map((event) => event.locationId);
 
-    const locationsAndEventsData = [...eventsData, ...locationsData];
+    // Filter locations that has an ongoing event
+    const filteredLocation = locationsData.filter((location) => !eventIds.includes(location.id));
+    const locationsAndEventsData = [...eventsData, ...filteredLocation];
 
     return locationsAndEventsData;
   } catch (err) {

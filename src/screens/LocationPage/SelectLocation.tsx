@@ -132,6 +132,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
               if (location.type === 'event') {
                 return (
                   <EventBox
+                    key={location.id}
                     time="18:00"
                     localDay="יום שבת"
                     locationName={location.locationName}

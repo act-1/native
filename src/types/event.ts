@@ -17,4 +17,5 @@ export type IEvent = {
   attendingCount: number;
   coordinates: FirebaseFirestoreTypes.GeoPoint;
   type?: 'event';
+  pastEvent: boolean;
 };

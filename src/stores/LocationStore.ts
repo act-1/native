@@ -6,7 +6,7 @@ import { IEvent } from '@types/event';
 
 class LocationStore {
   rootStore: null | rootStore = null;
-  nearbyLocations: ILocation[] = [];
+  nearbyLocations: (ILocation | IEvent)[] = [];
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });

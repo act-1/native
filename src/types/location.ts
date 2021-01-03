@@ -19,4 +19,5 @@ export type ILocation = {
     'ירושלים'
   ];
   coordinates: FirebaseFirestoreTypes.GeoPoint;
+  type?: 'location';
 };
