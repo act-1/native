@@ -32,7 +32,6 @@ class UserStore {
         // TODO: Extract to function
         runInAction(async () => {
           const checkIn = await AsyncStorage.getItem('lastCheckIn');
-          console.log(checkIn);
           if (checkIn) {
             const lastCheckIn = JSON.parse(checkIn);
             await AsyncStorage.clear();

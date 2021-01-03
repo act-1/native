@@ -21,9 +21,8 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
         onPress: () => {
           userStore
             .checkIn(locationId)
-            .then((result) => {
+            .then(() => {
               navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
-              console.log(result);
             })
             .catch((err) => {
               // TODO: Add crashlytics report here
@@ -55,9 +54,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   }, []);
 
   useEffect(() => {
-    locationStore.getNearbyLocations();
-    // fetch all locations around
-    // fetch all events around
+    locationStore.getNearbyLocationsAndEvents();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userStore.userCurrentPosition]);
@@ -131,21 +128,34 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
         {LocationPermissionMessage || (
           <Box marginTop="m" width="100%">
-            <EventBox
-              time="18:00"
-              localDay="יום שבת"
-              locationName="כיכר פריז, ירושלים"
-              title="מוצ״ש בבלפור"
-              thumbnail={
-                new URL(
-                  'https://res.cloudinary.com/onekm/image/upload/v1609003582/event_thumbs/132223595_181504143674568_5409743636926973174_o_d3qec1.jpg'
-                )
+            {locationStore.nearbyLocations.map((location) => {
+              if (location.type === 'event') {
+                return (
+                  <EventBox
+                    time="18:00"
+                    localDay="יום שבת"
+                    locationName={location.locationName}
+                    title={location.title}
+                    thumbnail={
+                      new URL(
+                        'https://res.cloudinary.com/onekm/image/upload/v1609003582/event_thumbs/132223595_181504143674568_5409743636926973174_o_d3qec1.jpg'
+                      )
+                    }
+                    onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
+                  />
+                );
+              } else {
+                return (
+                  <LocationBox
+                    key={location.id}
+                    locationId={location.id}
+                    name={location.name}
+                    address={location.city}
+                    onPress={() => onLocationPress(location.id)}
+                  />
+                );
               }
-              onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
-            />
-            {locationStore.nearbyLocations.map(({ id, name, city }: ILocation) => (
-              <LocationBox key={id} locationId={id} name={name} address={city} onPress={() => onLocationPress(id)} />
-            ))}
+            })}
           </Box>
         )}
       </Box>

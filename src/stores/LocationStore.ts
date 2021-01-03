@@ -1,7 +1,8 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import rootStore from './RootStore';
-import { ILocation } from '@types';
-import { fetchNearbyLocations } from '@services/locations';
+import { fetchNearbyEventsAndLocations } from '@services/locations';
+import { ILocation } from '@types/location';
+import { IEvent } from '@types/event';
 
 class LocationStore {
   rootStore: null | rootStore = null;
@@ -12,12 +13,12 @@ class LocationStore {
     this.rootStore = rootStore;
   }
 
-  async getNearbyLocations() {
+  async getNearbyLocationsAndEvents() {
     try {
-      const snapshot = await fetchNearbyLocations({ position: [31.7670357, 35.2046522] });
-      const locationsData = snapshot.docs.map((doc) => doc.data());
+      const data = await fetchNearbyEventsAndLocations({ position: [31.7670357, 35.2046522] });
+
       runInAction(() => {
-        this.nearbyLocations = locationsData;
+        this.nearbyLocations = data;
       });
     } catch (err) {
       throw err;
