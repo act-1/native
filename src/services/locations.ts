@@ -1,6 +1,7 @@
 import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { GeoQuerySnapshot } from 'geofirestore-core';
 import * as geofirestore from 'geofirestore';
+import { IEvent } from '@types/event';
 
 // Create a GeoFirestore reference
 const GeoFirestore = geofirestore.initializeApp(firestore());
@@ -34,17 +35,19 @@ export async function fetchNearbyLocations({ position, radius = 2.5 }: NearbyLoc
 }
 
 /**
- * Get events around the provided position & radius.
+ * Get upcoming events around the provided position & radius.
  * @param position The position to fetch locations around.
  * @param radius The radius number to search for locations.
  */
-export async function fetchNearbyEvents({ position, radius = 5 }: NearbyLocationsParams): Promise<GeoQuerySnapshot> {
+export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: NearbyLocationsParams): Promise<GeoQuerySnapshot> {
   try {
     const [lat, lng] = position;
-    const query = eventsCollection.near({
-      center: new firebase.firestore.GeoPoint(lat, lng),
-      radius,
-    });
+    const query = eventsCollection
+      .near({
+        center: new firebase.firestore.GeoPoint(lat, lng),
+        radius,
+      })
+      .where('pastEvent', '==', false);
 
     return query.limit(3).get();
   } catch (err) {
@@ -61,10 +64,17 @@ export async function fetchNearbyEventsAndLocations({ position }: NearbyLocation
   try {
     const [locationsSnapshot, eventsSnapshot] = await Promise.all([
       fetchNearbyLocations({ position }),
-      fetchNearbyEvents({ position }),
+      fetchNearbyUpcomingEvents({ position }),
     ]);
     const locationsData = locationsSnapshot.docs.map((doc) => ({ ...doc.data(), type: 'location' }));
-    const eventsData = eventsSnapshot.docs.map((doc) => ({ ...doc.data(), type: 'event' }));
+
+    // Since geofirestore doesn't allow us to filter by date, we need to do this by ourselves.
+    const now = new Date();
+    const before5Hours = new Date().setHours(now.getHours() - 2); // So events will show up 2 hours from their start;
+
+    const eventsData = eventsSnapshot.docs
+      .map((doc: any): IEvent => ({ ...doc.data(), type: 'event' }))
+      .filter((event: IEvent) => event.startDate.toMillis() > before5Hours);
 
     const locationsAndEventsData = [...eventsData, ...locationsData];
 
