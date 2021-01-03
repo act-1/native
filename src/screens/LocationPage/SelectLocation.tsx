@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Image, AppState, AppStateStatus } from 'react-native';
+import { Alert, Image, AppState, AppStateStatus, ActivityIndicator } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { openSettings } from 'react-native-permissions';
 import { SelectLocationScreenProps } from '@types/navigation';
@@ -7,9 +7,10 @@ import { Box, Text, LocationBox, EventBox } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
+import { ILocation } from '@types/location';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
-  const { userStore } = useStore();
+  const { userStore, locationStore } = useStore();
   const { userLocationPermission, userCurrentPosition } = userStore;
 
   const onLocationPress = async (locationId: string) => {
@@ -49,7 +50,17 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
     return () => {
       AppState.removeEventListener('change', handleAppStateChange);
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    locationStore.getNearbyLocations();
+    // fetch all locations around
+    // fetch all events around
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userStore.userCurrentPosition]);
 
   const requestLocation = async () => {
     try {
@@ -96,6 +107,15 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
         />
       </>
     );
+  } else if (locationStore.nearbyLocations.length === 0) {
+    LocationPermissionMessage = (
+      <>
+        <ActivityIndicator style={{ marginBottom: 8 }} />
+        <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
+          טוענת מיקומים..
+        </Text>
+      </>
+    );
   }
 
   return (
@@ -123,12 +143,9 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
               }
               onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
             />
-            <LocationBox
-              name="גשר המיתרים"
-              locationId="pardesiya"
-              address="ירושלים"
-              onPress={() => onLocationPress('pardesiya')}
-            />
+            {locationStore.nearbyLocations.map(({ id, name, city }: ILocation) => (
+              <LocationBox key={id} locationId={id} name={name} address={city} onPress={() => onLocationPress(id)} />
+            ))}
           </Box>
         )}
       </Box>
