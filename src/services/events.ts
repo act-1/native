@@ -1,17 +1,25 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
 import analytics from '@react-native-firebase/analytics';
+import * as geofirestore from 'geofirestore';
 import { IEvent } from '@types/event';
 import { formatLocalDay, formatShortDate, formatUpcomingDate } from '../utils/date-utils';
 import { format } from 'date-fns';
 
+// Create a GeoFirestore reference
+const GeoFirestore = geofirestore.initializeApp(firestore());
+
+// Create a GeoCollection reference
+const geocollection = GeoFirestore.collection('events');
+
 export async function getEventList(): Promise<IEvent[]> {
   const now = new Date();
   now.setHours(now.getHours() - 6); // So the event won't disappear while it's ongoing
-  console.log(now);
-  const querySnapshot = await firestore().collection('events').where('startDate', '>', now).orderBy('startDate').get();
+
+  const querySnapshot = await geocollection.where('startDate', '>', now).get();
+
   const documents = querySnapshot.docs.map((doc): FirebaseFirestoreTypes.DocumentData => ({ ...doc.data(), id: doc.id }));
-  console.log(documents);
+
   const events = documents.map(
     (doc): IEvent => ({
       id: doc.id,

@@ -5,7 +5,6 @@ import EventsAPI from '../services/events';
 import { createAnonymousUser } from '../services/user';
 import { IEvent } from '@types/event';
 import rootStore from './RootStore';
-import * as geofirestore from 'geofirestore';
 
 class EventStore {
   rootStore: null | rootStore = null;
@@ -15,20 +14,6 @@ class EventStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
-
-    // Create a GeoFirestore reference
-    const GeoFirestore = geofirestore.initializeApp(firestore());
-
-    // Create a GeoCollection reference
-    const geocollection = GeoFirestore.collection('locations');
-
-    // Add a GeoDocument to a GeoCollection
-    // const doc = geocollection.doc('ahlon');
-    // doc.set({
-    //   name: 'צומת קדימה',
-    //   address: 'קדימה', // The coordinates field must be a GeoPoint!
-    //   coordinates: new firestore.GeoPoint(32.283406, 34.896686),
-    // });
   }
 
   async getEvents() {
