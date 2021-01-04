@@ -20,9 +20,6 @@ function EventsWidget({ onEventPress, goToEventList, style }: EventsWidgetProps)
         <Text variant="largeTitle" color="lightText">
           הפגנות קרובות
         </Text>
-        <Text variant="appLink" textAlign="center" fontWeight="500" onPress={goToEventList}>
-          לרשימת ההפגנות
-        </Text>
       </Box>
       <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
         {eventStore.events.map((event: IEvent, index: number) => (
