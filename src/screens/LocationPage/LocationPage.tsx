@@ -12,19 +12,6 @@ import database from '@react-native-firebase/database';
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const store = useStore();
 
-  const confirmCheckIn = () => {
-    Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
-      {
-        text: 'לא עכשיו',
-        onPress: () => console.log('Cancel Pressed'),
-      },
-      {
-        text: 'אישור',
-        onPress: () => createUserCheckIn('zoran'),
-      },
-    ]);
-  };
-
   return (
     <Box flex={1} width="100%">
       <MapView
@@ -50,22 +37,25 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           5555 עכשיו בהפגנה
         </Text>
 
-        <Box width="100%" paddingHorizontal="xm">
-          <RoundedButton
-            text="צ׳ק אין"
-            size="huge"
-            icon={require('@assets/icons/location-icon.png')}
-            style={{ marginBottom: 12 }}
-            onPress={() => confirmCheckIn()}
-          />
-          <RoundedButton
-            text="הזמנת חברים"
-            onPress={() => manualRefreshCheckIns()}
-            size="huge"
-            icon={require('@assets/icons/hands-together.png')}
-          />
+        <Box width="100%" padding="m">
+          <Box
+            position="absolute"
+            style={{ margin: 12 }}
+            zIndex={2}
+            top={0}
+            backgroundColor="mainForeground"
+            opacity={0.6}
+            height="100%"
+            width="100%"
+            justifyContent="center"
+          >
+            <Text fontSize={28} textAlign="center" fontFamily="Rubik-Bold" color="mainBackground">
+              בקרוב
+            </Text>
+          </Box>
+          <RoundedButton text="הזמנת חברים" size="huge" icon={require('@assets/icons/hands-together.png')} />
 
-          <Box flexDirection="row" width="100%" marginTop="m">
+          <Box flexDirection="row" position="relative" width="100%" marginTop="m">
             <RoundedButton text="העלאת תמונה" size="huge" icon={require('@assets/icons/camera.png')} style={{ flex: 1 }} />
             <Box flex={0.075} />
             <RoundedButton text="גלריית הפגנה" size="huge" icon={require('@assets/icons/gallery.png')} style={{ flex: 1 }} />
