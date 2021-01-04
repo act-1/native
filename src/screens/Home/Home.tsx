@@ -24,9 +24,7 @@ function Home({ navigation }: HomeScreenProps) {
   return (
     <>
       <HomeHeader />
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#f2f2f2' }}>
-        <PostFeed />
-      </ScrollView>
+      <PostFeed />
     </>
   );
 }
