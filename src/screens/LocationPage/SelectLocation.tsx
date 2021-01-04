@@ -13,14 +13,14 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore, locationStore } = useStore();
   const { userLocationPermission, userCurrentPosition } = userStore;
 
-  const onLocationPress = async (locationId: string) => {
+  const onLocationPress = async (locationId: string, eventId?: string) => {
     Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
       { text: 'לא עכשיו' },
       {
         text: 'אישור',
         onPress: () => {
           userStore
-            .checkIn(locationId)
+            .checkIn(locationId, eventId)
             .then(() => {
               navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
             })
@@ -132,7 +132,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
               if (location.type === 'event') {
                 return (
                   <EventBox
-                    key={location.id}
+                    key={location.locationId}
                     time="18:00"
                     localDay="יום שבת"
                     locationName={location.locationName}
@@ -142,7 +142,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
                         'https://res.cloudinary.com/onekm/image/upload/v1609003582/event_thumbs/132223595_181504143674568_5409743636926973174_o_d3qec1.jpg'
                       )
                     }
-                    onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
+                    onPress={() => onLocationPress(location.locationId, location.id)}
                   />
                 );
               } else {

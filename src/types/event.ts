@@ -3,6 +3,7 @@ import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 export type IEvent = {
   id: string;
   title: string;
+  locationId: string;
   locationName: string;
   startDate: FirebaseFirestoreTypes.Timestamp;
   endDate: FirebaseFirestoreTypes.Timestamp;

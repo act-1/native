@@ -126,9 +126,9 @@ class UserStore {
     }
   }
 
-  async checkIn(locationId: string) {
+  async checkIn(locationId: string, eventId?: string) {
     try {
-      const { checkIn } = await createUserCheckIn(locationId);
+      const { checkIn } = await createUserCheckIn(locationId, eventId);
       this.lastCheckIn = checkIn;
       await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return checkIn;
