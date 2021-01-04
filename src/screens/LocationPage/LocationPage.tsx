@@ -66,6 +66,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             height="100%"
             width="100%"
             justifyContent="center"
+            borderRadius={3}
           >
             <Text fontSize={28} textAlign="center" fontFamily="Rubik-Bold" color="mainBackground">
               בקרוב

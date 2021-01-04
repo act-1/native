@@ -1,18 +1,24 @@
 import React from 'react';
 import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react-lite';
+import analytics from '@react-native-firebase/analytics';
+import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../../../../stores';
 import { Box, Text, EventBox } from '@components/';
 import { IEvent } from '@types/event';
 
 type EventsWidgetProps = {
-  onEventPress: (eventId: string, index: number) => void;
-  goToEventList: () => void;
   style?: ViewStyle;
 };
 
-function EventsWidget({ onEventPress, goToEventList, style }: EventsWidgetProps) {
+function EventsWidget({ style }: EventsWidgetProps) {
   const { eventStore } = useStore();
+  const navigation = useNavigation();
+
+  const onEventPress = (eventId: string, index: number) => {
+    navigation.navigate('EventPage', { eventId });
+    analytics().logEvent('events_widget_event_press', { event_id: eventId, featured_event_index: index + 1 });
+  };
 
   return (
     <Box style={style}>
@@ -20,12 +26,9 @@ function EventsWidget({ onEventPress, goToEventList, style }: EventsWidgetProps)
         <Text variant="largeTitle" color="lightText">
           הפגנות קרובות
         </Text>
-        <Text variant="appLink" textAlign="center" fontWeight="500" onPress={goToEventList}>
-          לרשימת ההפגנות
-        </Text>
       </Box>
       <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
-        {eventStore.events.map((event: IEvent, index: number) => (
+        {eventStore.events.slice(0, 5).map((event: IEvent, index: number) => (
           <EventBox variant="thumbBox" {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
         ))}
       </ScrollView>

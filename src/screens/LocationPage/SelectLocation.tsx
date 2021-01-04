@@ -104,12 +104,23 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
         />
       </>
     );
-  } else if (locationStore.nearbyLocations.length === 0) {
+  } else if (locationStore.fetchedLocations === false && locationStore.nearbyLocations.length === 0) {
     LocationPermissionMessage = (
       <>
         <ActivityIndicator style={{ marginBottom: 8 }} />
         <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
           טוענת מיקומים..
+        </Text>
+      </>
+    );
+  } else if (locationStore.fetchedLocations === true && locationStore.nearbyLocations.length === 0) {
+    LocationPermissionMessage = (
+      <>
+        <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="m">
+          לא נמצאו הפגנות פעילות באיזורך.
+        </Text>
+        <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
+          הפגנות יופיעו כאשר מיקומכם יהיה בסביבת מוקד הפגנה.
         </Text>
       </>
     );

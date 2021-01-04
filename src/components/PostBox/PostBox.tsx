@@ -16,7 +16,6 @@ type PostBoxProps = IPost & {
   id: string;
   image?: URL;
   style?: ViewStyle;
-  liked: boolean;
 };
 
 const windowWidth = Dimensions.get('window').width;
