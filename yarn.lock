@@ -1830,6 +1830,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-10.3.1.tgz#28441738e68256efbd504559f1200ade8b870d8e"
   integrity sha512-nKGrVI9AVg5v1mV8CUyICTKBv4xzMs5XfBOg+HIHeThFQ26N2WueAYCyWjMh0qHFXmXy3oUU5OWJKShaAy+9IA==
 
+"@react-native-firebase/in-app-messaging@^10.4.0":
+  version "10.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/in-app-messaging/-/in-app-messaging-10.4.0.tgz#f12f0154866e9d60dd9a68928e8fcd06f60dc6f6"
+  integrity sha512-2ADkswaKY8cLupL3bO8D1RJh/AAcENn78WWkWFvWHnKGiXM8wyRuEpQm1Kb7wAnLdkVxmumBgASN9aPTSt0egA==
+
 "@react-native-firebase/messaging@10.3.1":
   version "10.3.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-10.3.1.tgz#f764295ccb6fe97747dda097810d6d9c94b6c6c2"
