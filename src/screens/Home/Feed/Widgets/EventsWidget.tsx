@@ -28,7 +28,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
         </Text>
       </Box>
       <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
-        {eventStore.events.map((event: IEvent, index: number) => (
+        {eventStore.events.slice(0, 5).map((event: IEvent, index: number) => (
           <EventBox variant="thumbBox" {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
         ))}
       </ScrollView>
