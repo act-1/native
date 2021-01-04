@@ -47,7 +47,8 @@ const AppTabs = () => {
             // Go directly to location page if the user has an active check in session.
             e.preventDefault();
             if (userStore.hasActiveCheckIn) {
-              navigation.navigate('CheckIn', { screen: 'LocationPage' });
+              const locationId = userStore.lastCheckIn.locationId;
+              navigation.navigate('CheckIn', { screen: 'LocationPage', params: { locationId } });
             } else {
               navigation.navigate('CheckIn', { screen: 'SelectLocation' });
             }
