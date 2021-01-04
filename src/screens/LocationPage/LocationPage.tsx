@@ -1,16 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, Alert } from 'react-native';
 import MapView from 'react-native-maps';
-import { Box, Text } from '../../components';
+import { Box, Text, Ticker } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
 import { createUserCheckIn } from '../../services/checkIn';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
-import database from '@react-native-firebase/database';
+import { firebase } from '@react-native-firebase/database';
+
+const database = firebase.app().database('http://localhost:9000/?ns=act1co');
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const store = useStore();
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
+
+    checkInCount.on('value', (snapshot) => {
+      setCounter(snapshot.val());
+    });
+
+    return () => {
+      checkInCount.off();
+    };
+  }, [route.params.locationId]);
 
   return (
     <Box flex={1} width="100%">
@@ -33,9 +48,12 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
         <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
           כיכר פריז
         </Text>
-        <Text variant="largeTitle" fontWeight="500" color="lightText" marginBottom="xm">
-          5555 עכשיו בהפגנה
-        </Text>
+        <Box flexDirection="row">
+          <Ticker textStyle={styles.counterText}>{counter}</Ticker>
+          <Text style={[styles.counterText, { marginLeft: 7 }]} marginBottom="xm">
+            עכשיו בהפגנה
+          </Text>
+        </Box>
 
         <Box width="100%" padding="m">
           <Box
@@ -74,5 +92,11 @@ const styles = StyleSheet.create({
     height: 75,
     marginBottom: 8,
     resizeMode: 'contain',
+  },
+  counterText: {
+    fontFamily: 'Rubik-Medium',
+    fontSize: 26,
+    color: '#737373',
+    textAlign: 'left',
   },
 });
