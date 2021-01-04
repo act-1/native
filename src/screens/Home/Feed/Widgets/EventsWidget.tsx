@@ -1,6 +1,8 @@
 import React from 'react';
 import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react-lite';
+import analytics from '@react-native-firebase/analytics';
+import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../../../../stores';
 import { Box, Text, EventBox } from '@components/';
 import { IEvent } from '@types/event';
