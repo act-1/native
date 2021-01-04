@@ -27,8 +27,18 @@ function PostFeed() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         style={{ backgroundColor: '#f2f2f2' }}
       >
-        {posts.length > 0 && posts.map((post: IPost) => <PostBox {...post} key={post.id} />)}
-        <EventsWidget style={{ marginVertical: 8 }} />
+        {posts.length > 0 &&
+          posts.map((post: IPost, index) => {
+            if (index === 6) {
+              return (
+                <>
+                  <EventsWidget style={{ marginVertical: 8 }} />
+                  <PostBox {...post} key={post.id} />
+                </>
+              );
+            }
+            return <PostBox {...post} key={post.id} />;
+          })}
       </ScrollView>
     </Box>
   );
