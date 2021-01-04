@@ -32,7 +32,7 @@ function PostFeed() {
             if (index === 6) {
               return (
                 <>
-                  <EventsWidget style={{ marginVertical: 8 }} />
+                  <EventsWidget key={post.id + index} style={{ marginVertical: 8 }} />
                   <PostBox {...post} key={post.id} />
                 </>
               );
