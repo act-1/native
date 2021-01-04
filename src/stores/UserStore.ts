@@ -34,8 +34,6 @@ class UserStore {
           const checkIn = await AsyncStorage.getItem('lastCheckIn');
           if (checkIn) {
             const lastCheckIn = JSON.parse(checkIn);
-            await AsyncStorage.clear();
-
             this.lastCheckIn = lastCheckIn;
           }
         });
