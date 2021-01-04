@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Image, AppState, AppStateStatus } from 'react-native';
+import { Alert, Image, AppState, AppStateStatus, ActivityIndicator } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { openSettings } from 'react-native-permissions';
 import { SelectLocationScreenProps } from '@types/navigation';
@@ -7,22 +7,22 @@ import { Box, Text, LocationBox, EventBox } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
+import { ILocation } from '@types/location';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
-  const { userStore } = useStore();
+  const { userStore, locationStore } = useStore();
   const { userLocationPermission, userCurrentPosition } = userStore;
 
-  const onLocationPress = async (locationId: string) => {
+  const onLocationPress = async (locationId: string, eventId?: string) => {
     Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
       { text: 'לא עכשיו' },
       {
         text: 'אישור',
         onPress: () => {
           userStore
-            .checkIn(locationId)
-            .then((result) => {
+            .checkIn(locationId, eventId)
+            .then(() => {
               navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
-              console.log(result);
             })
             .catch((err) => {
               // TODO: Add crashlytics report here
@@ -49,7 +49,15 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
     return () => {
       AppState.removeEventListener('change', handleAppStateChange);
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    locationStore.getNearbyLocationsAndEvents();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userStore.userCurrentPosition]);
 
   const requestLocation = async () => {
     try {
@@ -96,6 +104,15 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
         />
       </>
     );
+  } else if (locationStore.nearbyLocations.length === 0) {
+    LocationPermissionMessage = (
+      <>
+        <ActivityIndicator style={{ marginBottom: 8 }} />
+        <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
+          טוענת מיקומים..
+        </Text>
+      </>
+    );
   }
 
   return (
@@ -111,24 +128,35 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
         {LocationPermissionMessage || (
           <Box marginTop="m" width="100%">
-            <EventBox
-              time="18:00"
-              localDay="יום שבת"
-              locationName="כיכר פריז, ירושלים"
-              title="מוצ״ש בבלפור"
-              thumbnail={
-                new URL(
-                  'https://res.cloudinary.com/onekm/image/upload/v1609003582/event_thumbs/132223595_181504143674568_5409743636926973174_o_d3qec1.jpg'
-                )
+            {locationStore.nearbyLocations.map((location) => {
+              if (location.type === 'event') {
+                return (
+                  <EventBox
+                    key={location.locationId}
+                    time="18:00"
+                    localDay="יום שבת"
+                    locationName={location.locationName}
+                    title={location.title}
+                    thumbnail={
+                      new URL(
+                        'https://res.cloudinary.com/onekm/image/upload/v1609003582/event_thumbs/132223595_181504143674568_5409743636926973174_o_d3qec1.jpg'
+                      )
+                    }
+                    onPress={() => onLocationPress(location.locationId, location.id)}
+                  />
+                );
+              } else {
+                return (
+                  <LocationBox
+                    key={location.id}
+                    locationId={location.id}
+                    name={location.name}
+                    address={location.city}
+                    onPress={() => onLocationPress(location.id)}
+                  />
+                );
               }
-              onPress={() => navigation.navigate('LocationPage', { locationId: 'pardesiya ' })}
-            />
-            <LocationBox
-              name="גשר המיתרים"
-              locationId="pardesiya"
-              address="ירושלים"
-              onPress={() => onLocationPress('pardesiya')}
-            />
+            })}
           </Box>
         )}
       </Box>

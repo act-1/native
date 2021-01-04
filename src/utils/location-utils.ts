@@ -44,7 +44,6 @@ export async function getCurrentPosition(): Promise<LatLng> {
   if (Platform.OS === 'android') {
     coordinates = await new Promise((resolve) => {
       Geolocation.getCurrentPosition((position) => {
-        console.log(position);
         resolve(extractPositionCoords(position));
       });
     });

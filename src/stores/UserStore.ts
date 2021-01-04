@@ -32,11 +32,8 @@ class UserStore {
         // TODO: Extract to function
         runInAction(async () => {
           const checkIn = await AsyncStorage.getItem('lastCheckIn');
-          console.log(checkIn);
           if (checkIn) {
             const lastCheckIn = JSON.parse(checkIn);
-            await AsyncStorage.clear();
-
             this.lastCheckIn = lastCheckIn;
           }
         });
@@ -127,9 +124,9 @@ class UserStore {
     }
   }
 
-  async checkIn(locationId: string) {
+  async checkIn(locationId: string, eventId?: string) {
     try {
-      const { checkIn } = await createUserCheckIn(locationId);
+      const { checkIn } = await createUserCheckIn(locationId, eventId);
       this.lastCheckIn = checkIn;
       await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return checkIn;

@@ -1,19 +1,22 @@
 import { makeAutoObservable } from 'mobx';
 
-import eventStore from './EventStore';
 import userStore from './UserStore';
+import locationStore from './LocationStore';
 import feedStore from './FeedStore';
+import eventStore from './EventStore';
 
 class RootStore {
+  userStore: userStore;
+  locationStore: locationStore;
   eventStore: eventStore;
   feedStore: feedStore;
-  userStore: userStore;
 
   constructor() {
     makeAutoObservable(this);
+    this.userStore = new userStore(this);
+    this.locationStore = new locationStore(this);
     this.eventStore = new eventStore(this);
     this.feedStore = new feedStore(this);
-    this.userStore = new userStore(this);
   }
 
   async initApp() {
