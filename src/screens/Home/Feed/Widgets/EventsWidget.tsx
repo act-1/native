@@ -6,13 +6,17 @@ import { Box, Text, EventBox } from '@components/';
 import { IEvent } from '@types/event';
 
 type EventsWidgetProps = {
-  onEventPress: (eventId: string, index: number) => void;
-  goToEventList: () => void;
   style?: ViewStyle;
 };
 
-function EventsWidget({ onEventPress, goToEventList, style }: EventsWidgetProps) {
+function EventsWidget({ style }: EventsWidgetProps) {
   const { eventStore } = useStore();
+  const navigation = useNavigation();
+
+  const onEventPress = (eventId: string, index: number) => {
+    navigation.navigate('EventPage', { eventId });
+    analytics().logEvent('events_widget_event_press', { event_id: eventId, featured_event_index: index + 1 });
+  };
 
   return (
     <Box style={style}>
