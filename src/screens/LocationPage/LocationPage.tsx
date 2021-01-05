@@ -9,7 +9,12 @@ import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
 import { firebase } from '@react-native-firebase/database';
 
-const database = firebase.app().database('http://localhost:9000/?ns=act1co');
+let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
+
+// TODO: Set as a default
+if (__DEV__) {
+  database = firebase.app().database('http://localhost:9000/?ns=act1co');
+}
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const store = useStore();
