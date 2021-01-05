@@ -6,8 +6,18 @@ const EventsStack = createStackNavigator();
 
 function EventsNavigator() {
   return (
-    <EventsStack.Navigator headerMode="none">
-      <EventsStack.Screen name="EventList" component={EventList} />
+    <EventsStack.Navigator
+      screenOptions={{
+        gestureEnabled: true,
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontSize: 22,
+          fontFamily: 'Rubik-Medium',
+          color: '#6E7DFF',
+        },
+      }}
+    >
+      <EventsStack.Screen name="EventList" options={{ title: 'אירועים קרובים' }} component={EventList} />
     </EventsStack.Navigator>
   );
 }

@@ -51,10 +51,6 @@ function EventList({ navigation }: EventListScreenProps) {
     <SafeAreaView>
       <StatusBar barStyle="dark-content" />
       <Box height="100%">
-        <Text variant="hugeTitle" color="screenTitle" paddingTop="m" paddingHorizontal="m" marginBottom="m">
-          אירועים קרובים
-        </Text>
-
         <SectionList
           sections={eventList}
           renderItem={({ item }) => (

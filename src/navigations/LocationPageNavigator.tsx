@@ -10,15 +10,13 @@ function LocationPageNavigator() {
       screenOptions={{
         title: 'צ׳ק אין',
         headerTintColor: '#697CFF',
-        headerStyle: {
-          backgroundColor: '#fafafa',
-        },
 
+        headerTitleAlign: 'center',
         headerTitleStyle: {
+          fontSize: 22,
           fontFamily: 'Rubik-Medium',
-          fontWeight: '600',
+          color: '#6E7DFF',
         },
-        headerLeft: false,
       }}
     >
       <LocationStack.Screen name="SelectLocation" component={SelectLocation} />
