@@ -705,14 +705,14 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.8)
     - SDWebImageWebPCoder (~> 0.6.1)
-  - RNFBAnalytics (10.3.1):
+  - RNFBAnalytics (10.4.0):
     - Firebase/Analytics (~> 7.3.0)
     - React-Core
     - RNFBApp
-  - RNFBApp (10.3.0):
+  - RNFBApp (10.4.0):
     - Firebase/CoreOnly (~> 7.3.0)
     - React-Core
-  - RNFBAuth (10.3.1):
+  - RNFBAuth (10.4.0):
     - Firebase/Auth (~> 7.3.0)
     - React-Core
     - RNFBApp
@@ -720,15 +720,15 @@ PODS:
     - Firebase/Crashlytics (~> 7.3.0)
     - React-Core
     - RNFBApp
-  - RNFBDatabase (10.3.1):
+  - RNFBDatabase (10.4.0):
     - Firebase/Database (~> 7.3.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (10.3.1):
+  - RNFBFirestore (10.4.0):
     - Firebase/Firestore (~> 7.3.0)
     - React-Core
     - RNFBApp
-  - RNFBFunctions (10.3.1):
+  - RNFBFunctions (10.4.0):
     - Firebase/Functions (~> 7.3.0)
     - React-Core
     - RNFBApp
@@ -736,7 +736,7 @@ PODS:
     - Firebase/InAppMessaging (~> 7.3.0)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (10.3.1):
+  - RNFBMessaging (10.4.0):
     - Firebase/Messaging (~> 7.3.0)
     - React-Core
     - RNFBApp
@@ -1046,15 +1046,15 @@ SPEC CHECKSUMS:
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNDeviceInfo: 6ecb1d1c87d20e4c62354be0348de23362824dcd
   RNFastImage: d4870d58f5936111c56218dbd7fcfc18e65b58ff
-  RNFBAnalytics: 2fb60eedb8cead61797417cc7c33f087ce78e6c3
-  RNFBApp: d5bc110403b55ba26ac441716259bd514d559cc5
-  RNFBAuth: 4bf9e2c84d2e42651030eb80acf6b32f966f847a
+  RNFBAnalytics: dbe60bec27fa2d4876983581f98a1ebdd46a3c95
+  RNFBApp: a9af8372c9c2b2135ffa78817fd2d8baf3ee632e
+  RNFBAuth: 6a466af92b0b091a58e059ffac2a101764a5379a
   RNFBCrashlytics: b02cce65e7059e6f7827fa357cd84df79c6fdd74
-  RNFBDatabase: 573180586ee6ccdd8d17284492bdc1a488671e0e
-  RNFBFirestore: 9b4ce9ecf2b18a1840f744bdf432b17fcedaacb5
-  RNFBFunctions: 07e6de58d8ac9133512f0dbde7fb3a8798634371
+  RNFBDatabase: 8eea439f65568b7c2e159f6fad0f315fccd42d82
+  RNFBFirestore: 501b9120430c0b5e800a79406c5106a8bdd5e624
+  RNFBFunctions: d9c7c8b60202b65313291f7aaac1db749c0bc69e
   RNFBInAppMessaging: db4289c70537e45fb52fd883927f60d5ceefd3b3
-  RNFBMessaging: b2f402097f6643e733586bcb6d5f65dec7a6bce1
+  RNFBMessaging: e46490776fcde23b1dee602008a85ac0874c4c0f
   RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNPermissions: 99dd8d4a30ff13509b949ca63cd1f69edc461775
   RNReactNativeHapticFeedback: 653a8c126a0f5e88ce15ffe280b3ff37e1fbb285
