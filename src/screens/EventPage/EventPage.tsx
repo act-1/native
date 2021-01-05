@@ -30,11 +30,11 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
   const attendEvent = async (event: IEvent) => {
     try {
-      const { id: eventId, startDate: eventDate } = event;
+      const { id: eventId, startDate } = event;
       setAttendingRequestInProgress(true);
 
       if (!isAttending) {
-        const { attended } = await eventStore.attendEvent({ eventId, eventDate, type: 'attend' });
+        const { attended } = await eventStore.attendEvent({ eventId, eventDate: startDate, type: 'attend' });
         if (attended) {
           setAttendingRequestInProgress(false);
           setAttending(true);
@@ -49,7 +49,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
           }
         }
       } else {
-        const { removed } = await eventStore.attendEvent({ eventId, type: 'remove' });
+        const { removed } = await eventStore.unattendEvent({ eventId });
         if (removed) {
           setAttendingRequestInProgress(false);
           setAttending(false);

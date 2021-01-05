@@ -1,5 +1,6 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
+import { firebase } from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 import * as geofirestore from 'geofirestore';
 import { IEvent } from '@types/event';
@@ -40,34 +41,47 @@ export async function getEventList(): Promise<IEvent[]> {
   return events;
 }
 
-export async function attendEvent({
-  eventId,
-  eventDate,
-}: {
-  eventId: string;
-  eventDate: FirebaseFirestoreTypes.Timestamp;
-}): Promise<{ attended: boolean }> {
+export async function attendEvent({ eventId, eventDate }: { eventId: string; eventDate: Date }): Promise<{ attended: boolean }> {
   try {
-    const result = await functions().httpsCallable('attendEvent')({ eventId, eventDate });
-    if (result.data.ok) {
-      await analytics().logEvent('attend_event', { event_id: eventId });
-      return { attended: true };
-    }
-    throw new Error('Unexpected error.');
+    const userId = firebase.auth().currentUser?.uid;
+    const userAttendRef = firestore().collection('users').doc(userId).collection('attendingEvents').doc(eventId);
+    const eventAttendRef = firestore().collection('events').doc(eventId).collection('attending').doc(userId);
+    const eventRef = firestore().collection('events').doc(eventId);
+
+    const batch = firestore().batch();
+    batch.set(eventAttendRef, { notifications: true, attendedAt: firestore.FieldValue.serverTimestamp() });
+    batch.set(userAttendRef, { eventDate: eventDate, attendedAt: firestore.FieldValue.serverTimestamp() });
+    batch.update(eventRef, { attendingCount: firestore.FieldValue.increment(1) });
+    await batch.commit();
+
+    await analytics().logEvent('attendEvent', { event_id: eventId });
+
+    return { attended: true };
   } catch (err) {
     console.error(err);
     throw err;
   }
 }
 
-export async function attendenceRemoval({ eventId }: { eventId: string }): Promise<{ removed: boolean }> {
+export async function unattendEvent({ eventId }: { eventId: string }): Promise<{ removed: boolean }> {
   try {
-    const result = await functions().httpsCallable('unattendEvent')({ eventId });
-    if (result.data.ok) {
-      await analytics().logEvent('unattend_event', { event_id: eventId });
-      return { removed: true };
-    }
-    throw new Error('Unexpected error.');
+    // Add new attending entry in events check ins
+    const userId = firebase.auth().currentUser?.uid;
+
+    const userAttendRef = firestore().collection('users').doc(userId).collection('attendingEvents').doc(eventId);
+    const eventAttendRef = firestore().collection('events').doc(eventId).collection('attending').doc(userId);
+    const eventRef = firestore().collection('events').doc(eventId);
+
+    // Delete user attending documents
+    const batch = firestore().batch();
+    batch.delete(userAttendRef);
+    batch.delete(eventAttendRef);
+    batch.update(eventRef, { attendingCount: firestore.FieldValue.increment(-1) });
+    await batch.commit();
+
+    await analytics().logEvent('unattend_event', { event_id: eventId });
+
+    return { removed: true };
   } catch (err) {
     throw err;
   }
@@ -89,5 +103,5 @@ export default {
   getEventList,
   getUserEvents,
   attendEvent,
-  attendenceRemoval,
+  unattendEvent,
 };

@@ -9,7 +9,6 @@ import rootStore from './RootStore';
 class EventStore {
   rootStore: null | rootStore = null;
   events: IEvent[] | [] = [];
-  userEventIds: string[] = [];
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -28,30 +27,31 @@ class EventStore {
     }
   }
 
-  async attendEvent({
-    eventId,
-    type,
-    eventDate,
-  }: {
-    eventId: string;
-    type: string;
-    eventDate?: FirebaseFirestoreTypes.Timestamp;
-  }): Promise<{ attended?: boolean; removed?: boolean } | undefined> {
+  async attendEvent({ eventId, eventDate }: { eventId: string; eventDate: Date }): Promise<{ attended: boolean } | undefined> {
+    try {
+      const result = await EventsAPI.attendEvent({ eventId, eventDate });
+      this.rootStore?.userStore.userEventIds.push(eventId);
+
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async unattendEvent({ eventId }: { eventId: string }): Promise<{ removed: boolean }> {
     try {
       let result;
+      const { userEventIds } = this.rootStore!.userStore;
 
-      if (type === 'attend' && eventDate) {
-        result = await EventsAPI.attendEvent({ eventId, eventDate });
-        this.userEventIds.push(eventId);
-      }
-      if (type === 'remove') {
-        if (this.userEventIds.includes(eventId)) {
-          result = await EventsAPI.attendenceRemoval({ eventId });
-          const updatedUserEventIds = this.userEventIds.filter((id) => id !== eventId);
-          runInAction(() => {
-            this.userEventIds = updatedUserEventIds;
-          });
-        }
+      if (userEventIds.includes(eventId)) {
+        result = await EventsAPI.unattendEvent({ eventId });
+        const updatedUserEventIds = userEventIds.filter((id) => id !== eventId);
+
+        runInAction(() => {
+          this.rootStore!.userStore.userEventIds = updatedUserEventIds;
+        });
+      } else {
+        throw new Error('The eventId is missing from the user event Ids.');
       }
 
       return result;
