@@ -1,6 +1,8 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import analytics from '@react-native-firebase/analytics';
+import crashlytics from '@react-native-firebase/crashlytics';
 import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
 import EventsAPI from '@services/events';
@@ -25,6 +27,8 @@ class UserStore {
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user && this.user?.uid !== user.uid) {
+        crashlytics().setUserId(user.uid);
+
         runInAction(() => {
           this.user = user;
         });
@@ -107,8 +111,8 @@ class UserStore {
 
   async getUserCoordinates() {
     try {
+      analytics().logEvent('user_permission_location_request');
       const permission = await requestLocationPermission();
-
       if (permission === 'granted') {
         const coordinates = await getCurrentPosition();
         runInAction(() => {
@@ -116,6 +120,7 @@ class UserStore {
         });
       }
 
+      analytics().logEvent(`user_permission_location_${permission}`);
       runInAction(() => {
         this.userLocationPermission = permission;
       });

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Image, AppState, AppStateStatus, ActivityIndicator } from 'react-native';
 import { StackActions } from '@react-navigation/native';
+import crashlytics from '@react-native-firebase/crashlytics';
+import analytics from '@react-native-firebase/analytics';
 import { openSettings } from 'react-native-permissions';
 import { SelectLocationScreenProps } from '@types/navigation';
 import { Box, Text, LocationBox, EventBox } from '../../components';
@@ -14,18 +16,27 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userLocationPermission, userCurrentPosition } = userStore;
 
   const onLocationPress = async (locationId: string, eventId?: string) => {
+    if (eventId) {
+      analytics().logEvent('check_in_select_event');
+    } else {
+      analytics().logEvent('check_in_select_location');
+    }
+
     Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
-      { text: 'לא עכשיו' },
+      { text: 'לא עכשיו', onPress: () => analytics().logEvent('check_in_alert_cancel') },
       {
         text: 'אישור',
         onPress: () => {
           userStore
             .checkIn(locationId, eventId)
             .then(() => {
+              analytics().logEvent('check_in_success');
               navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
             })
-            .catch((err) => {
-              // TODO: Add crashlytics report here
+            .catch((err: any) => {
+              crashlytics().log('Check in denied; already exists.');
+              crashlytics().setAttribute('lastCheckInId', userStore.lastCheckIn.id);
+              crashlytics().recordError(err);
               if (err.code === 'already-exists') {
                 Alert.alert("נראה שיש לך כבר צ'ק אין פעיל 🤭");
               }
