@@ -155,15 +155,11 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
                 return (
                   <EventBox
                     key={location.locationId}
-                    time="18:00"
+                    startDate={location.startDate}
                     localDay="יום שבת"
                     locationName={location.locationName}
                     title={location.title}
-                    thumbnail={
-                      new URL(
-                        'https://res.cloudinary.com/onekm/image/upload/v1609003582/event_thumbs/132223595_181504143674568_5409743636926973174_o_d3qec1.jpg'
-                      )
-                    }
+                    thumbnail={new URL(location.thumbnail)}
                     onPress={() => onLocationPress(location.locationId, location.id)}
                   />
                 );

@@ -24,19 +24,16 @@ export async function getEventList(): Promise<IEvent[]> {
     (doc): IEvent => ({
       id: doc.id,
       title: doc.title,
+      locationId: doc.locationId,
       locationName: doc.locationName,
       thumbnail: new URL(doc.thumbnail),
       content: doc.content,
       organizations: doc.organizations,
       attendingCount: doc.attendingCount,
       coordinates: doc.coordinates,
-      startDate: doc.startDate,
-      endDate: doc.endDate,
-      date: format(doc.startDate.toMillis(), 'dd/MM/yyyy'),
-      time: format(doc.startDate.toMillis(), 'HH:mm'),
-      upcomingDate: formatUpcomingDate(doc.startDate.toDate()),
-      shortDate: formatShortDate(doc.startDate.toDate()),
-      localDay: formatLocalDay(doc.startDate.toDate()),
+      startDate: doc.startDate.toDate(),
+      endDate: doc.endDate.toDate(),
+      pastEvent: doc.pastEvent,
     })
   );
 

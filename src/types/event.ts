@@ -5,13 +5,8 @@ export type IEvent = {
   title: string;
   locationId: string;
   locationName: string;
-  startDate: FirebaseFirestoreTypes.Timestamp;
-  endDate: FirebaseFirestoreTypes.Timestamp;
-  date: string;
-  localDay: string;
-  upcomingDate: string;
-  shortDate: string;
-  time: string;
+  startDate: Date;
+  endDate: Date;
   thumbnail: URL;
   content: string;
   organizations: { id: string; thumbnail: string; title: string }[];

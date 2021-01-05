@@ -1,5 +1,6 @@
 import { IEvent } from '@types/event';
 import { formatShortDate, formatUpcomingDate, parseLocalDate } from '../../utils/date-utils';
+import { format } from 'date-fns';
 
 export type EventsSectionListItem = {
   title: string;
@@ -12,10 +13,11 @@ export function formatEventsForSectionList(events: [IEvent]): EventsSectionListI
   const eventsByDates: { [key: string]: [IEvent] } = {};
 
   events.forEach((event) => {
-    if (!eventsByDates[event.date]) {
-      eventsByDates[event.date] = [event];
+    const eventDate = format(event.startDate, 'dd/MM/yyyy');
+    if (!eventsByDates[eventDate]) {
+      eventsByDates[eventDate] = [event];
     } else {
-      eventsByDates[event.date].push(event);
+      eventsByDates[eventDate].push(event);
     }
   });
 

@@ -10,6 +10,8 @@ import { IEvent } from '@types/event';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
 import { EventPageDetail, EventPageCounter } from './';
+import { formatLocalDay, formatShortDate, formatUpcomingDate } from '@utils/date-utils';
+import { format } from 'date-fns';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
@@ -17,6 +19,14 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   const [isAttending, setAttending] = useState(false);
   const [attendingRequestInProgress, setAttendingRequestInProgress] = useState(false);
   const { openModal } = useModal();
+
+  let eventTime, eventDate, upcomingDate;
+
+  if (event) {
+    eventTime = format(event.startDate, 'HH:mm');
+    upcomingDate = formatUpcomingDate(event.startDate);
+    eventDate = format(event.startDate, 'dd/MM/yyyy');
+  }
 
   const attendEvent = async (event: IEvent) => {
     try {
@@ -78,7 +88,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
                 {event.title}
               </Text>
               <Text variant="text">
-                {event.startDate.toDate() > new Date() ? event.upcomingDate : event.date} בשעה {event.time}
+                {event.startDate > new Date() ? upcomingDate : eventDate} בשעה {eventTime}
               </Text>
             </Box>
 

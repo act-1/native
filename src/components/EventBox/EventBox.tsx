@@ -2,18 +2,22 @@ import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Box, Text } from '../';
+import { formatLocalDay, formatShortDate, formatUpcomingDate } from '@utils/date-utils';
+import { format } from 'date-fns';
 
 type EventBoxProps = {
   title: string;
-  localDay: string;
-  time: string;
+  startDate: Date;
   locationName: string;
   thumbnail: URL;
   variant?: 'thumbBox' | 'listBox';
   onPress: () => void;
 };
 
-function EventBox({ title, localDay, time, locationName, thumbnail, variant = 'listBox', onPress }: EventBoxProps) {
+function EventBox({ title, startDate, locationName, thumbnail, variant = 'listBox', onPress }: EventBoxProps) {
+  const time = format(startDate, 'HH:mm');
+  const localDay = formatLocalDay(startDate);
+
   return (
     <Pressable
       style={({ pressed }) => [
