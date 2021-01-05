@@ -1,11 +1,8 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
-import functions from '@react-native-firebase/functions';
 import { firebase } from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 import * as geofirestore from 'geofirestore';
 import { IEvent } from '@types/event';
-import { formatLocalDay, formatShortDate, formatUpcomingDate } from '../utils/date-utils';
-import { format } from 'date-fns';
 
 // Create a GeoFirestore reference
 const GeoFirestore = geofirestore.initializeApp(firestore());
