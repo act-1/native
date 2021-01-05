@@ -9,11 +9,12 @@ import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
 import { firebase } from '@react-native-firebase/database';
 
+firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
 
 // TODO: Set as a default
 if (__DEV__) {
-  database = firebase.app().database('http://localhost:9000/?ns=act1co');
+  // database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
@@ -24,6 +25,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
 
     checkInCount.on('value', (snapshot) => {
+      console.log(snapshot.val());
       setCounter(snapshot.val());
     });
 

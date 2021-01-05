@@ -21,7 +21,7 @@ type NearbyLocationsParams = {
  * @param position The position to fetch locations around.
  * @param radius The radius number to search for locations.
  */
-export async function fetchNearbyLocations({ position, radius = 2.5 }: NearbyLocationsParams): Promise<GeoQuerySnapshot> {
+export async function fetchNearbyLocations({ position, radius = 2 }: NearbyLocationsParams): Promise<GeoQuerySnapshot> {
   try {
     const [lat, lng] = position;
     const query = locationCollection.near({
@@ -72,11 +72,14 @@ export async function fetchNearbyEventsAndLocations({ position }: NearbyLocation
 
     // Since geofirestore doesn't allow us to filter by date, we need to do this by ourselves.
     const now = new Date();
-    const before3Hours = new Date().setHours(now.getHours() - 3); // So events will show up 2 hours from their start;
+
     console.log(eventsSnapshot.docs[0].data().startDate.toDate());
     const eventsData = eventsSnapshot.docs
       .map((doc: any): IEvent => ({ ...doc.data(), startDate: doc.data().startDate.toDate(), type: 'event' }))
-      .filter((event: any) => event.startDate > before3Hours);
+      .filter((event: any) => {
+        const twoHoursBeforeEvent = new Date(new Date(event.startDate).setHours(event.startDate.getHours() - 2)); // So events will show up 2 hours from their start;
+        return now > twoHoursBeforeEvent;
+      });
     const eventIds = eventsData.map((event: IEvent) => event.locationId);
 
     // Filter locations that has an ongoing event

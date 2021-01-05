@@ -9,7 +9,7 @@ export type IEvent = {
   endDate: Date;
   thumbnail: URL;
   content: string;
-  organizations: { id: string; thumbnail: string; title: string }[];
+  organizers: { id: string; profilePicture: string; name: string }[];
   attendingCount: number;
   coordinates: FirebaseFirestoreTypes.GeoPoint;
   type?: 'event';

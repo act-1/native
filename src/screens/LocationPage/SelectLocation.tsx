@@ -156,7 +156,6 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
                   <EventBox
                     key={location.locationId}
                     startDate={location.startDate}
-                    localDay="יום שבת"
                     locationName={location.locationName}
                     title={location.title}
                     thumbnail={new URL(location.thumbnail)}

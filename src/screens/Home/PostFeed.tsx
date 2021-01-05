@@ -29,7 +29,7 @@ function PostFeed() {
       >
         {posts.length > 0 &&
           posts.map((post: IPost, index) => {
-            if (index === 6) {
+            if (index === 5) {
               return (
                 <>
                   <EventsWidget key={post.id + index} style={{ marginVertical: 8 }} />

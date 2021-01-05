@@ -20,12 +20,13 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   const [attendingRequestInProgress, setAttendingRequestInProgress] = useState(false);
   const { openModal } = useModal();
 
-  let eventTime, eventDate, upcomingDate;
-
+  let eventTime, eventDate, upcomingDate, shortDate;
   if (event) {
+    console.log(event.organizers);
     eventTime = format(event.startDate, 'HH:mm');
     upcomingDate = formatUpcomingDate(event.startDate);
     eventDate = format(event.startDate, 'dd/MM/yyyy');
+    shortDate = formatShortDate(event.startDate);
   }
 
   const attendEvent = async (event: IEvent) => {
@@ -117,7 +118,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Text>
 
               <Box height={50} justifyContent="space-between" marginBottom="xm">
-                <EventPageDetail text={`${event.upcomingDate}, ${event.shortDate} בשעה ${event.time}`} iconName="clock" />
+                <EventPageDetail text={`${upcomingDate}, ${shortDate} בשעה ${eventTime}`} iconName="clock" />
                 <EventPageDetail text={event.locationName} iconName="map-pin" />
               </Box>
 
@@ -144,16 +145,19 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
                 }}
               />
             </Box>
-            {event.organizations?.length > 0 && (
+            {event.organizers?.length > 0 && (
               <Box padding="m" backgroundColor="mainBackground">
                 <Text variant="largeTitle" marginBottom="m">
                   מארגנים
                 </Text>
 
-                {event.organizations.map((org: { id: string; thumbnail: string; title: string }) => (
-                  <Box flexDirection="row" alignItems="center" key={org.id}>
-                    <Image source={{ uri: org.thumbnail }} style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }} />
-                    <Text variant="text">{org.title}</Text>
+                {event.organizers.map((org) => (
+                  <Box flexDirection="row" alignItems="center" marginBottom="m" key={org.id}>
+                    <Image
+                      source={{ uri: org.profilePicture }}
+                      style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
+                    />
+                    <Text variant="text">{org.name}</Text>
                   </Box>
                 ))}
               </Box>
