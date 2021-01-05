@@ -22,7 +22,6 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
   let eventTime, eventDate, upcomingDate, shortDate;
   if (event) {
-    console.log(event.organizers);
     eventTime = format(event.startDate, 'HH:mm');
     upcomingDate = formatUpcomingDate(event.startDate);
     eventDate = format(event.startDate, 'dd/MM/yyyy');

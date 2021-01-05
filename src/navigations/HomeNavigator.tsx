@@ -1,17 +1,24 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Home, EventList, EventPage } from '../screens';
+import { Text } from 'react-native';
+import { Home } from '../screens';
 import { RootStackParamList } from '../types/navigation';
-import EventsNavigator from '../navigations/EventsNavigator';
-import Icon from 'react-native-vector-icons/Feather';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
-const HomeStack = createStackNavigator<RootStackParamList>();
+const HomeStack = createNativeStackNavigator<RootStackParamList>();
 
 function HomeNavigator() {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name="Home" component={Home} />
-      <HomeStack.Screen name="EventList" options={{ title: 'הפגנות קרובות' }} component={EventList} />
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="Home"
+        options={{
+          headerTopInsetEnabled: false,
+          headerTitle: 'Act1',
+          headerCenter: () => <Text style={{ fontSize: 22, fontFamily: 'Rubik-Medium', color: '#6E7DFF' }}>Act1</Text>,
+          headerTitleStyle: { fontSize: 22, fontFamily: 'Rubik-Medium', color: '#6E7DFF' },
+        }}
+        component={Home}
+      />
     </HomeStack.Navigator>
   );
 }

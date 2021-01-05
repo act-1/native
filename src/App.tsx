@@ -8,6 +8,7 @@ import { Easing } from 'react-native';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from '@shopify/restyle';
 import { ModalProvider, createModalStack, ModalOptions } from 'react-native-modalfy';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AttendingModal } from './components/Modals';
 import theme from './theme';
 import AppNavigator from './navigations/AppNavigator';
@@ -46,31 +47,33 @@ function App() {
   }, [store.userStore.user]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <ModalProvider stack={stack}>
-        <NavigationContainer
-          ref={navigationRef}
-          theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}
-          onReady={() => (routeNameRef.current = navigationRef.current.getCurrentRoute().name)}
-          onStateChange={async () => {
-            const previousRouteName = routeNameRef.current;
-            const currentRouteName = navigationRef.current.getCurrentRoute().name;
+    <SafeAreaProvider>
+      <ThemeProvider theme={theme}>
+        <ModalProvider stack={stack}>
+          <NavigationContainer
+            ref={navigationRef}
+            theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}
+            onReady={() => (routeNameRef.current = navigationRef.current.getCurrentRoute().name)}
+            onStateChange={async () => {
+              const previousRouteName = routeNameRef.current;
+              const currentRouteName = navigationRef.current.getCurrentRoute().name;
 
-            if (previousRouteName !== currentRouteName) {
-              await analytics().logScreenView({
-                screen_name: currentRouteName,
-                screen_class: currentRouteName,
-              });
-            }
+              if (previousRouteName !== currentRouteName) {
+                await analytics().logScreenView({
+                  screen_name: currentRouteName,
+                  screen_class: currentRouteName,
+                });
+              }
 
-            // Save the current route name for later comparision
-            routeNameRef.current = currentRouteName;
-          }}
-        >
-          <AppNavigator />
-        </NavigationContainer>
-      </ModalProvider>
-    </ThemeProvider>
+              // Save the current route name for later comparision
+              routeNameRef.current = currentRouteName;
+            }}
+          >
+            <AppNavigator />
+          </NavigationContainer>
+        </ModalProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
 

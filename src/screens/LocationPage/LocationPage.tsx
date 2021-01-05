@@ -25,7 +25,6 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
 
     checkInCount.on('value', (snapshot) => {
-      console.log(snapshot.val());
       setCounter(snapshot.val());
     });
 

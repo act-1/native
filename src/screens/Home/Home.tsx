@@ -10,14 +10,14 @@ import { HomeScreenProps } from '@types/navigation';
 const HomeHeader = () => {
   const insets = useSafeAreaInsets();
 
-  return (
-    <SafeAreaView style={[styles.header, { height: 46 + insets.top }]}>
-      <StatusBar backgroundColor="#fafafa" barStyle="dark-content" networkActivityIndicatorVisible={false} />
-      <Text variant="hugeTitle" fontFamily="Rubik-Medium" fontWeight="500" fontSize={18} style={{ color: '#6E7DFF' }}>
-        Act1
-      </Text>
-    </SafeAreaView>
-  );
+  return <StatusBar backgroundColor="#fafafa" barStyle="dark-content" networkActivityIndicatorVisible={false} />;
+  // return (
+  //   <SafeAreaView style={[styles.header, { height: 46 + insets.top }]}>
+  //     <Text variant="hugeTitle" fontFamily="Rubik-Medium" fontWeight="500" fontSize={18} style={{ color: '#6E7DFF' }}>
+  //       Act1
+  //     </Text>
+  //   </SafeAreaView>
+  // );
 };
 
 function Home({ navigation }: HomeScreenProps) {

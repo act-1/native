@@ -10,7 +10,6 @@ function LiveCheckIns() {
 
     balfurCount.on('value', (snapshot) => {
       setBalfur(snapshot.val().toLocaleString());
-      console.log('Balfur count: ', snapshot.val());
     });
 
     return () => {

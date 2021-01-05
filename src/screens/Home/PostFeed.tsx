@@ -28,13 +28,13 @@ function PostFeed() {
         style={{ backgroundColor: '#f2f2f2' }}
       >
         {posts.length > 0 &&
-          posts.map((post: IPost, index) => {
+          posts.map((post: IPost, index: number) => {
             if (index === 5) {
               return (
-                <>
-                  <EventsWidget key={post.id + index} style={{ marginVertical: 8 }} />
-                  <PostBox {...post} key={post.id} />
-                </>
+                <Box key={post.id}>
+                  <EventsWidget style={{ marginVertical: 8 }} />
+                  <PostBox {...post} />
+                </Box>
               );
             }
             return <PostBox {...post} key={post.id} />;

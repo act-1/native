@@ -1,8 +1,11 @@
 import React from 'react';
+import { enableScreens } from 'react-native-screens';
 import { createStackNavigator } from '@react-navigation/stack';
 import { EventPage } from '../screens';
 import { RootStackParamList } from '../types/navigation';
 import Icon from 'react-native-vector-icons/Feather';
+
+enableScreens();
 
 const MainStack = createStackNavigator<RootStackParamList>();
 const RootStack = createStackNavigator();
