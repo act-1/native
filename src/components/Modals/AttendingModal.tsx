@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, StyleSheet, Dimensions } from 'react-native';
 import { Box, Text } from '../';
 import { RoundedButton } from '../Buttons';
+import analytics from '@react-native-firebase/analytics';
 import messaging from '@react-native-firebase/messaging';
 import { modalfy } from 'react-native-modalfy';
 
@@ -13,6 +14,7 @@ function AttendingModal() {
     const authorizationStatus = await messaging().requestPermission();
 
     if (authorizationStatus) {
+      analytics().logEvent('event_notification_modal_permission_received', { authorizationStatus });
       modalfy().closeModal('AttendingModal');
     }
   };
@@ -38,11 +40,25 @@ function AttendingModal() {
       <Text variant="text" fontWeight="300" textAlign="center" marginBottom="m">
         תרצו לקבל עדכונים על ההפגנה?
       </Text>
-      <RoundedButton text="הפעלת התראות" color="yellow" onPress={() => notificationPermissionsRequest()} />
+      <RoundedButton
+        text="הפעלת התראות"
+        color="yellow"
+        onPress={() => {
+          analytics().logEvent('event_notification_modal_permission_click');
+          notificationPermissionsRequest();
+        }}
+      />
       <Text variant="text" fontSize={15} fontWeight="300" textAlign="center" marginVertical="m">
         זה נטו להודעות חשובות ועדכונים בלוחות זמנים. לא חופרים, באמא.{' '}
       </Text>
-      <RoundedButton text="לא עכשיו" color="porcelain" onPress={() => modalfy().closeModal('AttendingModal')} />
+      <RoundedButton
+        text="לא עכשיו"
+        color="porcelain"
+        onPress={() => {
+          analytics().logEvent('event_notification_modal_cancel_click');
+          modalfy().closeModal('AttendingModal');
+        }}
+      />
     </Box>
   );
 }

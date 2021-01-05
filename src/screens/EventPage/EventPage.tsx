@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, StatusBar, Image, Platform } from 'react-native';
 import { useModal } from 'react-native-modalfy';
+import analytics from '@react-native-firebase/analytics';
 import messaging from '@react-native-firebase/messaging';
 import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
@@ -12,6 +13,7 @@ import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../compone
 import { EventPageDetail, EventPageCounter } from './';
 import { formatLocalDay, formatShortDate, formatUpcomingDate } from '@utils/date-utils';
 import { format } from 'date-fns';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
@@ -41,10 +43,13 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
           setEvent({ ...event, attendingCount: event.attendingCount + 1 });
 
           // Open modal only if need to request notification permissions.
-          if (Platform.OS === 'ios') {
+          const modalShown = await AsyncStorage.getItem('event_notification_modal_shown');
+          if (Platform.OS === 'ios' && !modalShown) {
             const authorizationStatus = await messaging().hasPermission();
             if (authorizationStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
+              analytics().logEvent('event_notification_modal_shown');
               openModal('AttendingModal');
+              await AsyncStorage.setItem('event_notification_modal_shown', 'true');
             }
           }
         }
