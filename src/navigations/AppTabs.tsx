@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LocationScreenProps } from '@types/navigation';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeNavigator, EventsNavigator, LocationPageNavigator } from './';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -23,6 +24,7 @@ const Tab = createBottomTabNavigator();
 
 const AppTabs = () => {
   const { userStore } = useStore();
+  const insets = useSafeAreaInsets();
 
   return (
     <Tab.Navigator
@@ -31,8 +33,8 @@ const AppTabs = () => {
           if (route.name === 'CheckIn') {
             return (
               <TouchableOpacity
-                activeOpacity={0.7}
-                style={styles.checkInIconWrapper}
+                activeOpacity={0.9}
+                style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 0 : 12 }]}
                 onPress={() => {
                   if (userStore.hasActiveCheckIn) {
                     const locationId = userStore.lastCheckIn.locationId;
@@ -57,23 +59,7 @@ const AppTabs = () => {
       }}
     >
       <Tab.Screen name="Home" component={HomeNavigator} />
-      <Tab.Screen
-        name="CheckIn"
-        component={LocationPageNavigator}
-        // listeners={({ navigation }) => ({
-        //   tabPress: (e) => {
-        //     console.log('Tab bar press ');
-        //     // Go directly to location page if the user has an active check in session.
-        //     e.preventDefault();
-        //     if (userStore.hasActiveCheckIn) {
-        //       const locationId = userStore.lastCheckIn.locationId;
-        //       navigation.navigate('CheckInModal', { screen: 'LocationPage', params: { locationId } });
-        //     } else {
-        //       navigation.navigate('CheckInModal', { screen: 'SelectLocation' });
-        //     }
-        //   },
-        // })}
-      />
+      <Tab.Screen name="CheckIn" component={LocationPageNavigator} />
       <Tab.Screen name="Events" component={EventsNavigator} />
     </Tab.Navigator>
   );
@@ -84,7 +70,6 @@ export default observer(AppTabs);
 const styles = StyleSheet.create({
   checkInIconWrapper: {
     position: 'absolute',
-    bottom: 12,
     height: 70,
     width: 70,
     borderRadius: 58,
