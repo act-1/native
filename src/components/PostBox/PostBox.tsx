@@ -5,7 +5,7 @@ import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
 import HTML from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/Feather';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import HapticFeedback from 'react-native-haptic-feedback';
 import { Box, Text, Ticker } from '../../components';
 import { IPost } from '@types/post';
 import * as timeago from 'timeago.js';
@@ -32,7 +32,7 @@ function PostBox(props: PostBoxProps) {
     try {
       // Update post like with it's opposite like state.
       const hapticMethod = liked ? 'impactMedium' : 'impactLight';
-      ReactNativeHapticFeedback.trigger(hapticMethod);
+      HapticFeedback.trigger(hapticMethod);
       await feedStore.updatePostLike(postId, !liked);
     } catch (err) {
       console.log(err);

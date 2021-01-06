@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeNavigator, EventsNavigator, LocationPageNavigator } from './';
+import HapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/Feather';
 
 const icons: any = {
@@ -36,6 +37,7 @@ const AppTabs = () => {
                 activeOpacity={0.9}
                 style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 0 : 12 }]}
                 onPress={() => {
+                  HapticFeedback.trigger('clockTick');
                   if (userStore.hasActiveCheckIn) {
                     const locationId = userStore.lastCheckIn.locationId;
                     navigation.navigate('CheckInModal', { screen: 'LocationPage', params: { locationId } });

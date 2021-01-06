@@ -10,6 +10,7 @@ import { RoundedButton } from '../../components/Buttons';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { ILocation } from '@types/location';
+import HapticFeedback from 'react-native-haptic-feedback';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore, locationStore } = useStore();
@@ -40,11 +41,11 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       {
         text: 'אישור',
         onPress: () => {
+          navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
           userStore
             .checkIn({ ...checkInData, locationId, locationName, locationCity, eventId })
             .then(() => {
               analytics().logEvent('check_in_success');
-              navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
             })
             .catch((err: any) => {
               crashlytics().log('Check in denied; already exists.');
