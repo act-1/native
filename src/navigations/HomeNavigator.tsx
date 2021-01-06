@@ -13,6 +13,7 @@ function HomeNavigator() {
         name="Home"
         options={{
           headerTitle: 'Act1',
+          headerTitleAlign: 'center',
           headerTitleStyle: { fontSize: 22, fontFamily: 'Rubik-Medium', color: '#6E7DFF' },
         }}
         component={Home}
