@@ -16,6 +16,16 @@ type NearbyLocationsParams = {
   radius?: number;
 };
 
+export async function fetchLocation(locationId: string) {
+  try {
+    const locationDocumentSnapshot = await locationCollection.doc(locationId).get();
+    const locationData: any = locationDocumentSnapshot.data();
+    return locationData;
+  } catch (err) {
+    throw err;
+  }
+}
+
 /**
  * Get locations around the provided position & radius.
  * @param position The position to fetch locations around.

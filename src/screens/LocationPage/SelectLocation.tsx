@@ -15,10 +15,23 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore, locationStore } = useStore();
   const { userLocationPermission, userCurrentPosition } = userStore;
 
-  const onLocationPress = async (locationId: string, eventId?: string) => {
-    if (eventId) {
+  const onLocationPress = async (checkInData: any) => {
+    let locationName = '';
+    let locationCity = checkInData.city;
+    let locationId = '';
+    let eventId: null | string = null;
+
+    // Normalize event / location data for check in
+    if (checkInData.endDate) {
+      eventId = checkInData.id;
+      locationId = checkInData.locationId;
+      locationName = checkInData.locationName;
+
       analytics().logEvent('check_in_select_event');
     } else {
+      locationId = checkInData.id;
+      locationName = checkInData.name;
+
       analytics().logEvent('check_in_select_location');
     }
 
@@ -28,10 +41,10 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
         text: 'אישור',
         onPress: () => {
           userStore
-            .checkIn(locationId, eventId)
+            .checkIn({ ...checkInData, locationId, locationName, locationCity, eventId })
             .then(() => {
               analytics().logEvent('check_in_success');
-              navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
+              navigation.dispatch(StackActions.replace('LocationPage', { locationId: checkInData.locationId }));
             })
             .catch((err: any) => {
               crashlytics().log('Check in denied; already exists.');
@@ -150,7 +163,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
         {LocationPermissionMessage || (
           <Box marginTop="m" width="100%">
-            {locationStore.nearbyLocations.map((location) => {
+            {locationStore.nearbyLocations.map((location: any) => {
               if (location.type === 'event') {
                 return (
                   <EventBox
@@ -159,7 +172,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
                     locationName={location.locationName}
                     title={location.title}
                     thumbnail={new URL(location.thumbnail)}
-                    onPress={() => onLocationPress(location.locationId, location.id)}
+                    onPress={() => onLocationPress({ ...location })}
                   />
                 );
               } else {
@@ -169,7 +182,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
                     locationId={location.id}
                     name={location.name}
                     address={location.city}
-                    onPress={() => onLocationPress(location.id)}
+                    onPress={() => onLocationPress({ ...location })}
                   />
                 );
               }

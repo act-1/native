@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, Alert } from 'react-native';
+import { StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { firebase } from '@react-native-firebase/database';
+import crashlytics from '@react-native-firebase/crashlytics';
 import MapView from 'react-native-maps';
 import { Box, Text, Ticker } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
@@ -7,7 +9,8 @@ import { createUserCheckIn } from '../../services/checkIn';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
-import { firebase } from '@react-native-firebase/database';
+import { ILocation } from '@types/location';
+import { fetchLocation } from '@services/locations';
 
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
@@ -19,9 +22,23 @@ if (__DEV__) {
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const store = useStore();
+  const [location, setLocation] = useState<ILocation | null>(null);
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
+    fetchLocation(route.params.locationId)
+      .then((locationData: ILocation) => {
+        if (locationData) {
+          setLocation(locationData);
+        }
+      })
+      .catch((err) => {
+        crashlytics().recordError(err);
+      });
+  }, [route.params.locationId]);
+
+  useEffect(() => {
+    console.log(route.params.locationId);
     const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
 
     checkInCount.on('value', (snapshot) => {
@@ -32,6 +49,15 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
       checkInCount.off();
     };
   }, [route.params.locationId]);
+
+  if (!location) {
+    return (
+      <Box justifyContent="center" alignItems="center">
+        <ActivityIndicator size="small" color="#0000ff" />
+        <Text>טוענת..</Text>
+      </Box>
+    );
+  }
 
   return (
     <Box flex={1} width="100%">
@@ -52,7 +78,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
         </Box>
         <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
-          כיכר פריז
+          {location.name}
         </Text>
         <Box flexDirection="row">
           <Ticker textStyle={styles.counterText}>{counter}</Ticker>

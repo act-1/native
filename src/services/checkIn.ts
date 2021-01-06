@@ -1,17 +1,56 @@
-import functions from '@react-native-firebase/functions';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/database';
 import { createTimestamp } from '@utils/date-utils';
 
-export async function createUserCheckIn(locationId: string, eventId?: string) {
+let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
+
+// TODO: Set as a default
+if (__DEV__) {
+  // database = firebase.app().database('http://localhost:9000/?ns=act1co');
+}
+
+export async function createUserCheckIn({ locationId, locationName, locationCity, eventId, eventEndDate }: CheckInParams) {
   try {
-    const result = await functions().httpsCallable('userCheckIn')({ locationId, eventId });
-    const { checkIn } = result.data;
+    const userId = auth().currentUser?.uid;
 
-    // Convert firebase timestamps to dates.
-    const { createdAt, expireAt } = checkIn;
-    const createdAtDate = createTimestamp(createdAt._seconds, createdAt._nanoseconds).toDate();
-    const expireAtDate = createTimestamp(expireAt._seconds, expireAt._nanoseconds).toDate();
+    // 1.5 hours from now - the default check in expiration time.
+    let expireAt = new Date();
+    expireAt.setTime(expireAt.getTime() + 1.5 * 60 * 60 * 1000);
 
-    return { ok: true, checkIn: { ...checkIn, createdAt: createdAtDate, expireAt: expireAtDate } };
+    // Check if the user checks in to an event.
+    // If they do - set the expiration time to the event end time.
+    if (eventEndDate) {
+      expireAt = eventEndDate;
+    }
+
+    const checkInInfo = {
+      userId,
+      eventId: eventId || null,
+      locationId,
+      locationName,
+      locationCity,
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      expireAt,
+    };
+
+    // Create check in documents
+    const checkInRef = firestore().collection('checkIns').doc();
+    const userCheckInRef = firestore().collection(`users/${userId}/checkIns`).doc(checkInRef.id);
+
+    const batch = firestore().batch();
+    batch.set(checkInRef, { ...checkInInfo, isActive: true });
+    batch.set(userCheckInRef, { ...checkInInfo, isActive: true, id: checkInRef.id });
+    await batch.commit();
+
+    // Increment the location counter in the realtime database.
+    await database.ref(`locationCounter/${locationId}`).set(firebase.database.ServerValue.increment(1));
+
+    // Retrieve the saved check in object
+    const checkInDocument = await userCheckInRef.get();
+    const checkInData = checkInDocument.data();
+
+    return { ok: true, checkIn: { ...checkInData, createdAt: new Date(), expireAt } };
   } catch (err) {
     throw err;
   }
