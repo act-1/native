@@ -11,7 +11,7 @@ import { IEvent } from '@types/event';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
 import { EventPageDetail, EventPageCounter } from './';
-import { formatLocalDay, formatShortDate, formatUpcomingDate } from '@utils/date-utils';
+import { formatShortDate, formatUpcomingDate } from '@utils/date-utils';
 import { format } from 'date-fns';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

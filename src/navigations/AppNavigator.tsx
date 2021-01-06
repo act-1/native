@@ -49,9 +49,9 @@ function MainStackScreen() {
 
 function AppNavigator() {
   return (
-    <RootStack.Navigator screenOptions={{ stackPresentation: 'modal', stackAnimation: 'flip' }}>
+    <RootStack.Navigator screenOptions={{ stackPresentation: 'modal' }}>
       <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-      <RootStack.Screen name="CheckInModal" component={LocationPageNavigator} />
+      <RootStack.Screen name="CheckInModal" component={LocationPageNavigator} options={{ headerShown: false }} />
     </RootStack.Navigator>
   );
 }
