@@ -6,6 +6,18 @@ import { useStore } from '@stores/index';
 import { HomeNavigator, EventsNavigator, LocationPageNavigator } from './';
 import Icon from 'react-native-vector-icons/Feather';
 
+const icons: any = {
+  Home: {
+    iconName: 'home',
+  },
+  CheckIn: {
+    iconName: 'map-pin',
+  },
+  Events: {
+    iconName: 'calendar',
+  },
+};
+
 const Tab = createBottomTabNavigator();
 
 const AppTabs = () => {
@@ -15,20 +27,10 @@ const AppTabs = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          let iconName = '';
-
-          switch (route.name) {
-            case 'Home':
-              iconName = 'home';
-              break;
-            case 'CheckIn':
-              iconName = 'map-pin';
-              break;
-            case 'Events':
-              iconName = 'calendar';
-              break;
+          if (route.name === 'CheckIn') {
+            return <Icon name="map-pin" size={50} color={'#6E7DFF'} />;
           }
-
+          const { iconName } = icons[route.name];
           return <Icon name={iconName} size={size} color={color} />;
         },
       })}
