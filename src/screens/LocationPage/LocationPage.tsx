@@ -11,6 +11,7 @@ import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
 import { ILocation } from '@types/location';
 import { fetchLocation } from '@services/locations';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
@@ -20,21 +21,32 @@ if (__DEV__) {
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
 
-function LocationPage({ navigation, route }: LocationScreenProps) {
-  const store = useStore();
+function LocationPage({ route }: LocationScreenProps) {
   const [location, setLocation] = useState<ILocation | null>(null);
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    fetchLocation(route.params.locationId)
-      .then((locationData: ILocation) => {
-        if (locationData) {
+    let cachedLocation: string | null;
+    async function getLocationData(locationId: string) {
+      try {
+        cachedLocation = await AsyncStorage.getItem(locationId);
+
+        if (cachedLocation) {
+          setLocation(JSON.parse(cachedLocation));
+        } else {
+          const locationData: ILocation = await fetchLocation(route.params.locationId);
+          await AsyncStorage.setItem(locationId, JSON.stringify(locationData));
           setLocation(locationData);
         }
-      })
-      .catch((err) => {
+      } catch (err) {
+        crashlytics().setAttribute('locationId', locationId);
+        crashlytics().setAttribute('cachedLocation', '' + cachedLocation);
         crashlytics().recordError(err);
-      });
+        throw err;
+      }
+    }
+
+    getLocationData(route.params.locationId);
   }, [route.params.locationId]);
 
   useEffect(() => {
@@ -46,13 +58,14 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     });
 
     return () => {
+      console.log('bye!');
       checkInCount.off();
     };
   }, [route.params.locationId]);
 
   if (!location) {
     return (
-      <Box justifyContent="center" alignItems="center">
+      <Box justifyContent="center" alignItems="center" flex={1}>
         <ActivityIndicator size="small" color="#0000ff" />
         <Text>טוענת..</Text>
       </Box>

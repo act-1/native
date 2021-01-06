@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Image, AppState, AppStateStatus, ActivityIndicator } from 'react-native';
+import { Alert, Image, AppState, AppStateStatus, ActivityIndicator, StatusBar, Platform } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import analytics from '@react-native-firebase/analytics';
@@ -44,7 +44,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
             .checkIn({ ...checkInData, locationId, locationName, locationCity, eventId })
             .then(() => {
               analytics().logEvent('check_in_success');
-              navigation.dispatch(StackActions.replace('LocationPage', { locationId: checkInData.locationId }));
+              navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
             })
             .catch((err: any) => {
               crashlytics().log('Check in denied; already exists.');
@@ -152,6 +152,8 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
   return (
     <Box flex={1} width="100%">
+      <StatusBar barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'} />
+
       <Box alignItems="center" justifyContent="center" marginTop="xl">
         <Image source={require('@assets/illustrations/power-deluxe.png')} style={{ marginBottom: 16 }} />
         <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
