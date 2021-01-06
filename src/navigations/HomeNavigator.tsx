@@ -2,9 +2,9 @@ import React from 'react';
 import { Text } from 'react-native';
 import { Home } from '../screens';
 import { RootStackParamList } from '../types/navigation';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const HomeStack = createNativeStackNavigator<RootStackParamList>();
+const HomeStack = createStackNavigator<RootStackParamList>();
 
 function HomeNavigator() {
   return (
@@ -12,9 +12,7 @@ function HomeNavigator() {
       <HomeStack.Screen
         name="Home"
         options={{
-          headerTopInsetEnabled: false,
           headerTitle: 'Act1',
-          headerCenter: () => <Text style={{ fontSize: 22, fontFamily: 'Rubik-Medium', color: '#6E7DFF' }}>Act1</Text>,
           headerTitleStyle: { fontSize: 22, fontFamily: 'Rubik-Medium', color: '#6E7DFF' },
         }}
         component={Home}
