@@ -73,15 +73,13 @@ function StickyHeaderScrollView({ children, goBack, headerTitle, thumbnail }: St
         contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} enabled={true} />}
+        // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} enabled={true} />}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
       >
         {children}
       </Animated.ScrollView>
 
-      <Animated.View
-        style={[styles.header, { transform: [{ translateY: headerTranslateY }], height: HEADER_MAX_HEIGHT }]}
-      >
+      <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }], height: HEADER_MAX_HEIGHT }]}>
         <AnimatedImage
           style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
           source={{ uri: thumbnail.href }}

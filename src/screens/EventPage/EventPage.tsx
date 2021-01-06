@@ -3,6 +3,7 @@ import { ActivityIndicator, StatusBar, Image, Platform } from 'react-native';
 import { useModal } from 'react-native-modalfy';
 import analytics from '@react-native-firebase/analytics';
 import messaging from '@react-native-firebase/messaging';
+import crashlytics from '@react-native-firebase/crashlytics';
 import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { observer } from 'mobx-react-lite';
@@ -36,23 +37,20 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
       setAttendingRequestInProgress(true);
 
       if (!isAttending) {
-        const { attended } = await eventStore.attendEvent({ eventId, eventDate: startDate, type: 'attend' });
-        if (attended) {
-          setAttendingRequestInProgress(false);
-          setAttending(true);
-          setEvent({ ...event, attendingCount: event.attendingCount + 1 });
-
-          // Open modal only if need to request notification permissions.
-          const modalShown = await AsyncStorage.getItem('event_notification_modal_shown');
-          if (Platform.OS === 'ios' && !modalShown) {
-            const authorizationStatus = await messaging().hasPermission();
-            if (authorizationStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
-              analytics().logEvent('event_notification_modal_shown');
-              openModal('AttendingModal');
-              await AsyncStorage.setItem('event_notification_modal_shown', 'true');
-            }
+        setAttendingRequestInProgress(false);
+        setAttending(true);
+        setEvent({ ...event, attendingCount: event.attendingCount + 1 });
+        // Open modal only if need to request notification permissions.
+        const modalShown = await AsyncStorage.getItem('event_notification_modal_shown');
+        if (Platform.OS === 'ios' && !modalShown) {
+          const authorizationStatus = await messaging().hasPermission();
+          if (authorizationStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
+            analytics().logEvent('event_notification_modal_shown');
+            openModal('AttendingModal');
+            await AsyncStorage.setItem('event_notification_modal_shown', 'true');
           }
         }
+        await eventStore.attendEvent({ eventId, eventDate: startDate, type: 'attend' });
       } else {
         const { removed } = await eventStore.unattendEvent({ eventId });
         if (removed) {
@@ -63,6 +61,8 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
       }
     } catch (err) {
       setAttendingRequestInProgress(false);
+      crashlytics().setAttribute('eventId', event.id);
+      crashlytics().recordError(err);
       console.error(err);
     }
   };
