@@ -48,9 +48,9 @@ const AppTabs = () => {
             e.preventDefault();
             if (userStore.hasActiveCheckIn) {
               const locationId = userStore.lastCheckIn.locationId;
-              navigation.navigate('CheckIn', { screen: 'LocationPage', params: { locationId } });
+              navigation.navigate('CheckInModal', { screen: 'LocationPage', params: { locationId } });
             } else {
-              navigation.navigate('CheckIn', { screen: 'SelectLocation' });
+              navigation.navigate('CheckInModal', { screen: 'SelectLocation' });
             }
           },
         })}

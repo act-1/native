@@ -1,14 +1,18 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { EventPage } from '../screens';
 import { RootStackParamList } from '../types/navigation';
+import LocationPageNavigator from './LocationPageNavigator';
+
 import Icon from 'react-native-vector-icons/Feather';
 
 enableScreens();
 
 const MainStack = createStackNavigator<RootStackParamList>();
-const RootStack = createStackNavigator();
+const RootStack = createNativeStackNavigator();
 
 import AppTabs from './AppTabs';
 
@@ -45,8 +49,9 @@ function MainStackScreen() {
 
 function AppNavigator() {
   return (
-    <RootStack.Navigator screenOptions={{ headerShown: false }}>
+    <RootStack.Navigator screenOptions={{ stackPresentation: 'modal', stackAnimation: 'flip' }}>
       <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
+      <RootStack.Screen name="CheckInModal" component={LocationPageNavigator} />
     </RootStack.Navigator>
   );
 }
