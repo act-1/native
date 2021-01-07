@@ -18,7 +18,7 @@ const palette = {
   blue: '#0078F8',
 
   white: '#fff',
-  barleyWhite: '#f6f6f6',
+  barleyWhite: '#ededed',
   porcelain: '#F0F2F3',
   lightgrey: '#f0f2f5',
   grey: '#737373',
@@ -43,7 +43,7 @@ const theme = createTheme({
     onBoardingBackground: palette.purpleLight,
     screenTitle: palette.purpleLight,
     lightBorderColor: palette.lightgrey,
-    seperator: palette.porcelain,
+    seperator: palette.barleyWhite,
     link: palette.blue,
   },
   spacing: {

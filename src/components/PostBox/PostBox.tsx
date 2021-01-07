@@ -79,7 +79,7 @@ function PostBox(props: PostBoxProps) {
         </Box>
       </Box>
 
-      <Box width="100%" height={2} backgroundColor="seperator" />
+      <Box width="100%" height={1} backgroundColor="seperator" />
     </Box>
   );
 }
