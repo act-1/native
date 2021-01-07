@@ -141,14 +141,14 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
     );
   } else if (locationStore.fetchedLocations === true && locationStore.nearbyLocations.length === 0) {
     LocationPermissionMessage = (
-      <>
+      <Box marginTop="xm">
         <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="m">
           לא נמצאו הפגנות פעילות באיזורך.
         </Text>
         <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
-          הפגנות יופיעו כאשר מיקומכם יהיה בסביבת מוקד הפגנה.
+          הפגנות יופיעו כאשר תמצאו בסביבת מוקד הפגנה.
         </Text>
-      </>
+      </Box>
     );
   }
 
