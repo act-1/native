@@ -43,10 +43,16 @@ export async function getCurrentPosition(): Promise<LatLng> {
     let coordinates: LatLng | undefined;
 
     if (Platform.OS === 'android') {
-      coordinates = await new Promise((resolve) => {
-        Geolocation.getCurrentPosition((position) => {
-          resolve(extractPositionCoords(position));
-        });
+      coordinates = await new Promise((resolve, reject) => {
+        Geolocation.getCurrentPosition(
+          (position) => {
+            resolve(extractPositionCoords(position));
+          },
+          (err) => {
+            // Change GeoError to standard Error
+            reject(new Error(err.message));
+          }
+        );
       });
     } else if (Platform.OS === 'ios') {
       let currentPosition: Geolocation.GeoPosition;

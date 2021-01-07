@@ -8,7 +8,7 @@ import { IEvent } from '@types/event';
 class LocationStore {
   rootStore: null | rootStore = null;
   nearbyLocations: (ILocation | IEvent)[] = [];
-  fetchedLocations = false;
+  fetchingLocations = false;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -17,7 +17,7 @@ class LocationStore {
 
   async getNearbyLocationsAndEvents(position: LatLng) {
     runInAction(() => {
-      this.fetchedLocations = false;
+      this.fetchingLocations = true;
     });
 
     try {
@@ -25,7 +25,7 @@ class LocationStore {
 
       runInAction(() => {
         this.nearbyLocations = data;
-        this.fetchedLocations = true;
+        this.fetchingLocations = false;
       });
     } catch (err) {
       crashlytics().recordError(err);
