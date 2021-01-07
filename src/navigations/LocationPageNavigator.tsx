@@ -8,28 +8,30 @@ const LocationStack = createStackNavigator();
 
 function LocationPageNavigator({ navigation }) {
   return (
-    <LocationStack.Navigator
-      screenOptions={{
-        title: 'צ׳ק אין',
-        headerTintColor: '#697CFF',
-        headerRight: () => (
-          <Pressable onPress={() => navigation.goBack()} style={styles.dismissButton}>
-            <Text color="lightText" fontSize={16}>
-              ביטול
-            </Text>
-          </Pressable>
-        ),
-        headerTitleAlign: 'center',
-        headerTitleStyle: {
-          fontSize: 22,
-          fontFamily: 'Rubik-Medium',
-          color: '#6E7DFF',
-          marginBottom: Platform.OS === 'ios' ? 11 : 2,
-        },
-        headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
-      }}
-    >
-      <LocationStack.Screen name="SelectLocation" component={SelectLocation} />
+    <LocationStack.Navigator>
+      <LocationStack.Screen
+        name="SelectLocation"
+        component={SelectLocation}
+        options={{
+          title: 'צ׳ק אין',
+          headerTintColor: '#697CFF',
+          headerRight: () => (
+            <Pressable onPress={() => navigation.goBack()} style={styles.dismissButton}>
+              <Text color="lightText" fontSize={16}>
+                ביטול
+              </Text>
+            </Pressable>
+          ),
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontSize: 22,
+            fontFamily: 'Rubik-Medium',
+            color: '#6E7DFF',
+            marginBottom: Platform.OS === 'ios' ? 11 : 2,
+          },
+          headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
+        }}
+      />
       <LocationStack.Screen
         name="LocationPage"
         component={LocationPage}
