@@ -23,7 +23,7 @@ if (__DEV__) {
 
 function LocationPage({ route }: LocationScreenProps) {
   const [location, setLocation] = useState<ILocation | null>(null);
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(null);
 
   useEffect(() => {
     let cachedLocation: string | null;
@@ -50,7 +50,6 @@ function LocationPage({ route }: LocationScreenProps) {
   }, [route.params.locationId]);
 
   useEffect(() => {
-    console.log(route.params.locationId);
     const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
 
     checkInCount.on('value', (snapshot) => {
@@ -58,20 +57,18 @@ function LocationPage({ route }: LocationScreenProps) {
     });
 
     return () => {
-      console.log('bye!');
       checkInCount.off();
     };
   }, [route.params.locationId]);
 
-  if (!location) {
+  if (location === null || counter === null) {
     return (
       <Box justifyContent="center" alignItems="center" flex={1}>
-        <ActivityIndicator size="small" color="#0000ff" />
+        <ActivityIndicator size="small" color="grey" />
         <Text>טוענת..</Text>
       </Box>
     );
   }
-
   return (
     <Box flex={1} width="100%">
       <MapView

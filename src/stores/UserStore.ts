@@ -105,7 +105,8 @@ class UserStore {
         this.userCurrentPosition = coordinates;
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      throw err;
     }
   }
 
@@ -125,7 +126,7 @@ class UserStore {
         this.userLocationPermission = permission;
       });
     } catch (err) {
-      console.error(err);
+      throw err;
     }
   }
 

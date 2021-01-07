@@ -89,6 +89,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       await userStore.getUserCoordinates();
     } catch (err) {
       console.error(err);
+      crashlytics().recordError(err);
     }
   };
 
@@ -132,7 +133,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   } else if (locationStore.fetchedLocations === false && locationStore.nearbyLocations.length === 0) {
     LocationPermissionMessage = (
       <>
-        <ActivityIndicator style={{ marginBottom: 8 }} />
+        <ActivityIndicator style={{ marginTop: 60, marginBottom: 8 }} color="grey" size="small" />
         <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
           טוענת מיקומים..
         </Text>

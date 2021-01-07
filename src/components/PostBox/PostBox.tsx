@@ -48,10 +48,10 @@ function PostBox(props: PostBoxProps) {
           }}
           style={styles.authorImage}
         />
-        <Box marginTop="m" marginLeft="s">
+        <Box marginTop="m" style={{ marginLeft: 10 }}>
           <Box flexDirection="row" marginBottom="xxs">
             <Box flexDirection="row" alignItems="center">
-              <Text variant="boxTitle" fontSize={fontSize} marginRight="s">
+              <Text variant="boxTitle" fontFamily="Rubik-Medium" fontSize={15.5} marginRight="xs">
                 {authorName}
               </Text>
               <Text variant="boxSubtitle" fontSize={fontSize}>
@@ -64,12 +64,12 @@ function PostBox(props: PostBoxProps) {
               <HTML
                 html={content}
                 tagsStyles={{
-                  p: { textAlign: 'left', fontSize },
+                  p: { textAlign: 'left', fontSize, color: '#0a0b0c' },
                 }}
               />
             </Box>
 
-            <Pressable onPress={likePress}>
+            <Pressable onPress={likePress} accessibilityLabel="אהבתי">
               <Box width="100%" flexDirection="row" alignItems="center" marginBottom="s">
                 <Icon name="heart" color={liked ? 'red' : '#999999'} size={18} style={{ marginRight: 6 }} />
                 <Ticker textStyle={{ ...styles.likeCount, color: liked ? 'red' : '#999999' }}>{likeCounter}</Ticker>
@@ -88,8 +88,8 @@ export default observer(PostBox);
 
 const styles = StyleSheet.create({
   authorImage: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
     borderRadius: 25,
     marginRight: 0,
     marginTop: 12,

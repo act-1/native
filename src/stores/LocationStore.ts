@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+import crashlytics from '@react-native-firebase/crashlytics';
 import rootStore from './RootStore';
 import { fetchNearbyEventsAndLocations } from '@services/locations';
 import { ILocation } from '@types/location';
@@ -20,13 +21,16 @@ class LocationStore {
     });
 
     try {
-      const data = await fetchNearbyEventsAndLocations({ position: [31.7670357, 35.2046522] });
+      const position = this.rootStore?.userStore.userCurrentPosition;
+      if (!position) throw new Error('User position is not available.');
+      const data = await fetchNearbyEventsAndLocations({ position });
 
       runInAction(() => {
         this.nearbyLocations = data;
         this.fetchedLocations = true;
       });
     } catch (err) {
+      crashlytics().recordError(err);
       throw err;
     }
   }

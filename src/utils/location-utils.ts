@@ -39,30 +39,38 @@ export async function requestLocationPermission(): Promise<PermissionStatus> {
 }
 
 export async function getCurrentPosition(): Promise<LatLng> {
-  let coordinates: LatLng = [0, 0];
+  try {
+    let coordinates: LatLng | undefined;
 
-  if (Platform.OS === 'android') {
-    coordinates = await new Promise((resolve) => {
-      Geolocation.getCurrentPosition((position) => {
-        resolve(extractPositionCoords(position));
+    if (Platform.OS === 'android') {
+      coordinates = await new Promise((resolve) => {
+        Geolocation.getCurrentPosition((position) => {
+          resolve(extractPositionCoords(position));
+        });
       });
-    });
-  } else if (Platform.OS === 'ios') {
-    let currentPosition: Geolocation.GeoPosition;
+    } else if (Platform.OS === 'ios') {
+      let currentPosition: Geolocation.GeoPosition;
 
-    // Using watchPosition because of https://github.com/Agontuk/react-native-geolocation-service/issues/212#issuecomment-728072176
-    const watchId = Geolocation.watchPosition((latestPosition) => {
-      currentPosition = latestPosition;
-    });
+      // Using watchPosition because of https://github.com/Agontuk/react-native-geolocation-service/issues/212#issuecomment-728072176
+      const watchId = Geolocation.watchPosition((latestPosition) => {
+        currentPosition = latestPosition;
+      });
 
-    // Set 1.5s timeout to get the most accurate position information
-    coordinates = await new Promise((resolve) =>
-      setTimeout(() => {
-        Geolocation.clearWatch(watchId);
-        resolve(extractPositionCoords(currentPosition));
-      }, 1500)
-    );
+      // Set 1.5s timeout to get the most accurate position information
+      coordinates = await new Promise((resolve) =>
+        setTimeout(() => {
+          Geolocation.clearWatch(watchId);
+          resolve(extractPositionCoords(currentPosition));
+        }, 1500)
+      );
+    }
+
+    if (coordinates === undefined) {
+      throw new Error('Could not get user position.');
+    }
+
+    return coordinates;
+  } catch (err) {
+    throw err;
   }
-
-  return coordinates;
 }
