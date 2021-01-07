@@ -40,6 +40,7 @@ const theme = createTheme({
     importantLight: palette.redLight,
     attentionBackground: palette.orange,
     attentionForeground: palette.orangeDark,
+    onBoardingBackground: palette.purpleLight,
     screenTitle: palette.purpleLight,
     lightBorderColor: palette.lightgrey,
     seperator: palette.porcelain,

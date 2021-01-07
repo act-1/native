@@ -1,4 +1,5 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import userStore from './UserStore';
 import locationStore from './LocationStore';
@@ -11,12 +12,15 @@ class RootStore {
   eventStore: eventStore;
   feedStore: feedStore;
 
+  seenBetaModal = 'false';
+
   constructor() {
     makeAutoObservable(this);
     this.userStore = new userStore(this);
     this.locationStore = new locationStore(this);
     this.eventStore = new eventStore(this);
     this.feedStore = new feedStore(this);
+    this.displayBetaModal();
   }
 
   async initApp() {
@@ -28,6 +32,15 @@ class RootStore {
       return true;
     } catch (err) {
       throw err;
+    }
+  }
+
+  async displayBetaModal() {
+    const seen = await AsyncStorage.getItem('seenBetaModal');
+    if (seen) {
+      runInAction(() => {
+        this.seenBetaModal = seen;
+      });
     }
   }
 }

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '@stores/index';
 import { enableScreens } from 'react-native-screens';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-import { EventPage } from '../screens';
+import { EventPage, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
 import LocationPageNavigator from './LocationPageNavigator';
 
@@ -48,12 +50,22 @@ function MainStackScreen() {
 }
 
 function AppNavigator() {
+  const { seenBetaModal } = useStore();
+  console.log(seenBetaModal);
   return (
     <RootStack.Navigator screenOptions={{ stackPresentation: 'modal' }}>
-      <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-      <RootStack.Screen name="CheckInModal" component={LocationPageNavigator} options={{ headerShown: false }} />
+      {seenBetaModal === 'true' ? (
+        <>
+          <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
+          <RootStack.Screen name="CheckInModal" component={LocationPageNavigator} options={{ headerShown: false }} />
+        </>
+      ) : (
+        <>
+          <RootStack.Screen name="OnboardingModal" component={Onboarding} options={{ headerShown: false }} />
+        </>
+      )}
     </RootStack.Navigator>
   );
 }
 
-export default AppNavigator;
+export default observer(AppNavigator);
