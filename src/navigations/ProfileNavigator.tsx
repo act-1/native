@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { Home } from '../screens';
+import { Profile } from '../screens';
 import { RootStackParamList } from '../types/navigation';
+// import { createStackNavigator } from 'react-native-screens/stack';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 const ProfileStack = createNativeStackNavigator<RootStackParamList>();
@@ -15,7 +16,7 @@ function ProfileNavigator() {
           headerTitle: 'פרופיל',
           headerTitleStyle: { fontSize: 22, fontFamily: 'Rubik-Medium', color: '#6E7DFF' },
         }}
-        component={Home}
+        component={Profile}
       />
     </ProfileStack.Navigator>
   );
