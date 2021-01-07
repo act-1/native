@@ -79,7 +79,10 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   }, []);
 
   useEffect(() => {
-    locationStore.getNearbyLocationsAndEvents();
+    console.log(userStore.userCurrentPosition);
+    if (userStore.userCurrentPosition !== undefined) {
+      locationStore.getNearbyLocationsAndEvents(userStore.userCurrentPosition);
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userStore.userCurrentPosition]);

@@ -15,14 +15,12 @@ class LocationStore {
     this.rootStore = rootStore;
   }
 
-  async getNearbyLocationsAndEvents() {
+  async getNearbyLocationsAndEvents(position: LatLng) {
     runInAction(() => {
       this.fetchedLocations = false;
     });
 
     try {
-      const position = this.rootStore?.userStore.userCurrentPosition;
-      if (!position) throw new Error('User position is not available.');
       const data = await fetchNearbyEventsAndLocations({ position });
 
       runInAction(() => {
