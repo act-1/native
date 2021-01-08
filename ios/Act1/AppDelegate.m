@@ -7,6 +7,8 @@
 #import <React/RCTRootView.h>
 #import <React/RCTI18nUtil.h> 
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 #import "RNBootSplash.h"
 
 #ifdef FB_SONARKIT_ENABLED
@@ -41,6 +43,7 @@ static void InitializeFlipper(UIApplication *application) {
   InitializeFlipper(application);
 #endif
   [[RCTI18nUtil sharedInstance] forceRTL:YES];[[RCTI18nUtil sharedInstance] forceRTL:YES];
+  [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
@@ -55,8 +58,16 @@ static void InitializeFlipper(UIApplication *application) {
   [self.window makeKeyAndVisible];
 
   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
-  
   return YES;
+}
+
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [[FBSDKApplicationDelegate sharedInstance]application:app
+                                                       openURL:url
+                                                       options:options];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
