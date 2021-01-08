@@ -14,7 +14,7 @@ const icons: any = {
     iconName: 'home',
   },
   Live: {
-    iconName: 'wifi',
+    iconName: 'globe',
   },
   Events: {
     iconName: 'calendar',
@@ -38,7 +38,7 @@ const AppTabs = () => {
             return (
               <TouchableOpacity
                 activeOpacity={0.9}
-                style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 0 : 12 }]}
+                style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 10 : 18 }]}
                 onPress={() => {
                   HapticFeedback.trigger('clockTick');
                   if (userStore.hasActiveCheckIn) {
@@ -64,6 +64,7 @@ const AppTabs = () => {
       }}
     >
       <Tab.Screen name="Home" component={HomeNavigator} />
+      <Tab.Screen name="Live" component={HomeNavigator} />
       <Tab.Screen name="CheckIn" component={LocationPageNavigator} />
       <Tab.Screen name="Events" component={EventsNavigator} />
       <Tab.Screen name="Profile" component={ProfileNavigator} />
@@ -76,21 +77,23 @@ export default observer(AppTabs);
 const styles = StyleSheet.create({
   checkInIconWrapper: {
     position: 'absolute',
-    height: 70,
-    width: 70,
+    height: 67,
+    width: 67,
     borderRadius: 58,
     justifyContent: 'center',
     alignItems: 'center',
     transform: [{ scale: 1 }],
+    borderWidth: 4,
+    borderColor: 'white',
     backgroundColor: '#6E7DFF',
     shadowColor: '#000',
-    shadowOffset: { height: 1, width: 0 },
+    shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0.25,
-    shadowRadius: 1,
+    shadowRadius: 0.5,
     elevation: 2,
   },
   checkInIcon: {
     width: 38,
-    height: 36,
+    height: 35,
   },
 });
