@@ -125,6 +125,9 @@ const theme = createTheme({
       color: 'important',
       textAlign: 'left',
     },
+    formLabel: {
+      fontSize: 16,
+    },
   },
 });
 

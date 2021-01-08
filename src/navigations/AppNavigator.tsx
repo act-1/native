@@ -46,14 +46,14 @@ function MainStackScreen() {
           ),
         })}
       />
-      <RootStack.Screen name="SignUpNavigator" component={SignUpNavigator} options={{ headerShown: false }} />
+      <RootStack.Screen name="SignUpNavigator" component={SignUpNavigator} />
     </MainStack.Navigator>
   );
 }
 
 function AppNavigator() {
   const { seenBetaModal } = useStore();
-  console.log(seenBetaModal);
+
   return (
     <RootStack.Navigator screenOptions={{ stackPresentation: 'modal' }}>
       {seenBetaModal === 'true' ? (
