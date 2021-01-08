@@ -11,9 +11,9 @@ function Beta() {
   const store = useStore();
 
   const closeOnBoardingModal = () => {
-    analytics().logEvent('beta_modal_closeed');
+    analytics().logEvent('beta_modal_closed');
     AsyncStorage.setItem('seenBetaModal', 'true');
-    store.updateOnboardingSeenState(true);
+    store.updateOnboardingSeenState('true');
   };
 
   useEffect(() => {
