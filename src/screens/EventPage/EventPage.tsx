@@ -113,7 +113,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
                 loading={attendingRequestInProgress}
                 onPress={() => attendEvent(event)}
               />
-              <CircularButton iconName="share" color="blue" text="הזמנת חברים" />
+              {/* <CircularButton iconName="share" color="blue" text="הזמנת חברים" /> */}
             </Box>
 
             <Box padding="m" marginBottom="m" backgroundColor="mainBackground">

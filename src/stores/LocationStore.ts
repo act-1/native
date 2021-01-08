@@ -8,26 +8,24 @@ import { IEvent } from '@types/event';
 class LocationStore {
   rootStore: null | rootStore = null;
   nearbyLocations: (ILocation | IEvent)[] = [];
-  fetchedLocations = false;
+  fetchingLocations = false;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
   }
 
-  async getNearbyLocationsAndEvents() {
+  async getNearbyLocationsAndEvents(position: LatLng) {
     runInAction(() => {
-      this.fetchedLocations = false;
+      this.fetchingLocations = true;
     });
 
     try {
-      const position = this.rootStore?.userStore.userCurrentPosition;
-      if (!position) throw new Error('User position is not available.');
       const data = await fetchNearbyEventsAndLocations({ position });
 
       runInAction(() => {
         this.nearbyLocations = data;
-        this.fetchedLocations = true;
+        this.fetchingLocations = false;
       });
     } catch (err) {
       crashlytics().recordError(err);

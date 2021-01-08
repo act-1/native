@@ -95,6 +95,7 @@ const theme = createTheme({
       fontFamily: 'Rubik-Bold',
       fontSize: 16,
       color: 'primaryText',
+      textAlign: 'left',
     },
     boxInfo: {
       fontFamily: 'Rubik-Medium',
