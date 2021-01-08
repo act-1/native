@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Button, Text } from 'react-native';
+import { ProfileScreenProps } from '../../types/navigation';
 
-function Profile() {
-  return <Text>Hi</Text>;
+function Profile({ navigation }: ProfileScreenProps) {
+  return <Button title="open me" onPress={() => navigation.navigate('SignUpNavigator', { screen: 'SignUpScreen' })} />;
 }
 
 export default Profile;

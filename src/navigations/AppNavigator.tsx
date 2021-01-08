@@ -7,6 +7,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { EventPage, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
+import SignUpNavigator from './SignUpNavigator';
 import LocationPageNavigator from './LocationPageNavigator';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -58,6 +59,7 @@ function AppNavigator() {
         <>
           <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
           <RootStack.Screen name="CheckInModal" component={LocationPageNavigator} options={{ headerShown: false }} />
+          <RootStack.Screen name="SignUpNavigator" component={SignUpNavigator} options={{ headerShown: false }} />
         </>
       ) : (
         <>

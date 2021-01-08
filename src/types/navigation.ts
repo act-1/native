@@ -7,6 +7,7 @@ export type EventPageScreenProps = StackScreenProps<RootStackParamList, 'EventPa
 export type EventListScreenProps = StackScreenProps<RootStackParamList, 'EventList'>;
 export type SelectLocationScreenProps = BottomTabScreenProps<RootStackParamList, 'CheckInSelectLocation'>;
 export type LocationScreenProps = StackScreenProps<RootStackParamList, 'LocationPage'>;
+export type ProfileScreenProps = StackScreenProps<RootStackParamList, 'Profile'>;
 
 export type RootStackParamList = {
   AppTabs: undefined;
@@ -16,6 +17,9 @@ export type RootStackParamList = {
   EventPage: { eventId: string };
   CheckInSelectLocation: undefined;
   LocationPage: { locationId: string };
+  Profile: undefined;
+  SignUpNavigator: undefined;
+  SignUpScreen: undefined;
 };
 
 type TabBarParamList = {
