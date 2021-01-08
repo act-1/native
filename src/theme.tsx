@@ -19,7 +19,6 @@ const palette = {
 
   white: '#fff',
   barleyWhite: '#ededed',
-  porcelain: '#F0F2F3',
   lightgrey: '#f0f2f5',
   grey: '#737373',
   metal: '#2d3436',

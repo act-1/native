@@ -46,6 +46,7 @@ function MainStackScreen() {
           ),
         })}
       />
+      <RootStack.Screen name="SignUpNavigator" component={SignUpNavigator} options={{ headerShown: false }} />
     </MainStack.Navigator>
   );
 }
@@ -59,7 +60,6 @@ function AppNavigator() {
         <>
           <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
           <RootStack.Screen name="CheckInModal" component={LocationPageNavigator} options={{ headerShown: false }} />
-          <RootStack.Screen name="SignUpNavigator" component={SignUpNavigator} options={{ headerShown: false }} />
         </>
       ) : (
         <>
