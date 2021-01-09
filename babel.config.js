@@ -13,8 +13,8 @@ const plugins = [
         '@stores': './src/stores',
       },
     },
-    'react-native-reanimated/plugin',
   ],
+  'react-native-reanimated/plugin',
 ];
 
 module.exports = {
