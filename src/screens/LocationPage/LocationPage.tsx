@@ -97,31 +97,7 @@ function LocationPage({ route }: LocationScreenProps) {
           </Text>
         </Box>
 
-        <Box width="100%" padding="m">
-          <Box
-            position="absolute"
-            style={{ margin: 12 }}
-            zIndex={2}
-            top={0}
-            backgroundColor="mainForeground"
-            opacity={0.6}
-            height="100%"
-            width="100%"
-            justifyContent="center"
-            borderRadius={3}
-          >
-            <Text fontSize={28} textAlign="center" fontFamily="Rubik-Bold" color="mainBackground">
-              בקרוב
-            </Text>
-          </Box>
-          <RoundedButton text="הזמנת חברים" size="huge" icon={require('@assets/icons/hands-together.png')} />
-
-          <Box flexDirection="row" position="relative" width="100%" marginTop="m">
-            <RoundedButton text="העלאת תמונה" size="huge" icon={require('@assets/icons/camera.png')} style={{ flex: 1 }} />
-            <Box flex={0.075} />
-            <RoundedButton text="גלריית הפגנה" size="huge" icon={require('@assets/icons/gallery.png')} style={{ flex: 1 }} />
-          </Box>
-        </Box>
+        <Box width="100%" padding="m"></Box>
       </Box>
     </Box>
   );

@@ -64,10 +64,10 @@ const AppTabs = () => {
       }}
     >
       <Tab.Screen name="Home" component={HomeNavigator} />
-      <Tab.Screen name="Live" component={HomeNavigator} />
+      {/* <Tab.Screen name="Live" component={HomeNavigator} /> */}
       <Tab.Screen name="CheckIn" component={LocationPageNavigator} />
       <Tab.Screen name="Events" component={EventsNavigator} />
-      <Tab.Screen name="Profile" component={ProfileNavigator} />
+      {/* <Tab.Screen name="Profile" component={ProfileNavigator} /> */}
     </Tab.Navigator>
   );
 };

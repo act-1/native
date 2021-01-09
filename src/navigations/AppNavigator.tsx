@@ -46,7 +46,7 @@ function MainStackScreen() {
           ),
         })}
       />
-      <RootStack.Screen name="SignUpNavigator" component={SignUpNavigator} />
+      {/* <RootStack.Screen name="SignUpNavigator" component={SignUpNavigator} /> */}
     </MainStack.Navigator>
   );
 }
