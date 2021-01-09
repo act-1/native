@@ -8,13 +8,7 @@ function LocationProfilePictures() {
   return (
     <Box paddingHorizontal="m" alignItems="center" width="100%">
       <Box backgroundColor="seperator" height={2} width={500} marginBottom="s" />
-      <Box
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        width={'100%'}
-        style={{ marginHorizontal: -80 }}
-      >
+      <Box flexDirection="row" justifyContent="space-between" alignItems="center" width={'100%'}>
         <Text variant="boxTitle" textAlign="left" fontWeight="500" marginBottom="s">
           מי מפגינ.ה?
         </Text>

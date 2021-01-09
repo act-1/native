@@ -26,9 +26,10 @@ function LocationPageNavigator({ navigation }) {
           headerTitleStyle: {
             fontSize: 22,
             fontFamily: 'Rubik-Medium',
-            color: '#6E7DFF',
+            color: '#EC534B',
             marginBottom: Platform.OS === 'ios' ? 11 : 2,
           },
+          headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
           headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
         }}
       />

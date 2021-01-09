@@ -37,7 +37,7 @@ const AppTabs = () => {
           if (route.name === 'CheckIn') {
             return (
               <TouchableOpacity
-                activeOpacity={0.9}
+                activeOpacity={0.8}
                 style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 10 : 18 }]}
                 onPress={() => {
                   HapticFeedback.trigger('clockTick');
@@ -58,8 +58,8 @@ const AppTabs = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#EC534B',
-        inactiveTintColor: 'gray',
+        activeTintColor: '#dddddd',
+        inactiveTintColor: '#475968',
         showLabel: false,
         style: { backgroundColor: '#1e262d', borderTopWidth: 2, borderTopColor: '#33404b' },
       }}
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 1 }],
     borderWidth: 4,
     borderColor: '#32373d',
-    backgroundColor: '#1e262d',
+    backgroundColor: '#33404b',
     shadowColor: '#000',
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0.25,
@@ -96,6 +96,6 @@ const styles = StyleSheet.create({
   checkInIcon: {
     width: 38,
     height: 35,
-    tintColor: '#ffffff',
+    tintColor: '#dddddd',
   },
 });

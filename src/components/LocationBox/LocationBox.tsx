@@ -13,14 +13,14 @@ type LocationBoxProps = {
 
 function LocationBox({ name, address, locationId, counter, onPress, style }: LocationBoxProps) {
   return (
-    <Pressable style={({ pressed }) => [{ backgroundColor: pressed ? '#e4e4e4' : '#fff' }]} onPress={onPress}>
+    <Pressable style={({ pressed }) => [{ backgroundColor: pressed ? '#1e262d' : '#0a0d0f' }]} onPress={onPress}>
       <Box flexDirection="row" alignItems="center" paddingVertical="s" paddingHorizontal="m" style={style}>
         <Image style={styles.locationPin} source={require('../../assets/icons/map-pin-rounded.png')} />
         <Box alignItems="flex-start" flex={1}>
-          <Text variant="boxTitle" color="subText" fontSize={16}>
+          <Text variant="boxTitle" fontSize={16}>
             {name}
           </Text>
-          <Text variant="boxSubtitle" color="subText">
+          <Text variant="boxSubtitle" color="lightText">
             {address}
           </Text>
         </Box>

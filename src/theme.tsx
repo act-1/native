@@ -10,11 +10,12 @@ const palette = {
   greenDark: '#0A906E',
 
   redLight: '#ffe7e5',
-  redPrimary: '#f0040d',
+  redPrimary: '#ff4241',
 
   orange: '#FFC281',
   orangeDark: '#632700',
 
+  turquoise: '#76C6CB',
   blue: '#0078F8',
 
   white: '#fff',
@@ -28,12 +29,13 @@ const palette = {
 const theme = createTheme({
   colors: {
     primaryText: palette.white,
-    subText: palette.metal,
-    lightText: palette.grey,
+    subText: palette.grey,
+    lightText: palette.barleyWhite,
     mainBackground: palette.black,
     mainForeground: palette.white,
     lightBackground: palette.lightgrey,
     eventBoxDateColor: palette.redPrimary,
+    boxTitle: palette.turquoise,
     dimmedBackground: palette.lightgrey,
     sectionListSeperator: palette.metal,
     important: palette.redPrimary,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement } from 'react';
-import { StatusBar, SectionList, SafeAreaView, SectionListData } from 'react-native';
+import { StatusBar, SectionList, SafeAreaView, SectionListData, RefreshControl } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import analytics from '@react-native-firebase/analytics';
 import { EventListScreenProps } from '@types/navigation';
@@ -66,6 +66,7 @@ function EventList({ navigation }: EventListScreenProps) {
           progressViewOffset={100}
           refreshing={refreshing}
           onRefresh={onRefresh}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#ece1e1" />}
           renderSectionHeader={({ section }) => renderEventSectionHeader(section)}
           ListEmptyComponent={() => (
             <Box marginTop="xxl" justifyContent="center" alignItems="center">

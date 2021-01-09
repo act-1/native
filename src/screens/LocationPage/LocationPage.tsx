@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   counterText: {
     fontFamily: 'Rubik-Medium',
     fontSize: 26,
-    color: '#737373',
+    color: '#f0f2f5',
     textAlign: 'left',
   },
 });
