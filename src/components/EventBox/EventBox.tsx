@@ -21,7 +21,7 @@ function EventBox({ title, startDate, locationName, thumbnail, variant = 'listBo
   return (
     <Pressable
       style={({ pressed }) => [
-        { backgroundColor: pressed ? '#e4e4e4' : '#fff' },
+        { backgroundColor: pressed ? '#1e262d' : '#0B0D0F' },
         { transform: [{ scale: pressed && variant === 'thumbBox' ? 0.99 : 1 }] },
         styles[variant],
       ]}

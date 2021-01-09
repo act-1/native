@@ -16,8 +16,8 @@ type RoundedButtonProps = {
 function getButtonDimenions(size: string): ViewStyle {
   if (size === 'small') {
     return {
-      width: 150,
-      height: 35,
+      width: 155,
+      height: 30,
     };
   }
 

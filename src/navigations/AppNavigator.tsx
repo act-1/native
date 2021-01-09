@@ -29,7 +29,7 @@ function MainStackScreen() {
       }}
       mode="card"
     >
-      <MainStack.Screen name="AppTabs" component={AppTabs} />
+      <MainStack.Screen name="AppTabs" component={AppTabs} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
       <MainStack.Screen
         name="EventPage"
         component={EventPage}

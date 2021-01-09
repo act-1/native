@@ -11,6 +11,8 @@ import { createUserCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const onAuthStateInitialCall;
+
 class UserStore {
   rootStore: null | rootStore = null;
   user: FirebaseAuthTypes.User | null = null;
@@ -26,7 +28,8 @@ class UserStore {
     this.initUserLocation();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
-      if (user && this.user?.uid !== user.uid) {
+      if (user) {
+        console.log('update..', user);
         crashlytics().setUserId(user.uid);
 
         runInAction(() => {

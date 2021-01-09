@@ -7669,10 +7669,10 @@ react-native-permissions@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.0.0.tgz#d9d107700741d41f8392f202f35a61f481fb0e68"
   integrity sha512-zBvf+o3NhgKmBk1I06GzZXaDfc9SUyO4M5TMcaCF1pwG1h4sI+XAv3gWSbryl6WnaZQc1zA+g7SocSoYcpJN5g==
 
-react-native-reanimated@2.0.0-rc.1:
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.0.0-rc.1.tgz#51be1ca5bfa7df0d75a2878792612032bff792ae"
-  integrity sha512-97xo5N4IHNg8hwJ/sTrp7gVuS85AUH3QEjKEtkwZxkH6uijB1OViyNlly6VAIE/cZIaDEPcY7tmDYJakUUHIGA==
+react-native-reanimated@2.0.0-alpha.8:
+  version "2.0.0-alpha.8"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.0.0-alpha.8.tgz#9b8ce77cea315bfc356f190eecec7763d19d4c26"
+  integrity sha512-WCeMwZW1ZOCkY1ANFDP2Iwei2bxO/LftxTmx0XiCbQl8+csctpB5I1GERuzCZNJZ1NLR9/LBqrJIr/Vl8/TnjQ==
   dependencies:
     "@babel/plugin-transform-object-assign" "^7.10.4"
     fbjs "^3.0.0"

@@ -64,7 +64,7 @@ function PostBox(props: PostBoxProps) {
               <HTML
                 html={content}
                 tagsStyles={{
-                  p: { textAlign: 'left', fontSize, color: '#0a0b0c' },
+                  p: { textAlign: 'left', fontSize, color: '#fff' },
                 }}
               />
             </Box>

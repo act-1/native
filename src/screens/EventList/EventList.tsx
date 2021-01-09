@@ -19,7 +19,7 @@ function renderEventSectionHeader({ title, subtitle }: SectionListData<IEvent, E
       backgroundColor="sectionListSeperator"
       elevation={1}
     >
-      <Text fontSize={16} fontWeight="100" textAlign="left">
+      <Text fontSize={16} fontWeight="100" textAlign="left" color="lightText">
         {title}
       </Text>
       <Text fontSize={12} color="lightText">

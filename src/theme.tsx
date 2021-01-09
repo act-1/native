@@ -21,20 +21,21 @@ const palette = {
   barleyWhite: '#ededed',
   lightgrey: '#f0f2f5',
   grey: '#737373',
-  metal: '#2d3436',
+  metal: '#20262C',
   black: '#040506',
 };
 
 const theme = createTheme({
   colors: {
-    primaryText: palette.black,
+    primaryText: palette.white,
     subText: palette.metal,
     lightText: palette.grey,
-    mainBackground: palette.white,
-    mainForeground: palette.black,
+    mainBackground: palette.black,
+    mainForeground: palette.white,
+    lightBackground: palette.lightgrey,
     eventBoxDateColor: palette.redPrimary,
     dimmedBackground: palette.lightgrey,
-    sectionListSeperator: palette.lightgrey,
+    sectionListSeperator: palette.metal,
     important: palette.redPrimary,
     importantLight: palette.redLight,
     attentionBackground: palette.orange,
@@ -42,7 +43,7 @@ const theme = createTheme({
     onBoardingBackground: palette.purpleLight,
     screenTitle: palette.purpleLight,
     lightBorderColor: palette.lightgrey,
-    seperator: palette.barleyWhite,
+    seperator: palette.metal,
     link: palette.blue,
   },
   spacing: {

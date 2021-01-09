@@ -58,9 +58,10 @@ const AppTabs = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#6E7DFF',
+        activeTintColor: '#EC534B',
         inactiveTintColor: 'gray',
         showLabel: false,
+        style: { backgroundColor: '#1e262d', borderTopWidth: 2, borderTopColor: '#33404b' },
       }}
     >
       <Tab.Screen name="Home" component={HomeNavigator} />
@@ -84,8 +85,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     transform: [{ scale: 1 }],
     borderWidth: 4,
-    borderColor: 'white',
-    backgroundColor: '#6E7DFF',
+    borderColor: '#32373d',
+    backgroundColor: '#1e262d',
     shadowColor: '#000',
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0.25,
@@ -95,5 +96,6 @@ const styles = StyleSheet.create({
   checkInIcon: {
     width: 38,
     height: 35,
+    tintColor: '#ffffff',
   },
 });
