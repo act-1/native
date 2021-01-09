@@ -13,6 +13,7 @@ const plugins = [
         '@stores': './src/stores',
       },
     },
+    'react-native-reanimated/plugin',
   ],
 ];
 
