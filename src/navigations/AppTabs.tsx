@@ -40,7 +40,7 @@ const AppTabs = () => {
                 activeOpacity={0.8}
                 style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 10 : 18 }]}
                 onPress={() => {
-                  HapticFeedback.trigger('clockTick');
+                  HapticFeedback.trigger('impactMedium');
                   if (userStore.hasActiveCheckIn) {
                     const locationId = userStore.lastCheckIn.locationId;
                     navigation.navigate('CheckInModal', { screen: 'LocationPage', params: { locationId } });
@@ -61,7 +61,7 @@ const AppTabs = () => {
         activeTintColor: '#dddddd',
         inactiveTintColor: '#475968',
         showLabel: false,
-        style: { backgroundColor: '#1e262d', borderTopWidth: 2, borderTopColor: '#33404b' },
+        style: { backgroundColor: '#0f1316', borderTopWidth: 2, borderTopColor: '#1e262d' },
       }}
     >
       <Tab.Screen name="Home" component={HomeNavigator} />

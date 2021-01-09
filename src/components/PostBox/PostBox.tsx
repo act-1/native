@@ -71,7 +71,7 @@ function PostBox(props: PostBoxProps) {
 
             <Pressable onPress={likePress} accessibilityLabel="אהבתי">
               <Box width="100%" flexDirection="row" alignItems="center" marginBottom="s">
-                <Icon name="heart" color={liked ? '#ec534b' : '#999999'} size={18} style={{ marginRight: 6 }} />
+                <Icon name="thumbs-up" color={liked ? '#ec534b' : '#999999'} size={18} style={{ marginRight: 6 }} />
                 <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#ec534b' : '#999999' }}>{likeCounter}</Ticker>
               </Box>
             </Pressable>

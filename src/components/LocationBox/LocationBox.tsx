@@ -20,7 +20,7 @@ function LocationBox({ name, address, locationId, counter, onPress, style }: Loc
           <Text variant="boxTitle" fontSize={16}>
             {name}
           </Text>
-          <Text variant="boxSubtitle" color="lightText">
+          <Text variant="boxSubtitle" color="subText">
             {address}
           </Text>
         </Box>

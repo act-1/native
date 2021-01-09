@@ -29,14 +29,15 @@ function PostFeed() {
       >
         {posts.length > 0 &&
           posts.map((post: IPost, index: number) => {
-            if (index === 5) {
-              return (
-                <Box key={post.id}>
-                  <EventsWidget style={{ marginVertical: 8 }} />
-                  <PostBox {...post} />
-                </Box>
-              );
-            }
+            // Featured events widget
+            // if (index === 5) {
+            //   return (
+            //     <Box key={post.id}>
+            //       <EventsWidget style={{ marginVertical: 8 }} />
+            //       <PostBox {...post} />
+            //     </Box>
+            //   );
+            // }
             return <PostBox {...post} key={post.id} />;
           })}
       </ScrollView>

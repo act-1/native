@@ -8,15 +8,14 @@ function LocationProfilePictures() {
   return (
     <Box paddingHorizontal="m" alignItems="center" width="100%">
       <Box backgroundColor="seperator" height={2} width={500} marginBottom="s" />
-      <Box flexDirection="row" justifyContent="space-between" alignItems="center" width={'100%'}>
-        <Text variant="boxTitle" textAlign="left" fontWeight="500" marginBottom="s">
-          מי מפגינ.ה?
+      <Box flexDirection="row" width={'100%'}>
+        <Text variant="boxTitle" color="lightText" textAlign="left" fontWeight="500" marginBottom="s">
+          מי בהפגנה?
         </Text>
-        <RoundedButton text="הוספת תמונת פרופיל" color="blue" size="small" textStyle={{ fontSize: 14 }} />
       </Box>
       <Box backgroundColor="seperator" height={2} width={500} marginBottom="m" />
       {/* <ScrollView> */}
-      <Box flexDirection="row" justifyContent="center" flexWrap="wrap">
+      <Box flexDirection="row" justifyContent="center" flexWrap="wrap" marginBottom="xm">
         <FastImage
           source={{
             uri:
@@ -69,6 +68,7 @@ function LocationProfilePictures() {
           />
         </Box>
       </Box>
+      <RoundedButton text="הוספת תמונת פרופיל" color="blue" size="small" textStyle={{ fontSize: 14 }} />
       {/* </ScrollView> */}
     </Box>
   );

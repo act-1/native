@@ -87,7 +87,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
         </Box>
       ) : (
         <StickyHeaderScrollView goBack={() => navigation.goBack()} headerTitle={event.title} thumbnail={event.thumbnail}>
-          <Box backgroundColor="dimmedBackground">
+          <Box backgroundColor="mainBackground">
             <Box paddingVertical="xm" marginBottom="m" backgroundColor="mainBackground" alignItems="center">
               <Text style={{ writingDirection: 'rtl' }} variant="largeTitle" marginBottom="m" textAlign="center">
                 {event.title}
@@ -116,7 +116,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               {/* <CircularButton iconName="share" color="blue" text="הזמנת חברים" /> */}
             </Box>
 
-            <Box padding="m" marginBottom="m" backgroundColor="mainBackground">
+            <Box padding="m" marginBottom="m" backgroundColor="greyBackground">
               <Text variant="largeTitle" marginBottom="m">
                 פרטים
               </Text>
@@ -127,7 +127,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Box>
 
               <MapView
-                style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
+                style={{ height: 175, marginHorizontal: -12 }}
                 maxZoomLevel={15}
                 minZoomLevel={12}
                 mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}

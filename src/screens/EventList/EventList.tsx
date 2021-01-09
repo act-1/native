@@ -49,7 +49,6 @@ function EventList({ navigation }: EventListScreenProps) {
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="dark-content" />
       <Box height="100%">
         <SectionList
           sections={eventList}

@@ -19,9 +19,7 @@ function EventPageCounter({ number, text, style }: EventPageCounterProps) {
       style={[styles.counterBox, style]}
     >
       <Ticker textStyle={styles.countTextStyle}>{number.toLocaleString()}</Ticker>
-      <Text variant="text" color="mainBackground">
-        {text}
-      </Text>
+      <Text variant="text">{text}</Text>
     </Box>
   );
 }
@@ -32,8 +30,8 @@ const styles = StyleSheet.create({
   counterBox: {
     height: 100,
     marginHorizontal: -2,
-    borderWidth: 1,
-    backgroundColor: '#7254c8',
+    borderWidth: 0,
+    backgroundColor: '#111111',
   },
   countTextStyle: {
     fontFamily: 'Rubik-Bold',

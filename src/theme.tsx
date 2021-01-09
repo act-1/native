@@ -10,7 +10,7 @@ const palette = {
   greenDark: '#0A906E',
 
   redLight: '#ffe7e5',
-  redPrimary: '#ff4241',
+  redPrimary: '#eb524b',
 
   orange: '#FFC281',
   orangeDark: '#632700',
@@ -22,7 +22,8 @@ const palette = {
   barleyWhite: '#ededed',
   lightgrey: '#f0f2f5',
   grey: '#737373',
-  metal: '#20262C',
+  metal: '#222222',
+  heavyMetal: '#111111',
   black: '#040506',
 };
 
@@ -31,13 +32,15 @@ const theme = createTheme({
     primaryText: palette.white,
     subText: palette.grey,
     lightText: palette.barleyWhite,
+    headerTitle: palette.redPrimary,
     mainBackground: palette.black,
     mainForeground: palette.white,
+    greyBackground: palette.heavyMetal,
     lightBackground: palette.lightgrey,
     eventBoxDateColor: palette.redPrimary,
     boxTitle: palette.turquoise,
     dimmedBackground: palette.lightgrey,
-    sectionListSeperator: palette.metal,
+    sectionListSeperator: palette.heavyMetal,
     important: palette.redPrimary,
     importantLight: palette.redLight,
     attentionBackground: palette.orange,
@@ -107,7 +110,7 @@ const theme = createTheme({
     boxSubtitle: {
       fontFamily: 'Rubik-Regular',
       fontSize: 15,
-      color: 'lightText',
+      color: 'subText',
     },
     appLink: {
       fontFamily: 'Rubik-Medium',

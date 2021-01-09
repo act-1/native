@@ -14,7 +14,7 @@ function HomeNavigator() {
         options={{
           headerTitle: 'Act1',
           headerTitleAlign: 'center',
-          headerStyle: { backgroundColor: '#040506', shadowOffset: { height: 1, width: 0 }, shadowColor: '#1e242a' },
+          headerStyle: { backgroundColor: '#0a0a0a', shadowOffset: { height: 0, width: 0 } },
           headerTitleStyle: { fontSize: 22, fontFamily: 'Rubik-Medium', color: '#EC534B' },
         }}
         component={Home}
