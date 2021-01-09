@@ -97,7 +97,9 @@ function LocationPage({ route }: LocationScreenProps) {
           </Text>
         </Box>
 
-        <Box width="100%" padding="m"></Box>
+        <Box width="100%" padding="m" alignItems="center">
+          <RoundedButton text="התחברות" color="blue" />
+        </Box>
       </Box>
     </Box>
   );
