@@ -119,15 +119,7 @@ function LocationPage({ route }: LocationScreenProps) {
             </Text>
           </Box>
 
-          <Box backgroundColor="seperator" height={2} width={500} marginBottom="m" />
-
-          <Box flexDirection="row" width={'100%'}>
-            <Text variant="boxTitle" color="lightText" textAlign="left" fontWeight="500" marginBottom="m">
-              מי בהפגנה?
-            </Text>
-          </Box>
-
-          <LocationProfilePictures style={{ marginBottom: 12 }} />
+          <LocationProfilePictures style={{ marginBottom: 24 }} />
 
           <RoundedButton text="הצטרפות לרשימה" color="blue" size="small" textStyle={{ fontSize: 14 }} />
 
