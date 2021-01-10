@@ -5,7 +5,7 @@ import { LocationScreenProps } from '@types/navigation';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { HomeNavigator, EventsNavigator, LocationPageNavigator, ProfileNavigator } from './';
+import { HomeNavigator, EventsNavigator, CheckInNavigator, ProfileNavigator } from './';
 import HapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -66,7 +66,7 @@ const AppTabs = () => {
     >
       <Tab.Screen name="Home" component={HomeNavigator} />
       {/* <Tab.Screen name="Live" component={HomeNavigator} /> */}
-      <Tab.Screen name="CheckIn" component={LocationPageNavigator} />
+      <Tab.Screen name="CheckIn" component={CheckInNavigator} />
       <Tab.Screen name="Events" component={EventsNavigator} />
       {/* <Tab.Screen name="Profile" component={ProfileNavigator} /> */}
     </Tab.Navigator>

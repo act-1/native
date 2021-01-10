@@ -4,12 +4,12 @@ import { Text } from '@components/';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { SelectLocation, LocationPage } from '@screens/LocationPage';
 
-const LocationStack = createStackNavigator();
+const CheckInStack = createStackNavigator();
 
-function LocationPageNavigator({ navigation }) {
+function CheckInNavigator({ navigation }) {
   return (
-    <LocationStack.Navigator>
-      <LocationStack.Screen
+    <CheckInStack.Navigator>
+      <CheckInStack.Screen
         name="SelectLocation"
         component={SelectLocation}
         options={{
@@ -33,18 +33,18 @@ function LocationPageNavigator({ navigation }) {
           headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
         }}
       />
-      <LocationStack.Screen
+      <CheckInStack.Screen
         name="LocationPage"
         component={LocationPage}
         options={{
           headerShown: false,
         }}
       />
-    </LocationStack.Navigator>
+    </CheckInStack.Navigator>
   );
 }
 
-export default LocationPageNavigator;
+export default CheckInNavigator;
 
 const styles = StyleSheet.create({
   dismissButton: {

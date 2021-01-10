@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { EventPage, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
 import SignUpNavigator from './SignUpNavigator';
-import LocationPageNavigator from './LocationPageNavigator';
+import CheckInNavigator from './CheckInNavigator';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -59,7 +59,7 @@ function AppNavigator() {
       {seenBetaModal === 'true' ? (
         <>
           <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-          <RootStack.Screen name="CheckInModal" component={LocationPageNavigator} options={{ headerShown: false }} />
+          <RootStack.Screen name="CheckInModal" component={CheckInNavigator} options={{ headerShown: false }} />
         </>
       ) : (
         <>
