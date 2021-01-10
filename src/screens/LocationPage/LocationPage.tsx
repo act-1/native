@@ -123,6 +123,8 @@ function LocationPage({ route }: LocationScreenProps) {
 
           <RoundedButton text="הצטרפות לרשימה" color="blue" size="small" textStyle={{ fontSize: 14 }} />
 
+          <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
+
           <BottomSheetModal ref={bottomSheetModalRef} index={1} snapPoints={snapPoints}>
             <SheetSignUp />
           </BottomSheetModal>
