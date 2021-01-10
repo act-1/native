@@ -79,14 +79,15 @@ export async function createUserCheckIn({
   }
 }
 
-async function publicCheckIn(checkInInfo) {
+async function publicCheckIn(checkInInfo: CheckInProps) {
   const { userId, locationID, checkInId, eventId, expireAt } = checkInInfo;
   try {
+    console.log(checkInInfo);
     // Get user public check in perferences
-    const userDoc = await firestore().collection('users').doc(userId).get();
-    const publicCheckInPerf = userDoc.data().publicCheckIn;
-    //   console.log(publicCheckIn)
-    //   if (publicCheckInPerf === true) {
+    // const userDoc = await firestore().collection('users').doc(userId).get();
+    // const publicCheckInPerf = userDoc.data().publicCheckIn;
+    // //   console.log(publicCheckIn)
+    // //   if (publicCheckInPerf === true) {
     //     database.ref(`checkIns/${locationId}/${checkInId}`).set({
     //       locationId, locationName, locationCity, userName, userPictureURL, expireAt, isActive: true
     //     });
@@ -96,7 +97,9 @@ async function publicCheckIn(checkInInfo) {
     //   }
     // // check if user has a profile picture
     // if ()
-  } catch (err) {}
+  } catch (err) {
+    throw err;
+  }
 }
 
 type DeleteCheckInParams = {
@@ -121,7 +124,7 @@ export async function deleteCheckIn({ checkInId, locationId, isActive = true }: 
     if (isActive) {
       await database.ref(`locationCounter/${locationId}`).set(firebase.database.ServerValue.increment(-1));
     }
-    AsyncStorage.removeItem('las');
+
     return { deleted: true };
   } catch (err) {
     throw err;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Platform, Pressable, StyleSheet } from 'react-native';
-import { Text } from '@components/';
+import { Box, Text, CircularButton } from '@components';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { SelectLocation, LocationPage } from '@screens/LocationPage';
+import Icon from 'react-native-vector-icons/Feather';
 
 const CheckInStack = createStackNavigator();
 
@@ -37,7 +38,22 @@ function CheckInNavigator({ navigation }) {
         name="LocationPage"
         component={LocationPage}
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerTitle: '',
+          headerTransparent: true,
+          headerRightContainerStyle: { marginRight: 12 },
+          headerRight: () => (
+            <Box flexDirection="row">
+              <CircularButton
+                onPress={() => navigation.goBack()}
+                iconName="x"
+                color="grey"
+                size="small"
+                style={{ opacity: 0.8, marginLeft: 8 }}
+              />
+            </Box>
+          ),
+          headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
         }}
       />
     </CheckInStack.Navigator>

@@ -24,7 +24,7 @@ if (__DEV__) {
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
 
-function LocationPage({ route }: LocationScreenProps) {
+function LocationPage({ navigation, route }: LocationScreenProps) {
   const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
   const [counter, setCounter] = useState(null);
@@ -36,6 +36,21 @@ function LocationPage({ route }: LocationScreenProps) {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
+
+  const removeCheckIn = async () => {
+    try {
+      if (location !== null && userStore.lastCheckIn !== null) {
+        const result = await deleteCheckIn({ checkInId: userStore.lastCheckIn.id, locationId: location.id });
+        if (result.deleted) {
+          await userStore.deleteLastCheckIn();
+          navigation.goBack();
+        }
+      }
+    } catch (err) {
+      crashlytics().recordError(err);
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     let cachedLocation: string | null;
@@ -65,6 +80,11 @@ function LocationPage({ route }: LocationScreenProps) {
     const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
 
     checkInCount.on('value', (snapshot) => {
+      const count = snapshot.val();
+      if (count < 0) {
+        crashlytics().setAttributes({ locationId: route.params.locationId });
+        crashlytics().log('Check in counter is below zero.');
+      }
       setCounter(snapshot.val());
     });
 
@@ -120,10 +140,7 @@ function LocationPage({ route }: LocationScreenProps) {
           </Box> */}
 
           <LocationProfilePictures />
-          <RoundedButton
-            text="delete checkin"
-            onPress={() => deleteCheckIn({ checkInId: userStore.lastCheckIn.id, locationId: location.id })}
-          />
+          <RoundedButton text="delete checkin" onPress={removeCheckIn} />
           <BottomSheetModal ref={bottomSheetModalRef} index={1} snapPoints={snapPoints}>
             <SheetSignUp />
           </BottomSheetModal>

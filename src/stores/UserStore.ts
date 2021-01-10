@@ -29,7 +29,6 @@ class UserStore {
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user) {
-        console.log('update..', user);
         crashlytics().setUserId(user.uid);
 
         runInAction(() => {
