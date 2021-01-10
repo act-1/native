@@ -6,4 +6,6 @@ type CheckInParams = {
   locationCity: string;
   eventId?: string;
   eventEndDate?: Date;
+  expireAt: Date;
+  createdAt: Date;
 };

@@ -19,7 +19,7 @@ class UserStore {
   userEventIds: string[] = [];
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
-  lastCheckIn = {};
+  lastCheckIn: CheckInParams | null = null;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -51,7 +51,10 @@ class UserStore {
   }
 
   get hasActiveCheckIn() {
-    return new Date() < new Date(this.lastCheckIn.expireAt);
+    if (this.lastCheckIn !== null) {
+      return new Date() < new Date(this.lastCheckIn.expireAt);
+    }
+    return false;
   }
 
   async getUserEvents() {
@@ -147,6 +150,15 @@ class UserStore {
       this.lastCheckIn = checkIn;
       await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return checkIn;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async deleteLastCheckIn() {
+    try {
+      await AsyncStorage.removeItem('lastCheckIn');
+      this.lastCheckIn = null;
     } catch (err) {
       throw err;
     }
