@@ -1,7 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { firebase } from '@react-native-firebase/database';
-import { createTimestamp } from '@utils/date-utils';
 
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
 
