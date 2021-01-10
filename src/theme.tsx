@@ -18,7 +18,7 @@ const palette = {
   turquoise: '#76C6CB',
   blue: '#0078F8',
 
-  white: '#fff',
+  white: '#fafafa',
   barleyWhite: '#ededed',
   lightgrey: '#f0f2f5',
   grey: '#737373',

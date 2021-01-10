@@ -105,9 +105,15 @@ function LocationPage({ route }: LocationScreenProps) {
           <Box shadowOpacity={0.5} shadowOffset={{ width: 0, height: 0 }} shadowRadius={3}>
             <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
           </Box>
-          <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
+          <Text variant="extraLargeTitle" marginBottom="xs">
             {location.name}
           </Text>
+          <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.9} marginBottom="m">
+            {location.city}
+          </Text>
+
+          <Box backgroundColor="seperator" height={2} width={500} marginBottom="s" />
+
           <Box flexDirection="row">
             <Ticker textStyle={styles.counterText}>{counter}</Ticker>
             <Text style={[styles.counterText, { marginLeft: 7 }]} marginBottom="xm">
@@ -115,11 +121,12 @@ function LocationPage({ route }: LocationScreenProps) {
             </Text>
           </Box>
 
-          {/* <Box width="100%" padding="m" alignItems="center">
-            <RoundedButton text="הוספת תמונת פרופיל" color="blue" onPress={handlePresentModalPress} />
-          </Box> */}
+          <LocationProfilePictures style={{ marginBottom: 24 }} />
 
-          <LocationProfilePictures />
+          <RoundedButton text="הצטרפות לרשימה" color="blue" size="small" textStyle={{ fontSize: 14 }} />
+
+          <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
+
           <RoundedButton
             text="delete checkin"
             onPress={() => deleteCheckIn({ checkInId: userStore.lastCheckIn.id, locationId: location.id })}

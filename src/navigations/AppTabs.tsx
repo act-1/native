@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 1 }],
     borderWidth: 4,
     borderColor: '#32373d',
-    backgroundColor: '#33404b',
+    backgroundColor: '#EC534B',
     shadowColor: '#000',
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0.25,
@@ -96,6 +96,6 @@ const styles = StyleSheet.create({
   checkInIcon: {
     width: 38,
     height: 35,
-    tintColor: '#dddddd',
+    tintColor: '#32373d',
   },
 });
