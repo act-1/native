@@ -1,5 +1,6 @@
-import crashlytics from '@react-native-firebase/crashlytics';
+import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import crashlytics from '@react-native-firebase/crashlytics';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 type GraphAPIResult = {
@@ -59,13 +60,14 @@ export async function facebookLogin() {
       new GraphRequestManager().addRequest(infoRequest).start();
     });
 
-    await auth().currentUser?.updateProfile({
-      displayName: userCredential?.additionalUserInfo?.profile?.name,
-      photoURL: pictureUrl,
-    });
+    const displayName = userCredential?.additionalUserInfo?.profile?.name;
 
-    // TODO: Update pictureUrl & name in user document.
-    // return { ok: true, pictureUrl };
+    await auth().currentUser?.updateProfile({ displayName, photoURL: pictureUrl });
+
+    const userRef = firestore().collection('users').doc(auth().currentUser!.uid);
+    await userRef.update({ displayName, profilePicture: pictureUrl });
+
+    return { ok: true, pictureUrl };
   } catch (err) {
     throw err;
   }

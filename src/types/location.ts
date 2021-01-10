@@ -18,6 +18,6 @@ export type ILocation = {
     'אילת והערבה',
     'ירושלים'
   ];
-  coordinates: FirebaseFirestoreTypes.GeoPoint;
+  coordinates: { _latitude: number; _longitude: number };
   type?: 'location';
 };

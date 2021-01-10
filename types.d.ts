@@ -1,6 +1,7 @@
 type LatLng = [number, number];
 
 type CheckInParams = {
+  id: string;
   locationId: string;
   locationName: string;
   locationCity: string;

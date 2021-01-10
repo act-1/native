@@ -9,6 +9,7 @@
   <style name="BootTheme" parent="AppTheme">
     <!-- set the generated bootsplash.xml drawable as activity background -->
     <item name="android:background">@drawable/bootsplash</item>
+    <item name="android:navigationBarColor">#0f1316</item>
   </style>
 
 </resources>

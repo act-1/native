@@ -11,7 +11,7 @@ export type IEvent = {
   content: string;
   organizers: { id: string; profilePicture: string; name: string }[];
   attendingCount: number;
-  coordinates: FirebaseFirestoreTypes.GeoPoint;
+  coordinates: { _latitude: number; _longitude: number };
   type?: 'event';
   pastEvent: boolean;
 };

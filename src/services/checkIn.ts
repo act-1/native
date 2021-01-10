@@ -73,30 +73,37 @@ export async function createUserCheckIn({
       publicCheckIn(checkInData);
     }
 
-    return { ok: true, checkIn: { ...checkInData, createdAt: new Date(), expireAt } };
+    return { ok: true, checkIn: { ...checkInData, createdAt: new Date(), expireAt, id: checkInDocument.id } };
   } catch (err) {
     throw err;
   }
 }
 
 async function publicCheckIn(checkInInfo: CheckInProps) {
-  const { userId, locationID, checkInId, eventId, expireAt } = checkInInfo;
+  const { userId, locationId, locationName, locationCity, id: checkInId, eventId, expireAt } = checkInInfo;
   try {
     console.log(checkInInfo);
+
     // Get user public check in perferences
     // const userDoc = await firestore().collection('users').doc(userId).get();
     // const publicCheckInPerf = userDoc.data().publicCheckIn;
-    // //   console.log(publicCheckIn)
-    // //   if (publicCheckInPerf === true) {
-    //     database.ref(`checkIns/${locationId}/${checkInId}`).set({
-    //       locationId, locationName, locationCity, userName, userPictureURL, expireAt, isActive: true
-    //     });
 
-    //   } else {
-    //     return { ok: false, message: 'The user set public check in off.'}
-    //   }
-    // // check if user has a profile picture
-    // if ()
+    // if (publicCheckInPerf === true) {
+    database.ref(`checkIns/${locationId}/${checkInId}`).set({
+      locationId,
+      locationName,
+      locationCity,
+      userId,
+      userName: 'Guy Tepper',
+      profilePicture:
+        'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
+      expireAt,
+      eventId: eventId || null,
+      isActive: true,
+    });
+    // } else {
+    //   return { ok: false, message: 'The user set public check in off.' };
+    // }
   } catch (err) {
     throw err;
   }
@@ -130,3 +137,7 @@ export async function deleteCheckIn({ checkInId, locationId, isActive = true }: 
     throw err;
   }
 }
+
+export default {
+  publicCheckIn,
+};

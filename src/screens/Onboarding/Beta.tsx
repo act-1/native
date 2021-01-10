@@ -22,7 +22,7 @@ function Beta() {
 
   return (
     <Box flex={1} backgroundColor="mainBackground">
-      <StatusBar backgroundColor="#6E7DFF" barStyle="light-content" />
+      <StatusBar backgroundColor="#040506" barStyle="light-content" />
       <SafeAreaView />
       <Box flex={1} paddingHorizontal="m" marginTop="xxl">
         <Text variant="hugeTitle" textAlign="center" paddingHorizontal="xm" marginBottom="xm">
