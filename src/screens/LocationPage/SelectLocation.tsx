@@ -47,7 +47,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
             })
             .catch((err: any) => {
               crashlytics().log('Check in denied; already exists.');
-              crashlytics().setAttribute('lastCheckInId', userStore.lastCheckIn.id);
+              if (userStore.lastCheckIn) crashlytics().setAttribute('lastCheckInId', userStore.lastCheckIn.id);
               crashlytics().recordError(err);
               if (err.code === 'already-exists') {
                 Alert.alert("נראה שיש לך כבר צ'ק אין פעיל 🤭");

@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SheetSignUp from '../SignUp/SheetSignUp';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import LocationProfilePictures from './LocationProfilePictures';
+import { deleteCheckIn } from '@services/checkIn';
 
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
@@ -24,6 +25,7 @@ if (__DEV__) {
 }
 
 function LocationPage({ route }: LocationScreenProps) {
+  const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
   const [counter, setCounter] = useState(null);
 
@@ -125,6 +127,10 @@ function LocationPage({ route }: LocationScreenProps) {
 
           <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
 
+          <RoundedButton
+            text="delete checkin"
+            onPress={() => deleteCheckIn({ checkInId: userStore.lastCheckIn.id, locationId: location.id })}
+          />
           <BottomSheetModal ref={bottomSheetModalRef} index={1} snapPoints={snapPoints}>
             <SheetSignUp />
           </BottomSheetModal>
