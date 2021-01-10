@@ -14,8 +14,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SheetSignUp from '../SignUp/SheetSignUp';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import LocationProfilePictures from './LocationProfilePictures';
-import { deleteCheckIn } from '@services/checkIn';
-
+import CheckInService from '@services/checkIn';
+import mapStyle from '@utils/mapStyle.json';
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
 
@@ -37,20 +37,34 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     bottomSheetModalRef.current?.present();
   }, []);
 
-  const removeCheckIn = async () => {
+  const addPublicCheckIn = async () => {
     try {
-      if (location !== null && userStore.lastCheckIn !== null) {
-        const result = await deleteCheckIn({ checkInId: userStore.lastCheckIn.id, locationId: location.id });
-        if (result.deleted) {
-          await userStore.deleteLastCheckIn();
-          navigation.goBack();
-        }
+      const checkInInfo = userStore.lastCheckIn;
+      console.log(checkInInfo);
+      if (checkInInfo !== null) {
+        await CheckInService.publicCheckIn(checkInInfo);
+      } else {
+        throw new Error('No check in info present in userStore for public check in.');
       }
     } catch (err) {
       crashlytics().recordError(err);
-      console.error(err);
     }
   };
+
+  // const removeCheckIn = async () => {
+  //   try {
+  //     if (location !== null && userStore.lastCheckIn !== null) {
+  //       const result = await deleteCheckIn({ checkInId: userStore.lastCheckIn.id, locationId: location.id });
+  //       if (result.deleted) {
+  //         await userStore.deleteLastCheckIn();
+  //         navigation.goBack();
+  //       }
+  //     }
+  //   } catch (err) {
+  //     crashlytics().recordError(err);
+  //     console.error(err);
+  //   }
+  // };
 
   useEffect(() => {
     let cachedLocation: string | null;
@@ -111,18 +125,19 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
       <BottomSheetModalProvider>
         <MapView
           style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
-          maxZoomLevel={14}
-          minZoomLevel={14}
+          maxZoomLevel={15}
+          minZoomLevel={15}
           mapPadding={{ right: -25, top: 0, bottom: 0, left: 15 }}
           initialRegion={{
-            latitude: 31.7749882,
-            longitude: 35.2197916,
+            latitude: location.coordinates._latitude,
+            longitude: location.coordinates._longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
+          customMapStyle={mapStyle}
         />
         <Box alignItems="center" justifyContent="center" paddingHorizontal="m" style={{ marginTop: -60 }}>
-          <Box shadowOpacity={0.5} shadowOffset={{ width: 0, height: 0 }} shadowRadius={3}>
+          <Box shadowOpacity={0.5} shadowOffset={{ width: 0, height: 0 }} shadowRadius={3} elevation={3}>
             <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
           </Box>
           <Text variant="extraLargeTitle" marginBottom="xs">
@@ -143,13 +158,19 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
           <LocationProfilePictures style={{ marginBottom: 24 }} />
 
-          <RoundedButton text="הצטרפות לרשימה" color="blue" size="small" textStyle={{ fontSize: 14 }} />
+          <RoundedButton
+            text="הצטרפות לרשימה"
+            onPress={addPublicCheckIn}
+            color="blue"
+            size="small"
+            textStyle={{ fontSize: 14 }}
+          />
 
           <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
 
-          <RoundedButton text="delete checkin" onPress={removeCheckIn} />
+          {/* <RoundedButton text="delete checkin" onPress={removeCheckIn} /> */}
           <BottomSheetModal ref={bottomSheetModalRef} index={1} snapPoints={snapPoints}>
-            <SheetSignUp />
+            <SheetSignUp onSuccess={() => addPublicCheckIn()} />
           </BottomSheetModal>
         </Box>
       </BottomSheetModalProvider>

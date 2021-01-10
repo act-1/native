@@ -13,6 +13,7 @@ import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
 import { EventPageDetail, EventPageCounter } from './';
 import { formatShortDate, formatUpcomingDate } from '@utils/date-utils';
+import mapStyle from '@utils/mapStyle.json';
 import { format } from 'date-fns';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -128,8 +129,8 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
               <MapView
                 style={{ height: 175, marginHorizontal: -12 }}
-                maxZoomLevel={15}
-                minZoomLevel={12}
+                maxZoomLevel={16}
+                minZoomLevel={14}
                 mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
                 initialRegion={{
                   latitude: event.coordinates._latitude,
@@ -137,6 +138,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}
+                customMapStyle={mapStyle}
               >
                 <Marker coordinate={{ latitude: event.coordinates._latitude, longitude: event.coordinates._longitude }} />
               </MapView>
