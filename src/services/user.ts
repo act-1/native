@@ -23,6 +23,21 @@ export async function createUserFCMToken(userId: string, fcmToken: string) {
   }
 }
 
+export async function updateUserOnAuth(displayName: string, profilePicture: string) {
+  try {
+    const user = auth().currentUser;
+
+    if (!user) {
+      throw new Error('User is not authenticated.');
+    }
+
+    await user.updateProfile({ displayName, photoURL: profilePicture });
+    return firestore().collection('users').doc(user.uid).update({ displayName, profilePicture, isAnonymous: false });
+  } catch (err) {
+    throw err;
+  }
+}
+
 export async function updateUserDisplayName(displayName: string) {
   try {
     const user = auth().currentUser;
