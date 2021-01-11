@@ -15,7 +15,6 @@ const onAuthStateInitialCall;
 
 class UserStore {
   rootStore: null | rootStore = null;
-  user: FirebaseAuthTypes.User | null = null;
   userEventIds: string[] = [];
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
@@ -31,10 +30,6 @@ class UserStore {
       if (user) {
         crashlytics().setUserId(user.uid);
 
-        runInAction(() => {
-          this.user = user;
-        });
-
         // TODO: Extract to function
         runInAction(async () => {
           const checkIn = await AsyncStorage.getItem('lastCheckIn');
@@ -47,6 +42,10 @@ class UserStore {
         this.signInAnonymously();
       }
     });
+  }
+
+  get user() {
+    return auth().currentUser;
   }
 
   get hasActiveCheckIn() {
