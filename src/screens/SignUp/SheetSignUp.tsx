@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput, StyleSheet, ActivityIndicator } from 'react-native';
+import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
 import { Box, Text } from '../../components';
