@@ -1,7 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { firebase } from '@react-native-firebase/database';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
 
@@ -9,16 +8,6 @@ let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.c
 if (__DEV__) {
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
-
-type CheckInProps = {
-  userId: string;
-  eventId: string;
-  locationId: string;
-  locationName: string;
-  locationCity: string;
-  createdAt: FirebaseFirestore.Timestamp;
-  expireAt: FirebaseFirestore.Timestamp;
-};
 
 export async function createUserCheckIn({
   locationId,
@@ -79,8 +68,15 @@ export async function createUserCheckIn({
   }
 }
 
-async function publicCheckIn(checkInInfo: CheckInProps) {
+type PublicCheckInProps = {
+  checkInInfo: CheckInParams;
+  displayName: string;
+  profilePictureURL?: string | null;
+};
+
+async function publicCheckIn({ checkInInfo, displayName, profilePictureURL }: PublicCheckInProps) {
   const { userId, locationId, locationName, locationCity, id: checkInId, eventId, expireAt } = checkInInfo;
+
   try {
     console.log(checkInInfo);
 
@@ -94,9 +90,8 @@ async function publicCheckIn(checkInInfo: CheckInProps) {
       locationName,
       locationCity,
       userId,
-      userName: 'Guy Tepper',
-      profilePicture:
-        'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
+      displayName,
+      profilePictureURL: profilePictureURL ? profilePictureURL : '',
       expireAt,
       eventId: eventId || null,
       isActive: true,

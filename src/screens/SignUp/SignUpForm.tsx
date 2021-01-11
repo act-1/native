@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Image, TextInput, Alert, StyleSheet } from 'react-native';
+import { Image, TextInput, StyleSheet } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import { updateUserDisplayName } from '@services/user';
+import CheckInService from '@services/checkIn';
 
 function SignUpForm() {
   const { userStore } = useStore();
@@ -34,6 +35,11 @@ function SignUpForm() {
       await updateUserDisplayName(displayName);
       analytics().logEvent('sign_up_form_submitted');
       setLoading(false);
+
+      // Add public check in
+      const checkInInfo = userStore.lastCheckIn;
+      await CheckInService.publicCheckIn({ checkInInfo, displayName, profilePictureURL });
+
       navigation.goBack();
     } catch (err) {
       setLoading(false);
