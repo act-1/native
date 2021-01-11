@@ -55,11 +55,10 @@ export async function createUserCheckIn({
     const checkInDocument = await userCheckInRef.get();
     const checkInData: CheckInParams = checkInDocument.data();
 
-    console.log(checkInData);
-    console.log(auth().currentUser);
     // // check if user is not anonymous
     if (auth().currentUser?.isAnonymous === false) {
-      publicCheckIn(checkInData);
+      const { displayName, photoURL } = auth().currentUser!;
+      publicCheckIn({ checkInInfo: checkInData, displayName, profilePictureURL: photoURL });
     }
 
     return { ok: true, checkIn: { ...checkInData, createdAt: new Date(), expireAt, id: checkInDocument.id } };
@@ -70,7 +69,7 @@ export async function createUserCheckIn({
 
 type PublicCheckInProps = {
   checkInInfo: CheckInParams;
-  displayName: string;
+  displayName: string | null;
   profilePictureURL?: string | null;
 };
 
@@ -78,20 +77,18 @@ async function publicCheckIn({ checkInInfo, displayName, profilePictureURL }: Pu
   const { userId, locationId, locationName, locationCity, id: checkInId, eventId, expireAt } = checkInInfo;
 
   try {
-    console.log(checkInInfo);
-
     // Get user public check in perferences
     // const userDoc = await firestore().collection('users').doc(userId).get();
     // const publicCheckInPerf = userDoc.data().publicCheckIn;
 
     // if (publicCheckInPerf === true) {
-    database.ref(`checkIns/${locationId}/${checkInId}`).set({
+    await database.ref(`checkIns/${locationId}/${checkInId}`).set({
       locationId,
       locationName,
       locationCity,
       userId,
-      displayName,
-      profilePictureURL: profilePictureURL ? profilePictureURL : '',
+      displayName: displayName ? displayName : '',
+      profilePicture: profilePictureURL ? profilePictureURL : '',
       expireAt,
       eventId: eventId || null,
       isActive: true,
