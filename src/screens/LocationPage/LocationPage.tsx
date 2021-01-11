@@ -156,19 +156,21 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             </Text>
           </Box>
 
-          <LocationProfilePictures style={{ marginBottom: 24 }} />
-
-          <RoundedButton
-            text="הצטרפות לרשימה"
-            onPress={handlePresentModalPress}
-            color="blue"
-            size="small"
-            textStyle={{ fontSize: 14 }}
-          />
+          <LocationProfilePictures style={{ marginBottom: 18 }} />
+          {userStore.user.isAnonymous && (
+            <RoundedButton
+              text="הצטרפות לרשימה"
+              onPress={handlePresentModalPress}
+              color="blue"
+              size="small"
+              textStyle={{ fontSize: 14 }}
+            />
+          )}
 
           <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
 
           {/* <RoundedButton text="delete checkin" onPress={removeCheckIn} /> */}
+
           <BottomSheetModal
             ref={bottomSheetModalRef}
             index={1}
