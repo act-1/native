@@ -42,20 +42,6 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
   const dismissModal = () => bottomSheetModalRef!.current!.dismiss();
 
-  const addPublicCheckIn = async () => {
-    try {
-      const checkInInfo = userStore.lastCheckIn;
-
-      if (checkInInfo !== null) {
-        await CheckInService.publicCheckIn(checkInInfo);
-      } else {
-        throw new Error('No check in info present in userStore for public check in.');
-      }
-    } catch (err) {
-      crashlytics().recordError(err);
-    }
-  };
-
   // const removeCheckIn = async () => {
   //   try {
   //     if (location !== null && userStore.lastCheckIn !== null) {
