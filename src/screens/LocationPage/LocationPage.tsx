@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { firebase } from '@react-native-firebase/database';
+import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import MapView from 'react-native-maps';
 import { Box, Text, Ticker } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
-import { createUserCheckIn } from '../../services/checkIn';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
 import { ILocation } from '@types/location';
 import { fetchLocation } from '@services/locations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SheetSignUp from '../SignUp/SheetSignUp';
+import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import LocationProfilePictures from './LocationProfilePictures';
+import CheckInService from '@services/checkIn';
+import mapStyle from '@utils/mapStyle.json';
 
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
@@ -21,9 +26,50 @@ if (__DEV__) {
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
 
-function LocationPage({ route }: LocationScreenProps) {
+function LocationPage({ navigation, route }: LocationScreenProps) {
+  const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
   const [counter, setCounter] = useState(null);
+
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  const snapPoints = useMemo(() => ['1%', '25%'], []);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+    analytics().logEvent('location_page_sign_up_sheet_display');
+  }, []);
+
+  const dismissModal = () => bottomSheetModalRef!.current!.dismiss();
+
+  const addPublicCheckIn = async () => {
+    try {
+      const checkInInfo = userStore.lastCheckIn;
+
+      if (checkInInfo !== null) {
+        await CheckInService.publicCheckIn(checkInInfo);
+      } else {
+        throw new Error('No check in info present in userStore for public check in.');
+      }
+    } catch (err) {
+      crashlytics().recordError(err);
+    }
+  };
+
+  // const removeCheckIn = async () => {
+  //   try {
+  //     if (location !== null && userStore.lastCheckIn !== null) {
+  //       const result = await deleteCheckIn({ checkInId: userStore.lastCheckIn.id, locationId: location.id });
+  //       if (result.deleted) {
+  //         await userStore.deleteLastCheckIn();
+  //         navigation.goBack();
+  //       }
+  //     }
+  //   } catch (err) {
+  //     crashlytics().recordError(err);
+  //     console.error(err);
+  //   }
+  // };
 
   useEffect(() => {
     let cachedLocation: string | null;
@@ -53,6 +99,11 @@ function LocationPage({ route }: LocationScreenProps) {
     const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
 
     checkInCount.on('value', (snapshot) => {
+      const count = snapshot.val();
+      if (count < 0) {
+        crashlytics().setAttributes({ locationId: route.params.locationId });
+        crashlytics().log('Check in counter is below zero.');
+      }
       setCounter(snapshot.val());
     });
 
@@ -70,59 +121,68 @@ function LocationPage({ route }: LocationScreenProps) {
     );
   }
   return (
-    <Box flex={1} width="100%">
-      <MapView
-        style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
-        maxZoomLevel={14}
-        minZoomLevel={14}
-        mapPadding={{ right: -25, top: 0, bottom: 0, left: 15 }}
-        initialRegion={{
-          latitude: 31.7749882,
-          longitude: 35.2197916,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
-      <Box alignItems="center" justifyContent="center" paddingHorizontal="m" style={{ marginTop: -60 }}>
-        <Box shadowOpacity={0.5} shadowOffset={{ width: 0, height: 0 }} shadowRadius={3}>
-          <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
-        </Box>
-        <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
-          {location.name}
-        </Text>
-        <Box flexDirection="row">
-          <Ticker textStyle={styles.counterText}>{counter}</Ticker>
-          <Text style={[styles.counterText, { marginLeft: 7 }]} marginBottom="xm">
-            עכשיו בהפגנה
+    <Box>
+      <BottomSheetModalProvider>
+        <MapView
+          style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
+          maxZoomLevel={15}
+          minZoomLevel={15}
+          mapPadding={{ right: -25, top: 0, bottom: 0, left: 15 }}
+          initialRegion={{
+            latitude: location.coordinates._latitude,
+            longitude: location.coordinates._longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          customMapStyle={mapStyle}
+        />
+        <Box alignItems="center" justifyContent="center" paddingHorizontal="m" style={{ marginTop: -60 }}>
+          <Box shadowOpacity={0.5} shadowOffset={{ width: 0, height: 0 }} shadowRadius={3} elevation={3}>
+            <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
+          </Box>
+          <Text variant="extraLargeTitle" marginBottom="xs">
+            {location.name}
           </Text>
-        </Box>
+          <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.9} marginBottom="m">
+            {location.city}
+          </Text>
 
-        <Box width="100%" padding="m">
-          <Box
-            position="absolute"
-            style={{ margin: 12 }}
-            zIndex={2}
-            top={0}
-            backgroundColor="mainForeground"
-            opacity={0.6}
-            height="100%"
-            width="100%"
-            justifyContent="center"
-            borderRadius={3}
-          >
-            <Text fontSize={28} textAlign="center" fontFamily="Rubik-Bold" color="mainBackground">
-              בקרוב
+          <Box backgroundColor="seperator" height={2} width={500} marginBottom="s" />
+
+          <Box flexDirection="row">
+            <Ticker textStyle={styles.counterText}>{counter}</Ticker>
+            <Text style={[styles.counterText, { marginLeft: 7 }]} marginBottom="xm">
+              עכשיו בהפגנה
             </Text>
           </Box>
-          <RoundedButton text="הזמנת חברים" size="huge" icon={require('@assets/icons/hands-together.png')} />
 
-          <Box flexDirection="row" position="relative" width="100%" marginTop="m">
-            <RoundedButton text="העלאת תמונה" size="huge" icon={require('@assets/icons/camera.png')} style={{ flex: 1 }} />
-            <Box flex={0.075} />
-            <RoundedButton text="גלריית הפגנה" size="huge" icon={require('@assets/icons/gallery.png')} style={{ flex: 1 }} />
-          </Box>
+          <LocationProfilePictures style={{ marginBottom: 18 }} />
+          {userStore.user.isAnonymous && (
+            <RoundedButton
+              text="הצטרפות לרשימה"
+              onPress={handlePresentModalPress}
+              color="blue"
+              size="small"
+              textStyle={{ fontSize: 14 }}
+            />
+          )}
+
+          <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
+
+          {/* <RoundedButton text="delete checkin" onPress={removeCheckIn} /> */}
+
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            backgroundComponent={() => (
+              <Box style={{ ...StyleSheet.absoluteFillObject, bottom: -1000, backgroundColor: '#333438' }} />
+            )}
+          >
+            <SheetSignUp dismissModal={dismissModal} />
+          </BottomSheetModal>
         </Box>
-      </Box>
+      </BottomSheetModalProvider>
     </Box>
   );
 }
@@ -139,7 +199,7 @@ const styles = StyleSheet.create({
   counterText: {
     fontFamily: 'Rubik-Medium',
     fontSize: 26,
-    color: '#737373',
+    color: '#f0f2f5',
     textAlign: 'left',
   },
 });

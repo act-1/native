@@ -7,7 +7,8 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { EventPage, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
-import LocationPageNavigator from './LocationPageNavigator';
+import SignUpNavigator from './SignUpNavigator';
+import CheckInNavigator from './CheckInNavigator';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -28,7 +29,7 @@ function MainStackScreen() {
       }}
       mode="card"
     >
-      <MainStack.Screen name="AppTabs" component={AppTabs} />
+      <MainStack.Screen name="AppTabs" component={AppTabs} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
       <MainStack.Screen
         name="EventPage"
         component={EventPage}
@@ -45,19 +46,21 @@ function MainStackScreen() {
           ),
         })}
       />
+      {/* <RootStack.Screen name="SignUpNavigator" component={SignUpNavigator} /> */}
     </MainStack.Navigator>
   );
 }
 
 function AppNavigator() {
   const { seenBetaModal } = useStore();
-  console.log(seenBetaModal);
+
   return (
     <RootStack.Navigator screenOptions={{ stackPresentation: 'modal' }}>
       {seenBetaModal === 'true' ? (
         <>
           <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-          <RootStack.Screen name="CheckInModal" component={LocationPageNavigator} options={{ headerShown: false }} />
+          <RootStack.Screen name="CheckInModal" component={CheckInNavigator} options={{ headerShown: false }} />
+          <RootStack.Screen name="SignUpModal" component={SignUpNavigator} options={{ headerShown: false }} />
         </>
       ) : (
         <>

@@ -5,7 +5,7 @@ import { LocationScreenProps } from '@types/navigation';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { HomeNavigator, EventsNavigator, LocationPageNavigator } from './';
+import { HomeNavigator, EventsNavigator, CheckInNavigator, ProfileNavigator } from './';
 import HapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -13,11 +13,14 @@ const icons: any = {
   Home: {
     iconName: 'home',
   },
-  CheckIn: {
-    iconName: 'map-pin',
+  Live: {
+    iconName: 'globe',
   },
   Events: {
     iconName: 'calendar',
+  },
+  Profile: {
+    iconName: 'user',
   },
 };
 
@@ -34,10 +37,10 @@ const AppTabs = () => {
           if (route.name === 'CheckIn') {
             return (
               <TouchableOpacity
-                activeOpacity={0.9}
-                style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 0 : 12 }]}
+                activeOpacity={0.8}
+                style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 10 : 18 }]}
                 onPress={() => {
-                  HapticFeedback.trigger('clockTick');
+                  HapticFeedback.trigger('impactMedium');
                   if (userStore.hasActiveCheckIn) {
                     const locationId = userStore.lastCheckIn.locationId;
                     navigation.navigate('CheckInModal', { screen: 'LocationPage', params: { locationId } });
@@ -55,14 +58,17 @@ const AppTabs = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#6E7DFF',
-        inactiveTintColor: 'gray',
+        activeTintColor: '#dddddd',
+        inactiveTintColor: '#475968',
         showLabel: false,
+        style: { backgroundColor: '#0f1316', borderTopWidth: 2, borderTopColor: '#1e262d' },
       }}
     >
       <Tab.Screen name="Home" component={HomeNavigator} />
-      <Tab.Screen name="CheckIn" component={LocationPageNavigator} />
+      {/* <Tab.Screen name="Live" component={HomeNavigator} /> */}
+      <Tab.Screen name="CheckIn" component={CheckInNavigator} />
       <Tab.Screen name="Events" component={EventsNavigator} />
+      {/* <Tab.Screen name="Profile" component={ProfileNavigator} /> */}
     </Tab.Navigator>
   );
 };
@@ -72,21 +78,24 @@ export default observer(AppTabs);
 const styles = StyleSheet.create({
   checkInIconWrapper: {
     position: 'absolute',
-    height: 70,
-    width: 70,
+    height: 67,
+    width: 67,
     borderRadius: 58,
     justifyContent: 'center',
     alignItems: 'center',
     transform: [{ scale: 1 }],
-    backgroundColor: '#6E7DFF',
+    borderWidth: 4,
+    borderColor: '#32373d',
+    backgroundColor: '#071516',
     shadowColor: '#000',
-    shadowOffset: { height: 1, width: 0 },
+    shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0.25,
-    shadowRadius: 1,
+    shadowRadius: 0.5,
     elevation: 2,
   },
   checkInIcon: {
     width: 38,
-    height: 36,
+    height: 35,
+    tintColor: '#ec534b',
   },
 });

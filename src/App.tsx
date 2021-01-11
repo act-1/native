@@ -44,6 +44,8 @@ function App() {
     if (store.userStore.user?.uid) {
       initApp();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store.userStore.user]);
 
   return (
@@ -52,7 +54,7 @@ function App() {
         <ModalProvider stack={stack}>
           <NavigationContainer
             ref={navigationRef}
-            theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}
+            theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#0B0D0F' } }}
             onReady={() => (routeNameRef.current = navigationRef.current.getCurrentRoute().name)}
             onStateChange={async () => {
               const previousRouteName = routeNameRef.current;

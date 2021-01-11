@@ -11,13 +11,14 @@ import { createUserCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const onAuthStateInitialCall;
+
 class UserStore {
   rootStore: null | rootStore = null;
-  user: FirebaseAuthTypes.User | null = null;
   userEventIds: string[] = [];
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
-  lastCheckIn = {};
+  lastCheckIn: CheckInParams | null = null;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -26,12 +27,8 @@ class UserStore {
     this.initUserLocation();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
-      if (user && this.user?.uid !== user.uid) {
+      if (user) {
         crashlytics().setUserId(user.uid);
-
-        runInAction(() => {
-          this.user = user;
-        });
 
         // TODO: Extract to function
         runInAction(async () => {
@@ -47,8 +44,15 @@ class UserStore {
     });
   }
 
+  get user() {
+    return auth().currentUser;
+  }
+
   get hasActiveCheckIn() {
-    return new Date() < new Date(this.lastCheckIn.expireAt);
+    if (this.lastCheckIn !== null) {
+      return new Date() < new Date(this.lastCheckIn.expireAt);
+    }
+    return false;
   }
 
   async getUserEvents() {
@@ -144,6 +148,15 @@ class UserStore {
       this.lastCheckIn = checkIn;
       await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return checkIn;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async deleteLastCheckIn() {
+    try {
+      await AsyncStorage.removeItem('lastCheckIn');
+      this.lastCheckIn = null;
     } catch (err) {
       throw err;
     }

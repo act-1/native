@@ -13,7 +13,7 @@ function EventPageDetail({ iconName, text }: EventPageDetailProps) {
   getFontScale().then((scale) => setFontScale(scale));
   return (
     <Box flexDirection="row" alignItems="center">
-      <Icon name={iconName} size={16 * fontScale} color="#000" style={{ marginRight: 8 * fontScale }} />
+      <Icon name={iconName} size={16 * fontScale} color="#50c9cd" style={{ marginRight: 8 * fontScale }} />
       <Text variant="text">{text}</Text>
     </Box>
   );

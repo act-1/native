@@ -67,3 +67,9 @@ local.properties
 android/service-key.json
 *.cer
 android/app/release/*
+
+# react-native-config codegen
+ios/tmp.xcconfig
+
+.env.local
+.env

@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, ViewStyle, TextStyle, Image, ImageSourcePropType } from 'react-native';
+import { Pressable, StyleSheet, ViewStyle, TextStyle, Image, ImageSourcePropType, ActivityIndicator } from 'react-native';
 import { Box, Text } from '../..';
 import { buttonColors } from '../ButtonColors';
 
 type RoundedButtonProps = {
-  color?: 'blue' | 'green' | 'yellow' | 'grey' | 'porcelain' | 'white' | 'black';
+  color?: 'blue' | 'darkBlue' | 'green' | 'yellow' | 'grey' | 'porcelain' | 'white' | 'black';
   icon?: ImageSourcePropType;
   onPress?: () => void;
   text?: string;
   size?: 'small' | 'large' | 'huge';
   style?: ViewStyle;
   textStyle?: TextStyle;
+  loading?: boolean;
+  disabled?: boolean;
 };
 
 function getButtonDimenions(size: string): ViewStyle {
   if (size === 'small') {
     return {
-      width: 150,
-      height: 35,
+      width: 155,
+      height: 30,
     };
   }
 
@@ -34,9 +36,19 @@ function getButtonDimenions(size: string): ViewStyle {
   };
 }
 
-function RoundedButton({ color = 'porcelain', icon, text, onPress, size = 'large', style, textStyle }: RoundedButtonProps) {
+function RoundedButton({
+  color = 'porcelain',
+  icon,
+  text,
+  onPress,
+  size = 'large',
+  style,
+  textStyle,
+  loading = false,
+  disabled = false,
+}: RoundedButtonProps) {
   const [pressed, setPressed] = useState(false);
-  const { initialColor, pressedColor, textColor } = buttonColors[color];
+  let { initialColor, pressedColor, textColor } = buttonColors[disabled ? 'grey' : color];
   const buttonDimensions = getButtonDimenions(size);
 
   return (
@@ -49,15 +61,19 @@ function RoundedButton({ color = 'porcelain', icon, text, onPress, size = 'large
       style={style}
     >
       <Pressable
-        onPress={onPress}
-        onPressIn={() => setPressed(true)}
+        onPress={disabled ? null : onPress}
+        onPressIn={disabled ? null : () => setPressed(true)}
         onPressOut={() => setPressed(false)}
         style={{ backgroundColor: pressed ? pressedColor : initialColor, ...buttonDimensions, ...styles.button }}
       >
         {icon && <Image source={icon} style={{ marginBottom: 12 }} />}
-        <Text style={{ color: textColor, ...textStyle }} variant="roundedButtonText" testID="button-text">
-          {text}
-        </Text>
+        {loading ? (
+          <ActivityIndicator color={textColor} />
+        ) : (
+          <Text style={{ color: textColor, ...textStyle }} variant="roundedButtonText" testID="button-text">
+            {text}
+          </Text>
+        )}
       </Pressable>
     </Box>
   );

@@ -12,7 +12,7 @@ class RootStore {
   eventStore: eventStore;
   feedStore: feedStore;
 
-  seenBetaModal = 'false';
+  seenBetaModal: 'true' | 'false' = 'false';
 
   constructor() {
     makeAutoObservable(this);
@@ -37,12 +37,16 @@ class RootStore {
 
   async displayBetaModal() {
     const seen = await AsyncStorage.getItem('seenBetaModal');
-    if (seen) {
+    if (seen === 'true' || seen === 'false') {
       runInAction(() => {
         this.seenBetaModal = seen;
       });
     }
   }
+
+  updateOnboardingSeenState = (state: 'true' | 'false') => {
+    this.seenBetaModal = state;
+  };
 }
 
 export default RootStore;

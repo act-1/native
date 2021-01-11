@@ -13,8 +13,9 @@ function EventsNavigator() {
         headerTitleStyle: {
           fontSize: 22,
           fontFamily: 'Rubik-Medium',
-          color: '#6E7DFF',
+          color: '#EC534B',
         },
+        headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
       }}
     >
       <EventsStack.Screen name="EventList" options={{ title: 'אירועים קרובים' }} component={EventList} />

@@ -6,7 +6,7 @@ import PostFeed from './PostFeed';
 function Home() {
   return (
     <View style={styles.homeWrapper}>
-      <StatusBar backgroundColor="#fafafa" barStyle="dark-content" networkActivityIndicatorVisible={false} />
+      <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
       <PostFeed />
     </View>
   );

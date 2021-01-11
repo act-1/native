@@ -10,32 +10,37 @@ const palette = {
   greenDark: '#0A906E',
 
   redLight: '#ffe7e5',
-  redPrimary: '#f0040d',
+  redPrimary: '#eb524b',
 
   orange: '#FFC281',
   orangeDark: '#632700',
 
+  turquoise: '#76C6CB',
   blue: '#0078F8',
 
-  white: '#fff',
+  white: '#fafafa',
   barleyWhite: '#ededed',
-  porcelain: '#F0F2F3',
   lightgrey: '#f0f2f5',
   grey: '#737373',
-  metal: '#2d3436',
+  metal: '#222222',
+  heavyMetal: '#111111',
   black: '#040506',
 };
 
 const theme = createTheme({
   colors: {
-    primaryText: palette.black,
-    subText: palette.metal,
-    lightText: palette.grey,
-    mainBackground: palette.white,
-    mainForeground: palette.black,
+    primaryText: palette.white,
+    subText: palette.grey,
+    lightText: palette.barleyWhite,
+    headerTitle: palette.redPrimary,
+    mainBackground: palette.black,
+    mainForeground: palette.white,
+    greyBackground: palette.heavyMetal,
+    lightBackground: palette.lightgrey,
     eventBoxDateColor: palette.redPrimary,
+    boxTitle: palette.turquoise,
     dimmedBackground: palette.lightgrey,
-    sectionListSeperator: palette.lightgrey,
+    sectionListSeperator: palette.heavyMetal,
     important: palette.redPrimary,
     importantLight: palette.redLight,
     attentionBackground: palette.orange,
@@ -43,7 +48,7 @@ const theme = createTheme({
     onBoardingBackground: palette.purpleLight,
     screenTitle: palette.purpleLight,
     lightBorderColor: palette.lightgrey,
-    seperator: palette.barleyWhite,
+    seperator: palette.metal,
     link: palette.blue,
   },
   spacing: {
@@ -105,7 +110,7 @@ const theme = createTheme({
     boxSubtitle: {
       fontFamily: 'Rubik-Regular',
       fontSize: 15,
-      color: 'lightText',
+      color: 'subText',
     },
     appLink: {
       fontFamily: 'Rubik-Medium',
@@ -125,6 +130,9 @@ const theme = createTheme({
       fontSize: 16,
       color: 'important',
       textAlign: 'left',
+    },
+    formLabel: {
+      fontSize: 16,
     },
   },
 });

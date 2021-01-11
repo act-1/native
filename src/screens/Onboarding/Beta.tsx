@@ -11,10 +11,9 @@ function Beta() {
   const store = useStore();
 
   const closeOnBoardingModal = () => {
-    analytics().logEvent('beta_modal_closeed');
+    analytics().logEvent('beta_modal_closed');
     AsyncStorage.setItem('seenBetaModal', 'true');
-    // TODO: Move state update to store action
-    store.seenBetaModal = 'true';
+    store.updateOnboardingSeenState('true');
   };
 
   useEffect(() => {
@@ -22,24 +21,17 @@ function Beta() {
   }, []);
 
   return (
-    <Box flex={1} backgroundColor="onBoardingBackground">
-      <StatusBar backgroundColor="#6E7DFF" barStyle="light-content" />
+    <Box flex={1} backgroundColor="mainBackground">
+      <StatusBar backgroundColor="#040506" barStyle="light-content" />
       <SafeAreaView />
       <Box flex={1} paddingHorizontal="m" marginTop="xxl">
-        <Text variant="hugeTitle" color="mainBackground" textAlign="center" paddingHorizontal="xm" marginBottom="xm">
+        <Text variant="hugeTitle" textAlign="center" paddingHorizontal="xm" marginBottom="xm">
           ברוכות וברוכים הבאים אל Act1
         </Text>
-        <Text
-          variant="largeTitle"
-          color="mainBackground"
-          textAlign="center"
-          paddingHorizontal="xm"
-          marginBottom="m"
-          style={{ direction: 'rtl' }}
-        >
+        <Text variant="largeTitle" textAlign="center" paddingHorizontal="xm" marginBottom="m" style={{ direction: 'rtl' }}>
           זוהי גרסת הנסיון הראשונית של Act1, אפליקציה שתקדם את המחאה בישראל.
         </Text>
-        <Text variant="largeTitle" color="mainBackground" textAlign="center" paddingHorizontal="xxl">
+        <Text variant="largeTitle" textAlign="center" paddingHorizontal="xxl">
           נשמח לפידבק שלכם בקבוצת הפייסבוק שלנו.
         </Text>
 

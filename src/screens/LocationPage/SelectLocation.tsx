@@ -14,6 +14,7 @@ import HapticFeedback from 'react-native-haptic-feedback';
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore, locationStore } = useStore();
   const { userCurrentPosition } = userStore;
+
   const onLocationPress = async (checkInData: any) => {
     let locationName = '';
     let locationCity = checkInData.city;
@@ -47,7 +48,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
             })
             .catch((err: any) => {
               crashlytics().log('Check in denied; already exists.');
-              crashlytics().setAttribute('lastCheckInId', userStore.lastCheckIn.id);
+              if (userStore.lastCheckIn) crashlytics().setAttribute('lastCheckInId', userStore.lastCheckIn.id);
               crashlytics().recordError(err);
               if (err.code === 'already-exists') {
                 Alert.alert("נראה שיש לך כבר צ'ק אין פעיל 🤭");
