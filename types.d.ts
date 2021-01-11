@@ -11,3 +11,17 @@ type CheckInParams = {
   expireAt: Date;
   createdAt: Date;
 };
+
+type PublicCheckInParams = {
+  id: string;
+  locationId: string;
+  locationName: string;
+  locationCity: string;
+  userId: string;
+  displayName: string;
+  profilePicture: string;
+  createdAt: string;
+  expireAt: string;
+  eventId: string | null;
+  isActive: boolean;
+};

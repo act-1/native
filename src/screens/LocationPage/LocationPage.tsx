@@ -57,6 +57,8 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
   //   }
   // };
 
+  // Retrieve location information.
+  // First try to hit the cache - then fetch from firestore.
   useEffect(() => {
     let cachedLocation: string | null;
     async function getLocationData(locationId: string) {
@@ -81,6 +83,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     getLocationData(route.params.locationId);
   }, [route.params.locationId]);
 
+  // Subscribe to location count
   useEffect(() => {
     const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
 
@@ -142,7 +145,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             </Text>
           </Box>
 
-          <LocationProfilePictures style={{ marginBottom: 18 }} />
+          <LocationProfilePictures locationId={location.id} style={{ marginBottom: 18 }} />
           {userStore.user.isAnonymous && (
             <RoundedButton
               text="הצטרפות לרשימה"
@@ -155,7 +158,24 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
           <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
 
-          {/* <RoundedButton text="delete checkin" onPress={removeCheckIn} /> */}
+          <RoundedButton
+            text="add checkin"
+            onPress={() => {
+              CheckInService.publicCheckIn({
+                checkInInfo: {
+                  id: '32132',
+                  locationId: 'ramat-gan-bialik-aba-hilel',
+                  locationName: '',
+                  locationCity: '',
+                  userId: '',
+                  expireAt: new Date(),
+                },
+                displayName: 'שדגשד1',
+                profilePictureURL:
+                  'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
+              });
+            }}
+          />
 
           <BottomSheetModal
             ref={bottomSheetModalRef}

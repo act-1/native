@@ -9,6 +9,9 @@ if (__DEV__) {
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
 
+const profilePicturePlaceholderURL =
+  'https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/profilePicturePlaceholder.png?alt=media&token=06884d2b-b32d-4799-b906-280a7f52ba43';
+
 export async function createUserCheckIn({
   locationId,
   locationName,
@@ -83,12 +86,14 @@ async function publicCheckIn({ checkInInfo, displayName, profilePictureURL }: Pu
 
     // if (publicCheckInPerf === true) {
     await database.ref(`checkIns/${locationId}/${checkInId}`).set({
+      id: checkInId,
       locationId,
       locationName,
       locationCity,
       userId,
       displayName: displayName ? displayName : '',
-      profilePicture: profilePictureURL ? profilePictureURL : '',
+      profilePicture: profilePictureURL ? profilePictureURL : profilePicturePlaceholderURL,
+      createdAt: new Date(),
       expireAt,
       eventId: eventId || null,
       isActive: true,
