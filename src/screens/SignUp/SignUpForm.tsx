@@ -8,7 +8,6 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import { updateUserDisplayName } from '@services/user';
-import { FirebaseAnalyticsTypes } from '@react-native-firebase/analytics';
 
 function SignUpForm() {
   const { userStore } = useStore();
@@ -34,10 +33,11 @@ function SignUpForm() {
       setLoading(true);
       await updateUserDisplayName(displayName);
       analytics().logEvent('sign_up_form_submitted');
-    } catch (err) {
-      console.log(err);
-    } finally {
       setLoading(false);
+      navigation.goBack();
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
     }
   };
 
