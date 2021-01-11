@@ -18,6 +18,7 @@ export const buttonColors: ColorsDict = {
   green: {
     initialColor: '#08c236',
     pressedColor: '#1ad348',
+    textColor: '#fff',
   },
   yellow: {
     initialColor: '#FFC000',
@@ -43,6 +44,11 @@ export const buttonColors: ColorsDict = {
     initialColor: '#0B0B0B',
     pressedColor: '#252525',
     iconColor: '#fff',
+    textColor: '#fff',
+  },
+  darkBlue: {
+    initialColor: '#3164b1',
+    pressedColor: '#4571B5',
     textColor: '#fff',
   },
 };

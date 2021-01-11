@@ -23,8 +23,9 @@ function SheetSignUp({ dismissModal }: SheetSignUpProps) {
   const facebookSignUp = async () => {
     try {
       setLoading(true);
-      await facebookLogin();
+      // await facebookLogin();
       dismissModal();
+      navigation.navigate('SignUpModal', { screen: 'SignUpForm' });
     } catch (err) {
       crashlytics().recordError(err);
       setError(true);
@@ -41,7 +42,7 @@ function SheetSignUp({ dismissModal }: SheetSignUpProps) {
       <Text variant="text" textAlign="center" marginBottom="xm">
         על מנת להתווסף לרשימה יש להזדהות באחת הדרכים הבאות:
       </Text>
-      <RoundedButton text="התחברות דרך פייסבוק" onPress={facebookSignUp} color="blue" />
+      <RoundedButton color="darkBlue" text="התחברות דרך פייסבוק" onPress={facebookSignUp} />
     </Box>
   );
 

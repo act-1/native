@@ -19,7 +19,7 @@ export type RootStackParamList = {
   LocationPage: { locationId: string };
   Profile: undefined;
   SignUpNavigator: undefined;
-  SignUpScreen: undefined;
+  SignUpForm: undefined;
 };
 
 type TabBarParamList = {

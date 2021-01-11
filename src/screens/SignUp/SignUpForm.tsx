@@ -1,75 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Image, StyleSheet, TextInput } from 'react-native';
 import { Box, Text } from '../../components';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 
 function SignUpForm() {
+  const { userStore } = useStore();
+  const { profilePicture, setProfilePicture } = useState(null);
+  const { displayName, setDisplayName } = useState('');
+  const displayNameInput = useRef<TextInput>(null);
+
+  useEffect(() => {
+    displayNameInput!.current!.focus();
+    if (userStore.user.isAnonymous === false) {
+    }
+  }, [userStore.user]);
+
+  const onSubmit = () => {
+    try {
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <Box padding="m">
-      <Box alignItems="center" marginBottom="m">
+    <Box paddingVertical="xm" paddingHorizontal="m">
+      <Box alignItems="center" marginBottom="xm">
         <Image source={require('../../assets/icons/account.png')} style={styles.profilePicture} />
 
-        <Text variant="appLink" fontWeight="100" marginTop="xs">
+        {/* <Text variant="text" color="" fontWeight="100" marginTop="s">
           עריכה
-        </Text>
+        </Text> */}
       </Box>
-      <Box flexDirection="row" alignItems="baseline" padding="m" borderTopWidth={1} borderColor="seperator">
-        <Text variant="formLabel" marginRight="xm">
-          שם
-        </Text>
-        <TextInput style={styles.textInputStyle} placeholder="כי אתם מיוחדים" />
+      <Box
+        flexDirection="row"
+        alignItems="baseline"
+        paddingVertical="m"
+        paddingHorizontal="s"
+        borderTopWidth={1}
+        borderColor="seperator"
+      >
+        <TextInput
+          ref={displayNameInput}
+          style={styles.textInputStyle}
+          accessibilityLabel="הזינו את שמכם"
+          placeholder="הזינו את שמכם.ן (כדאי בעברית)"
+          placeholderTextColor="#8d8d8d"
+        />
       </Box>
-      <Box flexDirection="row" justifyContent="center" paddingVertical="xm" borderTopWidth={1} borderColor="seperator">
+      <Box height={1} backgroundColor="seperator" style={{ marginBottom: 20 }} />
+      <Box flexDirection="row" justifyContent="center" borderColor="seperator" marginBottom="xm">
         <RoundedButton text="סיום הרשמה" color="blue" />
       </Box>
     </Box>
   );
 }
 
-export default SignUpForm;
+export default observer(SignUpForm);
 
 const styles = StyleSheet.create({
   profilePicture: {
     borderRadius: 50,
-    borderWidth: 4,
-    borderColor: '#fff',
   },
   textInputStyle: {
     flex: 1,
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
     borderColor: '#f0f2f5',
-    color: '#0078F8',
-    textAlign: 'right',
-    fontSize: 16,
     borderRadius: 3,
   },
 });
-
-{
-  /* <Box alignItems="center" padding="m">
-<Box flexDirection="row" paddingHorizontal="xxl" marginBottom="xxl">
-  <FastImage
-    source={{
-      uri: userStore.user.photoURL,
-    }}
-    style={styles.profilePic}
-  />
-  <TextInput style={styles.textInput} placeholder="הזינו את שמכם.ן - מומלץ בעברית :)" placeholderTextColor="#a8a8a8" />
-</Box>
-<RoundedButton text="סיום" />
-</Box> */
-}
-
-// const styles = StyleSheet.create({
-//   profilePic: {
-//     width: 80,
-//     height: 80,
-//     borderRadius: 50,
-//     flex: 1,
-//   },
-//   textInput: {
-//     flex: 2,
-//     color: 'white',
-//     textAlign: 'right',
-//     marginLeft: 10,
-//   },
-// });

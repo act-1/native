@@ -60,7 +60,7 @@ function AppNavigator() {
         <>
           <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
           <RootStack.Screen name="CheckInModal" component={CheckInNavigator} options={{ headerShown: false }} />
-          <RootStack.Screen name="SignInModal" component={SignUpNavigator} />
+          <RootStack.Screen name="SignUpModal" component={SignUpNavigator} options={{ headerShown: false }} />
         </>
       ) : (
         <>
