@@ -4,23 +4,31 @@ import { Box, Text } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
+import { updateUserDisplayName } from '@services/user';
 
 function SignUpForm() {
   const { userStore } = useStore();
-  const { profilePicture, setProfilePicture } = useState(null);
-  const { displayName, setDisplayName } = useState('');
+  const [loading, setLoading] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [displayName, setDisplayName] = useState('');
   const displayNameInput = useRef<TextInput>(null);
 
   useEffect(() => {
     displayNameInput!.current!.focus();
-    if (userStore.user.isAnonymous === false) {
+    if (userStore.user.isAnonymous === false && userStore.user.photoUrl) {
+      setProfilePicture(userStore.user.photoUrl);
     }
   }, [userStore.user]);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     try {
+      setLoading(true);
+      await updateUserDisplayName(displayName);
+      alert('success!');
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,11 +55,12 @@ function SignUpForm() {
           accessibilityLabel="הזינו את שמכם"
           placeholder="הזינו את שמכם.ן (כדאי בעברית)"
           placeholderTextColor="#8d8d8d"
+          onChangeText={(text) => setDisplayName(text)}
         />
       </Box>
       <Box height={1} backgroundColor="seperator" style={{ marginBottom: 20 }} />
       <Box flexDirection="row" justifyContent="center" borderColor="seperator" marginBottom="xm">
-        <RoundedButton text="סיום הרשמה" color="blue" />
+        <RoundedButton text="סיום הרשמה" color="blue" onPress={onSubmit} disabled={displayName.length < 2} loading={} />
       </Box>
     </Box>
   );
