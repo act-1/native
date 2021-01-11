@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, ViewStyle, TextStyle, Image, ImageSourcePropType } from 'react-native';
+import { Pressable, StyleSheet, ViewStyle, TextStyle, Image, ImageSourcePropType, ActivityIndicator } from 'react-native';
 import { Box, Text } from '../..';
 import { buttonColors } from '../ButtonColors';
 
@@ -11,6 +11,8 @@ type RoundedButtonProps = {
   size?: 'small' | 'large' | 'huge';
   style?: ViewStyle;
   textStyle?: TextStyle;
+  loading?: boolean;
+  disabled?: boolean;
 };
 
 function getButtonDimenions(size: string): ViewStyle {
@@ -34,9 +36,19 @@ function getButtonDimenions(size: string): ViewStyle {
   };
 }
 
-function RoundedButton({ color = 'porcelain', icon, text, onPress, size = 'large', style, textStyle }: RoundedButtonProps) {
+function RoundedButton({
+  color = 'porcelain',
+  icon,
+  text,
+  onPress,
+  size = 'large',
+  style,
+  textStyle,
+  loading = false,
+  disabled = false,
+}: RoundedButtonProps) {
   const [pressed, setPressed] = useState(false);
-  const { initialColor, pressedColor, textColor } = buttonColors[color];
+  let { initialColor, pressedColor, textColor } = buttonColors[disabled ? 'grey' : color];
   const buttonDimensions = getButtonDimenions(size);
 
   return (
@@ -49,15 +61,19 @@ function RoundedButton({ color = 'porcelain', icon, text, onPress, size = 'large
       style={style}
     >
       <Pressable
-        onPress={onPress}
-        onPressIn={() => setPressed(true)}
+        onPress={disabled ? null : onPress}
+        onPressIn={disabled ? null : () => setPressed(true)}
         onPressOut={() => setPressed(false)}
         style={{ backgroundColor: pressed ? pressedColor : initialColor, ...buttonDimensions, ...styles.button }}
       >
         {icon && <Image source={icon} style={{ marginBottom: 12 }} />}
-        <Text style={{ color: textColor, ...textStyle }} variant="roundedButtonText" testID="button-text">
-          {text}
-        </Text>
+        {loading ? (
+          <ActivityIndicator color={textColor} />
+        ) : (
+          <Text style={{ color: textColor, ...textStyle }} variant="roundedButtonText" testID="button-text">
+            {text}
+          </Text>
+        )}
       </Pressable>
     </Box>
   );
