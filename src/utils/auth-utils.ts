@@ -2,6 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { updateUserDisplayName } from '@services/user';
 
 type GraphAPIResult = {
   picture: {
@@ -62,12 +63,11 @@ export async function facebookLogin() {
 
     const displayName = userCredential?.additionalUserInfo?.profile?.name;
 
-    await auth().currentUser?.updateProfile({ displayName, photoURL: pictureUrl });
+    // TODO: Update user picture method
+    await auth().currentUser?.updateProfile({ photoURL: pictureUrl });
 
-    const userRef = firestore().collection('users').doc(auth().currentUser!.uid);
-    await userRef.update({ displayName, profilePicture: pictureUrl });
+    await updateUserDisplayName(displayName);
 
-    // TODO: Update user firestore document - display name and profile picture
     return { ok: true, pictureUrl };
   } catch (err) {
     throw err;

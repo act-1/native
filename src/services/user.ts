@@ -1,5 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
+import auth from '@react-native-firebase/auth';
 import { getDeviceId, getUniqueId } from 'react-native-device-info';
 
 export async function getUserFCMToken(userId: string, fcmToken: string) {
@@ -24,9 +25,18 @@ export async function createUserFCMToken(userId: string, fcmToken: string) {
 
 export async function updateUserDisplayName(displayName: string) {
   try {
-    return firestore().collection(`users/${userId}/devices`).doc(fcmToken).set({
-      displayName,
-    });
+    const user = auth().currentUser;
+
+    if (!user) {
+      throw new Error('User is not authenticated.');
+    }
+
+    // Update firebase user display name
+    user.updateProfile({ displayName });
+
+    // Update firestore user document
+    const userRef = firestore().collection('users').doc(user.uid);
+    return userRef.update({ displayName });
   } catch (err) {
     throw err;
   }
