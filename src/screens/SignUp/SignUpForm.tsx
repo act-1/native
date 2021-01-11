@@ -8,13 +8,14 @@ import { updateUserDisplayName } from '@services/user';
 
 function SignUpForm() {
   const { userStore } = useStore();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [displayName, setDisplayName] = useState('');
   const displayNameInput = useRef<TextInput>(null);
 
   useEffect(() => {
     displayNameInput!.current!.focus();
+    console.log(userStore.user.photoUrl);
     if (userStore.user.isAnonymous === false && userStore.user.photoUrl) {
       setProfilePicture(userStore.user.photoUrl);
     }
@@ -60,7 +61,7 @@ function SignUpForm() {
       </Box>
       <Box height={1} backgroundColor="seperator" style={{ marginBottom: 20 }} />
       <Box flexDirection="row" justifyContent="center" borderColor="seperator" marginBottom="xm">
-        <RoundedButton text="סיום הרשמה" color="blue" onPress={onSubmit} disabled={displayName.length < 2} loading={} />
+        <RoundedButton text="סיום הרשמה" color="blue" onPress={onSubmit} disabled={displayName.length < 2} loading={isLoading} />
       </Box>
     </Box>
   );
