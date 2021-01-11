@@ -1,70 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput, StyleSheet, ActivityIndicator } from 'react-native';
+import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
 import { Box, Text } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
 import { facebookLogin } from '@utils/auth-utils';
+import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 
-function SheetSignUp() {
-  const [isAuthed, setAuthed] = useState(false);
-  const [isLoading, setLoading] = useState(false);
+type SheetSignUpProps = {
+  dismissModal: () => void;
+};
+
+function SheetSignUp({ dismissModal }: SheetSignUpProps) {
   const { userStore } = useStore();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const navigation = useNavigation();
 
   const facebookSignUp = async () => {
     try {
       setLoading(true);
-      const result = await facebookLogin();
-      console.log(result);
+      await facebookLogin();
+      dismissModal();
     } catch (err) {
-      console.error(err);
+      crashlytics().recordError(err);
+      setError(true);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (userStore.user.isAnonymous === false) {
-      setAuthed(true);
-    }
-  }, [userStore.user]);
+  let sheetContent = (
+    <Box alignItems="center" paddingHorizontal="m" flex={1}>
+      <Text variant="largeTitle" marginBottom="m">
+        התחברות ל- Act1
+      </Text>
+      <Text variant="text" textAlign="center" marginBottom="xm">
+        על מנת להתווסף לרשימה יש להזדהות באחת הדרכים הבאות:
+      </Text>
+      <RoundedButton text="התחברות דרך פייסבוק" onPress={facebookSignUp} color="blue" />
+    </Box>
+  );
 
-  let sheetContent = null;
-
-  if (isLoading) {
+  if (loading) {
     sheetContent = (
-      <Box justifyContent="center" alignItems="center">
-        <ActivityIndicator size="small" />
+      <Box justifyContent="center" alignItems="center" flex={1}>
+        <ActivityIndicator size="small" color="grey" />
       </Box>
     );
   }
 
-  if (isAuthed === false) {
+  if (error) {
     sheetContent = (
-      <Box alignItems="center" paddingHorizontal="m" flex={1}>
-        <Text variant="largeTitle" marginBottom="m">
-          התחברות ל- Act1
+      <Box justifyContent="center" alignItems="center" flex={1}>
+        <Text variant="text" textAlign="center">
+          ארעה שגיאה.
         </Text>
-        <Text variant="text" textAlign="center" marginBottom="xm">
-          על מנת להתווסף לרשימה יש להזדהות באחת הדרכים הבאות:
-        </Text>
-        <RoundedButton text="התחברות דרך פייסבוק" onPress={facebookSignUp} color="blue" />
-      </Box>
-    );
-  } else {
-    sheetContent = (
-      <Box alignItems="center" padding="m">
-        <Box flexDirection="row" paddingHorizontal="xxl" marginBottom="xxl">
-          <FastImage
-            source={{
-              uri: userStore.user.photoURL,
-            }}
-            style={styles.profilePic}
-          />
-          <TextInput style={styles.textInput} placeholder="הזינו את שמכם.ן - מומלץ בעברית :)" placeholderTextColor="#a8a8a8" />
-        </Box>
-        <RoundedButton text="סיום" />
       </Box>
     );
   }
@@ -77,18 +71,3 @@ function SheetSignUp() {
 }
 
 export default observer(SheetSignUp);
-
-const styles = StyleSheet.create({
-  profilePic: {
-    width: 80,
-    height: 80,
-    borderRadius: 50,
-    flex: 1,
-  },
-  textInput: {
-    flex: 2,
-    color: 'white',
-    textAlign: 'right',
-    marginLeft: 10,
-  },
-});

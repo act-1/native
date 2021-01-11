@@ -43,3 +43,33 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
 });
+
+{
+  /* <Box alignItems="center" padding="m">
+<Box flexDirection="row" paddingHorizontal="xxl" marginBottom="xxl">
+  <FastImage
+    source={{
+      uri: userStore.user.photoURL,
+    }}
+    style={styles.profilePic}
+  />
+  <TextInput style={styles.textInput} placeholder="הזינו את שמכם.ן - מומלץ בעברית :)" placeholderTextColor="#a8a8a8" />
+</Box>
+<RoundedButton text="סיום" />
+</Box> */
+}
+
+// const styles = StyleSheet.create({
+//   profilePic: {
+//     width: 80,
+//     height: 80,
+//     borderRadius: 50,
+//     flex: 1,
+//   },
+//   textInput: {
+//     flex: 2,
+//     color: 'white',
+//     textAlign: 'right',
+//     marginLeft: 10,
+//   },
+// });

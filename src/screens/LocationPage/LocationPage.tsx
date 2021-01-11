@@ -37,6 +37,8 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     bottomSheetModalRef.current?.present();
   }, []);
 
+  const dismissModal = () => bottomSheetModalRef!.current!.dismiss();
+
   const addPublicCheckIn = async () => {
     try {
       const checkInInfo = userStore.lastCheckIn;
@@ -172,7 +174,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
               <Box style={{ ...StyleSheet.absoluteFillObject, bottom: -1000, backgroundColor: '#333438' }} />
             )}
           >
-            <SheetSignUp onSuccess={() => addPublicCheckIn()} />
+            <SheetSignUp dismissModal={dismissModal} />
           </BottomSheetModal>
         </Box>
       </BottomSheetModalProvider>
