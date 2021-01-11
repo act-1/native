@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet, ActivityIndicator } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Box, Text } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
@@ -8,40 +8,70 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 
 function SheetSignUp() {
-  const { userStore } = useStore();
   const [isAuthed, setAuthed] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const { userStore } = useStore();
+
+  const facebookSignUp = async () => {
+    try {
+      setLoading(true);
+      const result = await facebookLogin();
+      console.log(result);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (userStore.user.isAnonymous === false) {
       setAuthed(true);
     }
-    console.log(userStore.user);
   }, [userStore.user]);
 
-  return (
-    <Box backgroundColor="mainBackground" alignItems="center" padding="m" flex={1}>
-      {isAuthed === false ? (
-        <>
-          <Text variant="largeTitle" color="mainBackground" marginBottom="m">
-            התחברות ל- Act1
-          </Text>
-          <RoundedButton text="התחברות דרך פייסבוק" onPress={facebookLogin} color="blue" />
-        </>
-      ) : (
-        <Box backgroundColor="mainForeground" padding="m">
-          <Box flexDirection="row" marginBottom="xxl">
-            <FastImage
-              source={{
-                uri:
-                  'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
-              }}
-              style={styles.profilePic}
-            />
-            <TextInput style={styles.textInput} placeholder="הזינו את שמכם.ן - מומלץ בעברית :)" placeholderTextColor="grey" />
-          </Box>
-          <RoundedButton text="סיום" />
+  let sheetContent = null;
+
+  if (isLoading) {
+    sheetContent = (
+      <Box justifyContent="center" alignItems="center">
+        <ActivityIndicator size="small" />
+      </Box>
+    );
+  }
+
+  if (isAuthed === false) {
+    sheetContent = (
+      <Box alignItems="center" paddingHorizontal="m" flex={1}>
+        <Text variant="largeTitle" marginBottom="m">
+          התחברות ל- Act1
+        </Text>
+        <Text variant="text" textAlign="center" marginBottom="xm">
+          על מנת להתווסף לרשימה יש להזדהות באחת הדרכים הבאות:
+        </Text>
+        <RoundedButton text="התחברות דרך פייסבוק" onPress={facebookSignUp} color="blue" />
+      </Box>
+    );
+  } else {
+    sheetContent = (
+      <Box alignItems="center" padding="m">
+        <Box flexDirection="row" paddingHorizontal="xxl" marginBottom="xxl">
+          <FastImage
+            source={{
+              uri: userStore.user.photoURL,
+            }}
+            style={styles.profilePic}
+          />
+          <TextInput style={styles.textInput} placeholder="הזינו את שמכם.ן - מומלץ בעברית :)" placeholderTextColor="#a8a8a8" />
         </Box>
-      )}
+        <RoundedButton text="סיום" />
+      </Box>
+    );
+  }
+
+  return (
+    <Box padding="m" style={{ ...StyleSheet.absoluteFillObject }} flex={1}>
+      {sheetContent}
     </Box>
   );
 }
@@ -52,11 +82,13 @@ const styles = StyleSheet.create({
   profilePic: {
     width: 80,
     height: 80,
-    marginRight: 16,
     borderRadius: 50,
+    flex: 1,
   },
   textInput: {
+    flex: 2,
     color: 'white',
     textAlign: 'right',
+    marginLeft: 10,
   },
 });

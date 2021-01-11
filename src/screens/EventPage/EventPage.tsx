@@ -80,10 +80,10 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
   return (
     <Box flex={1}>
-      <StatusBar barStyle="light-content" backgroundColor="#697CFF" />
+      <StatusBar barStyle="light-content" />
       {event === undefined ? (
         <Box justifyContent="center" alignItems="center">
-          <ActivityIndicator size="small" color="#0000ff" />
+          <ActivityIndicator size="small" />
           <Text>טוענת..</Text>
         </Box>
       ) : (

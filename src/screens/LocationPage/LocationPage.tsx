@@ -31,7 +31,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  const snapPoints = useMemo(() => ['59%', '60%'], []);
+  const snapPoints = useMemo(() => ['1%', '25%'], []);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -40,7 +40,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
   const addPublicCheckIn = async () => {
     try {
       const checkInInfo = userStore.lastCheckIn;
-      console.log(checkInInfo);
+
       if (checkInInfo !== null) {
         await CheckInService.publicCheckIn(checkInInfo);
       } else {
@@ -116,12 +116,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     );
   }
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: '#000' }}
-      enabled={Platform.OS === 'ios' ? true : false}
-      behavior={Platform.OS === 'ios' ? 'position' : 'padding'}
-      contentContainerStyle={{ top: 0 }}
-    >
+    <Box>
       <BottomSheetModalProvider>
         <MapView
           style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
@@ -160,7 +155,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
           <RoundedButton
             text="הצטרפות לרשימה"
-            onPress={addPublicCheckIn}
+            onPress={handlePresentModalPress}
             color="blue"
             size="small"
             textStyle={{ fontSize: 14 }}
@@ -169,12 +164,19 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
 
           {/* <RoundedButton text="delete checkin" onPress={removeCheckIn} /> */}
-          <BottomSheetModal ref={bottomSheetModalRef} index={1} snapPoints={snapPoints}>
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            backgroundComponent={() => (
+              <Box style={{ ...StyleSheet.absoluteFillObject, bottom: -1000, backgroundColor: '#333438' }} />
+            )}
+          >
             <SheetSignUp onSuccess={() => addPublicCheckIn()} />
           </BottomSheetModal>
         </Box>
       </BottomSheetModalProvider>
-    </KeyboardAvoidingView>
+    </Box>
   );
 }
 
