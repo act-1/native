@@ -67,6 +67,7 @@ export async function facebookLogin() {
     const userRef = firestore().collection('users').doc(auth().currentUser!.uid);
     await userRef.update({ displayName, profilePicture: pictureUrl });
 
+    // TODO: Update user firestore document - display name and profile picture
     return { ok: true, pictureUrl };
   } catch (err) {
     throw err;

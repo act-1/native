@@ -21,3 +21,13 @@ export async function createUserFCMToken(userId: string, fcmToken: string) {
     throw err;
   }
 }
+
+export async function updateUserDisplayName(displayName: string) {
+  try {
+    return firestore().collection(`users/${userId}/devices`).doc(fcmToken).set({
+      displayName,
+    });
+  } catch (err) {
+    throw err;
+  }
+}
