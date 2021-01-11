@@ -14,6 +14,7 @@ import HapticFeedback from 'react-native-haptic-feedback';
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore, locationStore } = useStore();
   const { userCurrentPosition } = userStore;
+
   const onLocationPress = async (checkInData: any) => {
     let locationName = '';
     let locationCity = checkInData.city;

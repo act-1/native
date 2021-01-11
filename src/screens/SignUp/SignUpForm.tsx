@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Image, StyleSheet, TextInput } from 'react-native';
+import { Image, TextInput, Alert, StyleSheet } from 'react-native';
+import auth from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
-import { Box, Text } from '../../components';
+import { useNavigation } from '@react-navigation/native';
+import { Box } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
@@ -11,17 +13,21 @@ import { FirebaseAnalyticsTypes } from '@react-native-firebase/analytics';
 function SignUpForm() {
   const { userStore } = useStore();
   const [isLoading, setLoading] = useState(false);
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePictureURL, setProfilePictureURL] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState('');
   const displayNameInput = useRef<TextInput>(null);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     displayNameInput!.current!.focus();
 
-    if (userStore.user.isAnonymous === false && userStore.user.photoUrl) {
-      setProfilePicture(userStore.user.photoUrl);
+    const { photoURL } = auth().currentUser!;
+
+    if (photoURL) {
+      setProfilePictureURL(photoURL);
     }
-  }, [userStore.user]);
+  }, []);
 
   const onSubmit = async () => {
     try {
@@ -35,10 +41,15 @@ function SignUpForm() {
     }
   };
 
+  let profilePictureSource = require('../../assets/icons/account.png');
+  if (profilePictureURL) {
+    profilePictureSource = { uri: profilePictureURL };
+  }
+
   return (
     <Box paddingVertical="xm" paddingHorizontal="m">
       <Box alignItems="center" marginBottom="xm">
-        <Image source={require('../../assets/icons/account.png')} style={styles.profilePicture} />
+        <Image source={profilePictureSource} style={styles.profilePicture} />
 
         {/* <Text variant="text" color="" fontWeight="100" marginTop="s">
           עריכה
@@ -56,7 +67,7 @@ function SignUpForm() {
           ref={displayNameInput}
           style={styles.textInputStyle}
           accessibilityLabel="הזינו את שמכם"
-          placeholder="הזינו את שמכם.ן (כדאי בעברית)"
+          placeholder="הזינו את שמכם.ן"
           placeholderTextColor="#8d8d8d"
           onChangeText={(text) => setDisplayName(text)}
         />
@@ -73,7 +84,11 @@ export default observer(SignUpForm);
 
 const styles = StyleSheet.create({
   profilePicture: {
+    height: 85,
+    width: 85,
     borderRadius: 50,
+    borderWidth: 3,
+    borderColor: '#1d262d',
   },
   textInputStyle: {
     flex: 1,

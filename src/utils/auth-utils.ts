@@ -1,4 +1,3 @@
-import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
@@ -62,7 +61,6 @@ export async function facebookLogin() {
     });
 
     const displayName = userCredential?.additionalUserInfo?.profile?.name;
-
     await updateUserOnAuth(displayName, pictureUrl);
 
     return { ok: true, pictureUrl };
