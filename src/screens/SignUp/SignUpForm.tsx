@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Image, StyleSheet, TextInput } from 'react-native';
+import analytics from '@react-native-firebase/analytics';
 import { Box, Text } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import { updateUserDisplayName } from '@services/user';
+import { FirebaseAnalyticsTypes } from '@react-native-firebase/analytics';
 
 function SignUpForm() {
   const { userStore } = useStore();
@@ -15,7 +17,7 @@ function SignUpForm() {
 
   useEffect(() => {
     displayNameInput!.current!.focus();
-    console.log(userStore.user.photoUrl);
+
     if (userStore.user.isAnonymous === false && userStore.user.photoUrl) {
       setProfilePicture(userStore.user.photoUrl);
     }
@@ -25,7 +27,7 @@ function SignUpForm() {
     try {
       setLoading(true);
       await updateUserDisplayName(displayName);
-      alert('success!');
+      analytics().logEvent('sign_up_form_submitted');
     } catch (err) {
       console.log(err);
     } finally {

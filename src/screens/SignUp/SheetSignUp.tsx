@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput, StyleSheet, ActivityIndicator } from 'react-native';
+import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
 import { Box, Text } from '../../components';
@@ -23,11 +24,14 @@ function SheetSignUp({ dismissModal }: SheetSignUpProps) {
   const facebookSignUp = async () => {
     try {
       setLoading(true);
-      // await facebookLogin();
+      analytics().logEvent('sheet_sign_up_facebook_prompt');
+      await facebookLogin();
+      analytics().logSignUp({ method: 'facebook' });
       dismissModal();
       navigation.navigate('SignUpModal', { screen: 'SignUpForm' });
     } catch (err) {
       crashlytics().recordError(err);
+      analytics().logEvent('sheet_sign_up_facebook_error', { message: err.message });
       setError(true);
     } finally {
       setLoading(false);

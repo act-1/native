@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { Platform, StyleSheet, Image, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { firebase } from '@react-native-firebase/database';
+import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import MapView from 'react-native-maps';
 import { Box, Text, Ticker } from '../../components';
@@ -16,6 +17,7 @@ import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet
 import LocationProfilePictures from './LocationProfilePictures';
 import CheckInService from '@services/checkIn';
 import mapStyle from '@utils/mapStyle.json';
+
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
 
@@ -35,6 +37,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
+    analytics().logEvent('location_page_sign_up_sheet_display');
   }, []);
 
   const dismissModal = () => bottomSheetModalRef!.current!.dismiss();
