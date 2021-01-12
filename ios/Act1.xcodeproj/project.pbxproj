@@ -20,10 +20,13 @@
 		AF90AE06A8E60745A9D24E93 /* libPods-Act1-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9876892CF2277012D158322 /* libPods-Act1-tvOS.a */; };
 		BC59A90DCFCB94E20D0A6F45 /* libPods-Act1-Act1Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 519C2C143CD525C6E26020B6 /* libPods-Act1-Act1Tests.a */; };
 		C10BDA2D258F527300A658CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C10BDA2C258F527300A658CB /* GoogleService-Info.plist */; };
+		C1281D2525AD3E3E00495121 /* atlas-black-aaa.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1281D1F25AD3E3D00495121 /* atlas-black-aaa.ttf */; };
+		C1281D2625AD3E3E00495121 /* atlas-light-aaa.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1281D2025AD3E3E00495121 /* atlas-light-aaa.ttf */; };
+		C1281D2725AD3E3E00495121 /* atlas-medium-aaa.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1281D2125AD3E3E00495121 /* atlas-medium-aaa.ttf */; };
+		C1281D2825AD3E3E00495121 /* atlas-thin-aaa.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1281D2225AD3E3E00495121 /* atlas-thin-aaa.ttf */; };
+		C1281D2925AD3E3E00495121 /* atlas-bold-aaa.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1281D2325AD3E3E00495121 /* atlas-bold-aaa.ttf */; };
+		C1281D2A25AD3E3E00495121 /* atlas-regular-aaa.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1281D2425AD3E3E00495121 /* atlas-regular-aaa.ttf */; };
 		C1631C25257A94640099756B /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C21257A94640099756B /* Feather.ttf */; };
-		C1631C26257A94640099756B /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C22257A94640099756B /* Rubik-Bold.ttf */; };
-		C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C23257A94640099756B /* Rubik-Medium.ttf */; };
-		C1631C28257A94640099756B /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C24257A94640099756B /* Rubik-Regular.ttf */; };
 		C1D19D18259CDE2000AC4746 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1D19D17259CDE2000AC4746 /* BootSplash.storyboard */; };
 		C1DDF64825938C4E0063C069 /* Swifty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDF64725938C4E0063C069 /* Swifty.swift */; };
 		D78A600ED17D71836D73261A /* libPods-Act1-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5444E8FA12C262FD0CAD90C6 /* libPods-Act1-tvOSTests.a */; };
@@ -73,10 +76,13 @@
 		B9876892CF2277012D158322 /* libPods-Act1-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Act1-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10BDA2C258F527300A658CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C10BDA32258F575400A658CB /* Act1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Act1.entitlements; path = Act1/Act1.entitlements; sourceTree = "<group>"; };
+		C1281D1F25AD3E3D00495121 /* atlas-black-aaa.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "atlas-black-aaa.ttf"; sourceTree = "<group>"; };
+		C1281D2025AD3E3E00495121 /* atlas-light-aaa.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "atlas-light-aaa.ttf"; sourceTree = "<group>"; };
+		C1281D2125AD3E3E00495121 /* atlas-medium-aaa.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "atlas-medium-aaa.ttf"; sourceTree = "<group>"; };
+		C1281D2225AD3E3E00495121 /* atlas-thin-aaa.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "atlas-thin-aaa.ttf"; sourceTree = "<group>"; };
+		C1281D2325AD3E3E00495121 /* atlas-bold-aaa.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "atlas-bold-aaa.ttf"; sourceTree = "<group>"; };
+		C1281D2425AD3E3E00495121 /* atlas-regular-aaa.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "atlas-regular-aaa.ttf"; sourceTree = "<group>"; };
 		C1631C21257A94640099756B /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
-		C1631C22257A94640099756B /* Rubik-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Bold.ttf"; sourceTree = "<group>"; };
-		C1631C23257A94640099756B /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
-		C1631C24257A94640099756B /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		C1961C1425A87ED8005EF7EC /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		C1D19D17259CDE2000AC4746 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Act1/BootSplash.storyboard; sourceTree = "<group>"; };
 		C1DDF64625938C4E0063C069 /* Act1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Act1-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -224,10 +230,13 @@
 		C1631C20257A94640099756B /* fonts */ = {
 			isa = PBXGroup;
 			children = (
+				C1281D1F25AD3E3D00495121 /* atlas-black-aaa.ttf */,
+				C1281D2325AD3E3E00495121 /* atlas-bold-aaa.ttf */,
+				C1281D2025AD3E3E00495121 /* atlas-light-aaa.ttf */,
+				C1281D2125AD3E3E00495121 /* atlas-medium-aaa.ttf */,
+				C1281D2425AD3E3E00495121 /* atlas-regular-aaa.ttf */,
+				C1281D2225AD3E3E00495121 /* atlas-thin-aaa.ttf */,
 				C1631C21257A94640099756B /* Feather.ttf */,
-				C1631C22257A94640099756B /* Rubik-Bold.ttf */,
-				C1631C23257A94640099756B /* Rubik-Medium.ttf */,
-				C1631C24257A94640099756B /* Rubik-Regular.ttf */,
 			);
 			name = fonts;
 			path = ../src/assets/fonts;
@@ -382,13 +391,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1281D2525AD3E3E00495121 /* atlas-black-aaa.ttf in Resources */,
+				C1281D2625AD3E3E00495121 /* atlas-light-aaa.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				C1631C28257A94640099756B /* Rubik-Regular.ttf in Resources */,
-				C1631C26257A94640099756B /* Rubik-Bold.ttf in Resources */,
+				C1281D2925AD3E3E00495121 /* atlas-bold-aaa.ttf in Resources */,
+				C1281D2725AD3E3E00495121 /* atlas-medium-aaa.ttf in Resources */,
 				C1D19D18259CDE2000AC4746 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				C1281D2825AD3E3E00495121 /* atlas-thin-aaa.ttf in Resources */,
 				C1631C25257A94640099756B /* Feather.ttf in Resources */,
-				C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */,
+				C1281D2A25AD3E3E00495121 /* atlas-regular-aaa.ttf in Resources */,
 				C10BDA2D258F527300A658CB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

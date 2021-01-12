@@ -41,10 +41,13 @@
 	<string>נשתמש במיקום למציאת הפגנות ואירועים באיזורך</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>atlas-black-aaa.ttf</string>
+		<string>atlas-bold-aaa.ttf</string>
+		<string>atlas-medium-aaa.ttf</string>
+		<string>atlas-regular-aaa.ttf</string>
+		<string>atlas-light-aaa.ttf</string>
+		<string>atlas-thin-aaa.ttf</string>
 		<string>Feather.ttf</string>
-		<string>Rubik-Bold.ttf</string>
-		<string>Rubik-Medium.ttf</string>
-		<string>Rubik-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -68,10 +71,10 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-		<key>CFBundleURLSchemes</key>
-		<array>
-			<string>fb$(FACEBOOK_APP_ID)</string>
-		</array>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb$(FACEBOOK_APP_ID)</string>
+			</array>
 		</dict>
 	</array>
 	<key>FacebookAppID</key>
