@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#111111',
   },
   countTextStyle: {
-    fontFamily: 'Rubik-Bold',
+    fontFamily: 'AtlasDL3.1AAA-Bold',
     fontSize: 30,
     color: '#fff',
   },

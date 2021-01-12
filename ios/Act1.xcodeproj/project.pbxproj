@@ -21,11 +21,14 @@
 		BC59A90DCFCB94E20D0A6F45 /* libPods-Act1-Act1Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 519C2C143CD525C6E26020B6 /* libPods-Act1-Act1Tests.a */; };
 		C10BDA2D258F527300A658CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C10BDA2C258F527300A658CB /* GoogleService-Info.plist */; };
 		C1631C25257A94640099756B /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C21257A94640099756B /* Feather.ttf */; };
-		C1631C26257A94640099756B /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C22257A94640099756B /* Rubik-Bold.ttf */; };
-		C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C23257A94640099756B /* Rubik-Medium.ttf */; };
-		C1631C28257A94640099756B /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1631C24257A94640099756B /* Rubik-Regular.ttf */; };
 		C1D19D18259CDE2000AC4746 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1D19D17259CDE2000AC4746 /* BootSplash.storyboard */; };
 		C1DDF64825938C4E0063C069 /* Swifty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDF64725938C4E0063C069 /* Swifty.swift */; };
+		C1F4BDB625AD45D100484236 /* AtlasDL3.1AAA-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1F4BDB025AD457800484236 /* AtlasDL3.1AAA-Black.ttf */; };
+		C1F4BDB725AD45D100484236 /* AtlasDL3.1AAA-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1F4BDB125AD457800484236 /* AtlasDL3.1AAA-Bold.ttf */; };
+		C1F4BDB825AD45D100484236 /* AtlasDL3.1AAA-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1F4BDB425AD457800484236 /* AtlasDL3.1AAA-Light.ttf */; };
+		C1F4BDB925AD45D100484236 /* AtlasDL3.1AAA-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1F4BDB525AD457800484236 /* AtlasDL3.1AAA-Medium.ttf */; };
+		C1F4BDBA25AD45D100484236 /* AtlasDL3.1AAA-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1F4BDB225AD457800484236 /* AtlasDL3.1AAA-Regular.ttf */; };
+		C1F4BDBB25AD45D100484236 /* AtlasDL3.1AAA-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1F4BDB325AD457800484236 /* AtlasDL3.1AAA-Thin.ttf */; };
 		D78A600ED17D71836D73261A /* libPods-Act1-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5444E8FA12C262FD0CAD90C6 /* libPods-Act1-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
@@ -74,13 +77,16 @@
 		C10BDA2C258F527300A658CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C10BDA32258F575400A658CB /* Act1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Act1.entitlements; path = Act1/Act1.entitlements; sourceTree = "<group>"; };
 		C1631C21257A94640099756B /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
-		C1631C22257A94640099756B /* Rubik-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Bold.ttf"; sourceTree = "<group>"; };
-		C1631C23257A94640099756B /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
-		C1631C24257A94640099756B /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		C1961C1425A87ED8005EF7EC /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		C1D19D17259CDE2000AC4746 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Act1/BootSplash.storyboard; sourceTree = "<group>"; };
 		C1DDF64625938C4E0063C069 /* Act1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Act1-Bridging-Header.h"; sourceTree = "<group>"; };
 		C1DDF64725938C4E0063C069 /* Swifty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swifty.swift; sourceTree = "<group>"; };
+		C1F4BDB025AD457800484236 /* AtlasDL3.1AAA-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AtlasDL3.1AAA-Black.ttf"; path = "../src/assets/fonts/AtlasDL3.1AAA-Black.ttf"; sourceTree = "<group>"; };
+		C1F4BDB125AD457800484236 /* AtlasDL3.1AAA-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AtlasDL3.1AAA-Bold.ttf"; path = "../src/assets/fonts/AtlasDL3.1AAA-Bold.ttf"; sourceTree = "<group>"; };
+		C1F4BDB225AD457800484236 /* AtlasDL3.1AAA-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AtlasDL3.1AAA-Regular.ttf"; path = "../src/assets/fonts/AtlasDL3.1AAA-Regular.ttf"; sourceTree = "<group>"; };
+		C1F4BDB325AD457800484236 /* AtlasDL3.1AAA-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AtlasDL3.1AAA-Thin.ttf"; path = "../src/assets/fonts/AtlasDL3.1AAA-Thin.ttf"; sourceTree = "<group>"; };
+		C1F4BDB425AD457800484236 /* AtlasDL3.1AAA-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AtlasDL3.1AAA-Light.ttf"; path = "../src/assets/fonts/AtlasDL3.1AAA-Light.ttf"; sourceTree = "<group>"; };
+		C1F4BDB525AD457800484236 /* AtlasDL3.1AAA-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AtlasDL3.1AAA-Medium.ttf"; path = "../src/assets/fonts/AtlasDL3.1AAA-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FBF5D8AB9F32C6D95B582092 /* Pods-Act1-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Act1-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Act1-tvOS/Pods-Act1-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -196,6 +202,12 @@
 				C1961C1425A87ED8005EF7EC /* Config.xcconfig */,
 				C1DDF64725938C4E0063C069 /* Swifty.swift */,
 				C10BDA2C258F527300A658CB /* GoogleService-Info.plist */,
+				C1F4BDB025AD457800484236 /* AtlasDL3.1AAA-Black.ttf */,
+				C1F4BDB125AD457800484236 /* AtlasDL3.1AAA-Bold.ttf */,
+				C1F4BDB425AD457800484236 /* AtlasDL3.1AAA-Light.ttf */,
+				C1F4BDB525AD457800484236 /* AtlasDL3.1AAA-Medium.ttf */,
+				C1F4BDB225AD457800484236 /* AtlasDL3.1AAA-Regular.ttf */,
+				C1F4BDB325AD457800484236 /* AtlasDL3.1AAA-Thin.ttf */,
 				C1631C20257A94640099756B /* fonts */,
 				13B07FAE1A68108700A75B9A /* Act1 */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -225,9 +237,6 @@
 			isa = PBXGroup;
 			children = (
 				C1631C21257A94640099756B /* Feather.ttf */,
-				C1631C22257A94640099756B /* Rubik-Bold.ttf */,
-				C1631C23257A94640099756B /* Rubik-Medium.ttf */,
-				C1631C24257A94640099756B /* Rubik-Regular.ttf */,
 			);
 			name = fonts;
 			path = ../src/assets/fonts;
@@ -382,13 +391,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1F4BDB625AD45D100484236 /* AtlasDL3.1AAA-Black.ttf in Resources */,
+				C1F4BDB725AD45D100484236 /* AtlasDL3.1AAA-Bold.ttf in Resources */,
+				C1F4BDB825AD45D100484236 /* AtlasDL3.1AAA-Light.ttf in Resources */,
+				C1F4BDB925AD45D100484236 /* AtlasDL3.1AAA-Medium.ttf in Resources */,
+				C1F4BDBA25AD45D100484236 /* AtlasDL3.1AAA-Regular.ttf in Resources */,
+				C1F4BDBB25AD45D100484236 /* AtlasDL3.1AAA-Thin.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				C1631C28257A94640099756B /* Rubik-Regular.ttf in Resources */,
-				C1631C26257A94640099756B /* Rubik-Bold.ttf in Resources */,
 				C1D19D18259CDE2000AC4746 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C1631C25257A94640099756B /* Feather.ttf in Resources */,
-				C1631C27257A94640099756B /* Rubik-Medium.ttf in Resources */,
 				C10BDA2D258F527300A658CB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

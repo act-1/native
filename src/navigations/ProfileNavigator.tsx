@@ -14,7 +14,7 @@ function ProfileNavigator() {
         name="Home"
         options={{
           headerTitle: 'פרופיל',
-          headerTitleStyle: { fontSize: 22, fontFamily: 'Rubik-Medium', color: '#6E7DFF' },
+          headerTitleStyle: { fontSize: 22, fontFamily: 'AtlasDL3.1AAA-Medium', color: '#6E7DFF' },
         }}
         component={Profile}
       />

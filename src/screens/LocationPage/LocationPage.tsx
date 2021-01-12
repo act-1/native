@@ -129,7 +129,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           <Box shadowOpacity={0.5} shadowOffset={{ width: 0, height: 0 }} shadowRadius={3} elevation={3}>
             <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
           </Box>
-          <Text variant="extraLargeTitle" marginBottom="xs">
+          <Text variant="extraLargeTitle" textAlign="center" marginBottom="xs">
             {location.name}
           </Text>
           <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.9} marginBottom="m">
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   counterText: {
-    fontFamily: 'Rubik-Medium',
+    fontFamily: 'AtlasDL3.1AAA-Medium',
     fontSize: 26,
     color: '#f0f2f5',
     textAlign: 'left',
