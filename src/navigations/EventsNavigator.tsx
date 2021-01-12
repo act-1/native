@@ -12,7 +12,7 @@ function EventsNavigator() {
         headerTitleAlign: 'center',
         headerTitleStyle: {
           fontSize: 22,
-          fontFamily: 'Rubik-Medium',
+          fontFamily: 'AtlasDL3.1AAA-Medium',
           color: '#EC534B',
         },
         headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },

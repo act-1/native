@@ -146,8 +146,8 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               <HTML
                 html={event.content}
                 tagsStyles={{
-                  p: { textAlign: 'left', marginBottom: 12, fontSize: 15, fontFamily: 'Rubik-Regular' },
-                  div: { textAlign: 'left', fontFamily: 'Rubik-Regular', fontSize: 15 },
+                  p: { textAlign: 'left', marginBottom: 12, fontSize: 15, fontFamily: 'AtlasDL3.1AAA-Regular' },
+                  div: { textAlign: 'left', fontFamily: 'AtlasDL3.1AAA-Regular', fontSize: 15 },
                 }}
               />
             </Box>

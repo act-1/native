@@ -73,10 +73,10 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
       <Box alignItems="center" justifyContent="center" marginTop="xl">
         <Image source={require('@assets/illustrations/power-deluxe.png')} style={{ marginBottom: 16 }} />
-        <Text variant="extraLargeTitle" color="lightText" marginBottom="s">
+        <Text variant="extraLargeTitle" fontWeight={'900'} textAlign="center" color="lightText" marginBottom="s">
           יצאתן להפגין? עשו צ׳ק אין!
         </Text>
-        <Text variant="text" textAlign="center" color="lightText" marginBottom="xm">
+        <Text variant="text" fontWeight={'400'} textAlign="center" color="lightText" marginBottom="xm">
           ביחד נראה לכל הארץ כמה המחאה שלנו גדולה.
         </Text>
 

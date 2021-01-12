@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   counterText: {
-    fontFamily: 'Rubik-Medium',
+    fontFamily: 'AtlasDL3.1AAA-Medium',
     fontSize: 26,
     color: '#f0f2f5',
     textAlign: 'left',

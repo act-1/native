@@ -41,12 +41,12 @@
 	<string>נשתמש במיקום למציאת הפגנות ואירועים באיזורך</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>atlas-black-aaa.ttf</string>
-		<string>atlas-bold-aaa.ttf</string>
-		<string>atlas-medium-aaa.ttf</string>
-		<string>atlas-regular-aaa.ttf</string>
-		<string>atlas-light-aaa.ttf</string>
-		<string>atlas-thin-aaa.ttf</string>
+		<string>AtlasDL3.1AAA-Black.ttf</string>
+		<string>AtlasDL3.1AAA-Bold.ttf</string>
+		<string>AtlasDL3.1AAA-Medium.ttf</string>
+		<string>AtlasDL3.1AAA-Regular.ttf</string>
+		<string>AtlasDL3.1AAA-Light.ttf</string>
+		<string>AtlasDL3.1AAA-Thin.ttf</string>
 		<string>Feather.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
