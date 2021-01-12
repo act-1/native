@@ -18,7 +18,7 @@ const deviceWidth = Dimensions.get('window').width;
 function LocationProfilePictures({ locationId, style }: { locationId: string; style?: ViewStyle }) {
   const [isLoading, setIsLoading] = useState(true);
   const [publicCheckIns, setPublicCheckIns] = useState<PublicCheckInParams[]>([]);
-  const carousel = useRef(null);
+  const carousel = useRef<Carousel<PublicCheckInParams>>(null);
   // const [currentCheckInIndex, setCheckInIndex] = useState(0);
 
   // Subscribe to location count & public check ins
@@ -27,19 +27,17 @@ function LocationProfilePictures({ locationId, style }: { locationId: string; st
     const checkIns = database.ref(`/checkIns/${locationId}`).orderByChild('isActive').equalTo(true);
 
     checkIns.once('value', (snapshot) => {
-      //   if (snapshotValue) {
-      //     const checkInsArray: PublicCheckInParams[] = Object.values(snapshotValue);
-      //     setPublicCheckIns(checkInsArray);
-      //   }
       setIsLoading(false);
     });
 
-    // checkIns.on('value')
-
     checkIns.on('child_added', (snapshot) => {
       const checkIn = snapshot.val();
-      console.log('PUZTZ', snapshot);
-      setPublicCheckIns((prevState) => [...prevState, checkIn]);
+      const currentCarouselIndex = carousel!.current!.currentIndex;
+      setPublicCheckIns((prevState) => [
+        ...prevState.slice(0, currentCarouselIndex),
+        checkIn,
+        ...prevState.slice(currentCarouselIndex),
+      ]);
     });
 
     return () => {
@@ -72,6 +70,8 @@ function LocationProfilePictures({ locationId, style }: { locationId: string; st
           )}
           sliderWidth={deviceWidth}
           itemWidth={deviceWidth}
+          scrollEnabled={false}
+          loop={true}
         />
       </Box>
     </View>

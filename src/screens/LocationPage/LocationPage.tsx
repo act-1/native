@@ -163,16 +163,15 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             onPress={() => {
               CheckInService.publicCheckIn({
                 checkInInfo: {
-                  id: '32132',
+                  id: '59595959',
                   locationId: 'ramat-gan-bialik-aba-hilel',
                   locationName: '',
                   locationCity: '',
                   userId: '',
                   expireAt: new Date(),
                 },
-                displayName: 'שדגשד1',
-                profilePictureURL:
-                  'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
+                displayName: '5555',
+                profilePictureURL: 'https://picsum.photos/200',
               });
             }}
           />
