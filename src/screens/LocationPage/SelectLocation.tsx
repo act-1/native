@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Alert, Image, StatusBar, Platform } from 'react-native';
+import { Alert, Image, StatusBar, Platform, ScrollView } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import analytics from '@react-native-firebase/analytics';
@@ -68,7 +68,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   }, [userCurrentPosition]);
 
   return (
-    <Box flex={1} width="100%">
+    <ScrollView style={{ flex: 1, width: '100%' }}>
       <StatusBar barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'} />
 
       <Box alignItems="center" justifyContent="center" marginTop="xl">
@@ -111,7 +111,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
           </Box>
         )}
       </Box>
-    </Box>
+    </ScrollView>
   );
 }
 

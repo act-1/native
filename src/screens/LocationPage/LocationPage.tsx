@@ -129,7 +129,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           <Box shadowOpacity={0.5} shadowOffset={{ width: 0, height: 0 }} shadowRadius={3} elevation={3}>
             <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
           </Box>
-          <Text variant="extraLargeTitle" marginBottom="xs">
+          <Text variant="extraLargeTitle" textAlign="center" marginBottom="xs">
             {location.name}
           </Text>
           <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.9} marginBottom="m">
