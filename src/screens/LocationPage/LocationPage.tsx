@@ -158,23 +158,30 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
           <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
 
-          <RoundedButton
+          <Box justifyContent="center" alignItems="center" height={110}>
+            <Text variant="text" textAlign="center" fontWeight="700" lineHeight={21.5} marginBottom="xm">
+              רוצים לצרף את תמונתכם לרשימת המפגינים.ות במצפור שלום?
+            </Text>
+            <RoundedButton text="הצטרפות לרשימת המפגינים" onPress={() => null} color="blue" />
+          </Box>
+          {/* <RoundedButton
             text="add checkin"
             onPress={() => {
               CheckInService.publicCheckIn({
                 checkInInfo: {
                   id: '59595959',
-                  locationId: 'ramat-gan-bialik-aba-hilel',
+                  locationId: 'nayot-junction-jerusalem',
                   locationName: '',
                   locationCity: '',
                   userId: '',
                   expireAt: new Date(),
                 },
-                displayName: '5555',
-                profilePictureURL: 'https://picsum.photos/200',
+                displayName: 'גיא טפר',
+                profilePictureURL:
+                  'https://scontent.ftlv15-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=dk56_uIJzVAAX_bjegq&_nc_ht=scontent.ftlv15-1.fna&oh=3bd791e62fe014c932bb4fade1f8fa05&oe=60231FFF',
               });
             }}
-          />
+          /> */}
 
           <BottomSheetModal
             ref={bottomSheetModalRef}

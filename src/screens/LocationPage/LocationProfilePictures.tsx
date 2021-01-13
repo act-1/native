@@ -42,8 +42,18 @@ function LocationProfilePictures({ locationId, style }: { locationId: string; st
 
   if (isLoading) {
     return (
-      <Box justifyContent="center" alignItems="center" flex={1}>
+      <Box justifyContent="center" alignItems="center" height={110} style={style}>
         <ActivityIndicator size="small" color="grey" />
+      </Box>
+    );
+  }
+
+  if (publicCheckIns.length === 0) {
+    return (
+      <Box justifyContent="center" alignItems="center" height={110} style={style}>
+        <Text variant="text" textAlign="center" style={{ color: '#fff' }} marginBottom="xm" paddingHorizontal="m">
+          אף אחד עדיין לא הצטרף לרשימת המפגינים הפומבית.
+        </Text>
       </Box>
     );
   }
