@@ -61,7 +61,7 @@ export async function createUserCheckIn({
     // // check if user is not anonymous
     if (auth().currentUser?.isAnonymous === false) {
       const { displayName, photoURL } = auth().currentUser!;
-      publicCheckIn({ checkInInfo: checkInData, displayName, profilePictureURL: photoURL });
+      await publicCheckIn({ checkInInfo: checkInData, displayName, profilePictureURL: photoURL });
     }
 
     return { ok: true, checkIn: { ...checkInData, createdAt: new Date(), expireAt, id: checkInDocument.id } };
@@ -85,12 +85,12 @@ async function publicCheckIn({ checkInInfo, displayName, profilePictureURL }: Pu
     // const publicCheckInPerf = userDoc.data().publicCheckIn;
 
     // if (publicCheckInPerf === true) {
-    await database.ref(`checkIns/${locationId}/${checkInId}`).set({
+    return database.ref(`checkIns/${locationId}/${checkInId}`).set({
       id: checkInId,
       locationId,
       locationName,
       locationCity,
-      userId,
+      userId: auth().currentUser!.uid,
       displayName: displayName ? displayName : '',
       profilePicture: profilePictureURL ? profilePictureURL : profilePicturePlaceholderURL,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
