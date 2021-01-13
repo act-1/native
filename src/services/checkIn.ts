@@ -6,7 +6,7 @@ let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.c
 
 // TODO: Set as a default
 if (__DEV__) {
-  database = firebase.app().database('http://localhost:9000/?ns=act1co');
+  // database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
 
 const profilePicturePlaceholderURL =
