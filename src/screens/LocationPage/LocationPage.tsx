@@ -106,7 +106,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     return (
       <Box justifyContent="center" alignItems="center" flex={1}>
         <ActivityIndicator size="small" color="grey" />
-        <Text>טוענת..</Text>
+        <Text variant="text">טוענת..</Text>
       </Box>
     );
   }
