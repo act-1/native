@@ -128,7 +128,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Box>
 
               <MapView
-                style={{ height: 175, marginHorizontal: -12 }}
+                style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
                 maxZoomLevel={16}
                 minZoomLevel={14}
                 mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
@@ -146,7 +146,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               <HTML
                 html={event.content}
                 tagsStyles={{
-                  p: { textAlign: 'left', marginBottom: 12, fontSize: 15, fontFamily: 'AtlasDL3.1AAA-Regular' },
+                  p: { textAlign: 'left', marginBottom: 12, fontSize: 15, fontFamily: 'AtlasDL3.1AAA-Regular', color: '#fff' },
                   div: { textAlign: 'left', fontFamily: 'AtlasDL3.1AAA-Regular', fontSize: 15 },
                 }}
               />
