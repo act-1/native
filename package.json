@@ -36,6 +36,8 @@
     "date-fns": "^2.16.1",
     "geofirestore": "^4.4.1",
     "hermes-engine": "0.5.2-rc1",
+    "lottie-ios": "3.1.8",
+    "lottie-react-native": "^3.5.0",
     "mobx": "^6.0.4",
     "mobx-react-lite": "^3.1.6",
     "react": "16.13.1",

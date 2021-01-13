@@ -68,3 +68,12 @@ export async function unlikePost(postId: string): Promise<{ updated: boolean; ac
     throw err;
   }
 }
+
+export async function updateCheckInCount(): Promise<{ updated: boolean; action: string }> {
+  try {
+    const result = await functions().httpsCallable('updateCheckInCountManually')();
+    return result.data;
+  } catch (err) {
+    throw err;
+  }
+}

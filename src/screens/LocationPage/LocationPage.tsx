@@ -16,6 +16,7 @@ import SheetSignUp from '../SignUp/SheetSignUp';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import LocationProfilePictures from './LocationProfilePictures';
 import CheckInService from '@services/checkIn';
+import { updateCheckInCount } from '@services/feed';
 import mapStyle from '@utils/mapStyle.json';
 
 firebase.app().database().setLoggingEnabled(true);
@@ -23,7 +24,7 @@ let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.c
 
 // TODO: Set as a default
 if (__DEV__) {
-  // database = firebase.app().database('http://localhost:9000/?ns=act1co');
+  database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
@@ -146,42 +147,32 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           </Box>
 
           <LocationProfilePictures locationId={location.id} style={{ marginBottom: 18 }} />
-          {userStore.user.isAnonymous && (
-            <RoundedButton
-              text="הצטרפות לרשימה"
-              onPress={handlePresentModalPress}
-              color="blue"
-              size="small"
-              textStyle={{ fontSize: 14 }}
-            />
-          )}
 
           <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
 
-          <Box justifyContent="center" alignItems="center" height={110}>
-            <Text variant="text" textAlign="center" fontWeight="700" lineHeight={21.5} marginBottom="xm">
-              רוצים לצרף את תמונתכם לרשימת המפגינים.ות במצפור שלום?
-            </Text>
-            <RoundedButton text="הצטרפות לרשימת המפגינים" onPress={() => null} color="blue" />
-          </Box>
-          {/* <RoundedButton
+          {userStore.user.isAnonymous && (
+            <Box justifyContent="center" alignItems="center" height={110}>
+              <Text
+                variant="text"
+                style={{ color: '#FFC000' }}
+                textAlign="center"
+                fontWeight="700"
+                lineHeight={21.5}
+                paddingHorizontal="s"
+                marginBottom="xm"
+              >
+                רוצים לצרף את תמונתכם לרשימת המפגינים.ות ב{location.name}?
+              </Text>
+              <RoundedButton text="הצטרפות לרשימה" onPress={handlePresentModalPress} color="yellow" />
+            </Box>
+          )}
+
+          <RoundedButton
             text="add checkin"
-            onPress={() => {
-              CheckInService.publicCheckIn({
-                checkInInfo: {
-                  id: '59595959',
-                  locationId: 'nayot-junction-jerusalem',
-                  locationName: '',
-                  locationCity: '',
-                  userId: '',
-                  expireAt: new Date(),
-                },
-                displayName: 'גיא טפר',
-                profilePictureURL:
-                  'https://scontent.ftlv15-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=dk56_uIJzVAAX_bjegq&_nc_ht=scontent.ftlv15-1.fna&oh=3bd791e62fe014c932bb4fade1f8fa05&oe=60231FFF',
-              });
+            onPress={async () => {
+              await updateCheckInCount();
             }}
-          /> */}
+          />
 
           <BottomSheetModal
             ref={bottomSheetModalRef}
