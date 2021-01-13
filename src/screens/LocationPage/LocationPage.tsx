@@ -167,13 +167,6 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             </Box>
           )}
 
-          <RoundedButton
-            text="add checkin"
-            onPress={async () => {
-              await updateCheckInCount();
-            }}
-          />
-
           <BottomSheetModal
             ref={bottomSheetModalRef}
             index={1}
