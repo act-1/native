@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Image, TextInput, StyleSheet } from 'react-native';
+import { Image, TextInput, StyleSheet, Alert } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 import { useNavigation } from '@react-navigation/native';
