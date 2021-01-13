@@ -34,12 +34,12 @@ function SignUpForm() {
       setLoading(true);
       await updateUserDisplayName(displayName);
       analytics().logEvent('sign_up_form_submitted');
-      setLoading(false);
 
       // Add public check in
       const checkInInfo = userStore.lastCheckIn;
       await CheckInService.publicCheckIn({ checkInInfo, displayName, profilePictureURL });
 
+      setLoading(false);
       navigation.goBack();
     } catch (err) {
       setLoading(false);
