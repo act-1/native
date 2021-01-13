@@ -25,10 +25,12 @@ class RootStore {
 
   async initApp() {
     try {
-      await this.eventStore.getEvents();
-      await this.feedStore.getPosts();
-      await this.userStore.refreshFCMToken();
-      await this.userStore.getUserEvents();
+      await Promise.all([
+        await this.eventStore.getEvents(),
+        await this.feedStore.getPosts(),
+        await this.userStore.refreshFCMToken(),
+        await this.userStore.getUserEvents(),
+      ]);
       return true;
     } catch (err) {
       throw err;
