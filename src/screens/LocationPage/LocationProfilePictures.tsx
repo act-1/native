@@ -32,12 +32,7 @@ function LocationProfilePictures({ locationId, style }: { locationId: string; st
 
     checkIns.on('child_added', (snapshot) => {
       const checkIn = snapshot.val();
-      const currentCarouselIndex = carousel!.current!.currentIndex;
-      setPublicCheckIns((prevState) => [
-        ...prevState.slice(0, currentCarouselIndex),
-        checkIn,
-        ...prevState.slice(currentCarouselIndex),
-      ]);
+      setPublicCheckIns((prevState) => [...prevState, checkIn]);
     });
 
     return () => {
