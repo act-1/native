@@ -77,8 +77,8 @@ type PublicCheckInProps = {
 };
 
 async function publicCheckIn({ checkInInfo, displayName, profilePictureURL }: PublicCheckInProps) {
-  const { userId, locationId, locationName, locationCity, id: checkInId, eventId, expireAt } = checkInInfo;
 
+  const { locationId, locationName, locationCity, id: checkInId, eventId, expireAt } = checkInInfo;
   try {
     // Get user public check in perferences
     // const userDoc = await firestore().collection('users').doc(userId).get();
