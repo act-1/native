@@ -14,7 +14,7 @@ function AttendingModal() {
     const authorizationStatus = await messaging().requestPermission();
 
     if (authorizationStatus) {
-      analytics().logEvent('event_notification_modal_permission_received', { authorizationStatus });
+      analytics().logEvent('event_notification_permission_received', { authorizationStatus });
       modalfy().closeModal('AttendingModal');
     }
   };
@@ -44,7 +44,7 @@ function AttendingModal() {
         text="הפעלת התראות"
         color="yellow"
         onPress={() => {
-          analytics().logEvent('event_notification_modal_permission_click');
+          analytics().logEvent('notification_modal_permission_click');
           notificationPermissionsRequest();
         }}
       />
@@ -55,7 +55,7 @@ function AttendingModal() {
         text="לא עכשיו"
         color="porcelain"
         onPress={() => {
-          analytics().logEvent('event_notification_modal_cancel_click');
+          analytics().logEvent('notification_modal_cancel_click');
           modalfy().closeModal('AttendingModal');
         }}
       />

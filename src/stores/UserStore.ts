@@ -19,6 +19,7 @@ class UserStore {
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
   lastCheckIn: CheckInParams | null = null;
+  userId: string | null = null;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -28,6 +29,7 @@ class UserStore {
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user) {
+        this.userId = user.uid;
         crashlytics().setUserId(user.uid);
 
         // TODO: Extract to function

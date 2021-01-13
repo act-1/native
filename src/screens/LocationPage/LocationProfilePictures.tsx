@@ -73,7 +73,7 @@ function LocationProfilePictures({ locationId, style }: { locationId: string; st
           style={{ height: 100, marginTop: 6, marginBottom: 16 }}
         />
         <Text variant="text" textAlign="center" style={{ color: '#fff' }} marginBottom="xm" paddingHorizontal="m">
-          רשימת המפגינים הפומבית ריקה.
+          אף אחד עדיין לא הצטרף לרשימת המפגינים.
         </Text>
       </Box>
     );
