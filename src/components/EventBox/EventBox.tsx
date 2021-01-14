@@ -9,12 +9,13 @@ type EventBoxProps = {
   title: string;
   startDate: Date;
   locationName: string;
+  city: string;
   thumbnail: URL;
   variant?: 'thumbBox' | 'listBox';
   onPress: () => void;
 };
 
-function EventBox({ title, startDate, locationName, thumbnail, variant = 'listBox', onPress }: EventBoxProps) {
+function EventBox({ title, startDate, locationName, city, thumbnail, variant = 'listBox', onPress }: EventBoxProps) {
   const time = format(startDate, 'HH:mm');
   const localDay = formatLocalDay(startDate);
 
@@ -36,7 +37,7 @@ function EventBox({ title, startDate, locationName, thumbnail, variant = 'listBo
           {title}
         </Text>
         <Text variant="boxSubtitle" style={styles.textRTL}>
-          {locationName}
+          {locationName}, {city}
         </Text>
       </Box>
     </Pressable>

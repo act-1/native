@@ -5,6 +5,7 @@ export type IEvent = {
   title: string;
   locationId: string;
   locationName: string;
+  city: string;
   startDate: Date;
   endDate: Date;
   thumbnail: URL;

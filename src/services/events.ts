@@ -24,6 +24,7 @@ export async function getEventList(): Promise<IEvent[]> {
       title: doc.title,
       locationId: doc.locationId,
       locationName: doc.locationName,
+      city: doc.city,
       thumbnail: new URL(doc.thumbnail),
       content: doc.content,
       organizers: doc.organizers,

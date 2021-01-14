@@ -124,7 +124,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
               <Box height={50} justifyContent="space-between" marginBottom="xm">
                 <EventPageDetail text={`${upcomingDate}, ${shortDate} בשעה ${eventTime}`} iconName="clock" />
-                <EventPageDetail text={event.locationName} iconName="map-pin" />
+                <EventPageDetail text={`${event.locationName}, ${event.city}`} iconName="map-pin" />
               </Box>
 
               <MapView
