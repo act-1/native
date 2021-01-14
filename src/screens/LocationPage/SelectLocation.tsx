@@ -73,29 +73,20 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
       <Box alignItems="center" justifyContent="center" marginTop="xl">
         <Image source={require('@assets/illustrations/power-deluxe.png')} style={{ marginBottom: 16 }} />
-        <Text variant="extraLargeTitle" textAlign="center" color="lightText" marginBottom="s">
-          יצאתן להפגין? עשו צ׳ק אין!
-        </Text>
-        <Text variant="text" fontWeight={'400'} textAlign="center" color="lightText" marginBottom="xm">
-          יחד נראה לכל הארץ כמה המחאה שלנו גדולה.
+        <Text variant="extraLargeTitle" textAlign="center" color="lightText" marginBottom="xs">
+          יוצאים להפגין. ככה זה מתחיל.
         </Text>
 
         {locationStore.nearbyLocations.length === 0 ? (
           <LocationPermissionMessage />
         ) : (
           <Box marginTop="m" width="100%">
+            <Text variant="text" fontWeight={'400'} textAlign="center" color="lightText" marginBottom="xm">
+              איפה אתם עכשיו?
+            </Text>
             {locationStore.nearbyLocations.map((location: any) => {
               if (location.type === 'event') {
-                return (
-                  <EventBox
-                    key={location.locationId}
-                    startDate={location.startDate}
-                    locationName={location.locationName}
-                    title={location.title}
-                    thumbnail={new URL(location.thumbnail)}
-                    onPress={() => onLocationPress({ ...location })}
-                  />
-                );
+                return <EventBox key={location.locationId} {...location} onPress={() => onLocationPress({ ...location })} />;
               } else {
                 return (
                   <LocationBox

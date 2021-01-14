@@ -28,7 +28,7 @@ function EventBox({ title, startDate, locationName, city, thumbnail, variant = '
       ]}
       onPress={onPress}
     >
-      <FastImage style={imageStyle[variant]} source={{ uri: thumbnail.href }} />
+      <FastImage style={imageStyle[variant]} source={{ uri: thumbnail.href || thumbnail }} />
       <Box alignItems="flex-start" flex={1} style={eventInfo[variant]}>
         <Text variant="boxInfo" style={styles.textRTL}>
           {localDay} בשעה {time}

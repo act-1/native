@@ -89,10 +89,10 @@ export async function fetchNearbyEventsAndLocations({ position }: NearbyLocation
         const twoHoursBeforeEvent = new Date(new Date(event.startDate).setHours(event.startDate.getHours() - 2)); // So events will show up 2 hours from their start;
         return now > twoHoursBeforeEvent;
       });
-    const eventIds = eventsData.map((event: IEvent) => event.locationId);
+    const eventLocationIds = eventsData.map((event: IEvent) => event.locationId);
 
     // Filter locations that has an ongoing event
-    const filteredLocation = locationsData.filter((location) => !eventIds.includes(location.id));
+    const filteredLocation = locationsData.filter((location) => !eventLocationIds.includes(location.id));
     const locationsAndEventsData = [...eventsData, ...filteredLocation];
 
     return locationsAndEventsData;
