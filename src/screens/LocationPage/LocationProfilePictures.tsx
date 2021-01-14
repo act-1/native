@@ -1,47 +1,104 @@
-import React from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Dimensions, View, ActivityIndicator, StyleSheet, ViewStyle } from 'react-native';
+import { firebase } from '@react-native-firebase/database';
 import FastImage from 'react-native-fast-image';
 import { Box, Text } from '../../components';
-import Swiper from 'react-native-swiper';
+import Carousel from 'react-native-snap-carousel';
+import LottieView from 'lottie-react-native';
+import { useStore } from '../../stores';
 
-const imageUrl =
-  'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F';
-const imageUrl2 =
-  'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/121625459_10158626258252403_3420718991340997508_n.jpg?_nc_cat=109&ccb=2&_nc_sid=09cbfe&_nc_ohc=dueHouhiukIAX_9Kyd_&_nc_ht=scontent-arn2-1.xx&oh=5232e56d892e3a59dab088f6bdca1e9b&oe=601F8402';
-const imageUrl3 =
-  'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/120761421_1034916866946599_3790304360353335176_o.jpg?_nc_cat=106&ccb=2&_nc_sid=09cbfe&_nc_ohc=LEZICWsio_8AX_ZbAXN&_nc_ht=scontent-arn2-1.xx&oh=a4d8f08cca6e829469aa923e857b2c93&oe=6021A54A';
-const imageUrl4 = 'https://pbs.twimg.com/profile_images/1264796012561993729/a4udzU9p_400x400.jpg';
+firebase.app().database().setLoggingEnabled(true);
+let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
 
-function LocationProfilePictures({ style }: { style: ViewStyle }) {
+// TODO: Set as a default
+if (__DEV__) {
+  // database = firebase.app().database('http://localhost:9000/?ns=act1co');
+}
+
+const deviceWidth = Dimensions.get('window').width;
+
+function LocationProfilePictures({ locationId, style }: { locationId: string; style?: ViewStyle }) {
+  const { userStore } = useStore();
+  const [isLoading, setIsLoading] = useState(true);
+  const [publicCheckIns, setPublicCheckIns] = useState<PublicCheckInParams[]>([]);
+  const carouselRef = useRef<Carousel<PublicCheckInParams>>(null);
+  // const [currentCheckInIndex, setCheckInIndex] = useState(0);
+
+  // Subscribe to location count & public check ins
+  useEffect(() => {
+    // TODO: Filter by createdAt property
+    const checkIns = database.ref(`/checkIns/${locationId}`).orderByChild('isActive').equalTo(true);
+
+    checkIns.once('value', () => {
+      setIsLoading(false);
+    });
+
+    checkIns.on('child_added', (snapshot) => {
+      const checkIn = snapshot.val();
+      setPublicCheckIns((prevState) => {
+        if (checkIn.userId === userStore.user.uid && carouselRef?.current) {
+          // Changing to previous carousel item, so the profile picture will have enough time to load,
+          // and to prevent cases when the user will miss seeing their profile picture showing up initially.
+          carouselRef.current.snapToItem(prevState.length - 1, false);
+        }
+
+        return [...prevState, checkIn];
+      });
+
+      console.log(userStore.user.uid, checkIn.userId);
+    });
+
+    return () => {
+      checkIns.off();
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locationId]);
+
+  if (isLoading) {
+    return (
+      <Box justifyContent="center" alignItems="center" height={110} style={style}>
+        <ActivityIndicator size="small" color="grey" />
+      </Box>
+    );
+  }
+
+  if (publicCheckIns.length === 0) {
+    return (
+      <Box justifyContent="center" alignItems="center" height={110} style={style}>
+        <LottieView
+          source={require('@assets/wave-animation.json')}
+          autoPlay
+          loop
+          style={{ height: 100, marginTop: 6, marginBottom: 16 }}
+        />
+        <Text variant="text" textAlign="center" style={{ color: '#fff' }} marginBottom="xm" paddingHorizontal="m">
+          אף אחד עדיין לא הצטרף לרשימת המפגינים.
+        </Text>
+      </Box>
+    );
+  }
+
   return (
     <View style={[style, { width: '100%' }]}>
       <Box height={110}>
-        <Swiper showsPagination={false} autoplay={true} horizontal={true} scrollEnabled={false}>
-          <Box alignItems="center" justifyContent="center">
-            <Box paddingTop="m" justifyContent="center" alignItems="center">
-              <FastImage source={{ uri: imageUrl }} style={styles.profilePic} />
-              <Text color="primaryText">גיא טפר</Text>
+        <Carousel
+          ref={carouselRef}
+          data={publicCheckIns}
+          autoplay={true}
+          renderItem={({ item: checkIn }: { item: PublicCheckInParams }) => (
+            <Box alignItems="center" justifyContent="center" key={checkIn.id}>
+              <Box paddingTop="m" justifyContent="center" alignItems="center">
+                <FastImage source={{ uri: checkIn.profilePicture }} style={styles.profilePic} />
+                <Text color="primaryText">{checkIn.displayName}</Text>
+              </Box>
             </Box>
-          </Box>
-          <Box alignItems="center" justifyContent="center">
-            <Box paddingTop="m" justifyContent="center" alignItems="center">
-              <FastImage source={{ uri: imageUrl2 }} style={styles.profilePic} />
-              <Text color="primaryText">חן יצחקי</Text>
-            </Box>
-          </Box>
-          <Box alignItems="center" justifyContent="center">
-            <Box paddingTop="m" justifyContent="center" alignItems="center">
-              <FastImage source={{ uri: imageUrl3 }} style={styles.profilePic} />
-              <Text color="primaryText">שושקה</Text>
-            </Box>
-          </Box>
-          <Box alignItems="center" justifyContent="center">
-            <Box paddingTop="m" justifyContent="center" alignItems="center">
-              <FastImage source={{ uri: imageUrl4 }} style={styles.profilePic} />
-              <Text color="primaryText">גונן בן יצחק</Text>
-            </Box>
-          </Box>
-        </Swiper>
+          )}
+          sliderWidth={deviceWidth}
+          itemWidth={deviceWidth}
+          scrollEnabled={false}
+          loop={true}
+        />
       </Box>
     </View>
   );
@@ -59,56 +116,3 @@ const styles = StyleSheet.create({
     borderColor: 'white',
   },
 });
-
-/* <Box flexDirection="row" justifyContent="center" marginBottom="xm">
-        <FastImage
-          source={{
-            uri:
-              'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
-          }}
-          style={styles.profilePic}
-        />
-        <FastImage
-          source={{
-            uri:
-              'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
-          }}
-          style={styles.profilePic}
-        />
-        <FastImage
-          source={{
-            uri:
-              'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
-          }}
-          style={styles.profilePic}
-        />
-        <FastImage
-          source={{
-            uri:
-              'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
-          }}
-          style={styles.profilePic}
-        />
-        <FastImage
-          source={{
-            uri:
-              'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
-          }}
-          style={styles.profilePic}
-        />
-        <FastImage
-          source={{
-            uri:
-              'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
-          }}
-          style={styles.profilePic}
-        />
-        <FastImage
-          source={{
-            uri:
-              'https://scontent.ftlv16-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=6LuPPfvXqo8AX9ci1Nn&_nc_ht=scontent.ftlv16-1.fna&oh=361688c0db337630e209b75f4cd1193d&oe=601F2B7F',
-          }}
-          style={styles.profilePic}
-        />
-        <Box style={styles.profilePic} backgroundColor="subText" />
-      </Box> */

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   counterStyle: {
-    fontFamily: 'Rubik-Bold',
+    fontFamily: 'AtlasDL3.1AAA-Bold',
     fontSize: 16,
     color: '#8b8b8b',
   },

@@ -16,6 +16,7 @@ import SheetSignUp from '../SignUp/SheetSignUp';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import LocationProfilePictures from './LocationProfilePictures';
 import CheckInService from '@services/checkIn';
+import { updateCheckInCount } from '@services/feed';
 import mapStyle from '@utils/mapStyle.json';
 
 firebase.app().database().setLoggingEnabled(true);
@@ -42,20 +43,6 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
   const dismissModal = () => bottomSheetModalRef!.current!.dismiss();
 
-  const addPublicCheckIn = async () => {
-    try {
-      const checkInInfo = userStore.lastCheckIn;
-
-      if (checkInInfo !== null) {
-        await CheckInService.publicCheckIn(checkInInfo);
-      } else {
-        throw new Error('No check in info present in userStore for public check in.');
-      }
-    } catch (err) {
-      crashlytics().recordError(err);
-    }
-  };
-
   // const removeCheckIn = async () => {
   //   try {
   //     if (location !== null && userStore.lastCheckIn !== null) {
@@ -71,6 +58,8 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
   //   }
   // };
 
+  // Retrieve location information.
+  // First try to hit the cache - then fetch from firestore.
   useEffect(() => {
     let cachedLocation: string | null;
     async function getLocationData(locationId: string) {
@@ -95,6 +84,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     getLocationData(route.params.locationId);
   }, [route.params.locationId]);
 
+  // Subscribe to location count
   useEffect(() => {
     const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
 
@@ -116,7 +106,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     return (
       <Box justifyContent="center" alignItems="center" flex={1}>
         <ActivityIndicator size="small" color="grey" />
-        <Text>טוענת..</Text>
+        <Text variant="text">טוענת..</Text>
       </Box>
     );
   }
@@ -140,7 +130,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           <Box shadowOpacity={0.5} shadowOffset={{ width: 0, height: 0 }} shadowRadius={3} elevation={3}>
             <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
           </Box>
-          <Text variant="extraLargeTitle" marginBottom="xs">
+          <Text variant="extraLargeTitle" textAlign="center" marginBottom="xs">
             {location.name}
           </Text>
           <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.9} marginBottom="m">
@@ -156,20 +146,26 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             </Text>
           </Box>
 
-          <LocationProfilePictures style={{ marginBottom: 18 }} />
-          {userStore.user.isAnonymous && (
-            <RoundedButton
-              text="הצטרפות לרשימה"
-              onPress={handlePresentModalPress}
-              color="blue"
-              size="small"
-              textStyle={{ fontSize: 14 }}
-            />
-          )}
+          <LocationProfilePictures locationId={location.id} style={{ marginBottom: 18 }} />
 
           <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
 
-          {/* <RoundedButton text="delete checkin" onPress={removeCheckIn} /> */}
+          {userStore.user.isAnonymous && (
+            <Box justifyContent="center" alignItems="center" height={110}>
+              <Text
+                variant="text"
+                style={{ color: '#FFC000' }}
+                textAlign="center"
+                fontWeight="700"
+                lineHeight={21.5}
+                paddingHorizontal="s"
+                marginBottom="xm"
+              >
+                רוצים לצרף את תמונתכם לרשימת המפגינים.ות ב{location.name}?
+              </Text>
+              <RoundedButton text="הצטרפות לרשימה" onPress={handlePresentModalPress} color="yellow" />
+            </Box>
+          )}
 
           <BottomSheetModal
             ref={bottomSheetModalRef}
@@ -197,7 +193,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   counterText: {
-    fontFamily: 'Rubik-Medium',
+    fontFamily: 'AtlasDL3.1AAA-Medium',
     fontSize: 26,
     color: '#f0f2f5',
     textAlign: 'left',

@@ -24,7 +24,7 @@ function LiveCheckIns() {
           עכשיו בהפגנה
         </Text>
         <Box backgroundColor="important" paddingHorizontal="xm" paddingVertical="xs" borderRadius={25}>
-          <Text color="mainBackground" fontFamily="Rubik-Medium">
+          <Text color="mainBackground" fontFamily="AtlasDL3.1AAA-Medium">
             LIVE
           </Text>
         </Box>

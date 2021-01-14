@@ -47,8 +47,7 @@ export async function updateUserDisplayName(displayName: string) {
     }
 
     // Update firebase user display name
-    user.updateProfile({ displayName });
-
+    await user.updateProfile({ displayName });
     // Update firestore user document
     const userRef = firestore().collection('users').doc(user.uid);
     return userRef.update({ displayName });

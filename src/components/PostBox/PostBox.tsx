@@ -51,7 +51,7 @@ function PostBox(props: PostBoxProps) {
         <Box marginTop="m" style={{ marginLeft: 10 }}>
           <Box flexDirection="row" marginBottom="xxs">
             <Box flexDirection="row" alignItems="center">
-              <Text variant="boxTitle" fontFamily="Rubik-Medium" fontSize={15.5} marginRight="xs">
+              <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Bold" fontSize={15.5} marginRight="xs">
                 {authorName}
               </Text>
               <Text variant="boxSubtitle" fontSize={fontSize}>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   likeCount: {
     color: '#999999',
-    fontFamily: 'Rubik-Medium',
+    fontFamily: 'AtlasDL3.1AAA-Medium',
     fontSize: 12,
   },
 });

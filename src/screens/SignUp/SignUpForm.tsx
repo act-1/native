@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Image, TextInput, StyleSheet } from 'react-native';
+import { Image, TextInput, StyleSheet, Alert } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 import { useNavigation } from '@react-navigation/native';
@@ -34,12 +34,12 @@ function SignUpForm() {
       setLoading(true);
       await updateUserDisplayName(displayName);
       analytics().logEvent('sign_up_form_submitted');
-      setLoading(false);
 
       // Add public check in
       const checkInInfo = userStore.lastCheckIn;
       await CheckInService.publicCheckIn({ checkInInfo, displayName, profilePictureURL });
 
+      setLoading(false);
       navigation.goBack();
     } catch (err) {
       setLoading(false);

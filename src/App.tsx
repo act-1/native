@@ -40,13 +40,13 @@ function App() {
         console.error(err);
       }
     };
-
-    if (store.userStore.user?.uid) {
+    console.log(store.userStore.user);
+    if (store.userStore.userId) {
       initApp();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store.userStore.user]);
+  }, [store.userStore.userId]);
 
   return (
     <SafeAreaProvider>

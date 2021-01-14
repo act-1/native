@@ -13,7 +13,7 @@ function SignUpNavigator() {
         headerShown: true,
         headerTitleStyle: {
           fontSize: 22,
-          fontFamily: 'Rubik-Medium',
+          fontFamily: 'AtlasDL3.1AAA-Medium',
           color: '#EC534B',
           marginBottom: Platform.OS === 'ios' ? 11 : 2,
         },

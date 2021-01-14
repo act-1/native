@@ -9,6 +9,9 @@ if (__DEV__) {
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
 
+const profilePicturePlaceholderURL =
+  'https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/profilePicturePlaceholder.png?alt=media&token=06884d2b-b32d-4799-b906-280a7f52ba43';
+
 export async function createUserCheckIn({
   locationId,
   locationName,
@@ -58,7 +61,7 @@ export async function createUserCheckIn({
     // // check if user is not anonymous
     if (auth().currentUser?.isAnonymous === false) {
       const { displayName, photoURL } = auth().currentUser!;
-      publicCheckIn({ checkInInfo: checkInData, displayName, profilePictureURL: photoURL });
+      await publicCheckIn({ checkInInfo: checkInData, displayName, profilePictureURL: photoURL });
     }
 
     return { ok: true, checkIn: { ...checkInData, createdAt: new Date(), expireAt, id: checkInDocument.id } };
@@ -74,21 +77,23 @@ type PublicCheckInProps = {
 };
 
 async function publicCheckIn({ checkInInfo, displayName, profilePictureURL }: PublicCheckInProps) {
-  const { userId, locationId, locationName, locationCity, id: checkInId, eventId, expireAt } = checkInInfo;
 
+  const { locationId, locationName, locationCity, id: checkInId, eventId, expireAt } = checkInInfo;
   try {
     // Get user public check in perferences
     // const userDoc = await firestore().collection('users').doc(userId).get();
     // const publicCheckInPerf = userDoc.data().publicCheckIn;
 
     // if (publicCheckInPerf === true) {
-    await database.ref(`checkIns/${locationId}/${checkInId}`).set({
+    return database.ref(`checkIns/${locationId}/${checkInId}`).set({
+      id: checkInId,
       locationId,
       locationName,
       locationCity,
-      userId,
+      userId: auth().currentUser!.uid,
       displayName: displayName ? displayName : '',
-      profilePicture: profilePictureURL ? profilePictureURL : '',
+      profilePicture: profilePictureURL ? profilePictureURL : profilePicturePlaceholderURL,
+      createdAt: firebase.database.ServerValue.TIMESTAMP,
       expireAt,
       eventId: eventId || null,
       isActive: true,
