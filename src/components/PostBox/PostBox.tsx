@@ -63,6 +63,7 @@ function PostBox(props: PostBoxProps) {
             <Box paddingRight="xxl" marginBottom="s">
               <HTML
                 html={content}
+                textSelectable={true}
                 tagsStyles={{
                   p: { textAlign: 'left', fontSize, color: '#fff' },
                 }}
