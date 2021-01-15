@@ -84,7 +84,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
       {event === undefined ? (
         <Box justifyContent="center" alignItems="center">
           <ActivityIndicator size="small" />
-          <Text>טוענת..</Text>
+          <Text>טוענת...</Text>
         </Box>
       ) : (
         <StickyHeaderScrollView goBack={() => navigation.goBack()} headerTitle={event.title} thumbnail={event.thumbnail}>
