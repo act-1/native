@@ -15,7 +15,7 @@ export function updateArrayItem(array: any[], index: number, updatedItem: any) {
   return updatedArray;
 }
 
-function updateArrayByObjectId(arr, id, updatedFields) {
+export function updateArrayByObjectId(arr, id, updatedFields) {
   const index = findArrayIndexById(arr, id);
 
   const obj = arr[index];
