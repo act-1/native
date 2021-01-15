@@ -21,7 +21,6 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
   const [event, setEvent] = useState<IEvent>();
   const [isAttending, setAttending] = useState(false);
-  const [attendingRequestInProgress, setAttendingRequestInProgress] = useState(false);
   const { openModal } = useModal();
 
   let eventTime, eventDate, upcomingDate, shortDate;
@@ -32,15 +31,14 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
     shortDate = formatShortDate(event.startDate);
   }
 
-  const attendEvent = async (event: IEvent) => {
+  const attendEvent = async () => {
     try {
-      const { id: eventId, startDate } = event;
-      setAttendingRequestInProgress(true);
+      const { id: eventId, attendingCount, startDate } = event!;
 
       if (!isAttending) {
-        setAttendingRequestInProgress(false);
         setAttending(true);
-        setEvent({ ...event, attendingCount: event.attendingCount + 1 });
+        await eventStore.attendEvent({ eventId, attendingCount, eventDate: startDate });
+
         // Open modal only if need to request notification permissions.
         const modalShown = await AsyncStorage.getItem('event_notification_modal_shown');
         if (Platform.OS === 'ios' && !modalShown) {
@@ -51,18 +49,12 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
             await AsyncStorage.setItem('event_notification_modal_shown', 'true');
           }
         }
-        await eventStore.attendEvent({ eventId, eventDate: startDate, type: 'attend' });
       } else {
-        const { removed } = await eventStore.unattendEvent({ eventId });
-        if (removed) {
-          setAttendingRequestInProgress(false);
-          setAttending(false);
-          setEvent({ ...event, attendingCount: event.attendingCount - 1 });
-        }
+        setAttending(false);
+        await eventStore.unattendEvent({ eventId, attendingCount });
       }
     } catch (err) {
-      setAttendingRequestInProgress(false);
-      crashlytics().setAttribute('eventId', event.id);
+      crashlytics().setAttribute('eventId', event!.id);
       crashlytics().recordError(err);
       console.error(err);
     }
@@ -111,8 +103,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
                 iconName="check"
                 color={isAttending ? 'green' : 'grey'}
                 text={isAttending ? 'אני שם!' : 'אישור הגעה'}
-                loading={attendingRequestInProgress}
-                onPress={() => attendEvent(event)}
+                onPress={attendEvent}
               />
               {/* <CircularButton iconName="share" color="blue" text="הזמנת חברים" /> */}
             </Box>
