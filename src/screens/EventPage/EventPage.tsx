@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, StatusBar, Image, Platform } from 'react-native';
-import { useModal } from 'react-native-modalfy';
-import analytics from '@react-native-firebase/analytics';
-import messaging from '@react-native-firebase/messaging';
+import { ActivityIndicator, StatusBar, Image } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
@@ -15,13 +12,11 @@ import { EventPageDetail, EventPageCounter } from './';
 import { formatShortDate, formatUpcomingDate } from '@utils/date-utils';
 import mapStyle from '@utils/mapStyle.json';
 import { format } from 'date-fns';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
   const [event, setEvent] = useState<IEvent>();
   const [isAttending, setAttending] = useState(false);
-  const { openModal } = useModal();
 
   let eventTime, eventDate, upcomingDate, shortDate;
   if (event) {
@@ -38,17 +33,6 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
       if (!isAttending) {
         setAttending(true);
         await eventStore.attendEvent({ eventId, attendingCount, eventDate: startDate });
-
-        // Open modal only if need to request notification permissions.
-        const modalShown = await AsyncStorage.getItem('event_notification_modal_shown');
-        if (Platform.OS === 'ios' && !modalShown) {
-          const authorizationStatus = await messaging().hasPermission();
-          if (authorizationStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
-            analytics().logEvent('event_notification_modal_shown');
-            openModal('AttendingModal');
-            await AsyncStorage.setItem('event_notification_modal_shown', 'true');
-          }
-        }
       } else {
         setAttending(false);
         await eventStore.unattendEvent({ eventId, attendingCount });
