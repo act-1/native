@@ -25,3 +25,7 @@ type PublicCheckInParams = {
   eventId: string | null;
   isActive: boolean;
 };
+
+type BoardingScreenProps = {
+  nextPage: () => void;
+};
