@@ -8,7 +8,7 @@ function Welcome({ nextPage }: BoardingScreenProps) {
     <Box flex={1} style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}>
       <SafeAreaView />
 
-      <Box flex={1} justifyContent="flex-start" alignItems="center" marginTop="xm" paddingHorizontal="xm">
+      <Box flex={1} justifyContent="flex-start" alignItems="center" marginTop="xm" paddingHorizontal="xl">
         <Text variant="hugeTitle" fontSize={56} fontWeight="900" color="headerTitle" marginTop="xxl" marginBottom="xm">
           ACT1
         </Text>
