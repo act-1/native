@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Image, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
+import { TextInput, StyleSheet } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { Text, Box, EditProfilePicture } from '../../components';
+import { Box, EditProfilePicture } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
@@ -23,7 +23,6 @@ type SignUpFormProps = {
 function SignUpForm({ currentIndex }: SignUpFormProps) {
   const { userStore } = useStore();
   const [isLoading, setLoading] = useState(false);
-  // TODO: Change to production url
   const [displayName, setDisplayName] = useState('');
   const displayNameInput = useRef<TextInput>(null);
 
@@ -88,24 +87,6 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
 export default observer(SignUpForm);
 
 const styles = StyleSheet.create({
-  profilePictureWrapper: {
-    height: 85,
-    width: 85,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 50,
-    backgroundColor: '#292929',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  profilePicture: {
-    height: '100%',
-    width: '100%',
-    borderRadius: 50,
-  },
   textInputStyle: {
     flex: 1,
     textAlign: 'center',
