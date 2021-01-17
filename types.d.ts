@@ -29,3 +29,11 @@ type PublicCheckInParams = {
 type BoardingScreenProps = {
   nextPage: () => void;
 };
+
+type GraphAPIResult = {
+  picture: {
+    data: {
+      url: string;
+    };
+  };
+};

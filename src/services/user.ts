@@ -23,6 +23,11 @@ export async function createUserFCMToken(userId: string, fcmToken: string) {
   }
 }
 
+/**
+ * Update user account information - both the firebase user entity and the firestore document
+ * @param displayName - The user's display name.
+ * @param profilePicture - The profile picture URL.
+ */
 export async function updateUserOnAuth(displayName: string, profilePicture: string) {
   try {
     const user = auth().currentUser;
