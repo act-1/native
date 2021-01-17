@@ -44,6 +44,7 @@ function SignUpForm({ currentIndex }) {
   }, [currentIndex]);
 
   useEffect(() => {
+    console.log(userStore.userData);
     if (userStore.userData && userStore.userData.profilePicture) {
       setProfilePictureURL(userStore.userData.profilePicture);
     }

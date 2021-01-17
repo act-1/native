@@ -6,7 +6,7 @@ import ViewPager from '@react-native-community/viewpager';
 import { Pages } from 'react-native-pages';
 import RoundedButton from '@components/Buttons/RoundedButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Welcome, About, SignUp } from './steps';
+import { Welcome, About, Providers } from './steps';
 import SignUpForm from '../SignUp/SignUpForm';
 import { useStore } from '../../stores';
 
@@ -30,7 +30,7 @@ function Onboarding() {
         <Pages ref={pages} onScrollEnd={onScrollEnd} style={{ flex: 1 }} scrollEnabled={true} indicatorOpacity={0}>
           <Welcome nextPage={nextPage} />
           <About nextPage={nextPage} />
-          <SignUp nextPage={nextPage} />
+          <Providers nextPage={nextPage} />
           <SignUpForm currentIndex={currentIndex} />
         </Pages>
       </ImageBackground>

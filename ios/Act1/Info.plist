@@ -71,7 +71,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>נשתמש במיקום למציאת הפגנות ואירועים באיזורך</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App allows the user to upload their pictures</string>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AtlasDL3.1AAA-Black.ttf</string>

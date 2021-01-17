@@ -1,3 +1,3 @@
 export { default as Welcome } from './Welcome';
 export { default as About } from './About';
-export { default as SignUp } from './SignUp';
+export { default as Providers } from './Providers';

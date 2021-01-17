@@ -4,7 +4,7 @@ import { Box, Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
 import { facebookLogin } from '@services/auth';
 
-function SignUp({ nextPage }: BoardingScreenProps) {
+function Providers({ nextPage }: BoardingScreenProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const facebookSignUp = async () => {
@@ -40,4 +40,4 @@ function SignUp({ nextPage }: BoardingScreenProps) {
   );
 }
 
-export default SignUp;
+export default Providers;
