@@ -11,8 +11,6 @@ import { createUserCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const onAuthStateInitialCall;
-
 class UserStore {
   rootStore: null | rootStore = null;
   userEventIds: string[] = [];
@@ -80,14 +78,6 @@ class UserStore {
       }
     } catch (err) {
       console.log(err);
-    }
-  }
-
-  async signInAnonymously() {
-    try {
-      await auth().signInAnonymously();
-    } catch (err) {
-      console.error(err);
     }
   }
 
