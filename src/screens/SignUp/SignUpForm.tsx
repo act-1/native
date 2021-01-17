@@ -2,22 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Image, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { Text, Box } from '../../components';
+import { Text, Box, EditProfilePicture } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import { updateUserDisplayName } from '@services/user';
-import { uploadProfilePicture } from '@services/storage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CheckInService from '@services/checkIn';
-import ImagePicker from 'react-native-image-crop-picker';
 
 type SignUpFormProps = {
   currentIndex?: number;
 };
-
-const DEFAULT_PROFILE_PICTURE =
-  'https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/profilePicturePlaceholder.png?alt=media&token=06884d2b-b32d-4799-b906-280a7f52ba43';
 
 /**
  * The sign up form can be shown from the onboarding screen, or as a standalone modal.
@@ -28,9 +23,7 @@ const DEFAULT_PROFILE_PICTURE =
 function SignUpForm({ currentIndex }: SignUpFormProps) {
   const { userStore } = useStore();
   const [isLoading, setLoading] = useState(false);
-  const [uploadingProfilePic, setUploadingProfilePic] = useState(false);
   // TODO: Change to production url
-  const [profilePictureURL, setProfilePictureURL] = useState<string>(DEFAULT_PROFILE_PICTURE);
   const [displayName, setDisplayName] = useState('');
   const displayNameInput = useRef<TextInput>(null);
 
@@ -41,13 +34,6 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
       displayNameInput!.current!.focus();
     }
   }, [currentIndex]);
-
-  useEffect(() => {
-    console.log(userStore.userData);
-    if (userStore.userData && userStore.userData.profilePicture) {
-      setProfilePictureURL(userStore.userData.profilePicture);
-    }
-  }, [userStore.userData]);
 
   const onSubmit = async () => {
     try {
@@ -61,21 +47,8 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
       // await CheckInService.publicCheckIn({ checkInInfo, displayName, profilePictureURL });
     } catch (err) {
       setLoading(false);
-      console.log(err);
+      crashlytics().recordError(err);
     }
-  };
-
-  const editProfilePicture = () => {
-    ImagePicker.openPicker({ width: 300, height: 300, cropping: true })
-      .then(async (image) => {
-        setUploadingProfilePic(true);
-        await uploadProfilePicture(image.path);
-        setUploadingProfilePic(false);
-      })
-      .catch((err) => {
-        crashlytics().log('Profile picture upload failed.');
-        crashlytics().recordError(err);
-      });
   };
 
   return (
@@ -85,19 +58,8 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
       style={{ paddingTop: insets.top + 40, backgroundColor: 'rgba(0,0,0,0.85)' }}
       flex={1}
     >
-      <Box alignItems="center" marginBottom="xm">
-        <Box style={styles.profilePictureWrapper} marginBottom="m">
-          {uploadingProfilePic ? (
-            <ActivityIndicator />
-          ) : (
-            <Image source={{ uri: profilePictureURL }} style={styles.profilePicture} />
-          )}
-        </Box>
+      <EditProfilePicture />
 
-        <Text color="link" fontSize={18} fontWeight="500" onPress={editProfilePicture}>
-          שינוי תמונה
-        </Text>
-      </Box>
       <Box
         flexDirection="row"
         alignItems="baseline"
