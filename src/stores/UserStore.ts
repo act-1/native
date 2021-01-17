@@ -40,8 +40,6 @@ class UserStore {
             this.lastCheckIn = lastCheckIn;
           }
         });
-      } else if (!user) {
-        this.signInAnonymously();
       }
     });
   }
