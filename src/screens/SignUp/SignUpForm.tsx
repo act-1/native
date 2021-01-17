@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Image, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
-import auth from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { Text, Box } from '../../components';
@@ -26,7 +25,7 @@ const DEFAULT_PROFILE_PICTURE =
  * In case the form is shown from the onboarding screen, the page `index` prop will be passed to the component,
  * allowing us to focus the text input once the component is shown.
  */
-function SignUpForm({ currentIndex }) {
+function SignUpForm({ currentIndex }: SignUpFormProps) {
   const { userStore } = useStore();
   const [isLoading, setLoading] = useState(false);
   const [uploadingProfilePic, setUploadingProfilePic] = useState(false);
@@ -87,7 +86,7 @@ function SignUpForm({ currentIndex }) {
       flex={1}
     >
       <Box alignItems="center" marginBottom="xm">
-        <Box style={styles.profilePictureWrapper}>
+        <Box style={styles.profilePictureWrapper} marginBottom="m">
           {uploadingProfilePic ? (
             <ActivityIndicator />
           ) : (
@@ -95,8 +94,8 @@ function SignUpForm({ currentIndex }) {
           )}
         </Box>
 
-        <Text color="link" fontSize={18} fontWeight="500" marginTop="xm" onPress={editProfilePicture}>
-          עריכה
+        <Text color="link" fontSize={18} fontWeight="500" onPress={editProfilePicture}>
+          שינוי תמונה
         </Text>
       </Box>
       <Box
