@@ -15,6 +15,8 @@ const palette = {
   orange: '#FFC281',
   orangeDark: '#632700',
 
+  yellow: '#FFCB00',
+
   turquoise: '#76C6CB',
   blue: '#0078F8',
 
@@ -50,6 +52,7 @@ const theme = createTheme({
     lightBorderColor: palette.lightgrey,
     seperator: palette.metal,
     link: palette.blue,
+    yellow: palette.yellow,
   },
   spacing: {
     xxs: 2,
