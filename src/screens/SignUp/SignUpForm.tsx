@@ -32,10 +32,13 @@ function SignUpForm({ currentIndex }) {
   useEffect(() => {
     if (currentIndex === 3) {
       displayNameInput!.current!.focus();
-      const { photoURL } = auth().currentUser!;
 
-      if (photoURL) {
-        setProfilePictureURL(photoURL);
+      if (auth().currentUser) {
+        const { photoURL } = auth().currentUser!;
+
+        if (photoURL) {
+          setProfilePictureURL(photoURL);
+        }
       }
     }
   }, [currentIndex]);
