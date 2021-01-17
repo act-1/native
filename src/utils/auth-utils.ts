@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import { updateUserOnAuth } from '@services/user';
+import { updateUserInfo } from '@services/user';
 
 type GraphAPIResult = {
   picture: {
@@ -61,7 +61,7 @@ export async function facebookLogin() {
     });
 
     const displayName = userCredential?.additionalUserInfo?.profile?.name;
-    await updateUserOnAuth(displayName, pictureUrl);
+    await updateUserInfo(displayName, pictureUrl);
 
     return { ok: true, pictureUrl };
   } catch (err) {

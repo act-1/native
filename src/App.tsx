@@ -40,13 +40,17 @@ function App() {
         console.error(err);
       }
     };
-    console.log(store.userStore.user);
-    if (store.userStore.userId) {
+
+    // Initalize data if the user authenticated.
+    // Otherwise, hide the splash screen to show the onboarding screen.
+    if (store.userStore.user && !store.intializedApp) {
       initApp();
+    } else {
+      RNBootSplash.hide({ fade: true });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store.userStore.userId]);
+  }, [store.userStore.user]);
 
   return (
     <SafeAreaProvider>

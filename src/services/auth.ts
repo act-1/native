@@ -32,11 +32,12 @@ export async function facebookLogin(): Promise<{ ok: boolean; isNewUser: boolean
     const userCredential = await auth().signInWithCredential(facebookCredential);
     const { additionalUserInfo } = userCredential;
 
-    // Check if the account is new, if so - update the account info with the display name & profile picture
-    if (additionalUserInfo && additionalUserInfo.isNewUser) {
-      const pictureUrl = await getFacebookProfilePicture(token);
-      const displayName = additionalUserInfo.profile?.name;
-      await updateUserOnAuth(displayName, pictureUrl);
+    // Check if the account is new, and update the account info with the profile picture (so it'll be displayed in the sign up form)
+    // The firestore account information will be set up through a cloud function authentication trigger.
+    if (additionalUserInfo && !additionalUserInfo.isNewUser) {
+      const photoURL = await getFacebookProfilePicture(token);
+      console.log(photoURL);
+      await auth().currentUser?.updateProfile({ photoURL });
       return { ok: true, isNewUser: true };
     }
 

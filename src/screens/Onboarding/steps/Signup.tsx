@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import { Box, Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
+import { facebookLogin } from '@services/auth';
 
-function Signup() {
+function SignUp({ nextPage }: BoardingScreenProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const facebookSignUp = async () => {
+    try {
+      setIsLoading(true);
+      const result = await facebookLogin();
+      if (result.isNewUser) {
+        setIsLoading(false);
+        nextPage();
+      }
+    } catch (err) {
+      setIsLoading(false);
+      // Send to crashlytics
+    }
+  };
+
   return (
     <Box flex={1} style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}>
       <SafeAreaView />
@@ -16,10 +33,10 @@ function Signup() {
           מתחברים למהפכה.
         </Text>
 
-        <RoundedButton text="התחברות דרך פייסבוק" color="darkBlue" />
+        <RoundedButton text="התחברות דרך פייסבוק" color="darkBlue" onPress={facebookSignUp} />
       </Box>
     </Box>
   );
 }
 
-export default Signup;
+export default SignUp;
