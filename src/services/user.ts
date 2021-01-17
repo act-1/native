@@ -78,3 +78,21 @@ export async function updateUserDisplayName(displayName: string) {
     throw err;
   }
 }
+
+export async function updateUserPicture(pictureUrl: string) {
+  try {
+    const user = auth().currentUser;
+
+    if (!user) {
+      throw new Error('User is not authenticated.');
+    }
+
+    // Update firebase user display name
+    await user.updateProfile({ photoURL: pictureUrl });
+    // Update firestore user document
+    const userRef = firestore().collection('users').doc(user.uid);
+    return userRef.update({ profilePicture: pictureUrl });
+  } catch (err) {
+    throw err;
+  }
+}

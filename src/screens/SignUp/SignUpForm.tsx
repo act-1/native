@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Image, TextInput, StyleSheet } from 'react-native';
+import { Image, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 import { Text, Box } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
-import { updateUserDisplayName } from '@services/user';
+import { updateUserDisplayName, updateUserPicture } from '@services/user';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CheckInService from '@services/checkIn';
 import ImagePicker from 'react-native-image-crop-picker';
+import storage from '@react-native-firebase/storage';
 
 type SignUpFormProps = {
   currentIndex?: number;
@@ -24,6 +25,7 @@ type SignUpFormProps = {
 function SignUpForm({ currentIndex }) {
   const { userStore } = useStore();
   const [isLoading, setLoading] = useState(false);
+  const [uploadingProfilePic, setUploadingProfilePic] = useState(false);
   const [profilePictureURL, setProfilePictureURL] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState('');
   const displayNameInput = useRef<TextInput>(null);
@@ -65,8 +67,13 @@ function SignUpForm({ currentIndex }) {
       width: 300,
       height: 300,
       cropping: true,
-    }).then((image) => {
-      console.log(image);
+    }).then(async (image) => {
+      setUploadingProfilePic(true);
+      const reference = storage().ref(`/profilePictures/${auth().currentUser!.uid}/new.png`);
+      await reference.putFile(image.path);
+      const pictureUrl = await reference.getDownloadURL();
+      await updateUserPicture(pictureUrl);
+      setUploadingProfilePic(false);
     });
   };
 
@@ -83,7 +90,9 @@ function SignUpForm({ currentIndex }) {
       flex={1}
     >
       <Box alignItems="center" marginBottom="xm">
-        <Image source={profilePictureSource} style={styles.profilePicture} />
+        <Box style={styles.profilePictureWrapper}>
+          {uploadingProfilePic ? <ActivityIndicator /> : <Image source={profilePictureSource} style={styles.profilePicture} />}
+        </Box>
 
         <Text color="link" fontSize={18} fontWeight="500" marginTop="xm" onPress={editProfilePicture}>
           עריכה
@@ -117,17 +126,23 @@ function SignUpForm({ currentIndex }) {
 export default observer(SignUpForm);
 
 const styles = StyleSheet.create({
-  profilePicture: {
+  profilePictureWrapper: {
     height: 85,
     width: 85,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 50,
+    backgroundColor: '#292929',
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
+    shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.2,
-    shadowRadius: 1.41,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  profilePicture: {
+    height: '100%',
+    width: '100%',
+    borderRadius: 50,
   },
   textInputStyle: {
     flex: 1,
