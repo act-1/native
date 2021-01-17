@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Image, TextInput, StyleSheet } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
-import { Box } from '../../components';
+import { Text, Box } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import { updateUserDisplayName } from '@services/user';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CheckInService from '@services/checkIn';
+import ImagePicker from 'react-native-image-crop-picker';
 
 type SignUpFormProps = {
   currentIndex?: number;
@@ -59,6 +60,16 @@ function SignUpForm({ currentIndex }) {
     }
   };
 
+  const editProfilePicture = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 300,
+      cropping: true,
+    }).then((image) => {
+      console.log(image);
+    });
+  };
+
   let profilePictureSource = require('../../assets/icons/account.png');
   if (profilePictureURL) {
     profilePictureSource = { uri: profilePictureURL };
@@ -74,9 +85,9 @@ function SignUpForm({ currentIndex }) {
       <Box alignItems="center" marginBottom="xm">
         <Image source={profilePictureSource} style={styles.profilePicture} />
 
-        {/* <Text variant="text" color="" fontWeight="100" marginTop="s">
+        <Text color="link" fontSize={18} fontWeight="500" marginTop="xm" onPress={editProfilePicture}>
           עריכה
-        </Text> */}
+        </Text>
       </Box>
       <Box
         flexDirection="row"

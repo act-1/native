@@ -50,6 +50,7 @@
     "react-native-geolocation-service": "^5.1.1",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-haptic-feedback": "^1.11.0",
+    "react-native-image-crop-picker": "^0.35.2",
     "react-native-maps": "0.27.1",
     "react-native-modalfy": "^2.1.0",
     "react-native-pages": "^0.9.0",
