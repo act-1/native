@@ -2,19 +2,23 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Image, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
+import crashlytics from '@react-native-firebase/crashlytics';
 import { Text, Box } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
-import { updateUserDisplayName, updateUserPicture } from '@services/user';
+import { updateUserDisplayName } from '@services/user';
+import { uploadProfilePicture } from '@services/storage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CheckInService from '@services/checkIn';
 import ImagePicker from 'react-native-image-crop-picker';
-import storage from '@react-native-firebase/storage';
 
 type SignUpFormProps = {
   currentIndex?: number;
 };
+
+const DEFAULT_PROFILE_PICTURE =
+  'https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/profilePicturePlaceholder.png?alt=media&token=06884d2b-b32d-4799-b906-280a7f52ba43';
 
 /**
  * The sign up form can be shown from the onboarding screen, or as a standalone modal.
@@ -26,7 +30,8 @@ function SignUpForm({ currentIndex }) {
   const { userStore } = useStore();
   const [isLoading, setLoading] = useState(false);
   const [uploadingProfilePic, setUploadingProfilePic] = useState(false);
-  const [profilePictureURL, setProfilePictureURL] = useState<string | null>(null);
+  // TODO: Change to production url
+  const [profilePictureURL, setProfilePictureURL] = useState<string>(DEFAULT_PROFILE_PICTURE);
   const [displayName, setDisplayName] = useState('');
   const displayNameInput = useRef<TextInput>(null);
 
@@ -35,16 +40,14 @@ function SignUpForm({ currentIndex }) {
   useEffect(() => {
     if (currentIndex === 3) {
       displayNameInput!.current!.focus();
-
-      if (auth().currentUser) {
-        const { photoURL } = auth().currentUser!;
-
-        if (photoURL) {
-          setProfilePictureURL(photoURL);
-        }
-      }
     }
   }, [currentIndex]);
+
+  useEffect(() => {
+    if (userStore.userData && userStore.userData.profilePicture) {
+      setProfilePictureURL(userStore.userData.profilePicture);
+    }
+  }, [userStore.userData]);
 
   const onSubmit = async () => {
     try {
@@ -63,24 +66,17 @@ function SignUpForm({ currentIndex }) {
   };
 
   const editProfilePicture = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 300,
-      cropping: true,
-    }).then(async (image) => {
-      setUploadingProfilePic(true);
-      const reference = storage().ref(`/profilePictures/${auth().currentUser!.uid}/new.png`);
-      await reference.putFile(image.path);
-      const pictureUrl = await reference.getDownloadURL();
-      await updateUserPicture(pictureUrl);
-      setUploadingProfilePic(false);
-    });
+    ImagePicker.openPicker({ width: 300, height: 300, cropping: true })
+      .then(async (image) => {
+        setUploadingProfilePic(true);
+        await uploadProfilePicture(image.path);
+        setUploadingProfilePic(false);
+      })
+      .catch((err) => {
+        crashlytics().log('Profile picture upload failed.');
+        crashlytics().recordError(err);
+      });
   };
-
-  let profilePictureSource = require('../../assets/icons/account.png');
-  if (profilePictureURL) {
-    profilePictureSource = { uri: profilePictureURL };
-  }
 
   return (
     <Box
@@ -91,7 +87,11 @@ function SignUpForm({ currentIndex }) {
     >
       <Box alignItems="center" marginBottom="xm">
         <Box style={styles.profilePictureWrapper}>
-          {uploadingProfilePic ? <ActivityIndicator /> : <Image source={profilePictureSource} style={styles.profilePicture} />}
+          {uploadingProfilePic ? (
+            <ActivityIndicator />
+          ) : (
+            <Image source={{ uri: profilePictureURL }} style={styles.profilePicture} />
+          )}
         </Box>
 
         <Text color="link" fontSize={18} fontWeight="500" marginTop="xm" onPress={editProfilePicture}>

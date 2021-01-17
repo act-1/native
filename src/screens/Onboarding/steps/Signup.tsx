@@ -11,6 +11,7 @@ function SignUp({ nextPage }: BoardingScreenProps) {
     try {
       setIsLoading(true);
       const result = await facebookLogin();
+      console.log(result);
       if (result.isNewUser) {
         setIsLoading(false);
         nextPage();
