@@ -1,17 +1,19 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
 import EventsAPI from '@services/events';
-import { getUserFCMToken, createUserFCMToken } from '@services/user';
+import { getUserFCMToken, createUserFCMToken, getUserData } from '@services/user';
 import { createUserCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
-const onAuthStateInitialCall;
+let userDataListenerActive = false;
 
 class UserStore {
   rootStore: null | rootStore = null;
@@ -19,7 +21,7 @@ class UserStore {
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
   lastCheckIn: CheckInParams | null = null;
-  userId: string | null = null;
+  userData: FirebaseFirestoreTypes.DocumentData | null = null;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -29,7 +31,16 @@ class UserStore {
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user) {
-        this.userId = user.uid;
+        if (userDataListenerActive === false) {
+          userDataListenerActive = true;
+          this.userDataListener(user.uid);
+        }
+        // if (!this.userData) {
+        //   runInAction(async () => {
+        //     const userData = await getUserData(user.uid);
+        //     this.userData = userData;
+        //   });
+        // }
         crashlytics().setUserId(user.uid);
 
         // TODO: Extract to function
@@ -40,8 +51,6 @@ class UserStore {
             this.lastCheckIn = lastCheckIn;
           }
         });
-      } else if (!user) {
-        this.signInAnonymously();
       }
     });
   }
@@ -55,6 +64,20 @@ class UserStore {
       return new Date() < new Date(this.lastCheckIn.expireAt);
     }
     return false;
+  }
+
+  userDataListener(userId: string) {
+    firestore()
+      .collection('users')
+      .doc(userId)
+      .onSnapshot((doc) => {
+        console.log('Current user data: ', doc?.data());
+        if (doc?.data()) {
+          runInAction(() => {
+            this.userData = doc.data()!;
+          });
+        }
+      });
   }
 
   async getUserEvents() {
@@ -82,14 +105,6 @@ class UserStore {
       }
     } catch (err) {
       console.log(err);
-    }
-  }
-
-  async signInAnonymously() {
-    try {
-      await auth().signInAnonymously();
-    } catch (err) {
-      console.error(err);
     }
   }
 

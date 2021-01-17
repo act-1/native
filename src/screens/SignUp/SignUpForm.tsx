@@ -8,39 +8,51 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import { updateUserDisplayName } from '@services/user';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CheckInService from '@services/checkIn';
 
-function SignUpForm() {
+type SignUpFormProps = {
+  currentIndex?: number;
+};
+
+/**
+ * The sign up form can be shown from the onboarding screen, or as a standalone modal.
+ *
+ * In case the form is shown from the onboarding screen, the page `index` prop will be passed to the component,
+ * allowing us to focus the text input once the component is shown.
+ */
+function SignUpForm({ currentIndex }) {
   const { userStore } = useStore();
   const [isLoading, setLoading] = useState(false);
   const [profilePictureURL, setProfilePictureURL] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState('');
   const displayNameInput = useRef<TextInput>(null);
 
+  const insets = useSafeAreaInsets();
+
   const navigation = useNavigation();
 
   useEffect(() => {
-    displayNameInput!.current!.focus();
+    if (currentIndex === 3) {
+      displayNameInput!.current!.focus();
+      const { photoURL } = auth().currentUser!;
 
-    const { photoURL } = auth().currentUser!;
-
-    if (photoURL) {
-      setProfilePictureURL(photoURL);
+      if (photoURL) {
+        setProfilePictureURL(photoURL);
+      }
     }
-  }, []);
+  }, [currentIndex]);
 
   const onSubmit = async () => {
     try {
       setLoading(true);
       await updateUserDisplayName(displayName);
+      setLoading(false);
       analytics().logEvent('sign_up_form_submitted');
 
       // Add public check in
-      const checkInInfo = userStore.lastCheckIn;
-      await CheckInService.publicCheckIn({ checkInInfo, displayName, profilePictureURL });
-
-      setLoading(false);
-      navigation.goBack();
+      // const checkInInfo = userStore.lastCheckIn;
+      // await CheckInService.publicCheckIn({ checkInInfo, displayName, profilePictureURL });
     } catch (err) {
       setLoading(false);
       console.log(err);
@@ -53,7 +65,12 @@ function SignUpForm() {
   }
 
   return (
-    <Box paddingVertical="xm" paddingHorizontal="m">
+    <Box
+      paddingVertical="xm"
+      paddingHorizontal="m"
+      style={{ paddingTop: insets.top + 40, backgroundColor: 'rgba(0,0,0,0.85)' }}
+      flex={1}
+    >
       <Box alignItems="center" marginBottom="xm">
         <Image source={profilePictureSource} style={styles.profilePicture} />
 
@@ -93,8 +110,13 @@ const styles = StyleSheet.create({
     height: 85,
     width: 85,
     borderRadius: 50,
-    borderWidth: 3,
-    borderColor: '#1d262d',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
   },
   textInputStyle: {
     flex: 1,

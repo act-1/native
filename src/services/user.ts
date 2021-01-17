@@ -3,6 +3,24 @@ import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
 import { getDeviceId, getUniqueId } from 'react-native-device-info';
 
+/**
+ * Fetches the user's firestore document data.
+ * @param userId - The user Id to fetch.
+ */
+export async function getUserData(userId: string) {
+  try {
+    const userSnapshot = await firestore().collection('users').doc(userId).get();
+    if (userSnapshot.exists) {
+      const userData = userSnapshot.data();
+      return userData;
+    } else {
+      throw new Error("The user doesn't exist in firestore.");
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
 export async function getUserFCMToken(userId: string, fcmToken: string) {
   try {
     return await firestore().collection(`users/${userId}/devices`).doc(fcmToken).get();
@@ -23,7 +41,12 @@ export async function createUserFCMToken(userId: string, fcmToken: string) {
   }
 }
 
-export async function updateUserOnAuth(displayName: string, profilePicture: string) {
+/**
+ * Update user account information - both the firebase user entity and the firestore document
+ * @param displayName - The user's display name.
+ * @param profilePicture - The profile picture URL.
+ */
+export async function updateUserInfo(displayName: string, profilePicture: string) {
   try {
     const user = auth().currentUser;
 
@@ -50,7 +73,7 @@ export async function updateUserDisplayName(displayName: string) {
     await user.updateProfile({ displayName });
     // Update firestore user document
     const userRef = firestore().collection('users').doc(user.uid);
-    return userRef.update({ displayName });
+    return userRef.update({ displayName, signupCompleted: true });
   } catch (err) {
     throw err;
   }

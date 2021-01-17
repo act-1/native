@@ -12,7 +12,7 @@ class RootStore {
   eventStore: eventStore;
   feedStore: feedStore;
 
-  seenBetaModal: 'true' | 'false' = 'false';
+  intializedApp = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -31,6 +31,11 @@ class RootStore {
         await this.userStore.refreshFCMToken(),
         await this.userStore.getUserEvents(),
       ]);
+
+      runInAction(() => {
+        this.intializedApp = true;
+      });
+
       return true;
     } catch (err) {
       throw err;
