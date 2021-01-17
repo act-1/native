@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Image, TextInput, StyleSheet, Alert } from 'react-native';
+import { Image, TextInput, StyleSheet } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
-import { useNavigation } from '@react-navigation/native';
 import { Box } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -29,8 +28,6 @@ function SignUpForm({ currentIndex }) {
   const displayNameInput = useRef<TextInput>(null);
 
   const insets = useSafeAreaInsets();
-
-  const navigation = useNavigation();
 
   useEffect(() => {
     if (currentIndex === 3) {
