@@ -23,7 +23,7 @@ function EditProfilePicture() {
   }, [userStore.userData]);
 
   const editPicture = () => {
-    ImagePicker.openPicker({ width: 300, height: 300, cropping: true })
+    ImagePicker.openPicker({ width: 400, height: 400, cropping: true })
       .then(async (image) => {
         setUploadingProfilePic(true);
         await uploadProfilePicture(image.path);
