@@ -79,7 +79,7 @@ export async function updateUserDisplayName(displayName: string) {
   }
 }
 
-export async function updateUserPicture(pictureUrl: string) {
+export async function updateUserPicture(pictureUrl: string, filePath: string) {
   try {
     const user = auth().currentUser;
 
@@ -91,7 +91,7 @@ export async function updateUserPicture(pictureUrl: string) {
     await user.updateProfile({ photoURL: pictureUrl });
     // Update firestore user document
     const userRef = firestore().collection('users').doc(user.uid);
-    return userRef.update({ profilePicture: pictureUrl });
+    return userRef.update({ profilePicture: pictureUrl, profilePicturePath: filePath });
   } catch (err) {
     throw err;
   }
