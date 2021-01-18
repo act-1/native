@@ -8,9 +8,7 @@ import { uploadProfilePicture } from '@services/storage';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 
-// TODO: Change to production url
-const DEFAULT_PICTURE =
-  'https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/profilePicturePlaceholder.png?alt=media&token=06884d2b-b32d-4799-b906-280a7f52ba43';
+const DEFAULT_PICTURE = 'https://res.cloudinary.com/act1/image/upload/v1610881280/profile_pictures/account-placeholder.png';
 
 function EditProfilePicture() {
   const { userStore } = useStore();
