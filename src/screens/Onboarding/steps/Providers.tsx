@@ -17,6 +17,7 @@ function Providers({ nextPage }: BoardingScreenProps) {
         nextPage();
       }
     } catch (err) {
+      console.log(err);
       setIsLoading(false);
       // Send to crashlytics
     }
@@ -34,7 +35,8 @@ function Providers({ nextPage }: BoardingScreenProps) {
           מתחברים למהפכה.
         </Text>
 
-        <RoundedButton text="התחברות דרך פייסבוק" color="darkBlue" onPress={facebookSignUp} />
+        <RoundedButton text="התחברות דרך פייסבוק" color="darkBlue" onPress={facebookSignUp} style={{ marginBottom: 16 }} />
+        <RoundedButton text="התחברות דרך גוגל" color="darkBlue" onPress={facebookSignUp} />
       </Box>
     </Box>
   );

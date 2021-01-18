@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import { updateUserOnAuth } from '@services/user';
+import { uploadProfilePictureFromURL } from './storage';
 
 export async function signInAnonymously() {
   try {
@@ -37,12 +37,13 @@ export async function facebookLogin(): Promise<{ ok: boolean; isNewUser: boolean
     if (additionalUserInfo && !additionalUserInfo.isNewUser) {
       const photoURL = await getFacebookProfilePicture(token);
       console.log(photoURL);
-      await auth().currentUser?.updateProfile({ photoURL });
+      await uploadProfilePictureFromURL(photoURL);
       return { ok: true, isNewUser: true };
     }
 
     return { ok: true, isNewUser: false };
   } catch (err) {
+    console.log(err);
     throw err;
   }
 }

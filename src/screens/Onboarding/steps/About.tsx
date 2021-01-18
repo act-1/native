@@ -20,7 +20,7 @@ function Welcome({ nextPage }: BoardingScreenProps) {
           ACT1 הוא כלי הישרת אותנו, הגיבורים.ות במאבקים בהם אנחנו מאמינים.
         </Text>
 
-        <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="m" color="yellow">
+        <Text variant="largeTitle" textAlign="center" marginBottom="m" color="yellow">
           אנחנו מאמינות ומאמינים בעולם שיוויני וצודק, בו נחיה בשלום וערבות הדדית אחד עם השניה.
         </Text>
 

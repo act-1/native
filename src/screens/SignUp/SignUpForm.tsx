@@ -45,6 +45,7 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
       // await CheckInService.publicCheckIn({ checkInInfo, displayName, profilePictureURL });
     } catch (err) {
       setLoading(false);
+      console.log(err);
       crashlytics().recordError(err);
     }
   };

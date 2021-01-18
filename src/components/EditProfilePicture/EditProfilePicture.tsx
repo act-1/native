@@ -17,6 +17,7 @@ function EditProfilePicture() {
   const { showActionSheetWithOptions } = useActionSheet();
 
   useEffect(() => {
+    console.log(userStore.userData);
     if (userStore.userData && userStore.userData.profilePicture) {
       setPictureUrl(userStore.userData.profilePicture);
     }
