@@ -17,10 +17,19 @@ function EditProfilePicture() {
   const { showActionSheetWithOptions } = useActionSheet();
 
   useEffect(() => {
-    console.log(userStore.userData);
-    if (userStore.userData && userStore.userData.profilePicture) {
+    if (userStore.userData && userStore.userData.profilePicture && userStore.userData.profilePicture !== pictureUrl) {
+      setUploadingProfilePic(true);
       setPictureUrl(userStore.userData.profilePicture);
+      setUploadingProfilePic(false);
+    } else {
+      // If profilePicture property hasn't been set up yet, fallback to the pictureURL property on the firebase user.
+      const picture = userStore.user?.pictureURL;
+      if (picture) {
+        setPictureUrl(picture);
+      }
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userStore.userData]);
 
   const editPicture = () => {

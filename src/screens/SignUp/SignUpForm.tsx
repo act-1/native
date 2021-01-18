@@ -21,7 +21,7 @@ type SignUpFormProps = {
  * allowing us to focus the text input once the component is shown.
  */
 function SignUpForm({ currentIndex }: SignUpFormProps) {
-  const { userStore } = useStore();
+  const store = useStore();
   const [isLoading, setLoading] = useState(false);
   const [displayName, setDisplayName] = useState('');
   const displayNameInput = useRef<TextInput>(null);
@@ -37,6 +37,8 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
   const onSubmit = async () => {
     try {
       setLoading(true);
+      console.log(store.userStore.user);
+      await store.initApp();
       await updateUserDisplayName(displayName);
       analytics().logEvent('sign_up_form_submitted');
 

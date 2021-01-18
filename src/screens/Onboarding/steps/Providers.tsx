@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import crashlytics from '@react-native-firebase/crashlytics';
 import { SafeAreaView } from 'react-native';
 import { Box, Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
 import { facebookLogin, googleLogin } from '@services/auth';
+import { uploadProfilePictureFromURL } from '@services/storage';
+import { useStore } from '../../../stores';
+import { observer } from 'mobx-react-lite';
 
-function Providers({ nextPage }: BoardingScreenProps) {
+function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
+  const { userStore } = useStore();
   const [isLoading, setIsLoading] = useState(false);
+  const [highResPhoto, setHighResPhoto] = useState(''); // Upload high res photo once user document has been set up.
 
   const signIn = async (provider: 'facebook' | 'google') => {
     try {
@@ -13,24 +19,51 @@ function Providers({ nextPage }: BoardingScreenProps) {
 
       let result;
 
-      if (provider === 'facebook') {
-        result = await facebookLogin();
+      // Sign up / log in - if the user is new upload their high res profile picture (fetched by the login methods).
+
+      switch (provider) {
+        case 'facebook':
+          result = await facebookLogin();
+          break;
+        case 'google':
+          result = await googleLogin();
+          break;
+        default:
+          throw new Error('Supplied provider is incorrect.');
       }
 
-      if (provider === 'google') {
-        result = await googleLogin();
-      }
+      if (result?.isNewUser || userStore.userData?.signupCompleted === false) {
+        if (result.photoURL) {
+          setHighResPhoto(result.photoURL);
+        }
 
-      if (result?.isNewUser) {
         setIsLoading(false);
         nextPage();
       }
     } catch (err) {
       console.log(err);
       setIsLoading(false);
-      // Send to crashlytics
+      crashlytics().recordError(err);
     }
   };
+
+  useEffect(() => {
+    if (userStore.userData?.signupCompleted === false && highResPhoto.length > 0) {
+      uploadProfilePictureFromURL(highResPhoto)
+        .then(() => {
+          setHighResPhoto('');
+          // If the user is still in the providers screen in this stage, it means that they
+          // have authneticated but not finished the sign up process.
+          if (currentIndex === 2) nextPage();
+        })
+        .catch((err) => {
+          console.log(err);
+          crashlytics().recordError(err);
+        });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userStore.userData?.signupCompleted]);
 
   return (
     <Box flex={1} style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}>
@@ -56,4 +89,4 @@ function Providers({ nextPage }: BoardingScreenProps) {
   );
 }
 
-export default Providers;
+export default observer(Providers);

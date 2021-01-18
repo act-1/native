@@ -12,7 +12,7 @@ export async function signInAnonymously() {
   }
 }
 
-export async function facebookLogin(): Promise<{ ok: boolean; isNewUser: boolean }> {
+export async function facebookLogin(): Promise<{ ok: boolean; isNewUser: boolean; photoURL?: string }> {
   try {
     // Attempt login with permissions
     const loginRequest = await LoginManager.logInWithPermissions(['public_profile', 'email']);
@@ -37,9 +37,8 @@ export async function facebookLogin(): Promise<{ ok: boolean; isNewUser: boolean
     // The firestore account information will be set up through a cloud function authentication trigger.
     if (additionalUserInfo && !additionalUserInfo.isNewUser) {
       const photoURL = await getFacebookProfilePicture(token);
-      console.log(photoURL);
-      await uploadProfilePictureFromURL(photoURL);
-      return { ok: true, isNewUser: true };
+
+      return { ok: true, isNewUser: true, photoURL };
     }
 
     return { ok: true, isNewUser: false };
@@ -93,7 +92,6 @@ GoogleSignin.configure({
 
 export async function googleLogin() {
   try {
-    console.log('hi');
     // Get the users ID token
     const { idToken } = await GoogleSignin.signIn();
 
@@ -105,7 +103,16 @@ export async function googleLogin() {
     const { additionalUserInfo } = userCredential;
 
     console.log(additionalUserInfo);
-    return { ok: true, isNewUser: true };
+
+    if (additionalUserInfo?.isNewUser) {
+      const photoURL: string = additionalUserInfo.profile!.picture;
+      // Get high resolution profile picture from Google.
+      const highResPhoto = photoURL.replace('s96-c', 's192-c');
+
+      return { ok: true, isNewUser: true, photoURL: highResPhoto };
+    }
+
+    return { ok: true, isNewUser: false };
   } catch (err) {
     console.error(err);
     throw err;

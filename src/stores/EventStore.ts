@@ -24,7 +24,7 @@ class EventStore {
       });
       return events;
     } catch (err) {
-      console.error(err);
+      console.error('Get events: ', err);
     }
   }
 

@@ -30,7 +30,7 @@ function Onboarding() {
   const screens = [
     <Welcome nextPage={nextPage} key="welcome" />,
     <About nextPage={nextPage} key="about" />,
-    <Providers nextPage={nextPage} key="providers" />,
+    <Providers nextPage={nextPage} currentIndex={currentIndex} key="providers" />,
     <SignUpForm currentIndex={currentIndex} key="signUpForm" />,
   ];
 
