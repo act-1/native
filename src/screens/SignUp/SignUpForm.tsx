@@ -38,7 +38,6 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
     try {
       setLoading(true);
       await updateUserDisplayName(displayName);
-      setLoading(false);
       analytics().logEvent('sign_up_form_submitted');
 
       // Add public check in
