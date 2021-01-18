@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { GoogleSignin } from '@react-native-community/google-signin';
 import { uploadProfilePictureFromURL } from './storage';
 
 export async function signInAnonymously() {
@@ -85,3 +86,28 @@ async function getFacebookProfilePicture(token: any): Promise<string> {
 // If the user upgrades their account from anonymous:
 // const userCredential = await auth().currentUser?.linkWithCredential(facebookCredential);
 // THIS IS A TEST
+
+GoogleSignin.configure({
+  webClientId: '406747409884-7jee6664iuf0mrgv9mgih2clomd388hi.apps.googleusercontent.com',
+});
+
+export async function googleLogin() {
+  try {
+    console.log('hi');
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    const userCredential = await auth().signInWithCredential(googleCredential);
+    const { additionalUserInfo } = userCredential;
+
+    console.log(additionalUserInfo);
+    return { ok: true, isNewUser: true };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}

@@ -2,17 +2,26 @@ import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import { Box, Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
-import { facebookLogin } from '@services/auth';
+import { facebookLogin, googleLogin } from '@services/auth';
 
 function Providers({ nextPage }: BoardingScreenProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const facebookSignUp = async () => {
+  const signIn = async (provider: 'facebook' | 'google') => {
     try {
       setIsLoading(true);
-      const result = await facebookLogin();
-      console.log(result);
-      if (result.isNewUser) {
+
+      let result;
+
+      if (provider === 'facebook') {
+        result = await facebookLogin();
+      }
+
+      if (provider === 'google') {
+        result = await googleLogin();
+      }
+
+      if (result?.isNewUser) {
         setIsLoading(false);
         nextPage();
       }
@@ -35,8 +44,13 @@ function Providers({ nextPage }: BoardingScreenProps) {
           מתחברים למהפכה.
         </Text>
 
-        <RoundedButton text="התחברות דרך פייסבוק" color="darkBlue" onPress={facebookSignUp} style={{ marginBottom: 16 }} />
-        <RoundedButton text="התחברות דרך גוגל" color="darkBlue" onPress={facebookSignUp} />
+        <RoundedButton
+          text="התחברות דרך פייסבוק"
+          color="darkBlue"
+          onPress={() => signIn('facebook')}
+          style={{ marginBottom: 16 }}
+        />
+        <RoundedButton text="התחברות דרך גוגל" color="red" onPress={() => signIn('google')} />
       </Box>
     </Box>
   );
