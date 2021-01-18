@@ -18,15 +18,7 @@ function EditProfilePicture() {
 
   useEffect(() => {
     if (userStore.userData && userStore.userData.profilePicture && userStore.userData.profilePicture !== pictureUrl) {
-      setUploadingProfilePic(true);
       setPictureUrl(userStore.userData.profilePicture);
-      setUploadingProfilePic(false);
-    } else {
-      // If profilePicture property hasn't been set up yet, fallback to the pictureURL property on the firebase user.
-      const picture = userStore.user?.pictureURL;
-      if (picture) {
-        setPictureUrl(picture);
-      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,15 +39,13 @@ function EditProfilePicture() {
   };
 
   const dislpayActionSheet = () => {
-    const options = ['בחירת תמונה חדשה', 'מחיקת תמונה', 'ביטול'];
-    const destructiveButtonIndex = 1;
+    const options = ['בחירת תמונה חדשה', 'ביטול'];
     const cancelButtonIndex = 2;
 
     showActionSheetWithOptions(
       {
         options,
         message: 'תמונת פרופיל',
-        destructiveButtonIndex,
         cancelButtonIndex,
       },
       (buttonIndex) => {
@@ -74,7 +64,11 @@ function EditProfilePicture() {
     <Box alignItems="center" marginBottom="xm">
       <Pressable onPress={dislpayActionSheet}>
         <Box style={styles.profilePictureWrapper} marginBottom="m">
-          {uploadingProfilePic ? <ActivityIndicator /> : <Image source={{ uri: pictureUrl }} style={styles.profilePicture} />}
+          {uploadingProfilePic ? (
+            <ActivityIndicator color="grey" />
+          ) : (
+            <Image source={{ uri: pictureUrl }} style={styles.profilePicture} />
+          )}
         </Box>
       </Pressable>
 

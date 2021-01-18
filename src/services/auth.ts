@@ -35,7 +35,7 @@ export async function facebookLogin(): Promise<{ ok: boolean; isNewUser: boolean
 
     // Check if the account is new, and update the account info with the profile picture (so it'll be displayed in the sign up form)
     // The firestore account information will be set up through a cloud function authentication trigger.
-    if (additionalUserInfo && !additionalUserInfo.isNewUser) {
+    if (additionalUserInfo && additionalUserInfo.isNewUser) {
       const photoURL = await getFacebookProfilePicture(token);
 
       return { ok: true, isNewUser: true, photoURL };

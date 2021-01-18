@@ -7,10 +7,13 @@ import { facebookLogin, googleLogin } from '@services/auth';
 import { uploadProfilePictureFromURL } from '@services/storage';
 import { useStore } from '../../../stores';
 import { observer } from 'mobx-react-lite';
+import { storeDecorator } from 'mobx/dist/internal';
 
 function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
-  const { userStore } = useStore();
+  const store = useStore();
+  const { userStore } = store;
   const [isLoading, setIsLoading] = useState(false);
+  const [uploadingProfilePic, setUploadingProfilePic] = useState(false);
   const [highResPhoto, setHighResPhoto] = useState(''); // Upload high res photo once user document has been set up.
 
   const signIn = async (provider: 'facebook' | 'google') => {
@@ -32,12 +35,16 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
           throw new Error('Supplied provider is incorrect.');
       }
 
+      console.log(result);
+
       if (result?.isNewUser || userStore.userData?.signupCompleted === false) {
         if (result.photoURL) {
           setHighResPhoto(result.photoURL);
         }
+      }
 
-        setIsLoading(false);
+      if (result.isNewUser === false) {
+        await store.initApp();
         nextPage();
       }
     } catch (err) {
@@ -47,14 +54,13 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
     }
   };
 
+  // Upload picture once the user document has been created.
   useEffect(() => {
-    if (userStore.userData?.signupCompleted === false && highResPhoto.length > 0) {
+    if (userStore.userData?.signupCompleted === false && highResPhoto.length > 0 && uploadingProfilePic === false) {
+      setUploadingProfilePic(true);
       uploadProfilePictureFromURL(highResPhoto)
         .then(() => {
-          setHighResPhoto('');
-          // If the user is still in the providers screen in this stage, it means that they
-          // have authneticated but not finished the sign up process.
-          if (currentIndex === 2) nextPage();
+          nextPage();
         })
         .catch((err) => {
           console.log(err);
@@ -63,7 +69,7 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userStore.userData?.signupCompleted]);
+  }, [userStore.userData]);
 
   return (
     <Box flex={1} style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}>

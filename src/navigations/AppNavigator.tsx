@@ -53,7 +53,7 @@ function MainStackScreen() {
 
 function AppNavigator() {
   const { userStore } = useStore();
-
+  console.log(userStore.userData);
   return (
     <RootStack.Navigator screenOptions={{ stackPresentation: 'modal' }}>
       {userStore.userData?.signupCompleted ? (

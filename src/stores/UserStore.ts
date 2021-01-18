@@ -29,7 +29,7 @@ class UserStore {
     this.initUserLocation();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
-      if (user) {
+      if (user?.uid) {
         if (userDataListenerActive === false) {
           userDataListenerActive = true;
           this.userDataListener(user.uid);
@@ -65,7 +65,6 @@ class UserStore {
       .collection('users')
       .doc(userId)
       .onSnapshot((doc) => {
-        console.log('Current user data: ', doc?.data());
         if (doc?.data()) {
           runInAction(() => {
             this.userData = doc.data()!;

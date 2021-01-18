@@ -37,7 +37,6 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
   const onSubmit = async () => {
     try {
       setLoading(true);
-      console.log(store.userStore.user);
       await store.initApp();
       await updateUserDisplayName(displayName);
       analytics().logEvent('sign_up_form_submitted');
