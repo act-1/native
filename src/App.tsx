@@ -4,24 +4,13 @@ import analytics from '@react-native-firebase/analytics';
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { observer } from 'mobx-react-lite';
 import { useStore } from './stores';
-import { Easing } from 'react-native';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from '@shopify/restyle';
-import { ModalProvider, createModalStack, ModalOptions } from 'react-native-modalfy';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { AttendingModal } from './components/Modals';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import theme from './theme';
 import AppNavigator from './navigations/AppNavigator';
 import RNBootSplash from 'react-native-bootsplash';
-
-const modalConfig = { AttendingModal };
-const defaultOptions: ModalOptions = {
-  backdropOpacity: 0.6,
-  animateInConfig: { easing: Easing.exp, duration: 0 }, // No effect
-  animateOutConfig: { easing: Easing.exp, duration: 0 }, // No effect
-};
-
-const stack = createModalStack(modalConfig, defaultOptions);
 
 function App() {
   const routeNameRef = React.useRef();
@@ -55,7 +44,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <ThemeProvider theme={theme}>
-        <ModalProvider stack={stack}>
+        <ActionSheetProvider>
           <NavigationContainer
             ref={navigationRef}
             theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#0B0D0F' } }}
@@ -77,7 +66,7 @@ function App() {
           >
             <AppNavigator />
           </NavigationContainer>
-        </ModalProvider>
+        </ActionSheetProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );

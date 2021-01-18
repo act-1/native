@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@expo/react-native-action-sheet": "^3.8.0",
     "@gorhom/bottom-sheet": "^2.0.2",
     "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/masked-view": "^0.1.10",
@@ -23,6 +24,7 @@
     "@react-native-firebase/in-app-messaging": "^10.4.0",
     "@react-native-firebase/messaging": "10.4.0",
     "@react-native-firebase/perf": "^10.4.0",
+    "@react-native-firebase/storage": "^10.4.1",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
@@ -40,6 +42,7 @@
     "lottie-react-native": "^3.5.0",
     "mobx": "^6.0.4",
     "mobx-react-lite": "^3.1.6",
+    "nanoid": "^3.1.20",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-bootsplash": "^3.1.2",
@@ -50,6 +53,7 @@
     "react-native-geolocation-service": "^5.1.1",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-haptic-feedback": "^1.11.0",
+    "react-native-image-crop-picker": "^0.35.2",
     "react-native-maps": "0.27.1",
     "react-native-modalfy": "^2.1.0",
     "react-native-pages": "^0.9.0",

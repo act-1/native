@@ -5,4 +5,5 @@ export { default as EventBox } from './EventBox';
 export { default as LocationBox } from './LocationBox';
 export { default as PostBox } from './PostBox';
 export { default as StickyHeaderScrollView } from './StickyHeaderScrollView';
+export { default as EditProfilePicture } from './EditProfilePicture';
 export { default as Ticker } from './Ticker';
