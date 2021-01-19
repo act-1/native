@@ -53,10 +53,10 @@ function MainStackScreen() {
 
 function AppNavigator() {
   const { userStore } = useStore();
-  console.log(userStore.userData);
+
   return (
     <RootStack.Navigator screenOptions={{ stackPresentation: 'modal' }}>
-      {userStore.userData?.signupCompleted ? (
+      {false && userStore.userData?.signupCompleted ? (
         <>
           <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
           <RootStack.Screen name="CheckInModal" component={CheckInNavigator} options={{ headerShown: false }} />

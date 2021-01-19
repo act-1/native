@@ -52,12 +52,7 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
   };
 
   return (
-    <Box
-      paddingVertical="xm"
-      paddingHorizontal="m"
-      style={{ paddingTop: insets.top + 40, backgroundColor: 'rgba(0,0,0,0.85)' }}
-      flex={1}
-    >
+    <Box paddingVertical="xm" paddingHorizontal="m" style={{ paddingTop: insets.top + 40 }} flex={1}>
       <EditProfilePicture />
 
       <Box

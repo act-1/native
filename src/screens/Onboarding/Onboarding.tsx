@@ -1,11 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { Platform, View, ImageBackground, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { Platform, Animated, View, ImageBackground, StyleSheet, StatusBar } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { Box, Text } from '../../components';
-import ViewPager from '@react-native-community/viewpager';
 import { Pages } from 'react-native-pages';
-import RoundedButton from '@components/Buttons/RoundedButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Welcome, About, Providers } from './steps';
 import SignUpForm from '../SignUp/SignUpForm';
 import { useStore } from '../../stores';
@@ -15,16 +12,26 @@ import { useStore } from '../../stores';
 const isAndroid = Platform.OS === 'android';
 
 function Onboarding() {
-  const store = useStore();
+  let pageProgress = useRef(new Animated.Value(0)).current;
+  let overlayFadeIn = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const pages = useRef<any>(null);
 
   const nextPage = () => {
     pages.current?.scrollToPage(currentIndex + 1);
   };
 
+  const onScrollStart = () => {
+    Animated.timing(overlayFadeIn, { toValue: 0.75, useNativeDriver: true }).start();
+  };
+
   const onScrollEnd = (index: number) => {
     setCurrentIndex(index);
+
+    if (index === 0) {
+      Animated.timing(overlayFadeIn, { toValue: 0, useNativeDriver: true }).start();
+    }
   };
 
   const screens = [
@@ -38,12 +45,28 @@ function Onboarding() {
     <Box flex={1} backgroundColor="greyBackground">
       <StatusBar backgroundColor="#040506" barStyle="light-content" />
       <ImageBackground source={require('@assets/pictures/onboarding.png')} style={styles.imageBackground}>
+        <Animated.View
+          style={{
+            position: 'absolute',
+            top: 0,
+            height: '100%',
+            width: '100%',
+            opacity: pageProgress.interpolate({
+              inputRange: [0, 1, 2, 3],
+              outputRange: [0, 0.7, 0.8, 0.9], // 0 : 150, 0.5 : 75, 1 : 0
+            }),
+            backgroundColor: '#000',
+            zIndex: 0,
+          }}
+        />
         <Pages
+          style={{ flex: 1, position: 'absolute' }}
           ref={pages}
           onScrollEnd={onScrollEnd}
-          style={{ flex: 1 }}
-          scrollEnabled={false}
+          onHalfway={onScrollStart}
+          scrollEnabled={true}
           indicatorOpacity={0}
+          progress={pageProgress}
           rtl={isAndroid}
         >
           {isAndroid ? screens.reverse() : screens}

@@ -5,7 +5,7 @@ import { RoundedButton } from '@components/Buttons';
 
 function Welcome({ nextPage }: BoardingScreenProps) {
   return (
-    <Box flex={1} style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}>
+    <Box flex={1}>
       <SafeAreaView />
 
       <Box flex={1} justifyContent="flex-start" alignItems="center" marginTop="xm" paddingHorizontal="xl">

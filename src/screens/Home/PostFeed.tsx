@@ -25,7 +25,7 @@ function PostFeed() {
       <Button title="התנתקות" onPress={() => auth().signOut()} />
       <Image source={{ uri: store.userStore.userData?.profilePicture }} style={{ height: 80, width: 80, borderRadius: 50 }} />
       <Text variant="text" textAlign="center">
-        {store.userStore.userData.displayName}
+        {store.userStore.userData?.displayName}
       </Text>
       <ScrollView
         showsVerticalScrollIndicator={false}

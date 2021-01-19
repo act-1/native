@@ -72,7 +72,7 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
   }, [userStore.userData]);
 
   return (
-    <Box flex={1} style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}>
+    <Box flex={1}>
       <SafeAreaView />
 
       <Box flex={1} justifyContent="flex-start" alignItems="center" marginTop="xm" paddingHorizontal="xm">
