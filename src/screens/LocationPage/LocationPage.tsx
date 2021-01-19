@@ -24,14 +24,14 @@ let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.c
 
 // TODO: Set as a default
 if (__DEV__) {
+  database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
-  const [counter, setCounter] = useState(null);
-
+  const [counter, setCounter] = useState<number | null>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const snapPoints = useMemo(() => ['1%', '25%'], []);
@@ -90,10 +90,19 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
     checkInCount.on('value', (snapshot) => {
       const count = snapshot.val();
+
+      // Location Id doesn't exist yet
+      if (count === null) {
+        setCounter(0);
+        return;
+      }
+      // Something went wrong!
       if (count < 0) {
         crashlytics().setAttributes({ locationId: route.params.locationId });
         crashlytics().log('Check in counter is below zero.');
+        return;
       }
+
       setCounter(snapshot.val());
     });
 
