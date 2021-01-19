@@ -32,8 +32,8 @@ function Onboarding() {
   const screens = [
     <Welcome nextPage={nextPage} key="welcome" style={{ marginBottom: insets.bottom + 55 }} />,
     <About nextPage={nextPage} key="about" />,
+    <Features nextPage={nextPage} key="features" />,
     <Providers nextPage={nextPage} currentIndex={currentIndex} key="providers" />,
-    <Features nextPage={nextPage} />,
     <SignUpForm currentIndex={currentIndex} key="signUpForm" />,
   ];
 
@@ -56,7 +56,7 @@ function Onboarding() {
             zIndex: 0,
           }}
         />
-        {currentIndex < 3 && (
+        {currentIndex < 4 && (
           <Animated.Text
             style={[
               styles.heading,
