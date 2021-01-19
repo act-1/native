@@ -1,17 +1,17 @@
 import React from 'react';
 import analytics from '@react-native-firebase/analytics';
-import { ScrollView, RefreshControl } from 'react-native';
+import auth from '@react-native-firebase/auth';
+import { Image, Button, ScrollView, RefreshControl } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-import { Box, PostBox } from '../../components';
+import { Box, Text, PostBox } from '../../components';
 import { EventsWidget, LiveCheckIns } from './Feed/Widgets';
 import { IPost } from '@types/post';
 
 function PostFeed() {
   const [refreshing, setRefreshing] = React.useState(false);
-  const { feedStore } = useStore();
-  const { posts } = feedStore;
-  const { eventStore } = useStore();
+  const store = useStore();
+  const { posts } = store.feedStore;
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -21,7 +21,12 @@ function PostFeed() {
   };
 
   return (
-    <Box flex={1}>
+    <Box flex={1} alignItems="center">
+      <Button title="התנתקות" onPress={() => auth().signOut()} />
+      <Image source={{ uri: store.userStore.userData?.profilePicture }} style={{ height: 80, width: 80, borderRadius: 50 }} />
+      <Text variant="text" textAlign="center">
+        {store.userStore.userData.displayName}
+      </Text>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#ece1e1" />}
@@ -29,15 +34,6 @@ function PostFeed() {
       >
         {posts.length > 0 &&
           posts.map((post: IPost, index: number) => {
-            // Featured events widget
-            // if (index === 5) {
-            //   return (
-            //     <Box key={post.id}>
-            //       <EventsWidget style={{ marginVertical: 8 }} />
-            //       <PostBox {...post} />
-            //     </Box>
-            //   );
-            // }
             return <PostBox {...post} key={post.id} />;
           })}
       </ScrollView>

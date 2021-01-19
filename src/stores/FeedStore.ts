@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+import auth from '@react-native-firebase/auth';
 import { getAllPosts, likePost, unlikePost } from '@services/feed';
 import { IPost } from '@types/post';
 import { updateArrayItem } from '@utils/array-utils';
@@ -15,7 +16,7 @@ class FeedStore {
 
   async getPosts() {
     try {
-      const userId = this.rootStore?.userStore?.user?.uid;
+      const userId = auth().currentUser?.uid;
       if (userId) {
         getAllPosts(userId).then((posts) => {
           runInAction(() => {
@@ -25,6 +26,7 @@ class FeedStore {
         });
       }
     } catch (err) {
+      console.error('Get posts:', err);
       throw err;
     }
   }
