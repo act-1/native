@@ -72,20 +72,31 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
   }, [userStore.userData]);
 
   return (
-    <Box flex={1}>
-      <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xm">
-        <Text variant="largeTitle" fontSize={24} marginBottom="xl">
-          מתחברים למהפכה.
-        </Text>
+    <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xm">
+      <Text variant="largeTitle" fontSize={24} marginBottom="xl">
+        מתחברים למהפכה.
+      </Text>
 
-        <RoundedButton
-          text="התחברות דרך פייסבוק"
-          color="darkBlue"
-          onPress={() => signIn('facebook')}
-          style={{ marginBottom: 16 }}
-        />
-        <RoundedButton text="התחברות דרך גוגל" color="red" onPress={() => signIn('google')} />
-      </Box>
+      <RoundedButton
+        text="התחברות דרך פייסבוק"
+        color="darkBlue"
+        onPress={() => signIn('facebook')}
+        style={{ marginBottom: 16 }}
+      />
+      <RoundedButton text="התחברות דרך גוגל" color="red" onPress={() => signIn('google')} style={{ marginBottom: 16 }} />
+      <RoundedButton text="התחברות דרך אפל" color="black" onPress={() => signIn('google')} style={{ marginBottom: 42 }} />
+
+      <Box height={1} width={320} marginBottom="xm" opacity={0.25} style={{ backgroundColor: '#FFC281' }} />
+      <Text variant="text" fontWeight="600" marginBottom="xm" style={{ color: '#FFC281' }} opacity={0.8}>
+        מי אנחנו ושאלות נפוצות{' >'}
+      </Text>
+      <Box height={1} width={320} opacity={0.25} style={{ backgroundColor: '#FFC281' }} marginBottom="xl" />
+      <RoundedButton
+        text="המשך ללא התחברות"
+        color="grey"
+        onPress={() => signIn('google')}
+        style={{ marginBottom: 42, opacity: 0.4 }}
+      />
     </Box>
   );
 }

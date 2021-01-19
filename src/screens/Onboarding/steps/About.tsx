@@ -8,15 +8,15 @@ function Welcome({ nextPage }: BoardingScreenProps) {
     <Box flex={1}>
       <SafeAreaView />
 
-      <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xl">
+      <Box flex={1} justifyContent="flex-start" alignItems="center" style={{ paddingHorizontal: 36 }}>
         <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="m" style={{ writingDirection: 'rtl' }}>
-          מערכה ראשונה היא החלק הראשון, אשר משמש ליצירת הכרות עם הגיבור.ה שיוצא.ת להתעמת עם האירוע המסית.
+          מערכה ראשונה היא החלק הראשון שיוצר הכרות עם הגיבור.ה, היוצא.ת להתעמת עם האירוע המסית.
         </Text>
-        <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="l" style={{ writingDirection: 'rtl' }}>
+        <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="xm" style={{ writingDirection: 'rtl' }}>
           אנו רואים את ACT1 ככלי המשרת אותנו, הגיבורים.ות במאבקים הקרובים לליבנו, בהם אנחנו מאמינים. 
         </Text>
 
-        <Text variant="largeTitle" textAlign="center" marginBottom="l" color="yellow">
+        <Text variant="largeTitle" textAlign="center" marginBottom="xm" color="yellow">
           אנחנו מאמינות ומאמינים בעולם שיוויני וצודק, בו נחיה בשלום וערבות הדדית אחד עם השניה.
         </Text>
 

@@ -29,7 +29,7 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
-    if (currentIndex === 3) {
+    if (currentIndex === 4) {
       displayNameInput!.current!.focus();
     }
   }, [currentIndex]);

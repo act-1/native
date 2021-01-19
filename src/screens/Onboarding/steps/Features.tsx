@@ -48,6 +48,13 @@ function Features({ nextPage }: BoardingScreenProps) {
         </Box>
       ))}
 
+      <Text variant="boxTitle" marginTop="s">
+        וזו רק ההתחלה.
+      </Text>
+      <Text variant="text" textAlign="center">
+        האפליקצייה נמצאת בהרצה, ובשבועות הקרובים יתווספו פיצ’רים שיקחו את המאבקים שלנו לשלב הבא.
+      </Text>
+
       <RoundedButton text="המשך" color="yellow" style={{ marginTop: 24 }} onPress={nextPage} />
     </Box>
   );
