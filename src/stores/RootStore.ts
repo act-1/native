@@ -20,7 +20,6 @@ class RootStore {
     this.locationStore = new locationStore(this);
     this.eventStore = new eventStore(this);
     this.feedStore = new feedStore(this);
-    this.displayBetaModal();
   }
 
   async initApp() {
@@ -38,22 +37,10 @@ class RootStore {
 
       return true;
     } catch (err) {
+      console.error(err);
       throw err;
     }
   }
-
-  async displayBetaModal() {
-    const seen = await AsyncStorage.getItem('seenBetaModal');
-    if (seen === 'true' || seen === 'false') {
-      runInAction(() => {
-        this.seenBetaModal = seen;
-      });
-    }
-  }
-
-  updateOnboardingSeenState = (state: 'true' | 'false') => {
-    this.seenBetaModal = state;
-  };
 }
 
 export default RootStore;

@@ -1,7 +1,8 @@
 import auth from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import { updateUserOnAuth } from '@services/user';
+import { GoogleSignin } from '@react-native-community/google-signin';
+import { uploadProfilePictureFromURL } from './storage';
 
 export async function signInAnonymously() {
   try {
@@ -11,7 +12,7 @@ export async function signInAnonymously() {
   }
 }
 
-export async function facebookLogin(): Promise<{ ok: boolean; isNewUser: boolean }> {
+export async function facebookLogin(): Promise<{ ok: boolean; isNewUser: boolean; photoURL?: string }> {
   try {
     // Attempt login with permissions
     const loginRequest = await LoginManager.logInWithPermissions(['public_profile', 'email']);
@@ -34,15 +35,15 @@ export async function facebookLogin(): Promise<{ ok: boolean; isNewUser: boolean
 
     // Check if the account is new, and update the account info with the profile picture (so it'll be displayed in the sign up form)
     // The firestore account information will be set up through a cloud function authentication trigger.
-    if (additionalUserInfo && !additionalUserInfo.isNewUser) {
+    if (additionalUserInfo && additionalUserInfo.isNewUser) {
       const photoURL = await getFacebookProfilePicture(token);
-      console.log(photoURL);
-      await auth().currentUser?.updateProfile({ photoURL });
-      return { ok: true, isNewUser: true };
+
+      return { ok: true, isNewUser: true, photoURL };
     }
 
     return { ok: true, isNewUser: false };
   } catch (err) {
+    console.log(err);
     throw err;
   }
 }
@@ -84,3 +85,36 @@ async function getFacebookProfilePicture(token: any): Promise<string> {
 // If the user upgrades their account from anonymous:
 // const userCredential = await auth().currentUser?.linkWithCredential(facebookCredential);
 // THIS IS A TEST
+
+GoogleSignin.configure({
+  webClientId: '406747409884-7jee6664iuf0mrgv9mgih2clomd388hi.apps.googleusercontent.com',
+});
+
+export async function googleLogin() {
+  try {
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    const userCredential = await auth().signInWithCredential(googleCredential);
+    const { additionalUserInfo } = userCredential;
+
+    console.log(additionalUserInfo);
+
+    if (additionalUserInfo?.isNewUser) {
+      const photoURL: string = additionalUserInfo.profile!.picture;
+      // Get high resolution profile picture from Google.
+      const highResPhoto = photoURL.replace('s96-c', 's192-c');
+
+      return { ok: true, isNewUser: true, photoURL: highResPhoto };
+    }
+
+    return { ok: true, isNewUser: false };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}

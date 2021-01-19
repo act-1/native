@@ -21,7 +21,7 @@ type SignUpFormProps = {
  * allowing us to focus the text input once the component is shown.
  */
 function SignUpForm({ currentIndex }: SignUpFormProps) {
-  const { userStore } = useStore();
+  const store = useStore();
   const [isLoading, setLoading] = useState(false);
   const [displayName, setDisplayName] = useState('');
   const displayNameInput = useRef<TextInput>(null);
@@ -29,7 +29,7 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
-    if (currentIndex === 3) {
+    if (currentIndex === 4) {
       displayNameInput!.current!.focus();
     }
   }, [currentIndex]);
@@ -37,6 +37,7 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
   const onSubmit = async () => {
     try {
       setLoading(true);
+      await store.initApp();
       await updateUserDisplayName(displayName);
       analytics().logEvent('sign_up_form_submitted');
 
@@ -45,17 +46,13 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
       // await CheckInService.publicCheckIn({ checkInInfo, displayName, profilePictureURL });
     } catch (err) {
       setLoading(false);
+      console.log(err);
       crashlytics().recordError(err);
     }
   };
 
   return (
-    <Box
-      paddingVertical="xm"
-      paddingHorizontal="m"
-      style={{ paddingTop: insets.top + 40, backgroundColor: 'rgba(0,0,0,0.85)' }}
-      flex={1}
-    >
+    <Box paddingVertical="xm" paddingHorizontal="m" style={{ paddingTop: insets.top + 40 }} flex={1}>
       <EditProfilePicture />
 
       <Box

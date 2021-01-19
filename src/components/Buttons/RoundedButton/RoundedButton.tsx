@@ -4,7 +4,7 @@ import { Box, Text } from '../..';
 import { buttonColors } from '../ButtonColors';
 
 type RoundedButtonProps = {
-  color?: 'blue' | 'darkBlue' | 'green' | 'yellow' | 'grey' | 'porcelain' | 'white' | 'black';
+  color?: 'blue' | 'darkBlue' | 'green' | 'red' | 'yellow' | 'grey' | 'porcelain' | 'white' | 'black';
   icon?: ImageSourcePropType;
   onPress?: () => void;
   text?: string;

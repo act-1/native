@@ -26,21 +26,15 @@ class UserStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
-
     this.initUserLocation();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
-      if (user) {
+      if (user?.uid) {
         if (userDataListenerActive === false) {
           userDataListenerActive = true;
           this.userDataListener(user.uid);
         }
-        // if (!this.userData) {
-        //   runInAction(async () => {
-        //     const userData = await getUserData(user.uid);
-        //     this.userData = userData;
-        //   });
-        // }
+
         crashlytics().setUserId(user.uid);
 
         // TODO: Extract to function
@@ -71,7 +65,6 @@ class UserStore {
       .collection('users')
       .doc(userId)
       .onSnapshot((doc) => {
-        console.log('Current user data: ', doc?.data());
         if (doc?.data()) {
           runInAction(() => {
             this.userData = doc.data()!;
@@ -82,29 +75,44 @@ class UserStore {
 
   async getUserEvents() {
     try {
-      const events = await EventsAPI.getUserEvents(this.user?.uid!);
+      const userId = auth().currentUser?.uid;
+
+      if (!userId) {
+        throw new Error('Not authenticated.');
+      }
+
+      const events = await EventsAPI.getUserEvents(userId);
       runInAction(() => {
         this.userEventIds = events;
       });
       return events;
     } catch (err) {
+      console.error('Get user events: ', err);
       throw err;
     }
   }
 
   async refreshFCMToken() {
     try {
+      const userId = auth().currentUser?.uid;
+
+      if (!userId) {
+        throw new Error('Not authenticated.');
+      }
+
       const FCMToken = await messaging().getToken();
-      const userFCMToken = await getUserFCMToken(this.user?.uid!, FCMToken);
+      const userFCMToken = await getUserFCMToken(userId, FCMToken);
+
       if (userFCMToken.exists) {
         // In the future we might want to update the active state.
         return userFCMToken;
       } else {
-        const token = await createUserFCMToken(this.user?.uid!, FCMToken);
+        const token = await createUserFCMToken(userId, FCMToken);
         return token;
       }
     } catch (err) {
-      console.log(err);
+      console.error('Refresh FCM Token: ', err);
+      crashlytics().recordError(err);
     }
   }
 

@@ -17,13 +17,15 @@ function EditProfilePicture() {
   const { showActionSheetWithOptions } = useActionSheet();
 
   useEffect(() => {
-    if (userStore.userData && userStore.userData.profilePicture) {
+    if (userStore.userData && userStore.userData.profilePicture && userStore.userData.profilePicture !== pictureUrl) {
       setPictureUrl(userStore.userData.profilePicture);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userStore.userData]);
 
   const editPicture = () => {
-    ImagePicker.openPicker({ width: 400, height: 400, cropping: true })
+    ImagePicker.openPicker({ width: 200, height: 200, cropping: true })
       .then(async (image) => {
         setUploadingProfilePic(true);
         await uploadProfilePicture(image.path);
@@ -37,15 +39,13 @@ function EditProfilePicture() {
   };
 
   const dislpayActionSheet = () => {
-    const options = ['בחירת תמונה חדשה', 'מחיקת תמונה', 'ביטול'];
-    const destructiveButtonIndex = 1;
+    const options = ['בחירת תמונה חדשה', 'ביטול'];
     const cancelButtonIndex = 2;
 
     showActionSheetWithOptions(
       {
         options,
         message: 'תמונת פרופיל',
-        destructiveButtonIndex,
         cancelButtonIndex,
       },
       (buttonIndex) => {
@@ -64,7 +64,11 @@ function EditProfilePicture() {
     <Box alignItems="center" marginBottom="xm">
       <Pressable onPress={dislpayActionSheet}>
         <Box style={styles.profilePictureWrapper} marginBottom="m">
-          {uploadingProfilePic ? <ActivityIndicator /> : <Image source={{ uri: pictureUrl }} style={styles.profilePicture} />}
+          {uploadingProfilePic ? (
+            <ActivityIndicator color="grey" />
+          ) : (
+            <Image source={{ uri: pictureUrl }} style={styles.profilePicture} />
+          )}
         </Box>
       </Pressable>
 
