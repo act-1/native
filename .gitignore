@@ -73,3 +73,7 @@ ios/tmp.xcconfig
 
 .env.local
 .env
+
+debug.keystore
+android/app/debug.keystore
+android/app/debug/app-debug.apk
