@@ -8,6 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeNavigator, EventsNavigator, CheckInNavigator, ProfileNavigator } from './';
 import HapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/Feather';
+import { LocationPage } from '@screens/LocationPage';
 
 const icons: any = {
   Home: {
@@ -64,7 +65,7 @@ const AppTabs = () => {
         style: { backgroundColor: '#0f1316', borderTopWidth: 2, borderTopColor: '#1e262d' },
       }}
     >
-      <Tab.Screen name="Home" component={HomeNavigator} />
+      <Tab.Screen name="Home" component={LocationPage} initialParams={{ locationId: 'habima' }} />
       {/* <Tab.Screen name="Live" component={HomeNavigator} /> */}
       <Tab.Screen name="CheckIn" component={CheckInNavigator} />
       <Tab.Screen name="Events" component={EventsNavigator} />
