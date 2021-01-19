@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
   featureIcon: {
     width: 64,
     height: 64,
-    opacity: 0.75,
+    opacity: 0.8,
   },
 });
