@@ -3,9 +3,8 @@ import { Platform, Animated, ImageBackground, StyleSheet, Dimensions, StatusBar 
 import analytics from '@react-native-firebase/analytics';
 import { Box } from '../../components';
 import { Pages } from 'react-native-pages';
-import { Welcome, About, Providers } from './steps';
+import { Welcome, About, Features, Providers } from './steps';
 import SignUpForm from '../SignUp/SignUpForm';
-import { useStore } from '../../stores';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
@@ -34,6 +33,7 @@ function Onboarding() {
     <Welcome nextPage={nextPage} key="welcome" style={{ marginBottom: insets.bottom + 55 }} />,
     <About nextPage={nextPage} key="about" />,
     <Providers nextPage={nextPage} currentIndex={currentIndex} key="providers" />,
+    <Features nextPage={nextPage} />,
     <SignUpForm currentIndex={currentIndex} key="signUpForm" />,
   ];
 
@@ -49,8 +49,8 @@ function Onboarding() {
             height: '100%',
             width: '100%',
             opacity: pageProgress.interpolate({
-              inputRange: [0, 1, 2, 3],
-              outputRange: [0, 0.75, 0.8, 0.9],
+              inputRange: [0, 1, 2, 3, 4],
+              outputRange: [0, 0.75, 0.8, 0.8, 0.9],
             }),
             backgroundColor: '#000',
             zIndex: 0,
@@ -63,14 +63,14 @@ function Onboarding() {
               {
                 marginTop: 36 + insets.top,
                 opacity: pageProgress.interpolate({
-                  inputRange: [0, 0.9, 1, 2, 3],
-                  outputRange: [0, 1, 1, 1, 0],
+                  inputRange: [0, 0.9, 1, 2, 3, 4],
+                  outputRange: [0, 1, 1, 1, 1, 0],
                 }),
                 transform: [
                   {
                     translateX: pageProgress.interpolate({
-                      inputRange: [0, 0.95, 1, 2, 3],
-                      outputRange: [-width, 0, 1, 1, width],
+                      inputRange: [0, 0.95, 1, 2, 3, 4],
+                      outputRange: [-width, 0, 1, 1, 1, width],
                     }),
                   },
                 ],
@@ -84,7 +84,6 @@ function Onboarding() {
           style={{ flex: 1, position: 'absolute' }}
           ref={pages}
           onScrollEnd={onScrollEnd}
-          onHalfway={onScrollStart}
           scrollEnabled={true}
           indicatorOpacity={0}
           progress={pageProgress}
