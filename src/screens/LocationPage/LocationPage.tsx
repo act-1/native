@@ -3,7 +3,7 @@ import { StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { firebase } from '@react-native-firebase/database';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { Box, Text, Ticker, StickyHeaderScrollView } from '../../components';
+import { Box, Text, StickyHeaderScrollView } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -13,7 +13,8 @@ import { fetchLocation } from '@services/locations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SheetSignUp from '../SignUp/SheetSignUp';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import LocationProfilePictures from './LocationProfilePictures';
+import LocationCounter from './LocationCounter';
+import LocationActions from './LocationActions';
 import CheckInService from '@services/checkIn';
 import { updateCheckInCount } from '@services/feed';
 
@@ -29,7 +30,6 @@ if (__DEV__) {
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
-  const [counter, setCounter] = useState<number | null>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const snapPoints = useMemo(() => ['1%', '25%'], []);
@@ -67,34 +67,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     getLocationData(route.params.locationId);
   }, [route.params.locationId]);
 
-  // Subscribe to location count
-  useEffect(() => {
-    const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
-
-    checkInCount.on('value', (snapshot) => {
-      const count = snapshot.val();
-
-      // Location Id doesn't exist yet
-      if (count === null) {
-        setCounter(0);
-        return;
-      }
-      // Something went wrong!
-      if (count < 0) {
-        crashlytics().setAttributes({ locationId: route.params.locationId });
-        crashlytics().log('Check in counter is below zero.');
-        return;
-      }
-
-      setCounter(snapshot.val());
-    });
-
-    return () => {
-      checkInCount.off();
-    };
-  }, [route.params.locationId]);
-
-  if (location === null || counter === null) {
+  if (location === null) {
     return (
       <Box justifyContent="center" alignItems="center" flex={1}>
         <ActivityIndicator size="small" color="grey" />
@@ -113,28 +86,25 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
       }
     >
       <BottomSheetModalProvider>
-        <Box paddingHorizontal="xm" marginTop="m">
-          <Text variant="extraLargeTitle" marginBottom="xs">
-            {location.name}
-          </Text>
-          <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.9} marginBottom="m">
-            {location.city}
-          </Text>
-
-          <Box backgroundColor="seperator" height={2} width={500} marginBottom="s" />
-
-          {/* <Box flexDirection="row">
-            <Ticker textStyle={styles.counterText}>{counter}</Ticker>
-            <Text style={[styles.counterText, { marginLeft: 7 }]} marginBottom="xm">
-              עכשיו בהפגנה
+        <Box marginTop="m">
+          <Box paddingHorizontal="xm">
+            <Text variant="extraLargeTitle" marginBottom="xxs">
+              {location.name}
+            </Text>
+            <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.8} marginBottom="m">
+              {location.city}
             </Text>
           </Box>
 
-          <LocationProfilePictures locationId={location.id} style={{ marginBottom: 18 }} />
+          {/* <Box backgroundColor="seperator" height={2} width={600} marginBottom="s" position="relative" left={-24} /> */}
+
+          <LocationActions />
+
+          <LocationCounter locationId={location.id} style={{ marginBottom: 18 }} />
 
           <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
 
-          {userStore.user.isAnonymous && (
+          {/* {userStore.user.isAnonymous && (
             <Box justifyContent="center" alignItems="center" height={110}>
               <Text
                 variant="text"

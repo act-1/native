@@ -126,7 +126,7 @@ const theme = createTheme({
     },
     circularButtonText: {
       fontFamily: 'AtlasDL3.1AAA-Medium',
-      fontSize: 13,
+      fontSize: 12,
     },
     importantText: {
       fontFamily: 'AtlasDL3.1AAA-Bold',

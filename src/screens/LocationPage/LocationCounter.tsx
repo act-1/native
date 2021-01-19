@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Dimensions, View, ActivityIndicator, StyleSheet, ViewStyle } from 'react-native';
 import { firebase } from '@react-native-firebase/database';
+import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
-import { Box, Text } from '../../components';
+import { Box, Text, Ticker } from '../../components';
 import Carousel from 'react-native-snap-carousel';
 import LottieView from 'lottie-react-native';
 import { useStore } from '../../stores';
@@ -17,10 +18,11 @@ if (__DEV__) {
 
 const deviceWidth = Dimensions.get('window').width;
 
-function LocationProfilePictures({ locationId, style }: { locationId: string; style?: ViewStyle }) {
+function LocationCounter({ locationId, style }: { locationId: string; style?: ViewStyle }) {
   const { userStore } = useStore();
   const [isLoading, setIsLoading] = useState(true);
   const [publicCheckIns, setPublicCheckIns] = useState<PublicCheckInParams[]>([]);
+  const [counter, setCounter] = useState<number | null>(null);
   const carouselRef = useRef<Carousel<PublicCheckInParams>>(null);
   // const [currentCheckInIndex, setCheckInIndex] = useState(0);
 
@@ -28,6 +30,7 @@ function LocationProfilePictures({ locationId, style }: { locationId: string; st
   useEffect(() => {
     // TODO: Filter by createdAt property
     const checkIns = database.ref(`/checkIns/${locationId}`).orderByChild('isActive').equalTo(true);
+    const checkInCount = database.ref(`/locationCounter/${locationId}`);
 
     checkIns.once('value', () => {
       setIsLoading(false);
@@ -48,8 +51,27 @@ function LocationProfilePictures({ locationId, style }: { locationId: string; st
       console.log(userStore.user.uid, checkIn.userId);
     });
 
+    checkInCount.on('value', (snapshot) => {
+      const count = snapshot.val();
+
+      // Location Id doesn't exist yet
+      if (count === null) {
+        setCounter(0);
+        return;
+      }
+      // Something went wrong!
+      if (count < 0) {
+        crashlytics().setAttributes({ locationId: route.params.locationId });
+        crashlytics().log('Check in counter is below zero.');
+        return;
+      }
+
+      setCounter(snapshot.val());
+    });
+
     return () => {
       checkIns.off();
+      checkInCount.off();
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,6 +103,8 @@ function LocationProfilePictures({ locationId, style }: { locationId: string; st
 
   return (
     <View style={[style, { width: '100%' }]}>
+      <Ticker textStyle={styles.counterText}>{counter}</Ticker>
+
       <Box height={110}>
         <Carousel
           ref={carouselRef}
@@ -104,7 +128,7 @@ function LocationProfilePictures({ locationId, style }: { locationId: string; st
   );
 }
 
-export default LocationProfilePictures;
+export default LocationCounter;
 
 const styles = StyleSheet.create({
   profilePic: {

@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Box, Text, CircularButton } from '../../components';
 
 function LocationActions() {
   return (
-    <View>
-      <Text>Hi</Text>
-    </View>
+    <Box flexDirection="row" justifyContent="space-evenly" backgroundColor="greyBackground" paddingVertical="xm" marginBottom="m">
+      <CircularButton iconName="map-pin" color="blue" text="צ׳ק אין" onPress={() => null} />
+      <CircularButton iconName="camera" color="blue" text="העלאת תמונה" onPress={() => null} />
+      <CircularButton iconName="share" color="blue" text="הזמנת חברים" onPress={() => null} />
+    </Box>
   );
 }
 
