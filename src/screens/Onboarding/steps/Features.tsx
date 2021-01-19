@@ -18,15 +18,15 @@ const features = [
   },
   {
     key: 'events',
-    icon: require('@assets/icons/camera.png'),
+    icon: require('@assets/icons/event.png'),
     title: 'אירועים',
-    description: 'בדקו הפגנות קרובות, סמנו הגעה וקבלו עדכונים.',
+    description: 'בדקו הפגנות קרובות, סמנו הגעה וקבלו התראות על שינויים.',
   },
   {
     key: 'feed',
-    icon: require('@assets/icons/camera.png'),
+    icon: require('@assets/icons/news.png'),
     title: 'פיד מחאה',
-    description: 'חדשות אחרונות מהמאבקים השונים בארצנו.',
+    description: 'חדשות ועדכונים מהמאבקים השונים בארצנו.',
   },
 ];
 
@@ -35,7 +35,10 @@ function Features({ nextPage }: BoardingScreenProps) {
     <Box flex={1} justifyContent="flex-start" alignItems="center" marginTop="xm" style={{ paddingHorizontal: 60 }}>
       {features.map((feature) => (
         <Box flexDirection="row" marginBottom="xm" key={feature.key}>
-          <Image source={feature.icon} style={styles.featureIcon} />
+          <Box marginRight="xm">
+            <Image source={feature.icon} style={styles.featureIcon} />
+          </Box>
+
           <Box width="100%">
             <Text variant="boxTitle">{feature.title}</Text>
             <Text variant="boxTitle" fontWeight="500">
@@ -45,7 +48,7 @@ function Features({ nextPage }: BoardingScreenProps) {
         </Box>
       ))}
 
-      <RoundedButton text="המשך" color="yellow" onPress={nextPage} />
+      <RoundedButton text="המשך" color="yellow" style={{ marginTop: 24 }} onPress={nextPage} />
     </Box>
   );
 }
@@ -57,6 +60,5 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     opacity: 0.75,
-    marginRight: 12,
   },
 });
