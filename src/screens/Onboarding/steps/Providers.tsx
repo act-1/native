@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { SafeAreaView } from 'react-native';
+import { Alert } from 'react-native';
 import { Box, Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
 import { facebookLogin, googleLogin } from '@services/auth';
 import { uploadProfilePictureFromURL } from '@services/storage';
 import { useStore } from '../../../stores';
 import { observer } from 'mobx-react-lite';
-import { storeDecorator } from 'mobx/dist/internal';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
   const store = useStore();
@@ -19,11 +19,9 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
   const signIn = async (provider: 'facebook' | 'google') => {
     try {
       setIsLoading(true);
-
       let result;
 
       // Sign up / log in - if the user is new upload their high res profile picture (fetched by the login methods).
-
       switch (provider) {
         case 'facebook':
           result = await facebookLogin();
@@ -45,10 +43,16 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
 
       if (result.isNewUser === false) {
         await store.initApp();
+        setIsLoading(false);
         nextPage();
       }
     } catch (err) {
-      console.log(err);
+      if (err.code === 'auth/account-exists-with-different-credential') {
+        Alert.alert(
+          'קיים כבר חשבון עם כתובת המייל הזו, אך עם ספק כניסה אחר.\n אנא היכנס.י באמצעות הספק המשויך לכתובת המייל הזו .'
+        );
+      }
+
       setIsLoading(false);
       crashlytics().recordError(err);
     }
@@ -60,6 +64,7 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
       setUploadingProfilePic(true);
       uploadProfilePictureFromURL(highResPhoto)
         .then(() => {
+          setIsLoading(false);
           nextPage();
         })
         .catch((err) => {
@@ -73,6 +78,12 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
 
   return (
     <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xm">
+      <Spinner
+        visible={isLoading}
+        textContent={'מתחברת לחשבון...'}
+        overlayColor={'rgba(0, 0, 0, 0.6)'}
+        textStyle={{ color: '#FFF' }}
+      />
       <Text variant="largeTitle" fontSize={24} marginBottom="xl">
         מתחברים למהפכה.
       </Text>
