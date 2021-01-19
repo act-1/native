@@ -6,6 +6,7 @@ import { Pages } from 'react-native-pages';
 import { Welcome, About, Providers } from './steps';
 import SignUpForm from '../SignUp/SignUpForm';
 import { useStore } from '../../stores';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 
@@ -14,6 +15,7 @@ const { width } = Dimensions.get('window');
 const isAndroid = Platform.OS === 'android';
 
 function Onboarding() {
+  const insets = useSafeAreaInsets();
   let pageProgress = useRef(new Animated.Value(0)).current;
   let overlayFadeIn = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,7 +48,7 @@ function Onboarding() {
   return (
     <Box flex={1} backgroundColor="greyBackground">
       <StatusBar backgroundColor="#040506" barStyle="light-content" />
-      <SafeAreaView />
+
       <ImageBackground source={require('@assets/pictures/onboarding.png')} style={styles.imageBackground}>
         <Animated.View
           style={{
@@ -67,8 +69,9 @@ function Onboarding() {
             style={[
               styles.heading,
               {
+                marginTop: 36 + insets.top,
                 opacity: pageProgress.interpolate({
-                  inputRange: [0, 1, 1, 2, 3],
+                  inputRange: [0, 0.9, 1, 2, 3],
                   outputRange: [0, 1, 1, 1, 0],
                 }),
                 transform: [
@@ -115,7 +118,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'AtlasDL3.1AAA-Bold',
     fontWeight: '900',
-    marginTop: 48,
     marginBottom: 20,
     color: '#eb524b',
   },
