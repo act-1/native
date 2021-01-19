@@ -73,12 +73,7 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
 
   return (
     <Box flex={1}>
-      <SafeAreaView />
-
-      <Box flex={1} justifyContent="flex-start" alignItems="center" marginTop="xm" paddingHorizontal="xm">
-        <Text variant="hugeTitle" fontSize={56} fontWeight="900" color="headerTitle" marginTop="xxl" marginBottom="xm">
-          ACT1
-        </Text>
+      <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xm">
         <Text variant="largeTitle" fontSize={24} marginBottom="xl">
           מתחברים למהפכה.
         </Text>

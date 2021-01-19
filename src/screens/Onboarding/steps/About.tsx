@@ -8,10 +8,7 @@ function Welcome({ nextPage }: BoardingScreenProps) {
     <Box flex={1}>
       <SafeAreaView />
 
-      <Box flex={1} justifyContent="flex-start" alignItems="center" marginTop="xm" paddingHorizontal="xl">
-        <Text variant="hugeTitle" fontSize={56} fontWeight="900" color="headerTitle" marginTop="xxl" marginBottom="xm">
-          ACT1
-        </Text>
+      <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xl">
         <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="m">
           ברוכות הבאות לאפליקציית האקטיביזם של ישראל.
         </Text>
