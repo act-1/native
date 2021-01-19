@@ -1,11 +1,11 @@
 import React from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
-import { Box, Text } from '../../../components';
+import { View, StyleSheet } from 'react-native';
+import { Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
 
-function Welcome({ nextPage }: BoardingScreenProps) {
+function Welcome({ nextPage, style }: BoardingScreenProps) {
   return (
-    <Box flex={1} justifyContent="flex-end" alignItems="center" zIndex={3} style={{ marginBottom: 112 }}>
+    <View style={[styles.welcomeWrapper, style]}>
       <Text variant="hugeTitle" fontSize={68} fontWeight="900" color="headerTitle">
         ACT1
       </Text>
@@ -16,8 +16,16 @@ function Welcome({ nextPage }: BoardingScreenProps) {
         ככה זה מתחיל.
       </Text>
       <RoundedButton text="בואו נתחיל" color="yellow" onPress={nextPage} />
-    </Box>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  welcomeWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+});
 
 export default Welcome;

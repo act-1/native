@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Platform, Animated, ImageBackground, StyleSheet, SafeAreaView, Dimensions, StatusBar } from 'react-native';
+import { Platform, Animated, ImageBackground, StyleSheet, Dimensions, StatusBar } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { Box } from '../../components';
 import { Pages } from 'react-native-pages';
@@ -16,8 +16,8 @@ const isAndroid = Platform.OS === 'android';
 
 function Onboarding() {
   const insets = useSafeAreaInsets();
-  let pageProgress = useRef(new Animated.Value(0)).current;
-  let overlayFadeIn = useRef(new Animated.Value(0)).current;
+
+  const pageProgress = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const pages = useRef<any>(null);
@@ -26,20 +26,12 @@ function Onboarding() {
     pages.current?.scrollToPage(currentIndex + 1);
   };
 
-  const onScrollStart = () => {
-    Animated.timing(overlayFadeIn, { toValue: 0.75, useNativeDriver: true }).start();
-  };
-
   const onScrollEnd = (index: number) => {
     setCurrentIndex(index);
-
-    if (index === 0) {
-      Animated.timing(overlayFadeIn, { toValue: 0, useNativeDriver: true }).start();
-    }
   };
 
   const screens = [
-    <Welcome nextPage={nextPage} key="welcome" />,
+    <Welcome nextPage={nextPage} key="welcome" style={{ marginBottom: insets.bottom + 55 }} />,
     <About nextPage={nextPage} key="about" />,
     <Providers nextPage={nextPage} currentIndex={currentIndex} key="providers" />,
     <SignUpForm currentIndex={currentIndex} key="signUpForm" />,

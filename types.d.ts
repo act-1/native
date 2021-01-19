@@ -28,6 +28,7 @@ type PublicCheckInParams = {
 
 type BoardingScreenProps = {
   nextPage: () => void;
+  style?: ViewStyle;
   currentIndex?: number;
 };
 
