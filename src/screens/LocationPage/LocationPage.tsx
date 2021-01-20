@@ -79,15 +79,11 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     <StickyHeaderScrollView
       // goBack={() => navigation.goBack()}
       headerTitle={location.name}
-      thumbnail={
-        new URL(
-          'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2253&q=80'
-        )
-      }
+      thumbnail={new URL('https://res.cloudinary.com/onekm/image/upload/v1604300825/weekend_pictures/31-10-2020/zomet_oh.jpg')}
     >
       <BottomSheetModalProvider>
         <Box marginTop="m">
-          <Box paddingHorizontal="xm">
+          <Box paddingHorizontal="xm" marginBottom="s">
             <Text variant="extraLargeTitle" marginBottom="xxs">
               {location.name}
             </Text>
@@ -98,11 +94,11 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
           {/* <Box backgroundColor="seperator" height={2} width={600} marginBottom="s" position="relative" left={-24} /> */}
 
-          <LocationActions />
-
           <LocationCounter locationId={location.id} style={{ marginBottom: 18 }} />
 
-          <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
+          <LocationActions />
+
+          {/* <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" /> */}
 
           {/* {userStore.user.isAnonymous && (
             <Box justifyContent="center" alignItems="center" height={110}>

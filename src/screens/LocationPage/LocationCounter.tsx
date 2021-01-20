@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Dimensions, View, ActivityIndicator, StyleSheet, ViewStyle } from 'react-native';
+import { Animated, View, ActivityIndicator, StyleSheet, ViewStyle } from 'react-native';
 import { firebase } from '@react-native-firebase/database';
 import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
 import { Box, Text, Ticker } from '../../components';
-import LottieView from 'lottie-react-native';
-import { useStore } from '../../stores';
 
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
@@ -16,14 +14,29 @@ if (__DEV__) {
   database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
 }
 
-const deviceWidth = Dimensions.get('window').width;
-
 function LocationCounter({ locationId, style }: { locationId: string; style?: ViewStyle }) {
-  const { userStore } = useStore();
+  const fadeInOut = useRef(new Animated.Value(1)).current;
   const [isLoading, setIsLoading] = useState(true);
   const [checkIns, setCheckIns] = useState<RTDBCheckIn[]>([]);
   const [counter, setCounter] = useState<number | null>(null);
-  // const [currentCheckInIndex, setCheckInIndex] = useState(0);
+
+  useEffect(() => {
+    const sequence = Animated.sequence([
+      Animated.timing(fadeInOut, {
+        toValue: 0,
+        duration: 1200,
+        delay: 750,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeInOut, {
+        toValue: 1,
+        duration: 1200,
+        useNativeDriver: true,
+      }),
+    ]);
+
+    Animated.loop(sequence).start();
+  }, [fadeInOut]);
 
   // Subscribe to location count & public check ins
   useEffect(() => {
@@ -75,32 +88,26 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
     console.log(counter);
     return (
       <Box justifyContent="center" alignItems="center" height={110} style={style}>
-        {/* <LottieView
-          source={require('@assets/wave-animation.json')}
-          autoPlay
-          loop
-          style={{ height: 100, marginTop: 6, marginBottom: 16 }}
-        /> */}
         <Text variant="text" textAlign="center" marginBottom="xm" paddingHorizontal="m">
           אף אחד עדיין לא הצטרף לרשימת המפגינים.
         </Text>
       </Box>
     );
   }
-  console.log(counter);
+
   return (
     <View style={[style, { width: '100%' }]}>
-      <Box flexDirection="row" justifyContent="center">
+      <Animated.View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 8, opacity: fadeInOut }}>
         <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>{counter}</Ticker>
         <Text variant="text" fontWeight="700" color="primaryColor" marginLeft="xs">
           מפגינים עכשיו
         </Text>
-      </Box>
+      </Animated.View>
       <Box flexDirection="row" justifyContent="center">
-        {checkIns.map((checkIn, index) => (
+        {[...checkIns, ...checkIns].map((checkIn, index) => (
           <FastImage
             source={{ uri: checkIn.profilePicture }}
-            style={[styles.profilePic, { marginLeft: index === 0 ? 0 : -16 }]}
+            style={[styles.profilePic, { marginLeft: index === 0 ? 0 : -12 }]}
             key={checkIn.id}
           />
         ))}
@@ -113,11 +120,10 @@ export default LocationCounter;
 
 const styles = StyleSheet.create({
   profilePic: {
-    width: 50,
-    height: 50,
+    width: 46,
+    height: 46,
     marginBottom: 8,
     borderRadius: 50,
-    borderWidth: 3,
-    borderColor: '#0a0d0f',
+    borderWidth: 4,
   },
 });
