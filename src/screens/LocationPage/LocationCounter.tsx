@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Animated, View, ActivityIndicator, StyleSheet, ViewStyle } from 'react-native';
+import { Animated, View, ActivityIndicator, StyleSheet, Dimensions, ViewStyle } from 'react-native';
 import { firebase } from '@react-native-firebase/database';
 import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
+import Carousel from 'react-native-snap-carousel';
+import { chunkArray } from '@utils/array-utils';
 import { Box, Text, Ticker } from '../../components';
+import { useStore } from '../../stores';
 
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
@@ -14,12 +17,17 @@ if (__DEV__) {
   database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
 }
 
+const deviceWidth = Dimensions.get('window').width;
+
 function LocationCounter({ locationId, style }: { locationId: string; style?: ViewStyle }) {
+  const { userStore } = useStore();
   const fadeInOut = useRef(new Animated.Value(1)).current;
   const [isLoading, setIsLoading] = useState(true);
   const [checkIns, setCheckIns] = useState<RTDBCheckIn[]>([]);
   const [counter, setCounter] = useState<number | null>(null);
+  const carouselRef = useRef<Carousel<RTDBCheckIn>>(null);
 
+  // Counter fade in / fade out
   useEffect(() => {
     const sequence = Animated.sequence([
       Animated.timing(fadeInOut, {
@@ -46,10 +54,24 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
 
     checkInsQuery.once('value', (snapshot) => {
       if (snapshot.val()) {
-        const entries: RTDBCheckIn[] = Object.values(snapshot.val());
-        setCheckIns(entries);
         setIsLoading(false);
       }
+    });
+
+    checkInsQuery.on('child_added', (snapshot) => {
+      const checkIn = snapshot.val();
+
+      setCheckIns((prevState) => {
+        if (checkIn.userId === userStore.user.uid && carouselRef?.current) {
+          // Changing to previous carousel item, so the profile picture will have enough time to load,
+          // and to prevent cases when the user will miss seeing their profile picture showing up initially.
+          carouselRef.current.snapToItem(prevState.length - 1, false);
+        }
+
+        return [...prevState, checkIn];
+      });
+
+      console.log(userStore.user.uid, checkIn.userId);
     });
 
     checkInCount.on('value', (snapshot) => {
@@ -85,7 +107,6 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
 
   // TODO: ISSUE?? FIX??
   if (counter === 0 || counter === null) {
-    console.log(counter);
     return (
       <Box justifyContent="center" alignItems="center" height={110} style={style}>
         <Text variant="text" textAlign="center" marginBottom="xm" paddingHorizontal="m">
@@ -95,6 +116,20 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
     );
   }
 
+  const chunkedCheckIns = chunkArray(checkIns, 6);
+
+  const carouselPages = chunkedCheckIns.map((pageCheckIns: RTDBCheckIn[]) => (
+    <Box flexDirection="row" justifyContent="center">
+      {pageCheckIns.map((checkIn, index) => (
+        <FastImage
+          source={{ uri: checkIn.profilePicture }}
+          style={[styles.profilePic, { marginLeft: index === 0 ? 0 : -12 }]}
+          key={checkIn.id}
+        />
+      ))}
+    </Box>
+  ));
+
   return (
     <View style={[style, { width: '100%' }]}>
       <Animated.View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 8, opacity: fadeInOut }}>
@@ -103,14 +138,19 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
           מפגינים עכשיו
         </Text>
       </Animated.View>
-      <Box flexDirection="row" justifyContent="center">
-        {[...checkIns, ...checkIns].map((checkIn, index) => (
-          <FastImage
-            source={{ uri: checkIn.profilePicture }}
-            style={[styles.profilePic, { marginLeft: index === 0 ? 0 : -12 }]}
-            key={checkIn.id}
-          />
-        ))}
+
+      <Box height={110}>
+        <Carousel
+          ref={carouselRef}
+          data={carouselPages}
+          autoplay={true}
+          autoplayInterval={4400}
+          renderItem={({ item }) => item}
+          sliderWidth={deviceWidth}
+          itemWidth={deviceWidth}
+          scrollEnabled={false}
+          loop={true}
+        />
       </Box>
     </View>
   );

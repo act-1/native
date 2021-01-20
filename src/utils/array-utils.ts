@@ -23,3 +23,17 @@ export function updateArrayByObjectId(arr, id, updatedFields) {
   const updatedArray = [...arr.slice(0, index), updateObj, ...arr.slice(index + 1)];
   return updatedArray;
 }
+
+/**
+ * Slice array to chunks of `n` elements.
+ * @param array The array to split.
+ * @param size The size of elements in each array chunk.
+ */
+export function chunkArray(array: Array<any>, size: number) {
+  let result = [];
+  for (let i = 0; i < array.length; i += size) {
+    let chunk = array.slice(i, i + size);
+    result.push(chunk);
+  }
+  return result;
+}
