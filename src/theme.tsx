@@ -31,6 +31,7 @@ const palette = {
 
 const theme = createTheme({
   colors: {
+    primaryColor: palette.redPrimary,
     primaryText: palette.white,
     subText: palette.grey,
     lightText: palette.barleyWhite,

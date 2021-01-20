@@ -4,7 +4,6 @@ import { firebase } from '@react-native-firebase/database';
 import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
 import { Box, Text, Ticker } from '../../components';
-import Carousel from 'react-native-snap-carousel';
 import LottieView from 'lottie-react-native';
 import { useStore } from '../../stores';
 
@@ -14,6 +13,7 @@ let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.c
 // TODO: Set as a default
 if (__DEV__) {
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
+  database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
 }
 
 const deviceWidth = Dimensions.get('window').width;
@@ -21,60 +21,45 @@ const deviceWidth = Dimensions.get('window').width;
 function LocationCounter({ locationId, style }: { locationId: string; style?: ViewStyle }) {
   const { userStore } = useStore();
   const [isLoading, setIsLoading] = useState(true);
-  const [publicCheckIns, setPublicCheckIns] = useState<PublicCheckInParams[]>([]);
+  const [checkIns, setCheckIns] = useState<RTDBCheckIn[]>([]);
   const [counter, setCounter] = useState<number | null>(null);
-  const carouselRef = useRef<Carousel<PublicCheckInParams>>(null);
   // const [currentCheckInIndex, setCheckInIndex] = useState(0);
 
   // Subscribe to location count & public check ins
   useEffect(() => {
     // TODO: Filter by createdAt property
-    const checkIns = database.ref(`/checkIns/${locationId}`).orderByChild('isActive').equalTo(true);
+    const checkInsQuery = database.ref(`/checkIns/${locationId}`).orderByChild('isActive').equalTo(true);
     const checkInCount = database.ref(`/locationCounter/${locationId}`);
 
-    checkIns.once('value', () => {
-      setIsLoading(false);
-    });
-
-    checkIns.on('child_added', (snapshot) => {
-      const checkIn = snapshot.val();
-      setPublicCheckIns((prevState) => {
-        if (checkIn.userId === userStore.user.uid && carouselRef?.current) {
-          // Changing to previous carousel item, so the profile picture will have enough time to load,
-          // and to prevent cases when the user will miss seeing their profile picture showing up initially.
-          carouselRef.current.snapToItem(prevState.length - 1, false);
-        }
-
-        return [...prevState, checkIn];
-      });
-
-      console.log(userStore.user.uid, checkIn.userId);
+    checkInsQuery.once('value', (snapshot) => {
+      if (snapshot.val()) {
+        const entries: RTDBCheckIn[] = Object.values(snapshot.val());
+        setCheckIns(entries);
+        setIsLoading(false);
+      }
     });
 
     checkInCount.on('value', (snapshot) => {
-      const count = snapshot.val();
+      if (snapshot.val()) {
+        const count = snapshot.val();
 
-      // Location Id doesn't exist yet
-      if (count === null) {
+        // Something went wrong!
+        if (count < 0) {
+          crashlytics().setAttributes({ locationId });
+          crashlytics().log('Check in counter is below zero.');
+          return;
+        }
+
+        setCounter(snapshot.val());
+      } else {
         setCounter(0);
-        return;
-      }
-      // Something went wrong!
-      if (count < 0) {
-        crashlytics().setAttributes({ locationId: route.params.locationId });
-        crashlytics().log('Check in counter is below zero.');
-        return;
       }
 
-      setCounter(snapshot.val());
+      return () => {
+        checkInsQuery.off();
+        checkInCount.off();
+      };
     });
-
-    return () => {
-      checkIns.off();
-      checkInCount.off();
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locationId]);
 
   if (isLoading) {
@@ -85,44 +70,40 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
     );
   }
 
-  if (publicCheckIns.length === 0) {
+  // TODO: ISSUE?? FIX??
+  if (counter === 0 || counter === null) {
+    console.log(counter);
     return (
       <Box justifyContent="center" alignItems="center" height={110} style={style}>
-        <LottieView
+        {/* <LottieView
           source={require('@assets/wave-animation.json')}
           autoPlay
           loop
           style={{ height: 100, marginTop: 6, marginBottom: 16 }}
-        />
-        <Text variant="text" textAlign="center" style={{ color: '#fff' }} marginBottom="xm" paddingHorizontal="m">
+        /> */}
+        <Text variant="text" textAlign="center" marginBottom="xm" paddingHorizontal="m">
           אף אחד עדיין לא הצטרף לרשימת המפגינים.
         </Text>
       </Box>
     );
   }
-
+  console.log(counter);
   return (
     <View style={[style, { width: '100%' }]}>
-      <Ticker textStyle={styles.counterText}>{counter}</Ticker>
-
-      <Box height={110}>
-        <Carousel
-          ref={carouselRef}
-          data={publicCheckIns}
-          autoplay={true}
-          renderItem={({ item: checkIn }: { item: PublicCheckInParams }) => (
-            <Box alignItems="center" justifyContent="center" key={checkIn.id}>
-              <Box paddingTop="m" justifyContent="center" alignItems="center">
-                <FastImage source={{ uri: checkIn.profilePicture }} style={styles.profilePic} />
-                <Text color="primaryText">{checkIn.displayName}</Text>
-              </Box>
-            </Box>
-          )}
-          sliderWidth={deviceWidth}
-          itemWidth={deviceWidth}
-          scrollEnabled={false}
-          loop={true}
-        />
+      <Box flexDirection="row" justifyContent="center">
+        <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>{counter}</Ticker>
+        <Text variant="text" fontWeight="700" color="primaryColor" marginLeft="xs">
+          מפגינים עכשיו
+        </Text>
+      </Box>
+      <Box flexDirection="row" justifyContent="center">
+        {checkIns.map((checkIn, index) => (
+          <FastImage
+            source={{ uri: checkIn.profilePicture }}
+            style={[styles.profilePic, { marginLeft: index === 0 ? 0 : -16 }]}
+            key={checkIn.id}
+          />
+        ))}
       </Box>
     </View>
   );
@@ -132,11 +113,11 @@ export default LocationCounter;
 
 const styles = StyleSheet.create({
   profilePic: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     marginBottom: 8,
     borderRadius: 50,
     borderWidth: 3,
-    borderColor: 'white',
+    borderColor: '#0a0d0f',
   },
 });
