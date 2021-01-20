@@ -13,8 +13,7 @@ import { fetchLocation } from '@services/locations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SheetSignUp from '../SignUp/SheetSignUp';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import LocationCounter from './LocationCounter';
-import LocationActions from './LocationActions';
+import { LocationActions, LocationCounter, LocationPictureFeed } from './';
 import CheckInService from '@services/checkIn';
 import { updateCheckInCount } from '@services/feed';
 
@@ -97,6 +96,8 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           <LocationCounter locationId={location.id} />
 
           <LocationActions />
+
+          <LocationPictureFeed />
 
           {/* <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" /> */}
 
