@@ -94,7 +94,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
           {/* <Box backgroundColor="seperator" height={2} width={600} marginBottom="s" position="relative" left={-24} /> */}
 
-          <LocationCounter locationId={location.id} style={{ marginBottom: 18 }} />
+          <LocationCounter locationId={location.id} />
 
           <LocationActions />
 

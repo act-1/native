@@ -131,7 +131,7 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
   ));
 
   return (
-    <View style={[style, { width: '100%' }]}>
+    <View style={[style, { width: '100%', marginBottom: 24 }]}>
       <Animated.View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 8, opacity: fadeInOut }}>
         <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>{counter}</Ticker>
         <Text variant="text" fontWeight="700" color="primaryColor" marginLeft="xs">
@@ -139,12 +139,12 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
         </Text>
       </Animated.View>
 
-      <Box height={110}>
+      <Box>
         <Carousel
           ref={carouselRef}
           data={carouselPages}
           autoplay={true}
-          autoplayInterval={4400}
+          autoplayInterval={5400}
           renderItem={({ item }) => item}
           sliderWidth={deviceWidth}
           itemWidth={deviceWidth}
@@ -162,8 +162,8 @@ const styles = StyleSheet.create({
   profilePic: {
     width: 46,
     height: 46,
-    marginBottom: 8,
     borderRadius: 50,
     borderWidth: 4,
+    borderColor: '#0a0d0f',
   },
 });
