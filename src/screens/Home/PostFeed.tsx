@@ -15,18 +15,13 @@ function PostFeed() {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await feedStore.getPosts();
+    await store.feedStore.getPosts();
     analytics().logEvent('post_feed_refresh');
     setRefreshing(false);
   };
 
   return (
-    <Box flex={1} alignItems="center">
-      <Button title="התנתקות" onPress={() => auth().signOut()} />
-      <Image source={{ uri: store.userStore.userData?.profilePicture }} style={{ height: 80, width: 80, borderRadius: 50 }} />
-      <Text variant="text" textAlign="center">
-        {store.userStore.userData?.displayName}
-      </Text>
+    <Box flex={1}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#ece1e1" />}

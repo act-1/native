@@ -9,6 +9,7 @@ import { EventPage, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
 import SignUpNavigator from './SignUpNavigator';
 import CheckInNavigator from './CheckInNavigator';
+import { LocationPage } from '@screens/LocationPage';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -30,19 +31,31 @@ function MainStackScreen() {
       mode="card"
     >
       <MainStack.Screen name="AppTabs" component={AppTabs} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
+      <MainStack.Screen name="LocationPage" component={LocationPage} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
       <MainStack.Screen
         name="EventPage"
         component={EventPage}
         options={({ navigation }) => ({
           gestureEnabled: true,
           headerShown: false,
-          headerTitle: 'עמוד הפגנה',
           headerBackTitle: ' ',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
           headerLeft: () => (
-            <Icon name={'arrow-right'} size={28} color={'#fff'} style={{ marginLeft: 15 }} onPress={() => navigation.goBack()} />
+            <Icon
+              name={'arrow-right'}
+              size={28}
+              color={'#fff'}
+              style={{
+                marginLeft: 15,
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 1,
+                shadowRadius: 2,
+              }}
+              onPress={() => navigation.goBack()}
+            />
           ),
         })}
       />

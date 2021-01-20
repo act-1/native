@@ -1,17 +1,31 @@
 import React from 'react';
-import { Button, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
+import FastImage from 'react-native-fast-image';
+import { Box, Text } from '../../components';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
 import { ProfileScreenProps } from '../../types/navigation';
-import { Box } from '../../components';
-import { RoundedButton } from '../../components/Buttons';
-
-import { facebookLogin } from '@utils/auth-utils';
 
 function Profile({ navigation }: ProfileScreenProps) {
+  const { userStore } = useStore();
+  console.log(userStore.userData);
   return (
-    <Box paddingTop="xl" justifyContent="center" alignItems="center">
-      <RoundedButton text="התחברות דרך פייסבוק" color="black" onPress={facebookLogin} />
+    <Box paddingTop="m" justifyContent="center" alignItems="center">
+      <FastImage source={{ uri: userStore.userData?.profilePicture }} style={styles.profilePicture} />
     </Box>
   );
 }
 
-export default Profile;
+export default observer(Profile);
+
+const styles = StyleSheet.create({
+  profilePicture: {
+    width: 90,
+    height: 90,
+    borderRadius: 50,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 1,
+    shadowRadius: 5,
+  },
+});
