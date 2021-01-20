@@ -12,7 +12,7 @@ type CheckInParams = {
   createdAt: Date;
 };
 
-type PublicCheckInParams = {
+type RTDBCheckIn = {
   id: string;
   locationId: string;
   locationName: string;

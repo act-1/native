@@ -3,8 +3,7 @@ import { StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { firebase } from '@react-native-firebase/database';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
-import MapView from 'react-native-maps';
-import { Box, Text, Ticker } from '../../components';
+import { Box, Text, StickyHeaderScrollView } from '../../components';
 import { RoundedButton } from '../../components/Buttons';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -14,24 +13,22 @@ import { fetchLocation } from '@services/locations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SheetSignUp from '../SignUp/SheetSignUp';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import LocationProfilePictures from './LocationProfilePictures';
+import { LocationActions, LocationCounter, LocationPictureFeed } from './';
 import CheckInService from '@services/checkIn';
 import { updateCheckInCount } from '@services/feed';
-import mapStyle from '@utils/mapStyle.json';
 
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
 
 // TODO: Set as a default
 if (__DEV__) {
+  database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
 }
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
-  const [counter, setCounter] = useState(null);
-
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const snapPoints = useMemo(() => ['1%', '25%'], []);
@@ -42,21 +39,6 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
   }, []);
 
   const dismissModal = () => bottomSheetModalRef!.current!.dismiss();
-
-  // const removeCheckIn = async () => {
-  //   try {
-  //     if (location !== null && userStore.lastCheckIn !== null) {
-  //       const result = await deleteCheckIn({ checkInId: userStore.lastCheckIn.id, locationId: location.id });
-  //       if (result.deleted) {
-  //         await userStore.deleteLastCheckIn();
-  //         navigation.goBack();
-  //       }
-  //     }
-  //   } catch (err) {
-  //     crashlytics().recordError(err);
-  //     console.error(err);
-  //   }
-  // };
 
   // Retrieve location information.
   // First try to hit the cache - then fetch from firestore.
@@ -84,25 +66,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     getLocationData(route.params.locationId);
   }, [route.params.locationId]);
 
-  // Subscribe to location count
-  useEffect(() => {
-    const checkInCount = database.ref(`/locationCounter/${route.params.locationId}`);
-
-    checkInCount.on('value', (snapshot) => {
-      const count = snapshot.val();
-      if (count < 0) {
-        crashlytics().setAttributes({ locationId: route.params.locationId });
-        crashlytics().log('Check in counter is below zero.');
-      }
-      setCounter(snapshot.val());
-    });
-
-    return () => {
-      checkInCount.off();
-    };
-  }, [route.params.locationId]);
-
-  if (location === null || counter === null) {
+  if (location === null) {
     return (
       <Box justifyContent="center" alignItems="center" flex={1}>
         <ActivityIndicator size="small" color="grey" />
@@ -111,46 +75,33 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     );
   }
   return (
-    <Box>
+    <StickyHeaderScrollView
+      // goBack={() => navigation.goBack()}
+      headerTitle={location.name}
+      thumbnail={new URL('https://res.cloudinary.com/onekm/image/upload/v1604300825/weekend_pictures/31-10-2020/zomet_oh.jpg')}
+    >
       <BottomSheetModalProvider>
-        <MapView
-          style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
-          maxZoomLevel={15}
-          minZoomLevel={15}
-          mapPadding={{ right: -25, top: 0, bottom: 0, left: 15 }}
-          initialRegion={{
-            latitude: location.coordinates._latitude,
-            longitude: location.coordinates._longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          customMapStyle={mapStyle}
-        />
-        <Box alignItems="center" justifyContent="center" paddingHorizontal="m" style={{ marginTop: -60 }}>
-          <Box shadowOpacity={0.5} shadowOffset={{ width: 0, height: 0 }} shadowRadius={3} elevation={3}>
-            <Image source={require('../../assets/icons/map-pin-circular.png')} style={styles.mapPin} />
-          </Box>
-          <Text variant="extraLargeTitle" textAlign="center" marginBottom="xs">
-            {location.name}
-          </Text>
-          <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.9} marginBottom="m">
-            {location.city}
-          </Text>
-
-          <Box backgroundColor="seperator" height={2} width={500} marginBottom="s" />
-
-          <Box flexDirection="row">
-            <Ticker textStyle={styles.counterText}>{counter}</Ticker>
-            <Text style={[styles.counterText, { marginLeft: 7 }]} marginBottom="xm">
-              עכשיו בהפגנה
+        <Box marginTop="m">
+          <Box paddingHorizontal="xm" marginBottom="s">
+            <Text variant="extraLargeTitle" marginBottom="xxs">
+              {location.name}
+            </Text>
+            <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.8} marginBottom="m">
+              {location.city}
             </Text>
           </Box>
 
-          <LocationProfilePictures locationId={location.id} style={{ marginBottom: 18 }} />
+          {/* <Box backgroundColor="seperator" height={2} width={600} marginBottom="s" position="relative" left={-24} /> */}
 
-          <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" />
+          <LocationCounter locationId={location.id} />
 
-          {userStore.user.isAnonymous && (
+          <LocationActions />
+
+          <LocationPictureFeed />
+
+          {/* <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" /> */}
+
+          {/* {userStore.user.isAnonymous && (
             <Box justifyContent="center" alignItems="center" height={110}>
               <Text
                 variant="text"
@@ -165,7 +116,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
               </Text>
               <RoundedButton text="הצטרפות לרשימה" onPress={handlePresentModalPress} color="yellow" />
             </Box>
-          )}
+          )} */}
 
           <BottomSheetModal
             ref={bottomSheetModalRef}
@@ -179,19 +130,13 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           </BottomSheetModal>
         </Box>
       </BottomSheetModalProvider>
-    </Box>
+    </StickyHeaderScrollView>
   );
 }
 
 export default observer(LocationPage);
 
 const styles = StyleSheet.create({
-  mapPin: {
-    width: 75,
-    height: 75,
-    marginBottom: 8,
-    resizeMode: 'contain',
-  },
   counterText: {
     fontFamily: 'AtlasDL3.1AAA-Medium',
     fontSize: 26,
@@ -199,3 +144,18 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
 });
+
+// const removeCheckIn = async () => {
+//   try {
+//     if (location !== null && userStore.lastCheckIn !== null) {
+//       const result = await deleteCheckIn({ checkInId: userStore.lastCheckIn.id, locationId: location.id });
+//       if (result.deleted) {
+//         await userStore.deleteLastCheckIn();
+//         navigation.goBack();
+//       }
+//     }
+//   } catch (err) {
+//     crashlytics().recordError(err);
+//     console.error(err);
+//   }
+// };
