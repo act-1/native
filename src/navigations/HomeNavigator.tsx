@@ -12,10 +12,16 @@ function HomeNavigator() {
       <HomeStack.Screen
         name="Home"
         options={{
-          headerTitle: 'Act1',
+          headerTitle: 'ACT1',
           headerTitleAlign: 'center',
           headerStyle: { backgroundColor: '#0a0a0a', shadowOffset: { height: 0, width: 0 } },
-          headerTitleStyle: { fontSize: 22, fontFamily: 'AtlasDL3.1AAA-Medium', color: '#EC534B' },
+          headerTitleStyle: {
+            fontSize: 22,
+            fontFamily: 'AtlasDL3.1AAA-Bold',
+            fontWeight: '700',
+            letterSpacing: 0.4,
+            color: '#EC534B',
+          },
         }}
         component={Home}
       />

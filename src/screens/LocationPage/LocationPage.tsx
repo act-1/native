@@ -82,7 +82,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     >
       <BottomSheetModalProvider>
         <Box marginTop="m">
-          <Box paddingHorizontal="xm" marginBottom="s">
+          <Box paddingHorizontal="m" marginBottom="s">
             <Text variant="extraLargeTitle" marginBottom="xxs">
               {location.name}
             </Text>

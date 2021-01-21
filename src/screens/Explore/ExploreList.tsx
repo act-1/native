@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Box, Text, Ticker } from '../../components';
 import Icon from 'react-native-vector-icons/Feather';
+import { ScrollView } from 'react-native-gesture-handler';
 
-class LocationPictureFeed extends Component {
-  render() {
-    return (
+function ExploreList() {
+  return (
+    <ScrollView>
       <Box paddingHorizontal="m">
         <Text variant="largeTitle" marginBottom="m">
           תמונות אחרונות
@@ -68,11 +69,11 @@ class LocationPictureFeed extends Component {
           </Box>
         </Box>
       </Box>
-    );
-  }
+    </ScrollView>
+  );
 }
 
-export default LocationPictureFeed;
+export default ExploreList;
 
 const styles = StyleSheet.create({
   profilePic: {
