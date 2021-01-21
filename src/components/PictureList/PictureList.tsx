@@ -20,22 +20,30 @@ const pictureItem = ({ item, index }: { item: Picture; index: number }) => (
       <FastImage source={{ uri: item.authorPicture }} style={styles.profilePic} />
       <Box>
         <Text variant="boxTitle">{item.authorName}</Text>
-        <Text variant="boxSubtitle">לפני 2 דק׳</Text>
+        <Box flexDirection="row" alignItems="center">
+          <Text variant="boxSubtitle" textAlign="left">
+            כיכר הפעמון
+          </Text>
+        </Box>
       </Box>
     </Box>
     <Box style={{ marginHorizontal: -16, marginBottom: 12 }}>
       {/* Height is calculated propotionaly to the device width */}
       <FastImage source={{ uri: item.pictureUrl }} style={{ height: item.height / (item.width / deviceWidth), width: '100%' }} />
     </Box>
-    <Box paddingHorizontal="m">
-      <Box width="100%" flexDirection="row" alignItems="center" marginBottom="s">
+    <Box paddingHorizontal="m" flexDirection="row" justifyContent="space-between">
+      <Box flexDirection="row" alignItems="center" marginBottom="s">
         <Icon name="heart" color={false ? '#ec534b' : '#999999'} size={18} style={{ marginRight: 6 }} />
         <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#999999' }}>42</Ticker>
       </Box>
-      {/* 
-      <Text variant="text" fontSize={14}>
+      <Text variant="boxSubtitle" textAlign="left">
+        לפני 2 דק׳
+      </Text>
+    </Box>
+    <Box paddingHorizontal="m">
+      <Text variant="text" fontSize={14} marginBottom="s">
         אני והח’ברס בהפגנוס. לא היה פשוט אבל הטוב ניצח. ככה הלכתי הביתה ודרשתי צדק לכולן!
-      </Text> */}
+      </Text>
     </Box>
   </Box>
 );
