@@ -39,3 +39,11 @@ type GraphAPIResult = {
     };
   };
 };
+
+type Picture = {
+  id: string;
+  authorName: string;
+  authorPicture: string;
+  pictureUrl: string;
+  likeCounter: number;
+};
