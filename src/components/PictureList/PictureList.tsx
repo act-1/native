@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 import { Box, Text, Ticker } from '../';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import { SharedElement } from 'react-navigation-shared-element';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -37,10 +38,12 @@ export default function PictureList({ pictures, initialIndex }: { pictures: Pict
       </Box>
       <Box style={{ marginHorizontal: -16, marginBottom: 12 }}>
         {/* Height is calculated propotionaly to the device width */}
-        <FastImage
-          source={{ uri: item.pictureUrl }}
-          style={{ height: item.height / (item.width / deviceWidth), width: '100%' }}
-        />
+        <SharedElement id={`item.${index}.photo`}>
+          <FastImage
+            source={{ uri: item.pictureUrl }}
+            style={{ height: item.height / (item.width / deviceWidth), width: '100%' }}
+          />
+        </SharedElement>
       </Box>
       <Box paddingHorizontal="m" flexDirection="row" justifyContent="space-between">
         <Box flexDirection="row" alignItems="center" marginBottom="s">
