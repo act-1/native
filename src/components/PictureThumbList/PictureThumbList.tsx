@@ -5,7 +5,7 @@ import { Box } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function Explore({ pictures }: { pictures: Picture[] }) {
+function PictureThumbList({ pictures }: { pictures: Picture[] }) {
   const navigation = useNavigation();
 
   return (
@@ -19,7 +19,7 @@ function Explore({ pictures }: { pictures: Picture[] }) {
   );
 }
 
-export default Explore;
+export default PictureThumbList;
 
 const deviceWidth = Dimensions.get('window').width;
 

@@ -8,7 +8,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeNavigator, EventsNavigator, CheckInNavigator, ProfileNavigator, ExploreNavigator } from './';
 import HapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/Feather';
-import { LocationPage } from '@screens/LocationPage';
 
 const icons: any = {
   Home: {

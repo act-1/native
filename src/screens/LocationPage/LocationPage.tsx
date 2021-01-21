@@ -76,7 +76,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
   }
   return (
     <StickyHeaderScrollView
-      // goBack={() => navigation.goBack()}
+      goBack={() => navigation.goBack()}
       headerTitle={location.name}
       thumbnail={new URL('https://res.cloudinary.com/onekm/image/upload/v1604300825/weekend_pictures/31-10-2020/zomet_oh.jpg')}
     >

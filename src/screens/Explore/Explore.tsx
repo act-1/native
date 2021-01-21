@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import { Box, PictureList, Text } from '../../components';
+import React from 'react';
+import { SafeAreaView } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import ExploreThumbnails from './ExploreThumbnails';
+import { Box, Text, PictureThumbList } from '../../components';
 
 const data: Picture[] = [
   {
@@ -59,22 +57,51 @@ const data: Picture[] = [
 ];
 
 function Explore() {
-  return <ExploreThumbnails pictures={data} />;
+  return (
+    <Box>
+      <SafeAreaView />
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingTop: 8, paddingBottom: 8, paddingHorizontal: 8 }}
+      >
+        <Box
+          borderWidth={1}
+          backgroundColor="primaryColor"
+          paddingHorizontal="xm"
+          paddingVertical="xs"
+          borderColor="seperator"
+          borderRadius={5}
+          marginRight="s"
+        >
+          <Text variant="text" fontSize={14} fontWeight="600">
+            נבחרות
+          </Text>
+        </Box>
+        <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
+          <Text variant="text" fontSize={14} fontWeight="600">
+            באיזורי
+          </Text>
+        </Box>
+        <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
+          <Text variant="text" fontSize={14} fontWeight="600">
+            ירושלים
+          </Text>
+        </Box>
+        <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
+          <Text variant="text" fontSize={14} fontWeight="600">
+            תל אביב
+          </Text>
+        </Box>
+        <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
+          <Text variant="text" fontSize={14} fontWeight="600">
+            חיפה
+          </Text>
+        </Box>
+      </ScrollView>
+      <PictureThumbList pictures={data} />
+    </Box>
+  );
 }
 
 export default Explore;
-
-const styles = StyleSheet.create({
-  profilePic: {
-    width: 42,
-    height: 42,
-    borderRadius: 50,
-    marginRight: 8,
-    borderColor: '#0a0d0f',
-  },
-  likeCount: {
-    color: '#999999',
-    fontFamily: 'AtlasDL3.1AAA-Medium',
-    fontSize: 16,
-  },
-});
