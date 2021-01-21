@@ -27,7 +27,7 @@ function StickyHeaderScrollView({ children, goBack, headerTitle, thumbnail }: St
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  const HEADER_MAX_HEIGHT = 200;
+  const HEADER_MAX_HEIGHT = 250;
   const HEADER_MIN_HEIGHT = insets.top + 50;
   const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
   const HEADER_SCROLL_DISTANCE_PADDING = HEADER_SCROLL_DISTANCE + 60;
@@ -132,6 +132,6 @@ const styles = StyleSheet.create({
   },
   eventThumb: {
     width: '100%',
-    height: 200,
+    height: 250,
   },
 });

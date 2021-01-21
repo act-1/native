@@ -3,3 +3,4 @@ export { default as EventList } from './EventList';
 export { default as EventPage } from './EventPage';
 export { default as Onboarding } from './Onboarding/Onboarding';
 export { default as Profile } from './Profile';
+export { default as Explore } from './Explore';
