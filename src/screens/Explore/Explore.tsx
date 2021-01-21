@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Box, Text, PictureThumbList } from '../../components';
+import Icon from 'react-native-vector-icons/Feather';
 
 const data: Picture[] = [
   {
@@ -73,9 +74,16 @@ function Explore() {
           borderColor="seperator"
           borderRadius={5}
           marginRight="s"
+          flexDirection="row"
+          alignItems="center"
         >
           <Text variant="text" fontSize={14} fontWeight="600">
             נבחרות
+          </Text>
+        </Box>
+        <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
+          <Text variant="text" fontSize={14} fontWeight="600">
+            אחרונות
           </Text>
         </Box>
         <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
