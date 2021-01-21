@@ -1,7 +1,9 @@
-import React from 'react';
-import { Button, Dimensions, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { Dimensions, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { Box, PictureList } from '../../components';
+import { Box, PictureList, Text } from '../../components';
+import { ScrollView } from 'react-native-gesture-handler';
+import ExploreThumbnails from './ExploreThumbnails';
 
 const data: Picture[] = [
   {
@@ -56,12 +58,23 @@ const data: Picture[] = [
   },
 ];
 
-function ExploreList({ route }) {
-  return (
-    <>
-      <PictureList pictures={data} initialIndex={route.params.initialIndex} />
-    </>
-  );
+function Explore() {
+  return <ExploreThumbnails pictures={data} />;
 }
 
-export default ExploreList;
+export default Explore;
+
+const styles = StyleSheet.create({
+  profilePic: {
+    width: 42,
+    height: 42,
+    borderRadius: 50,
+    marginRight: 8,
+    borderColor: '#0a0d0f',
+  },
+  likeCount: {
+    color: '#999999',
+    fontFamily: 'AtlasDL3.1AAA-Medium',
+    fontSize: 16,
+  },
+});
