@@ -1,12 +1,12 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-// import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+// import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import { Explore, ExploreList } from '@screens/Explore';
 import Icon from 'react-native-vector-icons/Feather';
 
-const ExploreStack = createStackNavigator();
-// const ExploreStack = createNativeStackNavigator();
+// const ExploreStack = createStackNavigator();
+const ExploreStack = createNativeStackNavigator();
 
 function ExploreNavigator() {
   return (
