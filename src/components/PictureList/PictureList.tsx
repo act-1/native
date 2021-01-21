@@ -1,29 +1,13 @@
 import React from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, Dimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Box, Text, Ticker } from '../';
 import Icon from 'react-native-vector-icons/Feather';
 
-const data: Picture[] = [
-  {
-    id: '1',
-    authorName: 'גיא טפר',
-    authorPicture: 'https://avatars0.githubusercontent.com/u/13344923?s=460&u=608d14c4d6c542d8f173dc2093e1763a7d18794c&v=4',
-    pictureUrl:
-      'https://res.cloudinary.com/onekm/image/upload/v1604266088/weekend_pictures/31-10-2020/clock-square-rabin_u5wwtg.jpg',
-    likeCounter: 42,
-  },
-  {
-    id: '2',
-    authorName: 'גיא טפר',
-    authorPicture: 'https://avatars0.githubusercontent.com/u/13344923?s=460&u=608d14c4d6c542d8f173dc2093e1763a7d18794c&v=4',
-    pictureUrl: 'https://res.cloudinary.com/onekm/image/upload/v1604264028/weekend_pictures/31-10-2020/rabin-sqaure_pmcyeu.jpg',
-    likeCounter: 42,
-  },
-];
+const deviceHeight = Dimensions.get('window').height;
 
 const pictureItem = ({ item }: { item: Picture }) => (
-  <Box marginBottom="l">
+  <Box marginBottom="l" onLayout={(mesaure) => console.log(mesaure.nativeEvent.layout.height)}>
     <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="m">
       <FastImage source={{ uri: item.authorPicture }} style={styles.profilePic} />
       <Box>
@@ -39,16 +23,27 @@ const pictureItem = ({ item }: { item: Picture }) => (
         <Icon name="heart" color={false ? '#ec534b' : '#999999'} size={18} style={{ marginRight: 6 }} />
         <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#999999' }}>42</Ticker>
       </Box>
-
+      {/* 
       <Text variant="text" fontSize={14}>
         אני והח’ברס בהפגנוס. לא היה פשוט אבל הטוב ניצח. ככה הלכתי הביתה ודרשתי צדק לכולן!
-      </Text>
+      </Text> */}
     </Box>
   </Box>
 );
 
-export default function PictureList() {
-  return <FlatList data={data} renderItem={pictureItem} keyExtractor={(item) => item.id} />;
+export default function PictureList({ pictures }: { pictures: Picture[] }) {
+  return (
+    <FlatList
+      data={pictures}
+      keyExtractor={(item) => item.id}
+      renderItem={pictureItem}
+      initialScrollIndex={2}
+      getItemLayout={(data, index) => {
+        const height = 600 + 110;
+        return { length: height, offset: height * index, index };
+      }}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
