@@ -4,10 +4,18 @@ import FastImage from 'react-native-fast-image';
 import { Box, Text, Ticker } from '../';
 import Icon from 'react-native-vector-icons/Feather';
 
-const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
 
-const pictureItem = ({ item }: { item: Picture }) => (
-  <Box marginBottom="l" onLayout={(mesaure) => console.log(mesaure.nativeEvent.layout.height)}>
+const itemHeights: number[] = [];
+
+const getItemLayout = (data, index) => {
+  const length = itemHeights[index];
+  const offset = itemHeights.slice(0, index).reduce((a, c) => a + c, 0);
+  return { length, offset, index };
+};
+
+const pictureItem = ({ item, index }: { item: Picture; index: number }) => (
+  <Box onLayout={(object) => (itemHeights[index] = object.nativeEvent.layout.height)}>
     <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="m">
       <FastImage source={{ uri: item.authorPicture }} style={styles.profilePic} />
       <Box>
@@ -16,7 +24,8 @@ const pictureItem = ({ item }: { item: Picture }) => (
       </Box>
     </Box>
     <Box style={{ marginHorizontal: -16, marginBottom: 12 }}>
-      <FastImage source={{ uri: item.pictureUrl }} style={{ height: 600, width: '100%' }} />
+      {/* Height is calculated propotionaly to the device width */}
+      <FastImage source={{ uri: item.pictureUrl }} style={{ height: item.height / (item.width / deviceWidth), width: '100%' }} />
     </Box>
     <Box paddingHorizontal="m">
       <Box width="100%" flexDirection="row" alignItems="center" marginBottom="s">
@@ -31,17 +40,14 @@ const pictureItem = ({ item }: { item: Picture }) => (
   </Box>
 );
 
-export default function PictureList({ pictures }: { pictures: Picture[] }) {
+export default function PictureList({ pictures, initialIndex }: { pictures: Picture[]; initialIndex?: number }) {
   return (
     <FlatList
       data={pictures}
       keyExtractor={(item) => item.id}
       renderItem={pictureItem}
-      initialScrollIndex={2}
-      getItemLayout={(data, index) => {
-        const height = 600 + 110;
-        return { length: height, offset: height * index, index };
-      }}
+      initialScrollIndex={initialIndex}
+      getItemLayout={getItemLayout}
     />
   );
 }
@@ -126,3 +132,10 @@ const styles = StyleSheet.create({
       </Box>
     </ScrollView>
  */
+
+// getItemLayout={(data, index) => {
+//   // Image height propotional calculation
+//   const height = data![index].height / (data![index].width / deviceWidth) + 20;
+//   console.log(data![index].height, data![index].height / (data![index].width / deviceWidth));
+//   return { length: height, offset: height * index, index };
+// }}

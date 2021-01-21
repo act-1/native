@@ -46,4 +46,6 @@ type Picture = {
   authorPicture: string;
   pictureUrl: string;
   likeCounter: number;
+  width: number;
+  height: number;
 };

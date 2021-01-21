@@ -10,8 +10,8 @@ function Explore({ pictures }: { pictures: Picture[] }) {
 
   return (
     <Box flexDirection="row" flexWrap="wrap">
-      {pictures.map((picture) => (
-        <TouchableOpacity onPress={() => navigation.navigate('ExploreList')}>
+      {pictures.map((picture, index) => (
+        <TouchableOpacity onPress={() => navigation.navigate('ExploreList', { initialIndex: index })} key={picture.id}>
           <FastImage style={styles.imageThumb} source={{ uri: picture.pictureUrl }} />
         </TouchableOpacity>
       ))}
