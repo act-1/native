@@ -10,7 +10,6 @@ const deviceWidth = Dimensions.get('window').width;
 const itemHeights: number[] = [];
 
 const getItemLayout = (data: Picture[] | null | undefined, index: number) => {
-  console.log(itemHeights);
   const length = itemHeights[index];
   const offset = itemHeights.slice(0, index).reduce((a, c) => a + c, 0);
   return { length, offset, index };
