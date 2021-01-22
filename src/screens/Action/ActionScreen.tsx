@@ -39,6 +39,7 @@ export default function ActionScreen() {
     showActionSheetWithOptions(
       {
         options,
+        containerStyle: { paddingBottom: 5 },
         message: 'העלאת תמונה',
         cancelButtonIndex,
       },
