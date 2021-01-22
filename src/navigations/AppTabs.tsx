@@ -5,7 +5,7 @@ import { LocationScreenProps } from '@types/navigation';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { HomeNavigator, EventsNavigator, CheckInNavigator, ProfileNavigator, ExploreNavigator } from './';
+import { HomeNavigator, EventsNavigator, ActionNavigator, ProfileNavigator, ExploreNavigator } from './';
 import HapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -34,7 +34,7 @@ const AppTabs = () => {
     <Tab.Navigator
       screenOptions={({ navigation, route }) => ({
         tabBarIcon: ({ color, size }) => {
-          if (route.name === 'CheckIn') {
+          if (route.name === 'Action') {
             return (
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -43,9 +43,9 @@ const AppTabs = () => {
                   HapticFeedback.trigger('impactMedium');
                   if (userStore.hasActiveCheckIn) {
                     const locationId = userStore.lastCheckIn.locationId;
-                    navigation.navigate('CheckInModal', { screen: 'LocationPage', params: { locationId } });
+                    navigation.navigate('ActionModal', { screen: 'LocationPage', params: { locationId } });
                   } else {
-                    navigation.navigate('CheckInModal', { screen: 'SelectLocation' });
+                    navigation.navigate('ActionModal', { screen: 'ActionScreen' });
                   }
                 }}
               >
@@ -66,7 +66,7 @@ const AppTabs = () => {
     >
       <Tab.Screen name="Home" component={HomeNavigator} />
       <Tab.Screen name="Explore" component={ExploreNavigator} />
-      <Tab.Screen name="CheckIn" component={CheckInNavigator} />
+      <Tab.Screen name="Action" component={ActionNavigator} />
       <Tab.Screen name="Events" component={EventsNavigator} />
       <Tab.Screen name="Profile" component={ProfileNavigator} />
     </Tab.Navigator>

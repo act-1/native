@@ -19,6 +19,7 @@ const MainStack = createStackNavigator<RootStackParamList>();
 const RootStack = createNativeStackNavigator();
 
 import AppTabs from './AppTabs';
+import ActionNavigator from './ActionNavigator';
 
 function MainStackScreen() {
   return (
@@ -72,7 +73,7 @@ function AppNavigator() {
       {userStore.user || userStore.userData?.signupCompleted ? (
         <>
           <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-          <RootStack.Screen name="CheckInModal" component={CheckInNavigator} options={{ headerShown: false }} />
+          <RootStack.Screen name="ActionModal" component={ActionNavigator} options={{ headerShown: false }} />
           <RootStack.Screen name="SignUpModal" component={SignUpNavigator} options={{ headerShown: false }} />
         </>
       ) : (
