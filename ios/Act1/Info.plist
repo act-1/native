@@ -79,7 +79,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>נשתמש במיקום למציאת הפגנות ואירועים באיזורך</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>על מנת להעלות תמונות קיימות יש לאפשר גישה לספריית התמונות</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AtlasDL3.1AAA-Black.ttf</string>
