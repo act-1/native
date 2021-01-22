@@ -23,6 +23,7 @@ export default function ActionButton({ backgroundImage, icon, title, description
       onPress={onPress}
       activeScale={0.98}
       friction={6}
+      onPressIn={() => HapticFeedback.trigger('impactLight')}
       onPressOut={() => HapticFeedback.trigger('impactLight')}
       style={style}
     >
