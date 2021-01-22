@@ -29,7 +29,6 @@ class UserStore {
     this.initUserLocation();
 
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
-      console.log(user.uid);
       if (user?.uid) {
         if (userDataListenerActive === false) {
           userDataListenerActive = true;
