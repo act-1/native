@@ -4,7 +4,6 @@ import FastImage from 'react-native-fast-image';
 import { Box } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { SharedElement } from 'react-navigation-shared-element';
 
 function PictureThumbList({ pictures }: { pictures: Picture[] }) {
   const navigation = useNavigation();
@@ -13,9 +12,7 @@ function PictureThumbList({ pictures }: { pictures: Picture[] }) {
     <Box flexDirection="row" flexWrap="wrap">
       {pictures.map((picture, index) => (
         <TouchableOpacity onPress={() => navigation.navigate('ExploreList', { initialIndex: index })} key={picture.id}>
-          <SharedElement id={`item.${index}.photo`}>
-            <FastImage style={styles.imageThumb} source={{ uri: picture.pictureUrl }} />
-          </SharedElement>
+          <FastImage style={styles.imageThumb} source={{ uri: picture.pictureUrl }} />
         </TouchableOpacity>
       ))}
     </Box>
