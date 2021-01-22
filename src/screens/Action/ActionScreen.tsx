@@ -3,8 +3,9 @@ import { Box } from '../../components';
 import ActionButton from './ActionButton';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
+import { ActionScreenProps } from '@types/navigation';
 
-export default function ActionScreen() {
+export default function ActionScreen({ navigation }: ActionScreenProps) {
   const { showActionSheetWithOptions } = useActionSheet();
 
   const openLibrary = async () => {
@@ -61,7 +62,7 @@ export default function ActionScreen() {
         icon={require('@assets/icons/location-icon.png')}
         title="צ׳ק אין"
         description="הצטרפו להפגנה"
-        onPress={openLibrary}
+        onPress={() => navigation.navigate('SelectLocation')}
         color="red"
         style={{ marginBottom: 12 }}
       />

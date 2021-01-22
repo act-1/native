@@ -69,21 +69,13 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
   return (
     <ScrollView style={{ flex: 1, width: '100%' }}>
-      <StatusBar barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'} />
-
-      <Box alignItems="center" justifyContent="center" marginTop="xl">
-        <Image source={require('@assets/illustrations/power-deluxe.png')} style={{ marginBottom: 16 }} />
-        <Text variant="extraLargeTitle" textAlign="center" color="lightText" marginBottom="xs">
-          יוצאים להפגין. ככה זה מתחיל.
-        </Text>
-
+      <Box alignItems="center" justifyContent="center">
         {locationStore.nearbyLocations.length === 0 ? (
-          <LocationPermissionMessage />
+          <Box alignItems="center" marginTop="xm">
+            <LocationPermissionMessage />
+          </Box>
         ) : (
-          <Box marginTop="m" width="100%">
-            <Text variant="text" fontWeight={'400'} textAlign="center" color="lightText" marginBottom="xm">
-              איפה אתם עכשיו?
-            </Text>
+          <Box width="100%">
             {locationStore.nearbyLocations.map((location: any) => {
               if (location.type === 'event') {
                 return <EventBox key={location.locationId} {...location} onPress={() => onLocationPress({ ...location })} />;

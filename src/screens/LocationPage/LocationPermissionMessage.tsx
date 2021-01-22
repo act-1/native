@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Platform, AppState, AppStateStatus, ActivityIndicator } from 'react-native';
+import { Platform, AppState, AppStateStatus, Linking, ActivityIndicator } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { openSettings } from 'react-native-permissions';
@@ -122,12 +122,33 @@ function LocationPermissionMessage() {
 
   return (
     <>
-      <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="m">
-        לא נמצאו הפגנות פעילות באיזורך.
+      <Text
+        variant="smallText"
+        fontFamily="AtlasDL3.1AAA-Bold"
+        textAlign="center"
+        color="lightText"
+        paddingHorizontal="xl"
+        marginBottom="s"
+      >
+        לא נמצאו מוקדי הפגנות באיזורך
       </Text>
-      <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="xm">
-        הפגנות יופיעו כאשר מיקומכם יהיה בסביבת מוקד הפגנה.
+      <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="l">
+        הפגנות יופיעו כאשר מיקומכם יהיה בסביבת מוקד הפגנה
       </Text>
+
+      <Box width="85%" height={2} backgroundColor="seperator" opacity={0.8} marginBottom="l" />
+
+      <Box opacity={0.67} alignItems="center">
+        <Text variant="smallText" textAlign="center" color="lightText" paddingHorizontal="xl" marginBottom="m">
+          חסר כאן מיקום? ספרו לנו ונדאג שהוא יופיע
+        </Text>
+        <RoundedButton
+          text="שליחת מייל ל- ACT1"
+          onPress={() => Linking.openURL('mailto:guytepper@act1.co.il')}
+          color="darkBlue"
+          textStyle={{ fontWeight: 'bold' }}
+        />
+      </Box>
     </>
   );
 }
