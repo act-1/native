@@ -40,7 +40,7 @@ function PostBox(props: PostBoxProps) {
   };
 
   return (
-    <Box backgroundColor="mainBackground" alignItems="flex-start" style={style}>
+    <Box alignItems="flex-start" style={[{ backgroundColor: '#0a0d0f' }, style]}>
       <Box flexDirection="row" paddingHorizontal="m">
         <FastImage
           source={{
@@ -80,7 +80,7 @@ function PostBox(props: PostBoxProps) {
         </Box>
       </Box>
 
-      <Box width="100%" height={1} backgroundColor="seperator" />
+      {/* <Box width="100%" height={1} backgroundColor="seperator" /> */}
     </Box>
   );
 }

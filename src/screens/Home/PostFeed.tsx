@@ -25,10 +25,10 @@ function PostFeed() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#ece1e1" />}
-        style={{ backgroundColor: '#040506' }}
+        style={{ backgroundColor: '#0a0d0f' }}
       >
         {posts.length > 0 &&
-          posts.map((post: IPost, index: number) => {
+          posts.map((post: IPost) => {
             return <PostBox {...post} key={post.id} />;
           })}
       </ScrollView>

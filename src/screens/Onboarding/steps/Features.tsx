@@ -8,25 +8,25 @@ const features = [
     key: 'checkIn',
     icon: require('@assets/icons/strike.png'),
     title: 'צ׳ק אין',
-    description: 'עשו צ׳ק אין להפגנה וצפו מי עוד מפגין ברחבי הארץ.',
+    description: 'עשו צ׳ק אין להפגנה וצפו מי עוד מפגין ברחבי הארץ',
   },
   {
     key: 'pictures',
     icon: require('@assets/icons/camera.png'),
     title: 'תמונות',
-    description: 'העלו צילומים וצפו בתמונות מהאירועים האחרונים.',
+    description: 'העלו צילומים וצפו בתמונות מהאירועים האחרונים',
   },
   {
     key: 'events',
     icon: require('@assets/icons/event.png'),
     title: 'אירועים',
-    description: 'בדקו הפגנות קרובות, סמנו הגעה וקבלו התראות על שינויים.',
+    description: 'בדקו הפגנות קרובות, סמנו הגעה וקבלו התראות על שינויים',
   },
   {
     key: 'feed',
     icon: require('@assets/icons/news.png'),
     title: 'פיד מחאה',
-    description: 'חדשות ועדכונים מהמאבקים השונים בארצנו.',
+    description: 'חדשות ועדכונים מהמאבקים השונים בארצנו',
   },
 ];
 
@@ -41,7 +41,7 @@ function Features({ nextPage }: BoardingScreenProps) {
 
           <Box width="100%">
             <Text variant="boxTitle">{feature.title}</Text>
-            <Text variant="boxTitle" fontWeight="500">
+            <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Medium">
               {feature.description}
             </Text>
           </Box>

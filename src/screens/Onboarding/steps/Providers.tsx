@@ -47,9 +47,7 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
       }
     } catch (err) {
       if (err.code === 'auth/account-exists-with-different-credential') {
-        Alert.alert(
-          'קיים כבר חשבון עם כתובת המייל הזו, אך עם ספק כניסה אחר.\n אנא היכנס.י באמצעות הספק המשויך לכתובת המייל הזו .'
-        );
+        Alert.alert('קיים כבר חשבון עם כתובת המייל הזו, אך עם ספק כניסה אחר', 'אנא היכנס.י באמצעות ספק המשויך לכתובת המייל הזו');
       }
 
       setIsLoading(false);
