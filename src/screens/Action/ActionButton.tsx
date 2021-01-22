@@ -5,8 +5,6 @@ import TouchableScale from 'react-native-touchable-scale';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { buttonColors } from '@components/Buttons/ButtonColors';
 
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-
 type ActionButtonProps = {
   backgroundImage: ImageSourcePropType;
   icon: ImageSourcePropType;
