@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeNavigator, EventsNavigator, ActionNavigator, ProfileNavigator, ExploreNavigator } from './';
+import TouchableScale from 'react-native-touchable-scale';
 import HapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -36,11 +37,12 @@ const AppTabs = () => {
         tabBarIcon: ({ color, size }) => {
           if (route.name === 'Action') {
             return (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 10 : 18 }]}
+              <TouchableScale
+                activeScale={0.92}
+                friction={6}
+                onPressIn={() => HapticFeedback.trigger('impactLight')}
+                onPressOut={() => HapticFeedback.trigger('impactMedium')}
                 onPress={() => {
-                  HapticFeedback.trigger('impactMedium');
                   if (userStore.hasActiveCheckIn) {
                     const locationId = userStore.lastCheckIn.locationId;
                     navigation.navigate('ActionModal', { screen: 'LocationPage', params: { locationId } });
@@ -48,9 +50,10 @@ const AppTabs = () => {
                     navigation.navigate('ActionModal', { screen: 'ActionScreen' });
                   }
                 }}
+                style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 10 : 18 }]}
               >
                 <Image source={require('@assets/icons/fist-icon.png')} style={styles.checkInIcon} />
-              </TouchableOpacity>
+              </TouchableScale>
             );
           }
           const { iconName } = icons[route.name];

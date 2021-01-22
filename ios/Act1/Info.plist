@@ -79,7 +79,9 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>נשתמש במיקום למציאת הפגנות ואירועים באיזורך</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>על מנת להעלות תמונות קיימות יש לאפשר גישה לספריית התמונות</string>
+	<string>על מנת להעלות תמונות יש לאפשר גישה לספריית התמונות</string>
+	<key>NSCameraUsageDescription</key>
+	<string>יש לאפשר גישה למצלמה על מנת לצלם תמונות</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AtlasDL3.1AAA-Black.ttf</string>

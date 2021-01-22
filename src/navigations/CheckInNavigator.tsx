@@ -3,7 +3,6 @@ import { Platform, Pressable, StyleSheet } from 'react-native';
 import { Box, Text, CircularButton } from '@components';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SelectLocation, LocationPage } from '@screens/LocationPage';
-import Icon from 'react-native-vector-icons/Feather';
 
 const CheckInStack = createStackNavigator();
 
