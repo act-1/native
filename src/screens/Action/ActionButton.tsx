@@ -1,29 +1,28 @@
 import React from 'react';
-import { Alert, Image, ImageBackground, StyleSheet } from 'react-native';
+import { Alert, Image, ImageBackground, StyleSheet, ViewStyle, ImageSourcePropType } from 'react-native';
 import { Box, Text } from '../../components';
 import TouchableScale from 'react-native-touchable-scale';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { buttonColors } from '@components/Buttons/ButtonColors';
-import ImagePicker from 'react-native-image-crop-picker';
 
-export default function ActionButton({ backgroundImage, icon, title, description, color, style }) {
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+
+type ActionButtonProps = {
+  backgroundImage: ImageSourcePropType;
+  icon: ImageSourcePropType;
+  title: string;
+  description: string;
+  onPress: () => void;
+  color: string;
+  style: ViewStyle;
+};
+
+export default function ActionButton({ backgroundImage, icon, title, description, onPress, color, style }: ActionButtonProps) {
   const { initialColor } = buttonColors[color];
-
-  const openCamera = async () => {
-    try {
-      await ImagePicker.openPicker({});
-    } catch (err) {
-      if (err.code === 'E_PERMISSION_MISSING') {
-        console.log(err.code);
-        Alert.alert(err.code);
-      }
-    }
-    // ImagePicker.openCamera({ cropping: false }).then((res) => console.log(res));
-  };
 
   return (
     <TouchableScale
-      onPress={openCamera}
+      onPress={onPress}
       activeScale={0.98}
       friction={6}
       onPressOut={() => HapticFeedback.trigger('impactLight')}
