@@ -14,7 +14,7 @@ type ActionButtonProps = {
   description: string;
   onPress: () => void;
   color: string;
-  style: ViewStyle;
+  style?: ViewStyle;
 };
 
 export default function ActionButton({ backgroundImage, icon, title, description, onPress, color, style }: ActionButtonProps) {
