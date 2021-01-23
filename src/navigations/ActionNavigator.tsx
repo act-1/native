@@ -51,36 +51,10 @@ function ActionNavigator({ navigation }) {
       <ActionStack.Screen
         name="LocationPage"
         component={LocationPage}
-        options={{
-          headerTitle: 'איפה אתם?',
-          headerBackTitleVisible: false,
-          headerBackImage: () => (
-            <Icon
-              name={'arrow-right'}
-              size={28}
-              color={'#fff'}
-              style={{
-                marginLeft: Platform.OS === 'ios' ? 6 : -4,
-                marginBottom: Platform.OS === 'ios' ? 8 : 0,
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 1 },
-                shadowOpacity: 1,
-                shadowRadius: 2,
-              }}
-              onPress={() => navigation.navigate('ActionScreen')} /** The goBack method doesn't work as expected on android **/
-            />
-          ),
-        }}
+        options={{ headerTitle: 'איפה אתם?', headerBackTitleVisible: false }}
       />
     </ActionStack.Navigator>
   );
 }
 
 export default ActionNavigator;
-
-const styles = StyleSheet.create({
-  dismissButton: {
-    marginRight: 16,
-    marginBottom: 2,
-  },
-});
