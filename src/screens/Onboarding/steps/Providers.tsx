@@ -41,7 +41,6 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
 
       if (result.isNewUser === false) {
         await store.initApp();
-        setIsLoading(false);
       }
     } catch (err) {
       if (err.code === 'auth/account-exists-with-different-credential') {
