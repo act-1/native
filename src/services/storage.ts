@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
+import perf from '@react-native-firebase/perf';
 import { updateUserPicture } from './user';
 import { nanoid } from 'nanoid/non-secure';
 import ImageResizer from 'react-native-image-resizer';
@@ -63,20 +64,24 @@ export async function uploadImage(image) {
       resizeRatio = 1.5;
     }
 
-    const resizedImage = await ImageResizer.createResizedImage(uri, width / resizeRatio, height / resizeRatio, 'JPEG', 50);
-    console.log(resizedImage);
-    // const reference = storage().ref(image.fileName);
-    // const task = reference.putFile(image.uri);
+    const resizedImage = await ImageResizer.createResizedImage(uri, width / resizeRatio, height / resizeRatio, 'JPEG', 75);
 
-    // task.on('state_changed', (taskSnapshot) => {
-    //   console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
-    // });
+    const trace = await perf().startTrace('imageUpload');
+    trace.putMetric(resizedImage.size);
 
-    // task.then(async () => {
-    //   const pictureUrl = await reference.getDownloadURL();
-    //   console.log('Done uplaoding!', pictureUrl);
-    //   return pictureUrl;
-    // });
+    const reference = storage().ref(resizedImage.name);
+    const task = reference.putFile(resizedImage.uri);
+
+    task.on('state_changed', (taskSnapshot) => {
+      console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
+    });
+
+    task.then(async () => {
+      const pictureUrl = await reference.getDownloadURL();
+      console.log('Done uplaoding!', pictureUrl);
+      trace.stop();
+      return pictureUrl;
+    });
   } catch (err) {
     console.error(err);
   }
