@@ -33,8 +33,6 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
           throw new Error('Supplied provider is incorrect.');
       }
 
-      console.log(result);
-
       if (result?.isNewUser || userStore.userData?.signupCompleted === false) {
         if (result.photoURL) {
           setHighResPhoto(result.photoURL);
