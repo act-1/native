@@ -67,21 +67,16 @@ export async function uploadImage(image) {
     const resizedImage = await ImageResizer.createResizedImage(uri, width / resizeRatio, height / resizeRatio, 'JPEG', 75);
 
     const trace = await perf().startTrace('imageUpload');
-    trace.putMetric(resizedImage.size);
+    trace.putMetric('image_size', resizedImage.size);
 
     const reference = storage().ref(resizedImage.name);
-    const task = reference.putFile(resizedImage.uri);
+    await reference.putFile(resizedImage.uri);
 
-    task.on('state_changed', (taskSnapshot) => {
-      console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
-    });
+    const pictureUrl = await reference.getDownloadURL();
+    console.log('Done uplaoding!', pictureUrl);
+    trace.stop();
 
-    task.then(async () => {
-      const pictureUrl = await reference.getDownloadURL();
-      console.log('Done uplaoding!', pictureUrl);
-      trace.stop();
-      return pictureUrl;
-    });
+    return pictureUrl;
   } catch (err) {
     console.error(err);
   }
