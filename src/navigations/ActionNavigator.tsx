@@ -49,11 +49,7 @@ function ActionNavigator({ navigation }) {
           ),
         }}
       />
-      <ActionStack.Screen
-        name="NewPost"
-        component={NewPost}
-        options={{ headerTitle: 'איפה אתם?', headerBackTitleVisible: false }}
-      />
+      <ActionStack.Screen name="NewPost" component={NewPost} options={{ headerTitle: 'פוסט חדש' }} />
       <ActionStack.Screen
         name="LocationPage"
         component={LocationPage}
