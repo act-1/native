@@ -4,6 +4,7 @@ import { Box, Text, CircularButton } from '@components';
 import { createStackNavigator } from '@react-navigation/stack';
 import ActionScreen from '@screens/Action';
 import { SelectLocation, LocationPage } from '@screens/LocationPage';
+import NewPost from '@screens/NewPost';
 import Icon from 'react-native-vector-icons/Feather';
 
 const ActionStack = createStackNavigator();
@@ -47,6 +48,11 @@ function ActionNavigator({ navigation }) {
             />
           ),
         }}
+      />
+      <ActionStack.Screen
+        name="NewPost"
+        component={NewPost}
+        options={{ headerTitle: 'איפה אתם?', headerBackTitleVisible: false }}
       />
       <ActionStack.Screen
         name="LocationPage"
