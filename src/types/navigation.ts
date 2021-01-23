@@ -1,5 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { ImagePickerResponse } from 'react-native-image-picker';
 
 export type TabBarProps = BottomTabScreenProps<TabBarParamList>;
 export type SelectLocationScreenProps = BottomTabScreenProps<RootStackParamList, 'CheckInSelectLocation'>;
@@ -10,6 +11,7 @@ export type EventListScreenProps = StackScreenProps<RootStackParamList, 'EventLi
 export type LocationScreenProps = StackScreenProps<RootStackParamList, 'LocationPage'>;
 export type ProfileScreenProps = StackScreenProps<RootStackParamList, 'Profile'>;
 export type ActionScreenProps = StackScreenProps<RootStackParamList, 'ActionScreen'>;
+export type NewPostProps = StackScreenProps<RootStackParamList, 'NewPost'>;
 
 export type RootStackParamList = {
   AppTabs: undefined;
@@ -23,6 +25,7 @@ export type RootStackParamList = {
   SignUpNavigator: undefined;
   SignUpForm: undefined;
   ActionScreen: undefined;
+  NewPost: { image: ImagePickerResponse };
   SelectLocation: undefined;
 };
 

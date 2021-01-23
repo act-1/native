@@ -47,7 +47,7 @@ const AppTabs = () => {
                     const locationId = userStore.lastCheckIn.locationId;
                     navigation.navigate('ActionModal', { screen: 'LocationPage', params: { locationId } });
                   } else {
-                    navigation.navigate('ActionModal', { screen: 'NewPost' });
+                    navigation.navigate('ActionModal', { screen: 'ActionScreen' });
                   }
                 }}
                 style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 10 : 18 }]}

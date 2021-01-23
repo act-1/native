@@ -10,8 +10,8 @@ export default function ActionScreen({ navigation }: ActionScreenProps) {
 
   const openLibrary = async () => {
     try {
-      await launchImageLibrary({ mediaType: 'photo' }, (response) => {
-        console.log(response);
+      await launchImageLibrary({ mediaType: 'photo' }, (image) => {
+        navigation.navigate('NewPost', { image });
       });
     } catch (err) {
       if (err.code === 'E_PERMISSION_MISSING') {

@@ -46,8 +46,6 @@ function LocationPermissionMessage() {
     }
   };
 
-  console.log('Fetchiunbg location status: ', locationStore.fetchingLocations);
-
   if (locationStore.fetchingLocations === true) {
     return (
       <>
