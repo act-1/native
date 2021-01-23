@@ -2,6 +2,7 @@ import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import { updateUserPicture } from './user';
 import { nanoid } from 'nanoid/non-secure';
+import ImageResizer from 'react-native-image-resizer';
 
 export async function uploadProfilePicture(imagePath: string) {
   try {
@@ -43,3 +44,40 @@ export async function uploadProfilePictureFromURL(iamgeURL: string) {
 //     throw err;
 //   }
 // }
+
+export async function uploadImage(image) {
+  try {
+    const { uri, width, height } = image;
+
+    // Whther to set the resize ratio based on the width (landscape image) or the height (portrait)
+    const resizeDimension = image.width > image.height ? image.width : image.height;
+    let resizeRatio = 1;
+
+    // Resize dimensions for landscape picture
+    if (resizeDimension > 5000) {
+      resizeRatio = 2.2;
+    }
+    if (resizeDimension > 4000) {
+      resizeRatio = 1.8;
+    } else if (resizeDimension > 3000) {
+      resizeRatio = 1.5;
+    }
+
+    const resizedImage = await ImageResizer.createResizedImage(uri, width / resizeRatio, height / resizeRatio, 'JPEG', 50);
+    console.log(resizedImage);
+    // const reference = storage().ref(image.fileName);
+    // const task = reference.putFile(image.uri);
+
+    // task.on('state_changed', (taskSnapshot) => {
+    //   console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
+    // });
+
+    // task.then(async () => {
+    //   const pictureUrl = await reference.getDownloadURL();
+    //   console.log('Done uplaoding!', pictureUrl);
+    //   return pictureUrl;
+    // });
+  } catch (err) {
+    console.error(err);
+  }
+}

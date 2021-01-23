@@ -10,7 +10,7 @@ export default function ActionScreen({ navigation }: ActionScreenProps) {
 
   const openLibrary = async () => {
     try {
-      await launchImageLibrary({ mediaType: 'photo' }, (image) => {
+      await launchImageLibrary({ mediaType: 'photo', quality: 0.9 }, (image) => {
         navigation.navigate('NewPost', { image });
       });
     } catch (err) {

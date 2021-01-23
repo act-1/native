@@ -4,6 +4,7 @@ import { Box, Text } from '../../components';
 import FastImage from 'react-native-fast-image';
 import { TextInput } from 'react-native-gesture-handler';
 import { NewPostProps } from '../../types/navigation';
+import { uploadImage } from '@services/storage';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -16,7 +17,7 @@ function NewPost({ navigation, route }: NewPostProps) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => uploadImage(image)}>
           <Box backgroundColor="primaryColor" paddingHorizontal="m" paddingVertical="xs" marginBottom="s" borderRadius={4}>
             <Text variant="text" fontSize={18} color="primaryText" fontWeight="600">
               פרסום

@@ -56,6 +56,7 @@
     "react-native-haptic-feedback": "^1.11.0",
     "react-native-image-crop-picker": "^0.35.2",
     "react-native-image-picker": "^3.1.4",
+    "react-native-image-resizer": "^1.4.2",
     "react-native-loading-spinner-overlay": "^2.0.0",
     "react-native-maps": "0.27.1",
     "react-native-modalfy": "^2.1.0",
