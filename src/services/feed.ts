@@ -77,3 +77,5 @@ export async function updateCheckInCount(): Promise<{ updated: boolean; action: 
     throw err;
   }
 }
+
+export async function newImagePost({ image, text });
