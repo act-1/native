@@ -7,7 +7,7 @@ import { HeaderButton } from '@components/Buttons';
 import FastImage from 'react-native-fast-image';
 import { TextInput } from 'react-native-gesture-handler';
 import { NewPostProps } from '../../types/navigation';
-
+import FeedService from '@services/feed';
 const deviceWidth = Dimensions.get('window').width;
 
 function NewPost({ navigation, route }: NewPostProps) {
@@ -19,7 +19,10 @@ function NewPost({ navigation, route }: NewPostProps) {
   const uploadPost = async () => {
     try {
       setUploading(true);
+      await FeedService.newImagePost({ image, text: content });
+      setUploading(false);
     } catch (err) {
+      console.error(err);
       setUploading(false);
       crashlytics().setAttribute('image_object', JSON.stringify(image));
       crashlytics().recordError(err);
@@ -29,9 +32,9 @@ function NewPost({ navigation, route }: NewPostProps) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => <HeaderButton text="פרסום" color="primaryRed" onPress={uploadPost} />,
+      headerRight: () => <HeaderButton text="פרסום" onPress={uploadPost} color="primaryRed" loading={uploading} />,
     });
-  }, [navigation]);
+  }, [navigation, uploading]);
 
   return (
     <ScrollView style={{ paddingTop: 12 }}>

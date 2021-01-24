@@ -1,7 +1,9 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
-import analytics from '@react-native-firebase/analytics';
+import auth from '@react-native-firebase/auth';
 import { IPost } from '@types/post';
+import Storage from './storage';
+import { ImagePickerResponse } from 'react-native-image-picker';
 
 export async function getAllPosts(userId: string): Promise<IPost[]> {
   try {
@@ -78,4 +80,43 @@ export async function updateCheckInCount(): Promise<{ updated: boolean; action: 
   }
 }
 
-export async function newImagePost({ image, text });
+type NewImagePostProps = {
+  image: ImagePickerResponse;
+  text?: string;
+  locationId?: string;
+};
+
+export async function newImagePost({ image, text }: NewImagePostProps) {
+  try {
+    const currentUser = auth().currentUser;
+    if (currentUser) {
+      const pictureUrl = await Storage.uploadImage(image);
+      console.log(currentUser.uid, currentUser.displayName, currentUser.photoURL);
+
+      // TODO: Add storage path
+      firestore().collection('posts').add({
+        createdAt: firestore.FieldValue.serverTimestamp(),
+        type: 'picture',
+        authorId: currentUser.uid,
+        authorName: currentUser.displayName,
+        authorPicture: currentUser.photoURL,
+        pictureUrl,
+        text,
+      });
+
+      /**
+       * locationId
+       * locationName
+       * locationCity
+       * locationProvince
+       */
+    }
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
+export default {
+  newImagePost,
+};

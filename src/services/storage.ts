@@ -81,3 +81,7 @@ export async function uploadImage(image) {
     console.error(err);
   }
 }
+
+export default {
+  uploadImage,
+};

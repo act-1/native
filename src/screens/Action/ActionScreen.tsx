@@ -61,7 +61,7 @@ export default function ActionScreen({ navigation }: ActionScreenProps) {
         backgroundImage={require('@assets/pictures/check-in-action.png')}
         icon={require('@assets/icons/location-icon.png')}
         title="צ׳ק אין"
-        description="הצטרפו להפגנה"
+        description="יוצאים להפגין, עושים צ׳ק אין"
         onPress={() => navigation.navigate('SelectLocation')}
         color="red"
         style={{ marginBottom: 12 }}
