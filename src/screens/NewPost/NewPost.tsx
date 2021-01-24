@@ -1,29 +1,28 @@
 import React, { useState } from 'react';
-import { ScrollView, Image, StyleSheet, TouchableOpacity, Dimensions, Alert } from 'react-native';
+import { ScrollView, Image, StyleSheet, Dimensions, Alert } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useStore } from '../../stores';
+import { observer } from 'mobx-react-lite';
 import { Box, Text } from '../../components';
 import { HeaderButton } from '@components/Buttons';
 import FastImage from 'react-native-fast-image';
 import { TextInput } from 'react-native-gesture-handler';
 import { NewPostProps } from '../../types/navigation';
-import FeedService from '@services/feed';
 const deviceWidth = Dimensions.get('window').width;
 
 function NewPost({ navigation, route }: NewPostProps) {
-  const { userStore } = useStore();
-  const [uploading, setUploading] = useState(false);
+  const { userStore, feedStore } = useStore();
   const [content, setContent] = useState('');
   const { image } = route.params;
 
   const uploadPost = async () => {
     try {
-      setUploading(true);
-      await FeedService.newImagePost({ image, text: content });
-      setUploading(false);
+      console.log('uploading wooohooo');
+      await feedStore.uploadImage({ image, text: content });
+      navigation.popToTop();
+      navigation.goBack();
     } catch (err) {
       console.error(err);
-      setUploading(false);
       crashlytics().setAttribute('image_object', JSON.stringify(image));
       crashlytics().recordError(err);
       Alert.alert('ארעה שגיאה');
@@ -32,9 +31,9 @@ function NewPost({ navigation, route }: NewPostProps) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => <HeaderButton text="פרסום" onPress={uploadPost} color="primaryRed" loading={uploading} />,
+      headerRight: () => <HeaderButton text="פרסום" onPress={uploadPost} color="primaryRed" />,
     });
-  }, [navigation, uploading]);
+  }, [navigation]);
 
   return (
     <ScrollView style={{ paddingTop: 12 }}>
@@ -75,7 +74,7 @@ function NewPost({ navigation, route }: NewPostProps) {
   );
 }
 
-export default NewPost;
+export default observer(NewPost);
 
 const styles = StyleSheet.create({
   profilePicture: {

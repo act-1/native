@@ -44,7 +44,20 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store.userStore.user]);
 
-  notificationRef.current?.show();
+  useEffect(() => {
+    if (store.feedStore.uploadStatus === 'in_progress') {
+      setTimeout(() => {
+        notificationRef.current?.show();
+      }, 400);
+    }
+
+    if (store.feedStore.uploadStatus === 'done') {
+      // Wait for the completion to finish and hide the banner
+      setTimeout(() => {
+        notificationRef.current?.hide();
+      }, 2700);
+    }
+  }, [store.feedStore.uploadStatus]);
 
   return (
     <SafeAreaProvider>
