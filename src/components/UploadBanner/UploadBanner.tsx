@@ -33,6 +33,12 @@ function UploadBanner() {
     }
   }, [progress, feedStore.uploadStatus]);
 
+  let uploadText = 'מעלה פוסט...';
+
+  if (feedStore.uploadStatus === 'done') {
+    uploadText = 'הפוסט עלה בהצלחה!';
+  }
+
   return (
     <Box style={styles.bannerWrapper}>
       <LottieView
@@ -40,7 +46,7 @@ function UploadBanner() {
         progress={progress}
         style={{ width: 50, marginRight: 8 }}
       />
-      <Text variant="boxTitle">מעלה תמונה...</Text>
+      <Text variant="boxTitle">{uploadText}</Text>
     </Box>
   );
 }
