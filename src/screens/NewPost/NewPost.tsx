@@ -3,6 +3,7 @@ import { ScrollView, Image, StyleSheet, TouchableOpacity, Dimensions, Alert } fr
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useStore } from '../../stores';
 import { Box, Text } from '../../components';
+import { HeaderButton } from '@components/Buttons';
 import FastImage from 'react-native-fast-image';
 import { TextInput } from 'react-native-gesture-handler';
 import { NewPostProps } from '../../types/navigation';
@@ -28,15 +29,7 @@ function NewPost({ navigation, route }: NewPostProps) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity activeOpacity={0.8} onPress={uploadPost}>
-          <Box backgroundColor="primaryColor" paddingHorizontal="m" paddingVertical="xs" marginBottom="s" borderRadius={4}>
-            <Text variant="text" fontSize={18} color="primaryText" fontWeight="600">
-              פרסום
-            </Text>
-          </Box>
-        </TouchableOpacity>
-      ),
+      headerRight: () => <HeaderButton text="פרסום" color="primaryRed" onPress={uploadPost} />,
     });
   }, [navigation]);
 
