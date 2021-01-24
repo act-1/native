@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { Box, Text } from '../../components';
 import { HeaderButton } from '@components/Buttons';
 import FastImage from 'react-native-fast-image';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { NewPostProps } from '../../types/navigation';
 const deviceWidth = Dimensions.get('window').width;
 
@@ -49,22 +49,25 @@ function NewPost({ navigation, route }: NewPostProps) {
             multiline={true}
           />
         </Box>
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          paddingVertical="s"
-          borderTopWidth={1}
-          borderBottomWidth={1}
-          borderColor="seperator"
-          marginBottom="m"
-          opacity={0.8}
-        >
-          <Text variant="text">הוספת מיקום</Text>
-          <Text variant="text" marginRight="s">
-            {'<'}
-          </Text>
-        </Box>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('SelectLocation')}>
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            paddingVertical="s"
+            borderTopWidth={1}
+            borderBottomWidth={1}
+            borderColor="seperator"
+            marginBottom="m"
+            opacity={0.8}
+          >
+            <Text variant="text">הוספת מיקום</Text>
+            <Text variant="text" marginRight="s">
+              {'<'}
+            </Text>
+          </Box>
+        </TouchableOpacity>
+
         <Image
           source={{ uri: image.uri }}
           style={{ height: image.height! / (image.width! / (deviceWidth - 24)), width: '100%', borderRadius: 6 }}
@@ -84,6 +87,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   textInput: {
+    paddingRight: 52,
     fontSize: 20,
     textAlign: 'right',
     color: 'white',

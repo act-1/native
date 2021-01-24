@@ -88,7 +88,7 @@ function App() {
               showKnob={false}
               blurType="light"
               autohide={false}
-              useForceTouch={true}
+              hideStatusBar={false}
             />
             <AppNavigator />
           </NavigationContainer>

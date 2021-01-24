@@ -1,13 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Animated, Easing, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-import { Box, Text } from '../';
+import { Box } from '../';
 import LottieView from 'lottie-react-native';
 
 function UploadBanner() {
   const { feedStore } = useStore();
+  const [uploadText, setUploadText] = useState('מעלה תמונה...');
   const progress = useRef(new Animated.Value(0)).current;
+  const fadeOutInText = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     if (feedStore.uploadStatus === 'pending') {
@@ -27,17 +29,29 @@ function UploadBanner() {
     if (feedStore.uploadStatus === 'done') {
       Animated.timing(progress, {
         toValue: 1,
-        duration: 1600,
+        duration: 1500,
+        delay: 150,
         useNativeDriver: true,
       }).start();
+
+      Animated.timing(fadeOutInText, {
+        toValue: 0,
+        duration: 700,
+        useNativeDriver: true,
+      }).start(() => {
+        setUploadText('התמונה הועלתה בהצלחה!');
+        Animated.timing(fadeOutInText, {
+          toValue: 1,
+          duration: 700,
+          useNativeDriver: true,
+        }).start(() => {
+          setTimeout(() => {
+            setUploadText('מעלה תמונה...');
+          }, 5000);
+        });
+      });
     }
-  }, [progress, feedStore.uploadStatus]);
-
-  let uploadText = 'מעלה פוסט...';
-
-  if (feedStore.uploadStatus === 'done') {
-    uploadText = 'הפוסט עלה בהצלחה!';
-  }
+  }, [feedStore.uploadStatus]);
 
   return (
     <Box style={styles.bannerWrapper}>
@@ -46,7 +60,7 @@ function UploadBanner() {
         progress={progress}
         style={{ width: 50, marginRight: 8 }}
       />
-      <Text variant="boxTitle">{uploadText}</Text>
+      <Animated.Text style={[styles.bannerText, { opacity: fadeOutInText }]}>{uploadText}</Animated.Text>
     </Box>
   );
 }
@@ -61,5 +75,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+
+  bannerText: {
+    fontFamily: 'AtlasDL3.1AAA-Bold',
+    fontSize: 16,
+    color: '#fff',
+    textAlign: 'left',
   },
 });
