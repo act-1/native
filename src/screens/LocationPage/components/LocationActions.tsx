@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, CircularButton } from '../../components';
+import { Box, CircularButton } from '../../../components';
 
 function LocationActions() {
   return (

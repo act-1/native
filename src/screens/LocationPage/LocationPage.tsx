@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 import { firebase } from '@react-native-firebase/database';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { Box, Text, StickyHeaderScrollView } from '../../components';
-import { RoundedButton } from '../../components/Buttons';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
@@ -13,7 +12,7 @@ import { fetchLocation } from '@services/locations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SheetSignUp from '../SignUp/SheetSignUp';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { LocationActions, LocationCounter, LocationPictureFeed } from './';
+import { LocationActions, LocationCounter, LocationPictureFeed } from './components';
 import CheckInService from '@services/checkIn';
 import { updateCheckInCount } from '@services/feed';
 
