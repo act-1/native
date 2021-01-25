@@ -119,6 +119,7 @@ export async function newImagePost({ image, text }: NewImagePostProps) {
        * locationName
        * locationCity
        * locationProvince
+       * coordinates (GeoFirestore)
        */
     }
   } catch (err) {

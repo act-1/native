@@ -14,6 +14,7 @@ const thumbSize = deviceWidth / 3;
 const placeholderThumbSize = thumbSize - 2;
 
 const placeholderThumb = (index: number, loadedImages: number[]) => {
+  console.log(loadedImages.includes(index));
   if (loadedImages.includes(index)) return null;
 
   // Default x & y values for the first thumb in the row.
@@ -38,40 +39,39 @@ const placeholderThumb = (index: number, loadedImages: number[]) => {
     y = thumbSize * row + 1; // Set the y axis to accomodate the thumbSize and the stroke
   }
 
-  if (index === 3) {
-    return null;
-  }
   return <Rect x={x} y={y} width={placeholderThumbSize} height={placeholderThumbSize} key={index} />;
 };
 
 function PictureThumbList({ pictures }: { pictures: IPicturePost[] }) {
   const navigation = useNavigation();
   const [loadedImages, setLoadedImages] = useState<number[]>([]);
-  console.log(loadedImages);
+
   return (
     <Box>
-      <Box flexDirection="row" flexWrap="wrap" position="absolute" zIndex={3}>
+      <Box flexDirection="row" flexWrap="wrap" position="absolute" zIndex={2}>
         {pictures.map((picture, index) => (
           <TouchableOpacity onPress={() => navigation.navigate('ExploreList', { initialIndex: index })} key={picture.id}>
             <FastImage
               style={styles.imageThumb}
               source={{ uri: picture.pictureUrl }}
-              onLoad={() => setLoadedImages((prevState) => [...prevState, index])}
+              onLoad={() => setLoadedImages((prevState) => [...prevState, index + 1])}
             />
           </TouchableOpacity>
         ))}
       </Box>
 
-      <ContentLoader
-        width={deviceWidth}
-        height={deviceHeight}
-        backgroundColor="#222222"
-        foregroundColor="#333333"
-        rtl
-        style={styles.contentLoaderWrapper}
-      >
-        {pictures.map((_, index) => placeholderThumb(index + 1, loadedImages))}
-      </ContentLoader>
+      {loadedImages.length !== pictures.length && (
+        <ContentLoader
+          width={deviceWidth}
+          height={deviceHeight}
+          backgroundColor="#222222"
+          foregroundColor="#333333"
+          rtl
+          style={styles.contentLoaderWrapper}
+        >
+          {pictures.map((_, index) => placeholderThumb(index + 1, loadedImages))}
+        </ContentLoader>
+      )}
     </Box>
   );
 }
@@ -81,7 +81,7 @@ export default PictureThumbList;
 const styles = StyleSheet.create({
   contentLoaderWrapper: {
     position: 'absolute',
-    zIndex: 0,
+    zIndex: 1,
   },
   imageThumb: {
     height: thumbSize,

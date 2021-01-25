@@ -1,10 +1,32 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView, ViewProps, StyleSheet, Pressable } from 'react-native';
 import { Box, Text, PictureThumbList } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-import Icon from 'react-native-vector-icons/Feather';
+
+function FilterButton({
+  title,
+  value,
+  selected,
+  onPress,
+  style,
+}: {
+  title: string;
+  value: string;
+  selected?: boolean;
+  onPress?: () => void;
+  style?: ViewProps;
+}) {
+  return (
+    <Pressable style={{ flex: 1 }} onPress={onPress}>
+      <Box style={styles.filterButton} backgroundColor={selected ? 'primaryColor' : 'mainBackground'}>
+        <Text variant="text" fontSize={14} fontWeight="600" textAlign="center">
+          {title}
+        </Text>
+      </Box>
+    </Pressable>
+  );
+}
 
 function Explore() {
   const { exploreStore } = useStore();
@@ -12,55 +34,43 @@ function Explore() {
   return (
     <Box>
       <SafeAreaView />
-      <ScrollView
+      {/* <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingTop: 8, paddingBottom: 8, paddingHorizontal: 8 }}
-      >
-        <Box
-          borderWidth={1}
-          backgroundColor="primaryColor"
-          paddingHorizontal="xm"
-          paddingVertical="xs"
-          borderColor="seperator"
-          borderRadius={5}
-          marginRight="s"
-          flexDirection="row"
-          alignItems="center"
-        >
-          <Text variant="text" fontSize={14} fontWeight="600">
-            נבחרות
-          </Text>
-        </Box>
-        <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
-          <Text variant="text" fontSize={14} fontWeight="600">
-            אחרונות
-          </Text>
-        </Box>
-        <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
-          <Text variant="text" fontSize={14} fontWeight="600">
-            באיזורי
-          </Text>
-        </Box>
-        <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
-          <Text variant="text" fontSize={14} fontWeight="600">
-            ירושלים
-          </Text>
-        </Box>
-        <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
-          <Text variant="text" fontSize={14} fontWeight="600">
-            תל אביב
-          </Text>
-        </Box>
-        <Box borderWidth={1} paddingHorizontal="xm" paddingVertical="xs" borderColor="seperator" borderRadius={5} marginRight="s">
-          <Text variant="text" fontSize={14} fontWeight="600">
-            חיפה
-          </Text>
-        </Box>
-      </ScrollView>
-      <PictureThumbList pictures={exploreStore.pictures} />
+        contentContainerStyle={{ padding: 8 }}
+      > */}
+      <Box flexDirection="row" paddingVertical="s" paddingLeft="s">
+        <FilterButton
+          title="נבחרות"
+          value="featured"
+          selected={exploreStore.currentFilter === 'featured'}
+          onPress={() => exploreStore.setCurrentFilter('featured')}
+        />
+        <FilterButton
+          title="אחרונות"
+          value="recent"
+          selected={exploreStore.currentFilter === 'recent'}
+          onPress={() => exploreStore.setCurrentFilter('recent')}
+        />
+      </Box>
+      {/* <FilterButton title="באיזורי" value="recent" />
+        <FilterButton title="ירושלים" value="recent" />
+        <FilterButton title="תל אביב" value="recent" />
+        <FilterButton title="חיפה" value="recent" /> */}
+      {/* </ScrollView> */}
+      <PictureThumbList pictures={exploreStore.recentPictures} />
     </Box>
   );
 }
 
 export default observer(Explore);
+
+const styles = StyleSheet.create({
+  filterButton: {
+    borderWidth: 1,
+    marginRight: 8,
+    borderRadius: 5,
+    paddingVertical: 6,
+    borderColor: '#222222',
+  },
+});
