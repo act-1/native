@@ -17,8 +17,7 @@ function NewPost({ navigation, route }: NewPostProps) {
 
   const uploadPost = async () => {
     try {
-      console.log('uploading wooohooo');
-      await feedStore.uploadImage({ image, text: content });
+      feedStore.uploadImage({ image, text: content });
       navigation.popToTop();
       navigation.goBack();
     } catch (err) {

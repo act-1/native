@@ -11,3 +11,21 @@ export type IPost = {
   liked?: boolean;
   timestamp: FirebaseFirestoreTypes.Timestamp;
 };
+
+export type IPicturePost = {
+  id: string;
+  createdAt: FirebaseFirestoreTypes.Timestamp;
+  updatedAt: FirebaseFirestoreTypes.Timestamp;
+  type: 'picture';
+  authorId: string;
+  authorName: string;
+  authorPicture: string;
+  pictureWidth: number;
+  pictureHeight: number;
+  pictureUrl: string;
+  archived: boolean;
+  featured: boolean;
+  homeScreen: boolean;
+  text: string;
+  likeCounter: number;
+};

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { IPicturePost } from '@types/post';
 import { Box } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function PictureThumbList({ pictures }: { pictures: Picture[] }) {
+function PictureThumbList({ pictures }: { pictures: IPicturePost[] }) {
   const navigation = useNavigation();
 
   return (

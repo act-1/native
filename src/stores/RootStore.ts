@@ -5,12 +5,14 @@ import userStore from './UserStore';
 import locationStore from './LocationStore';
 import feedStore from './FeedStore';
 import eventStore from './EventStore';
+import exploreStore from './ExploreStore';
 
 class RootStore {
   userStore: userStore;
   locationStore: locationStore;
   eventStore: eventStore;
   feedStore: feedStore;
+  exploreStore: exploreStore;
 
   intializedApp = false;
 
@@ -20,6 +22,7 @@ class RootStore {
     this.locationStore = new locationStore(this);
     this.eventStore = new eventStore(this);
     this.feedStore = new feedStore(this);
+    this.exploreStore = new exploreStore(this);
   }
 
   async initApp() {

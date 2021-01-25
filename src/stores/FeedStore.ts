@@ -2,10 +2,10 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import perf from '@react-native-firebase/perf';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
-import FeedService, { getAllPosts, likePost, unlikePost } from '@services/feed';
+import FeedService, { getAllPosts, likePost, newImagePost, unlikePost } from '@services/feed';
 import { IPost } from '@types/post';
 import { updateArrayItem } from '@utils/array-utils';
-import ImageResizer from 'react-native-image-resizer';
+import { ImagePickerResponse } from 'react-native-image-picker';
 import rootStore from './RootStore';
 
 class FeedStore {
@@ -72,67 +72,24 @@ class FeedStore {
    *
    * Therefor we moved it here for resolving the issue faster.
    */
-  async uploadImage({ image, text }) {
+  async uploadImage({ image, text }: { image: ImagePickerResponse; text?: string }) {
     try {
       runInAction(() => {
         this.uploadStatus = 'in_progress';
       });
 
-      const trace = await perf().startTrace('imageUpload');
+      await newImagePost({ image, text });
+      // Upload to firestore
 
-      const { uri, width, height } = image;
-
-      // Whther to set the resize ratio based on the width (landscape image) or the height (portrait)
-      const resizeDimension = image.width > image.height ? image.width : image.height;
-      let resizeRatio = 1;
-
-      // Resize dimensions for landscape picture
-      if (resizeDimension > 5000) {
-        resizeRatio = 2.2;
-      }
-      if (resizeDimension > 4000) {
-        resizeRatio = 1.8;
-      } else if (resizeDimension > 3000) {
-        resizeRatio = 1.5;
-      }
-
-      const resizedImage = await ImageResizer.createResizedImage(uri, width / resizeRatio, height / resizeRatio, 'JPEG', 75);
-
-      trace.putMetric('image_size', resizedImage.size);
-
-      const reference = storage().ref(resizedImage.name);
-      const task = reference.putFile(resizedImage.uri);
-
-      task.on('state_changed', (taskSnapshot) => {
-        const progress = (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100;
-        this.setUploadProgress(progress);
+      runInAction(() => {
+        this.uploadStatus = 'done';
       });
 
-      task.then(async () => {
-        const pictureUrl = await reference.getDownloadURL();
-
+      setTimeout(() => {
         runInAction(() => {
-          this.uploadStatus = 'done';
+          this.uploadStatus = 'pending';
         });
-
-        trace.stop();
-
-        setTimeout(() => {
-          runInAction(() => {
-            this.uploadStatus = 'pending';
-          });
-        }, 5250);
-      });
-
-      // runInAction(() => {
-      //   this.uploadStatus = 'in_progress';
-      // });
-
-      // await FeedService.newImagePost({ image, text });
-
-      // runInAction(() => {
-      //   this.uploadStatus = 'done';
-      // });
+      }, 5250);
     } catch (err) {
       console.log(err);
     }

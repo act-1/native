@@ -1,8 +1,8 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
-import { IPost } from '@types/post';
-import Storage from './storage';
+import { IPost, IPicturePost } from '@types/post';
+import Storage, { uploadPicture } from './storage';
 import { ImagePickerResponse } from 'react-native-image-picker';
 
 export async function getAllPosts(userId: string): Promise<IPost[]> {
@@ -90,18 +90,28 @@ export async function newImagePost({ image, text }: NewImagePostProps) {
   try {
     const currentUser = auth().currentUser;
     if (currentUser) {
-      const pictureUrl = await Storage.uploadImage(image);
+      const uploadedImage = await Storage.uploadPicture(image);
       console.log(currentUser.uid, currentUser.displayName, currentUser.photoURL);
 
-      // TODO: Add storage path
-      firestore().collection('posts').add({
+      const postRef = firestore().collection('posts').doc();
+
+      postRef.set({
+        id: postRef.id,
         createdAt: firestore.FieldValue.serverTimestamp(),
+        updatedAt: firestore.FieldValue.serverTimestamp(),
         type: 'picture',
         authorId: currentUser.uid,
         authorName: currentUser.displayName,
         authorPicture: currentUser.photoURL,
-        pictureUrl,
+        pictureWidth: uploadedImage.width,
+        pictureHeight: uploadedImage.height,
+        pictureUrl: uploadedImage.url,
+        storagePath: uploadedImage.storagePath,
+        archived: false,
+        featured: false,
+        homeScreen: false,
         text,
+        likeCounter: 0,
       });
 
       /**
@@ -117,6 +127,17 @@ export async function newImagePost({ image, text }: NewImagePostProps) {
   }
 }
 
+export async function getRecentPictures(): Promise<IPicturePost[]> {
+  try {
+    const postsSnapshot = await firestore().collection('posts').where('type', '==', 'picture').get();
+    const posts = postsSnapshot.docs.map((post) => post.data() as IPicturePost);
+    return posts;
+  } catch (err) {
+    throw err;
+  }
+}
+
 export default {
   newImagePost,
+  getRecentPictures,
 };
