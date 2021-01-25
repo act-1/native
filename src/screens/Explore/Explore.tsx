@@ -58,7 +58,9 @@ function Explore() {
         <FilterButton title="תל אביב" value="recent" />
         <FilterButton title="חיפה" value="recent" /> */}
       {/* </ScrollView> */}
-      <PictureThumbList pictures={exploreStore.recentPictures} />
+      <PictureThumbList
+        pictures={exploreStore.currentFilter === 'featured' ? exploreStore.featuredPictures : exploreStore.recentPictures}
+      />
     </Box>
   );
 }

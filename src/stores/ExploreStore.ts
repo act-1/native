@@ -32,6 +32,7 @@ class FeedStore {
     try {
       const recentPictures = await FeedService.getRecentPictures();
       this.recentPictures = recentPictures;
+      this.featuredPictures = recentPictures;
     } catch (err) {
       console.error(err);
     }

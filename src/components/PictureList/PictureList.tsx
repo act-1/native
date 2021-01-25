@@ -26,10 +26,16 @@ export default function PictureList({ pictures, initialIndex }: { pictures: IPic
 
   const pictureItem = ({ item, index }: { item: IPicturePost; index: number }) => (
     <Box onLayout={(object) => (itemHeights[index] = object.nativeEvent.layout.height)}>
-      <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="m">
-        <FastImage source={{ uri: item.authorPicture }} style={styles.profilePic} />
+      <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="s">
+        <FastImage
+          source={{
+            uri:
+              'https://scontent.ftlv15-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=m1-VKWy6OHoAX90JQPy&_nc_ht=scontent.ftlv15-1.fna&oh=80185911315cbb9176816b026298a887&oe=6032F1FF',
+          }}
+          style={styles.profilePic}
+        />
         <Box>
-          <Text variant="boxTitle">{item.authorName}</Text>
+          <Text variant="boxTitle">גיא טפר</Text>
           <Box flexDirection="row" alignItems="center">
             <Text
               variant="boxSubtitle"
@@ -41,19 +47,19 @@ export default function PictureList({ pictures, initialIndex }: { pictures: IPic
           </Box>
         </Box>
       </Box>
-      <Box style={{ marginHorizontal: -16, marginBottom: 12 }}>
+      <Box style={{ marginHorizontal: -16, marginBottom: 8 }}>
         {/* Height is calculated propotionaly to the device width */}
         <FastImage
           source={{ uri: item.pictureUrl }}
           style={{ height: item.pictureHeight / (item.pictureWidth / deviceWidth), width: '100%' }}
         />
       </Box>
-      <Box paddingHorizontal="m" flexDirection="row" justifyContent="space-between">
-        <Box flexDirection="row" alignItems="center" marginBottom="s">
-          <Icon name="heart" color={false ? '#ec534b' : '#999999'} size={18} style={{ marginRight: 6 }} />
-          <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#999999' }}>{item.likeCounter}</Ticker>
+      <Box paddingHorizontal="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="s">
+        <Box flexDirection="row" alignItems="center">
+          <Icon name="heart" color={false ? '#ec534b' : '#fff'} size={19} style={{ marginRight: 6 }} />
+          <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#fff' }}>{item.likeCounter}</Ticker>
         </Box>
-        <Text variant="boxSubtitle" textAlign="left">
+        <Text variant="boxSubtitle" fontSize={14} textAlign="left">
           {timeago.format(item.createdAt.toDate(), 'he')}
         </Text>
       </Box>
@@ -88,6 +94,6 @@ const styles = StyleSheet.create({
   likeCount: {
     color: '#999999',
     fontFamily: 'AtlasDL3.1AAA-Medium',
-    fontSize: 16,
+    fontSize: 17,
   },
 });

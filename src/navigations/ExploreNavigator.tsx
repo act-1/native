@@ -26,11 +26,11 @@ function ExploreNavigator() {
         headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
       }}
     >
-      <ExploreStack.Screen name="ExploreMain" options={{ title: 'תמונות נבחרות' }} component={Explore} />
+      <ExploreStack.Screen name="ExploreMain" component={Explore} />
       <ExploreStack.Screen
         name="ExploreList"
         options={({ navigation }) => ({
-          title: 'אמ',
+          title: 'נבחרות',
           headerShown: true,
           gestureEnabled: true,
           headerLeft: () => (
@@ -43,6 +43,7 @@ function ExploreNavigator() {
                 shadowOffset: { width: 0, height: 1 },
                 shadowOpacity: 1,
                 shadowRadius: 2,
+                marginLeft: 6,
               }}
               onPress={() => navigation.goBack()}
             />
