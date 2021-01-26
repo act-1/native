@@ -78,12 +78,14 @@ class FeedStore {
         this.uploadStatus = 'in_progress';
       });
 
-      await newImagePost({ image, text });
+      const postData = await newImagePost({ image, text });
       // Upload to firestore
 
       runInAction(() => {
         this.uploadStatus = 'done';
       });
+
+      this.rootStore?.exploreStore.addRecentPicture(postData);
 
       setTimeout(() => {
         runInAction(() => {

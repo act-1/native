@@ -95,10 +95,8 @@ export async function newImagePost({ image, text }: NewImagePostProps) {
 
       const postRef = firestore().collection('posts').doc();
 
-      postRef.set({
+      const postData = {
         id: postRef.id,
-        createdAt: firestore.FieldValue.serverTimestamp(),
-        updatedAt: firestore.FieldValue.serverTimestamp(),
         type: 'picture',
         authorId: currentUser.uid,
         authorName: currentUser.displayName,
@@ -110,10 +108,17 @@ export async function newImagePost({ image, text }: NewImagePostProps) {
         archived: false,
         featured: false,
         homeScreen: false,
-        text,
         likeCounter: 0,
+        text,
+      };
+
+      postRef.set({
+        ...postData,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+        updatedAt: firestore.FieldValue.serverTimestamp(),
       });
 
+      return postData;
       /**
        * locationId
        * locationName
