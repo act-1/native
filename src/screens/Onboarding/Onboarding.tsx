@@ -84,9 +84,10 @@ function Onboarding() {
           style={{ flex: 1, position: 'absolute' }}
           ref={pages}
           onScrollEnd={onScrollEnd}
-          scrollEnabled={true}
+          scrollEnabled={false}
           indicatorOpacity={0}
           progress={pageProgress}
+          indicatorColor="black"
           rtl={isAndroid}
         >
           {isAndroid ? screens.reverse() : screens}
