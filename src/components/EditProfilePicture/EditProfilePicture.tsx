@@ -52,10 +52,10 @@ function EditProfilePicture() {
         if (buttonIndex === 0) {
           editPicture();
         }
-        if (buttonIndex === destructiveButtonIndex) {
-          // Delete picture
-          alert('Deleting picture!');
-        }
+        // if (buttonIndex === destructiveButtonIndex) {
+        //   // Delete picture
+        //   alert('Deleting picture!');
+        // }
       }
     );
   };
