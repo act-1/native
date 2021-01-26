@@ -13,8 +13,9 @@ timeago.register('he', he);
 const deviceWidth = Dimensions.get('window').width;
 
 const itemHeights: number[] = [];
-
 const getItemLayout = (data: IPicturePost[] | null | undefined, index: number) => {
+  console.log(itemHeights);
+
   const length = itemHeights[index];
   const offset = itemHeights.slice(0, index).reduce((a, c) => a + c, 0);
   return { length, offset, index };
@@ -36,10 +37,10 @@ function PictureList({ pictures, title, initialIndex }: { pictures: IPicturePost
     // This is a hack to solve `initialScrollToIndex` issue, when the items didn't have enough time to render initially
     // and the method failed.
     if (initialIndex) {
-      let wait = new Promise((resolve) => setTimeout(resolve, 50));
-      wait.then(() => {
-        flatListRef.current!.scrollToIndex({ index: initialIndex, animated: false });
-      });
+      // let wait = new Promise((resolve) => setTimeout(resolve, 1000));
+      // wait.then(() => {
+      //   flatListRef.current!.scrollToIndex({ index: initialIndex, animated: false });
+      // });
     }
   }, [initialIndex]);
 
@@ -90,8 +91,9 @@ function PictureList({ pictures, title, initialIndex }: { pictures: IPicturePost
       data={pictures}
       keyExtractor={(item) => item.id}
       renderItem={pictureItem}
-      initialScrollIndex={initialIndex}
       getItemLayout={getItemLayout}
+      initialScrollIndex={initialIndex}
+      initialNumToRender={pictures.length} // TODO: Critical - if there are more than 10 items the compoennt crashes without this.
     />
   );
 }

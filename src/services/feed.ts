@@ -117,7 +117,7 @@ export async function newImagePost({ image, text }: NewImagePostProps) {
         updatedAt: firestore.FieldValue.serverTimestamp(),
       });
 
-      return postData;
+      return { ...postData, createdAt: new Date(), updatedAt: new Date() };
       /**
        * locationId
        * locationName
@@ -138,9 +138,11 @@ export async function getRecentPictures(): Promise<IPicturePost[]> {
       .collection('posts')
       .where('type', '==', 'picture')
       .where('archived', '==', false)
+      .orderBy('createdAt', 'desc')
       .get();
 
     const posts = postsSnapshot.docs.map((post) => post.data() as IPicturePost);
+    console.log(posts);
     return posts;
   } catch (err) {
     throw err;
