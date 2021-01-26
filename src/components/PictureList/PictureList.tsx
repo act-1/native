@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StyleSheet, FlatList, Dimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Box, Text, Ticker } from '../';
@@ -17,23 +17,36 @@ const itemHeights: number[] = [];
 const getItemLayout = (data: IPicturePost[] | null | undefined, index: number) => {
   const length = itemHeights[index];
   const offset = itemHeights.slice(0, index).reduce((a, c) => a + c, 0);
-  console.log(itemHeights, length);
   return { length, offset, index };
 };
 
-export default function PictureList({ pictures, initialIndex }: { pictures: IPicturePost[]; initialIndex?: number }) {
+function PictureList({ pictures, title, initialIndex }: { pictures: IPicturePost[]; title?: string; initialIndex?: number }) {
   const navigation = useNavigation();
+  const flatListRef = useRef<FlatList>(null);
+
+  React.useLayoutEffect(() => {
+    if (title) {
+      navigation.setOptions({
+        title,
+      });
+    }
+  }, [navigation, title]);
+
+  useEffect(() => {
+    // This is a hack to solve `initialScrollToIndex` issue, when the items didn't have enough time to render initially
+    // and the method failed.
+    if (initialIndex) {
+      let wait = new Promise((resolve) => setTimeout(resolve, 50));
+      wait.then(() => {
+        flatListRef.current!.scrollToIndex({ index: initialIndex, animated: false });
+      });
+    }
+  }, [initialIndex]);
 
   const pictureItem = ({ item, index }: { item: IPicturePost; index: number }) => (
     <Box onLayout={(object) => (itemHeights[index] = object.nativeEvent.layout.height)}>
       <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="s">
-        <FastImage
-          source={{
-            uri:
-              'https://scontent.ftlv15-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=m1-VKWy6OHoAX90JQPy&_nc_ht=scontent.ftlv15-1.fna&oh=80185911315cbb9176816b026298a887&oe=6032F1FF',
-          }}
-          style={styles.profilePic}
-        />
+        <FastImage source={{ uri: item.authorPicture }} style={styles.profilePic} />
         <Box>
           <Text variant="boxTitle">גיא טפר</Text>
           <Box flexDirection="row" alignItems="center">
@@ -73,15 +86,17 @@ export default function PictureList({ pictures, initialIndex }: { pictures: IPic
 
   return (
     <FlatList
+      ref={flatListRef}
       data={pictures}
       keyExtractor={(item) => item.id}
       renderItem={pictureItem}
       initialScrollIndex={initialIndex}
-      initialNumToRender={pictures.length}
       getItemLayout={getItemLayout}
     />
   );
 }
+
+export default PictureList;
 
 const styles = StyleSheet.create({
   profilePic: {
