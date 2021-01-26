@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions, LayoutChangeEvent } from 'react-native';
 import { Box, Text, Ticker } from '../';
+import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Feather';
 import { IPicturePost } from '@types/post';
@@ -12,6 +13,8 @@ timeago.register('he', he);
 const deviceWidth = Dimensions.get('window').width;
 
 function PictureListItem({ item, onLayout }: { item: IPicturePost; onLayout: (event: LayoutChangeEvent) => void }) {
+  const navigation = useNavigation();
+
   return (
     <Box onLayout={onLayout}>
       <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="s">
@@ -22,7 +25,7 @@ function PictureListItem({ item, onLayout }: { item: IPicturePost; onLayout: (ev
             <Text
               variant="boxSubtitle"
               textAlign="left"
-              // onPress={() => navigation.navigate('LocationPage', { locationId: 'habima' })}
+              onPress={() => navigation.navigate('LocationPage', { locationId: 'habima' })}
             >
               כיכר הפעמון
             </Text>
