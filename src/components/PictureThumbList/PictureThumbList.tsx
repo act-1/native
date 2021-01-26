@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { IPicturePost } from '@types/post';
@@ -14,7 +14,6 @@ const thumbSize = deviceWidth / 3;
 const placeholderThumbSize = thumbSize - 2;
 
 const placeholderThumb = (index: number, loadedImages: number[]) => {
-  console.log(loadedImages.includes(index));
   if (loadedImages.includes(index)) return null;
 
   // Default x & y values for the first thumb in the row.
@@ -46,6 +45,11 @@ function PictureThumbList({ pictures }: { pictures: IPicturePost[] }) {
   const navigation = useNavigation();
   const [loadedImages, setLoadedImages] = useState<number[]>([]);
 
+  useEffect(() => {
+    console.log(pictures);
+    setLoadedImages([]);
+  }, [pictures]);
+
   return (
     <Box>
       <Box flexDirection="row" flexWrap="wrap" position="absolute" zIndex={2}>
@@ -70,6 +74,19 @@ function PictureThumbList({ pictures }: { pictures: IPicturePost[] }) {
           style={styles.contentLoaderWrapper}
         >
           {pictures.map((_, index) => placeholderThumb(index + 1, loadedImages))}
+        </ContentLoader>
+      )}
+
+      {pictures.length === 0 && (
+        <ContentLoader
+          width={deviceWidth}
+          height={deviceHeight}
+          backgroundColor="#222222"
+          foregroundColor="#333333"
+          rtl
+          style={styles.contentLoaderWrapper}
+        >
+          {tempPics.map((_, index) => placeholderThumb(index + 1, loadedImages))}
         </ContentLoader>
       )}
     </Box>

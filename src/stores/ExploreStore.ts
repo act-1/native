@@ -12,7 +12,7 @@ class FeedStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
-    this.getRecentPictures();
+    this.getFeaturedPictures();
   }
 
   setCurrentFilter = (filter: 'featured' | 'recent') => {
@@ -21,8 +21,11 @@ class FeedStore {
 
   async getFeaturedPictures() {
     try {
-      const recentPictures = await FeedService.getRecentPictures();
-      this.recentPictures = recentPictures;
+      const featuredPictures = await FeedService.getFeaturedPictures();
+
+      runInAction(() => {
+        this.featuredPictures = featuredPictures;
+      });
     } catch (err) {
       console.error(err);
     }
@@ -31,8 +34,10 @@ class FeedStore {
   async getRecentPictures() {
     try {
       const recentPictures = await FeedService.getRecentPictures();
-      this.recentPictures = recentPictures;
-      this.featuredPictures = recentPictures;
+
+      runInAction(() => {
+        this.recentPictures = recentPictures;
+      });
     } catch (err) {
       console.error(err);
     }

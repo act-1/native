@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, ViewProps, StyleSheet, Pressable } from 'react-native';
 import { Box, Text, PictureThumbList } from '../../components';
 import { observer } from 'mobx-react-lite';
@@ -30,6 +30,16 @@ function FilterButton({
 
 function Explore() {
   const { exploreStore } = useStore();
+
+  useEffect(() => {
+    if (exploreStore.currentFilter === 'recent') {
+      exploreStore.getRecentPictures();
+    }
+
+    if (exploreStore.currentFilter === 'featured') {
+      exploreStore.getFeaturedPictures();
+    }
+  }, [exploreStore, exploreStore.currentFilter]);
 
   return (
     <Box>

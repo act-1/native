@@ -130,7 +130,27 @@ export async function newImagePost({ image, text }: NewImagePostProps) {
 
 export async function getRecentPictures(): Promise<IPicturePost[]> {
   try {
-    const postsSnapshot = await firestore().collection('posts').where('type', '==', 'picture').get();
+    const postsSnapshot = await firestore()
+      .collection('posts')
+      .where('type', '==', 'picture')
+      .where('archived', '==', false)
+      .get();
+
+    const posts = postsSnapshot.docs.map((post) => post.data() as IPicturePost);
+    return posts;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getFeaturedPictures(): Promise<IPicturePost[]> {
+  try {
+    const postsSnapshot = await firestore()
+      .collection('posts')
+      .where('type', '==', 'picture')
+      .where('featured', '==', true)
+      .get();
+
     const posts = postsSnapshot.docs.map((post) => post.data() as IPicturePost);
     return posts;
   } catch (err) {
@@ -141,4 +161,5 @@ export async function getRecentPictures(): Promise<IPicturePost[]> {
 export default {
   newImagePost,
   getRecentPictures,
+  getFeaturedPictures,
 };
