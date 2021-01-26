@@ -8,7 +8,7 @@ import { ProfileScreenProps } from '../../types/navigation';
 
 function Profile({ navigation }: ProfileScreenProps) {
   const { userStore } = useStore();
-  console.log(userStore.userData);
+
   return (
     <Box paddingTop="m" justifyContent="center" alignItems="center">
       <FastImage source={{ uri: userStore.userData?.profilePicture }} style={styles.profilePicture} />

@@ -89,7 +89,7 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
         style={{ marginBottom: 16 }}
       />
       <RoundedButton text="התחברות דרך גוגל" color="red" onPress={() => signIn('google')} style={{ marginBottom: 16 }} />
-      <RoundedButton text="התחברות דרך אפל" color="black" onPress={() => signIn('google')} style={{ marginBottom: 42 }} />
+      {/* <RoundedButton text="התחברות דרך אפל" color="black" onPress={() => signIn('google')} style={{ marginBottom: 42 }} />
 
       <Box height={1} width={320} marginBottom="xm" opacity={0.25} style={{ backgroundColor: '#FFC281' }} />
       <Text variant="text" fontWeight="600" marginBottom="xm" style={{ color: '#FFC281' }} opacity={0.8}>
@@ -100,7 +100,7 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
         text="המשך ללא התחברות"
         color="grey"
         onPress={() => signIn('google')}
-        style={{ marginBottom: 42, opacity: 0.4 }}
+        style={{ marginBottom: 42, opacity: 0.4 }} */}
       />
     </Box>
   );
