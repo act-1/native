@@ -52,11 +52,7 @@ function ActionNavigator({ navigation }) {
           headerBackTitleVisible: false,
         }}
       />
-      <ActionStack.Screen
-        name="LocationPage"
-        component={LocationPage}
-        options={{ headerTitle: 'איפה אתם?', headerBackTitleVisible: false }}
-      />
+      <ActionStack.Screen name="LocationPage" component={LocationPage} options={{ headerBackTitleVisible: false }} />
     </ActionStack.Navigator>
   );
 }

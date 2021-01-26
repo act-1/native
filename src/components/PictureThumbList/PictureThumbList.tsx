@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { FlatList, Dimensions, StyleSheet, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { IPicturePost } from '@types/post';
 import { Box } from '../../components';
+import { toJS } from 'mobx';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import ContentLoader, { Rect } from 'react-content-loader/native';
@@ -47,23 +48,32 @@ function PictureThumbList({ pictures }: { pictures: IPicturePost[] }) {
 
   useEffect(() => {
     setLoadedImages([]);
-  }, [pictures]);
+  }, []);
 
+  const renderThumbItem = ({ item, index }: { item: IPicturePost; index: number }) => (
+    <TouchableOpacity onPress={() => navigation.navigate('ExploreList', { initialIndex: index })}>
+      <FastImage
+        style={styles.imageThumb}
+        source={{ uri: item.pictureUrl }}
+        onLoad={() => setLoadedImages((prevState) => [...prevState, index + 1])}
+      />
+    </TouchableOpacity>
+  );
+  const standardPicturesArray = toJS(pictures);
+  console.log(loadedImages.length, pictures.length);
+  console.log(loadedImages.length >= pictures.length);
   return (
     <Box>
-      <Box flexDirection="row" flexWrap="wrap" position="absolute" zIndex={2}>
-        {pictures.map((picture, index) => (
-          <TouchableOpacity onPress={() => navigation.navigate('ExploreList', { initialIndex: index })} key={picture.id}>
-            <FastImage
-              style={styles.imageThumb}
-              source={{ uri: picture.pictureUrl }}
-              onLoad={() => setLoadedImages((prevState) => [...prevState, index + 1])}
-            />
-          </TouchableOpacity>
-        ))}
-      </Box>
+      <FlatList
+        data={standardPicturesArray}
+        numColumns={3}
+        renderItem={renderThumbItem}
+        style={{ zIndex: 3 }}
+        ListFooterComponent={() => <Box />}
+        ListFooterComponentStyle={{ height: Platform.OS === 'android' ? 150 : 190 }}
+      />
 
-      {loadedImages.length !== pictures.length && (
+      {loadedImages.length < pictures.length && (
         <ContentLoader
           width={deviceWidth}
           height={deviceHeight}

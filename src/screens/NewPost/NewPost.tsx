@@ -58,7 +58,8 @@ function NewPost({ navigation, route }: NewPostProps) {
             multiline={true}
           />
         </Box>
-        <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('SelectLocation')}>
+
+        {/* <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('SelectLocation')}>
           <Box
             flexDirection="row"
             justifyContent="space-between"
@@ -75,7 +76,7 @@ function NewPost({ navigation, route }: NewPostProps) {
               {'<'}
             </Text>
           </Box>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <Image
           source={{ uri: image.uri }}

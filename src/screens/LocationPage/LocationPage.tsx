@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from '@react-native-firebase/database';
 import analytics from '@react-native-firebase/analytics';
@@ -17,6 +17,8 @@ import { LocationActions, LocationCounter, LocationPictureFeed } from './compone
 import CheckInService from '@services/checkIn';
 import { updateCheckInCount } from '@services/feed';
 import { IPicturePost } from '@types/post';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import FastImage from 'react-native-fast-image';
 
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
@@ -31,6 +33,12 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
   const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
   const [locatinoPictures, setLocationPictures] = useState<IPicturePost[]>([]);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: location?.name,
+    });
+  }, [navigation, location]);
 
   useEffect(() => {
     const query = firestore()
@@ -99,40 +107,29 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     );
   }
   return (
-    <StickyHeaderScrollView
-      goBack={() => navigation.goBack()}
-      headerTitle={location.name}
-      thumbnail={new URL('https://res.cloudinary.com/onekm/image/upload/v1604300825/weekend_pictures/31-10-2020/zomet_oh.jpg')}
-    >
-      <BottomSheetModalProvider>
-        <Box marginTop="m">
-          <Box paddingHorizontal="m" marginBottom="s">
-            <Text variant="extraLargeTitle" marginBottom="xxs">
-              {location.name}
-            </Text>
-            <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.8} marginBottom="m">
-              {location.city}
-            </Text>
-          </Box>
+    <ScrollView style={{ flex: 1 }}>
+      <FastImage
+        source={{ uri: 'https://res.cloudinary.com/onekm/image/upload/v1604300825/weekend_pictures/31-10-2020/zomet_oh.jpg' }}
+        style={styles.locationThumb}
+      />
+      <Box marginTop="m">
+        <LocationCounter locationId={location.id} />
 
-          {/* <Box backgroundColor="seperator" height={2} width={600} marginBottom="s" position="relative" left={-24} /> */}
+        <LocationActions location={location} />
 
-          <LocationCounter locationId={location.id} />
-
-          <LocationActions location={location} />
-
-          <LocationPictureFeed pictures={locatinoPictures} />
-
-          {/* <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" /> */}
-        </Box>
-      </BottomSheetModalProvider>
-    </StickyHeaderScrollView>
+        <LocationPictureFeed pictures={locatinoPictures} />
+      </Box>
+    </ScrollView>
   );
 }
 
 export default observer(LocationPage);
 
 const styles = StyleSheet.create({
+  locationThumb: {
+    width: '100%',
+    height: 200,
+  },
   counterText: {
     fontFamily: 'AtlasDL3.1AAA-Medium',
     fontSize: 26,

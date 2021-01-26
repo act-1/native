@@ -32,11 +32,11 @@ function Explore() {
   const { exploreStore } = useStore();
 
   useEffect(() => {
-    if (exploreStore.currentFilter === 'recent') {
+    if (exploreStore.currentFilter === 'recent' && exploreStore.recentPictures.length === 0) {
       exploreStore.getRecentPictures();
     }
 
-    if (exploreStore.currentFilter === 'featured') {
+    if (exploreStore.currentFilter === 'featured' && exploreStore.featuredPictures.length === 0) {
       exploreStore.getFeaturedPictures();
     }
   }, [exploreStore, exploreStore.currentFilter]);
