@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, Image, StyleSheet, Dimensions, Alert } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useStore } from '../../stores';
@@ -13,13 +13,23 @@ const deviceWidth = Dimensions.get('window').width;
 function NewPost({ navigation, route }: NewPostProps) {
   const { userStore, feedStore } = useStore();
   const [content, setContent] = useState('');
-  const { image } = route.params;
+  const { image, completionScreen, location } = route.params;
+
+  useEffect(() => {
+    console.log(location);
+  }, [location]);
 
   const uploadPost = async () => {
     try {
-      feedStore.uploadImage({ image, text: content });
-      navigation.popToTop();
-      navigation.goBack();
+      feedStore.uploadImage({ image, text: content, location });
+
+      // How to route on completion
+      if (completionScreen === 'closeModal') {
+        navigation.popToTop();
+        navigation.goBack();
+      } else {
+        navigation.goBack();
+      }
     } catch (err) {
       console.error(err);
       crashlytics().setAttribute('image_object', JSON.stringify(image));
@@ -48,7 +58,8 @@ function NewPost({ navigation, route }: NewPostProps) {
             multiline={true}
           />
         </Box>
-        <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('SelectLocation')}>
+
+        {/* <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('SelectLocation')}>
           <Box
             flexDirection="row"
             justifyContent="space-between"
@@ -65,7 +76,7 @@ function NewPost({ navigation, route }: NewPostProps) {
               {'<'}
             </Text>
           </Box>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <Image
           source={{ uri: image.uri }}

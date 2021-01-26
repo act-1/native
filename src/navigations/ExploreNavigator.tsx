@@ -14,7 +14,7 @@ const ExploreStack = createStackNavigator();
 function ExploreNavigator() {
   return (
     <ExploreStack.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         gestureEnabled: true,
         headerShown: false,
         headerTitleStyle: {
@@ -24,7 +24,22 @@ function ExploreNavigator() {
         },
         ...TransitionPresets.SlideFromRightIOS,
         headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
-      }}
+        headerLeft: () => (
+          <Icon
+            name={'arrow-right'}
+            size={28}
+            color={'#fff'}
+            style={{
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 1,
+              shadowRadius: 2,
+              marginLeft: 6,
+            }}
+            onPress={() => navigation.goBack()}
+          />
+        ),
+      })}
     >
       <ExploreStack.Screen name="ExploreMain" component={Explore} />
       <ExploreStack.Screen
@@ -33,6 +48,7 @@ function ExploreNavigator() {
           title: 'נבחרות',
           headerShown: true,
           gestureEnabled: true,
+          headerBackTitle: '',
           headerLeft: () => (
             <Icon
               name={'arrow-right'}
@@ -51,7 +67,7 @@ function ExploreNavigator() {
         })}
         component={ExploreList}
       />
-      <ExploreStack.Screen name="LocationPage" options={{ headerShown: false }} component={LocationPage} />
+      <ExploreStack.Screen name="LocationPage" options={{ headerShown: true, headerBackTitle: '' }} component={LocationPage} />
     </ExploreStack.Navigator>
   );
 }

@@ -13,13 +13,13 @@ function ProfileNavigator() {
   const { userStore } = useStore();
 
   const userName = userStore.userData?.displayName;
-
+  console.log(userName);
   return (
     <ProfileStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#0a0a0a' } }}>
       <ProfileStack.Screen
-        name="Home"
+        name="Profile"
         options={{
-          headerTitle: 'גיא טפר',
+          headerTitle: userName,
           headerTitleStyle: { fontSize: 22, fontFamily: 'AtlasDL3.1AAA-Medium', color: '#EC534B' },
         }}
         component={Profile}

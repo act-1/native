@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { Platform } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
 import { enableScreens } from 'react-native-screens';
@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { EventPage, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
 import SignUpNavigator from './SignUpNavigator';
+import NewPost from '@screens/NewPost';
 import CheckInNavigator from './CheckInNavigator';
 import { LocationPage } from '@screens/LocationPage';
 
@@ -28,6 +29,15 @@ function MainStackScreen() {
         headerShown: false,
         gestureEnabled: true,
         ...TransitionPresets.SlideFromRightIOS,
+        headerBackImage: () => (
+          <Icon
+            name={'arrow-right'}
+            size={28}
+            color={'#fff'}
+            style={{ marginLeft: Platform.OS === 'ios' ? 8 : -4, marginBottom: Platform.OS === 'ios' ? 8 : 0 }}
+            onPress={() => navigation.navigate('ActionScreen')} /** The goBack method doesn't work as expected on android **/
+          />
+        ),
       }}
       mode="card"
     >
@@ -59,6 +69,24 @@ function MainStackScreen() {
             />
           ),
         })}
+      />
+      <MainStack.Screen
+        name="NewPost"
+        component={NewPost}
+        options={{
+          headerShown: true,
+          headerTitle: '',
+          headerRightContainerStyle: { marginRight: 12 },
+          headerBackTitleVisible: false,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontSize: 20,
+            fontFamily: 'AtlasDL3.1AAA-Medium',
+            color: '#EC534B',
+            marginBottom: 8,
+          },
+          headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
+        }}
       />
       {/* <RootStack.Screen name="SignUpNavigator" component={SignUpNavigator} /> */}
     </MainStack.Navigator>

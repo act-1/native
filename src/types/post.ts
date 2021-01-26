@@ -28,4 +28,9 @@ export type IPicturePost = {
   homeScreen: boolean;
   text: string;
   likeCounter: number;
+  locationId?: string;
+  locationCity?: string;
+  locationName?: string;
+  province?: string;
+  coordinates?: { _latitude: number; _longitude: number };
 };

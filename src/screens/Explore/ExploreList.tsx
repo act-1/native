@@ -6,9 +6,15 @@ import { useStore } from '../../stores';
 function ExploreList({ route }) {
   const { exploreStore } = useStore();
 
+  const title = exploreStore.currentFilter === 'featured' ? 'נבחרות' : 'אחרונות';
+
   return (
     <>
-      <PictureList pictures={exploreStore.recentPictures} initialIndex={route.params.initialIndex} />
+      <PictureList
+        pictures={exploreStore.currentFilter === 'featured' ? exploreStore.featuredPictures : exploreStore.recentPictures}
+        initialIndex={route.params.initialIndex}
+        title={title}
+      />
     </>
   );
 }

@@ -1,99 +1,52 @@
-import React from 'react';
-import { StyleSheet, FlatList, Dimensions } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import { Box, Text, Ticker } from '../';
-import Icon from 'react-native-vector-icons/Feather';
+import React, { useEffect, useRef } from 'react';
+import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { IPicturePost } from '@types/post';
-
-import * as timeago from 'timeago.js';
-import he from 'timeago.js/lib/lang/he';
-timeago.register('he', he);
-
-const deviceWidth = Dimensions.get('window').width;
+import PictureListItem from './PictureListItem';
 
 const itemHeights: number[] = [];
 
 const getItemLayout = (data: IPicturePost[] | null | undefined, index: number) => {
   const length = itemHeights[index];
   const offset = itemHeights.slice(0, index).reduce((a, c) => a + c, 0);
-  console.log(itemHeights, length);
   return { length, offset, index };
 };
 
-export default function PictureList({ pictures, initialIndex }: { pictures: IPicturePost[]; initialIndex?: number }) {
+function PictureList({ pictures, title, initialIndex }: { pictures: IPicturePost[]; title?: string; initialIndex?: number }) {
   const navigation = useNavigation();
+  const flatListRef = useRef<FlatList>(null);
 
-  const pictureItem = ({ item, index }: { item: IPicturePost; index: number }) => (
-    <Box onLayout={(object) => (itemHeights[index] = object.nativeEvent.layout.height)}>
-      <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="s">
-        <FastImage
-          source={{
-            uri:
-              'https://scontent.ftlv15-1.fna.fbcdn.net/v/t1.0-9/120795507_338405427579471_6909790557627558055_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=m1-VKWy6OHoAX90JQPy&_nc_ht=scontent.ftlv15-1.fna&oh=80185911315cbb9176816b026298a887&oe=6032F1FF',
-          }}
-          style={styles.profilePic}
-        />
-        <Box>
-          <Text variant="boxTitle">גיא טפר</Text>
-          <Box flexDirection="row" alignItems="center">
-            <Text
-              variant="boxSubtitle"
-              textAlign="left"
-              onPress={() => navigation.navigate('LocationPage', { locationId: 'habima' })}
-            >
-              כיכר הפעמון
-            </Text>
-          </Box>
-        </Box>
-      </Box>
-      <Box style={{ marginHorizontal: -16, marginBottom: 8 }}>
-        {/* Height is calculated propotionaly to the device width */}
-        <FastImage
-          source={{ uri: item.pictureUrl }}
-          style={{ height: item.pictureHeight / (item.pictureWidth / deviceWidth), width: '100%' }}
-        />
-      </Box>
-      <Box paddingHorizontal="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="s">
-        <Box flexDirection="row" alignItems="center">
-          <Icon name="heart" color={false ? '#ec534b' : '#fff'} size={19} style={{ marginRight: 6 }} />
-          <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#fff' }}>{item.likeCounter}</Ticker>
-        </Box>
-        <Text variant="boxSubtitle" fontSize={14} textAlign="left">
-          {timeago.format(item.createdAt.toDate(), 'he')}
-        </Text>
-      </Box>
-      <Box paddingHorizontal="m">
-        <Text variant="text" fontSize={14} marginBottom="s">
-          {item.text}
-        </Text>
-      </Box>
-    </Box>
-  );
+  React.useLayoutEffect(() => {
+    if (title) {
+      navigation.setOptions({
+        title,
+      });
+    }
+  }, [navigation, title]);
+
+  useEffect(() => {
+    // This is a hack to solve `initialScrollToIndex` issue, when the items didn't have enough time to render initially
+    // and the method failed.
+    if (initialIndex) {
+      let wait = new Promise((resolve) => setTimeout(resolve, 150));
+      wait.then(() => {
+        flatListRef.current!.scrollToIndex({ index: initialIndex, animated: false });
+      });
+    }
+  }, [initialIndex]);
 
   return (
     <FlatList
+      ref={flatListRef}
       data={pictures}
       keyExtractor={(item) => item.id}
-      renderItem={pictureItem}
-      initialScrollIndex={initialIndex}
-      initialNumToRender={pictures.length}
-      getItemLayout={getItemLayout}
+      renderItem={({ item, index }) => (
+        <PictureListItem item={item} onLayout={(object) => (itemHeights[index] = object.nativeEvent.layout.height)} />
+      )}
+      getItemLayout={initialIndex ? getItemLayout : null}
+      initialNumToRender={1000} // TODO: Critical - if there are more than 10 items the compoennt crashes without this.
     />
   );
 }
 
-const styles = StyleSheet.create({
-  profilePic: {
-    width: 42,
-    height: 42,
-    borderRadius: 50,
-    marginRight: 8,
-    borderColor: '#0a0d0f',
-  },
-  likeCount: {
-    color: '#999999',
-    fontFamily: 'AtlasDL3.1AAA-Medium',
-    fontSize: 17,
-  },
-});
+export default React.memo(PictureList);

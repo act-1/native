@@ -70,8 +70,6 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
 
         return [...prevState, checkIn];
       });
-
-      console.log(userStore.user.uid, checkIn.userId);
     });
 
     checkInCount.on('value', (snapshot) => {

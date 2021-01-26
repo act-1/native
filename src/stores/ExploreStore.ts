@@ -42,6 +42,10 @@ class FeedStore {
       console.error(err);
     }
   }
+
+  async addRecentPicture(picturePost: IPicturePost) {
+    this.recentPictures = [picturePost, ...this.recentPictures];
+  }
 }
 
 export default FeedStore;

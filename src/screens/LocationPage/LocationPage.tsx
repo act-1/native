@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 import { firebase } from '@react-native-firebase/database';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -15,6 +16,9 @@ import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet
 import { LocationActions, LocationCounter, LocationPictureFeed } from './components';
 import CheckInService from '@services/checkIn';
 import { updateCheckInCount } from '@services/feed';
+import { IPicturePost } from '@types/post';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import FastImage from 'react-native-fast-image';
 
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
@@ -28,16 +32,45 @@ if (__DEV__) {
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const [locatinoPictures, setLocationPictures] = useState<IPicturePost[]>([]);
 
-  const snapPoints = useMemo(() => ['1%', '25%'], []);
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: location?.name,
+    });
+  }, [navigation, location]);
 
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-    analytics().logEvent('location_page_sign_up_sheet_display');
-  }, []);
+  useEffect(() => {
+    const query = firestore()
+      .collection('posts')
+      .where('locationId', '==', route.params.locationId)
+      .where('archived', '==', false)
+      .orderBy('createdAt')
+      .limit(10);
 
-  const dismissModal = () => bottomSheetModalRef!.current!.dismiss();
+    const unsubscribe = query.onSnapshot(
+      (snapshot) => {
+        console.log(snapshot);
+        if (snapshot === null) return;
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === 'added') {
+            const picture = change.doc.data() as IPicturePost;
+            console.log(picture);
+            setLocationPictures((prevState) => [picture, ...prevState]);
+          }
+        });
+      },
+      (error) => {
+        crashlytics().recordError(error);
+        console.error(error);
+      }
+    );
+
+    return () => {
+      console.log('goodbye');
+      unsubscribe();
+    };
+  }, [route.params.locationId]);
 
   // Retrieve location information.
   // First try to hit the cache - then fetch from firestore.
@@ -74,68 +107,29 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     );
   }
   return (
-    <StickyHeaderScrollView
-      goBack={() => navigation.goBack()}
-      headerTitle={location.name}
-      thumbnail={new URL('https://res.cloudinary.com/onekm/image/upload/v1604300825/weekend_pictures/31-10-2020/zomet_oh.jpg')}
-    >
-      <BottomSheetModalProvider>
-        <Box marginTop="m">
-          <Box paddingHorizontal="m" marginBottom="s">
-            <Text variant="extraLargeTitle" marginBottom="xxs">
-              {location.name}
-            </Text>
-            <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.8} marginBottom="m">
-              {location.city}
-            </Text>
-          </Box>
+    <ScrollView style={{ flex: 1 }}>
+      <FastImage
+        source={{ uri: 'https://res.cloudinary.com/onekm/image/upload/v1604300825/weekend_pictures/31-10-2020/zomet_oh.jpg' }}
+        style={styles.locationThumb}
+      />
+      <Box marginTop="m">
+        <LocationCounter locationId={location.id} />
 
-          {/* <Box backgroundColor="seperator" height={2} width={600} marginBottom="s" position="relative" left={-24} /> */}
+        <LocationActions location={location} />
 
-          <LocationCounter locationId={location.id} />
-
-          <LocationActions />
-
-          <LocationPictureFeed />
-
-          {/* <Box backgroundColor="seperator" height={2} width={500} marginVertical="m" /> */}
-
-          {/* {userStore.user.isAnonymous && (
-            <Box justifyContent="center" alignItems="center" height={110}>
-              <Text
-                variant="text"
-                style={{ color: '#FFC000' }}
-                textAlign="center"
-                fontWeight="700"
-                lineHeight={21.5}
-                paddingHorizontal="s"
-                marginBottom="xm"
-              >
-                רוצים לצרף את תמונתכם לרשימת המפגינים.ות ב{location.name}?
-              </Text>
-              <RoundedButton text="הצטרפות לרשימה" onPress={handlePresentModalPress} color="yellow" />
-            </Box>
-          )} */}
-
-          <BottomSheetModal
-            ref={bottomSheetModalRef}
-            index={1}
-            snapPoints={snapPoints}
-            backgroundComponent={() => (
-              <Box style={{ ...StyleSheet.absoluteFillObject, bottom: -1000, backgroundColor: '#333438' }} />
-            )}
-          >
-            <SheetSignUp dismissModal={dismissModal} />
-          </BottomSheetModal>
-        </Box>
-      </BottomSheetModalProvider>
-    </StickyHeaderScrollView>
+        <LocationPictureFeed pictures={locatinoPictures} />
+      </Box>
+    </ScrollView>
   );
 }
 
 export default observer(LocationPage);
 
 const styles = StyleSheet.create({
+  locationThumb: {
+    width: '100%',
+    height: 200,
+  },
   counterText: {
     fontFamily: 'AtlasDL3.1AAA-Medium',
     fontSize: 26,
@@ -158,3 +152,51 @@ const styles = StyleSheet.create({
 //     console.error(err);
 //   }
 // };
+
+/**
+ * 
+ * 
+  /**
+   * const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  const snapPoints = useMemo(() => ['1%', '25%'], []);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+    analytics().logEvent('location_page_sign_up_sheet_display');
+  }, []);
+
+  const dismissModal = () => bottomSheetModalRef!.current!.dismiss();
+   
+
+
+ * 
+          {/* {userStore.user.isAnonymous && (
+            <Box justifyContent="center" alignItems="center" height={110}>
+              <Text
+                variant="text"
+                style={{ color: '#FFC000' }}
+                textAlign="center"
+                fontWeight="700"
+                lineHeight={21.5}
+                paddingHorizontal="s"
+                marginBottom="xm"
+              >
+                רוצים לצרף את תמונתכם לרשימת המפגינים.ות ב{location.name}?
+              </Text>
+              <RoundedButton text="הצטרפות לרשימה" onPress={handlePresentModalPress} color="yellow" />
+            </Box>
+          )} 
+
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            backgroundComponent={() => (
+              <Box style={{ ...StyleSheet.absoluteFillObject, bottom: -1000, backgroundColor: '#333438' }} />
+            )}
+          >
+            <SheetSignUp dismissModal={dismissModal} />
+          </BottomSheetModal> 
+
+ */
