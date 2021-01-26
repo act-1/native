@@ -3,8 +3,9 @@ import { Box, CircularButton } from '../../../components';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
+import { ILocation } from '@types/location';
 
-function LocationActions() {
+function LocationActions({ location }: { location: ILocation }) {
   const navigation = useNavigation();
 
   const { showActionSheetWithOptions } = useActionSheet();
@@ -12,7 +13,7 @@ function LocationActions() {
   const openLibrary = async () => {
     try {
       await launchImageLibrary({ mediaType: 'photo', quality: 1 }, (image) => {
-        navigation.navigate('NewPost', { image });
+        navigation.navigate('ActionModal', { screen: 'NewPost', params: { image, location } });
       });
     } catch (err) {
       if (err.code === 'E_PERMISSION_MISSING') {

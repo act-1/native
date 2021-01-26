@@ -94,7 +94,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
           <LocationCounter locationId={location.id} />
 
-          <LocationActions />
+          <LocationActions location={location} />
 
           <LocationPictureFeed />
 
