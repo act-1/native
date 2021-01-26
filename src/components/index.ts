@@ -9,3 +9,4 @@ export { default as EditProfilePicture } from './EditProfilePicture';
 export { default as PictureList } from './PictureList';
 export { default as PictureThumbList } from './PictureThumbList';
 export { default as Ticker } from './Ticker';
+export { default as UploadBanner } from './UploadBanner';

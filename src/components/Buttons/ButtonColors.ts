@@ -25,6 +25,11 @@ export const buttonColors: ColorsDict = {
     pressedColor: '#eb524b',
     textColor: '#fff',
   },
+  primaryRed: {
+    initialColor: '#eb524b',
+    pressedColor: '#e53a2b',
+    textColor: '#fff',
+  },
   yellow: {
     initialColor: '#FFC000',
     pressedColor: '#FFCB2D',

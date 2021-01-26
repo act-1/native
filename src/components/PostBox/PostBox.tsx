@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { Box, Text, Ticker } from '../../components';
 import { IPost } from '@types/post';
+
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
 timeago.register('he', he);

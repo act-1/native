@@ -10,8 +10,8 @@ export default function ActionScreen({ navigation }: ActionScreenProps) {
 
   const openLibrary = async () => {
     try {
-      await launchImageLibrary({ mediaType: 'photo' }, (response) => {
-        console.log(response);
+      await launchImageLibrary({ mediaType: 'photo', quality: 1 }, (image) => {
+        navigation.navigate('NewPost', { image });
       });
     } catch (err) {
       if (err.code === 'E_PERMISSION_MISSING') {
@@ -61,7 +61,7 @@ export default function ActionScreen({ navigation }: ActionScreenProps) {
         backgroundImage={require('@assets/pictures/check-in-action.png')}
         icon={require('@assets/icons/location-icon.png')}
         title="צ׳ק אין"
-        description="הצטרפו להפגנה"
+        description="יוצאים להפגין, עושים צ׳ק אין"
         onPress={() => navigation.navigate('SelectLocation')}
         color="red"
         style={{ marginBottom: 12 }}

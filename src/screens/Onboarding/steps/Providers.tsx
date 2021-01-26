@@ -33,8 +33,6 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
           throw new Error('Supplied provider is incorrect.');
       }
 
-      console.log(result);
-
       if (result?.isNewUser || userStore.userData?.signupCompleted === false) {
         if (result.photoURL) {
           setHighResPhoto(result.photoURL);
@@ -43,7 +41,6 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
 
       if (result.isNewUser === false) {
         await store.initApp();
-        setIsLoading(false);
       }
     } catch (err) {
       if (err.code === 'auth/account-exists-with-different-credential') {

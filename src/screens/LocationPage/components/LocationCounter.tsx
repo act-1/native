@@ -5,8 +5,8 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-snap-carousel';
 import { chunkArray } from '@utils/array-utils';
-import { Box, Text, Ticker } from '../../components';
-import { useStore } from '../../stores';
+import { Box, Text, Ticker } from '../../../components';
+import { useStore } from '../../../stores';
 
 firebase.app().database().setLoggingEnabled(true);
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
