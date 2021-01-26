@@ -37,10 +37,10 @@ function PictureList({ pictures, title, initialIndex }: { pictures: IPicturePost
     // This is a hack to solve `initialScrollToIndex` issue, when the items didn't have enough time to render initially
     // and the method failed.
     if (initialIndex) {
-      // let wait = new Promise((resolve) => setTimeout(resolve, 1000));
-      // wait.then(() => {
-      //   flatListRef.current!.scrollToIndex({ index: initialIndex, animated: false });
-      // });
+      let wait = new Promise((resolve) => setTimeout(resolve, 110));
+      wait.then(() => {
+        flatListRef.current!.scrollToIndex({ index: initialIndex, animated: false });
+      });
     }
   }, [initialIndex]);
 
