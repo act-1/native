@@ -25,7 +25,7 @@ export type RootStackParamList = {
   SignUpNavigator: undefined;
   SignUpForm: undefined;
   ActionScreen: undefined;
-  NewPost: { image: ImagePickerResponse };
+  NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal' };
   SelectLocation: undefined;
 };
 

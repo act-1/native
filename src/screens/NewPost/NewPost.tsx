@@ -13,13 +13,22 @@ const deviceWidth = Dimensions.get('window').width;
 function NewPost({ navigation, route }: NewPostProps) {
   const { userStore, feedStore } = useStore();
   const [content, setContent] = useState('');
-  const { image } = route.params;
+  const { image, completionScreen } = route.params;
 
   const uploadPost = async () => {
     try {
       feedStore.uploadImage({ image, text: content });
-      navigation.popToTop();
-      navigation.goBack();
+
+      // If came from location page, just go back.
+      // If came from action screen, pop to the modal's first screen and close the modal.
+      const routes = navigation.dangerouslyGetParent()!.dangerouslyGetState().routes;
+      console.log(routes);
+      if (completionScreen === 'closeModal') {
+        navigation.popToTop();
+        navigation.goBack();
+      } else {
+        navigation.goBack();
+      }
     } catch (err) {
       console.error(err);
       crashlytics().setAttribute('image_object', JSON.stringify(image));

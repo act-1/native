@@ -46,7 +46,6 @@ function PictureThumbList({ pictures }: { pictures: IPicturePost[] }) {
   const [loadedImages, setLoadedImages] = useState<number[]>([]);
 
   useEffect(() => {
-    console.log(pictures);
     setLoadedImages([]);
   }, [pictures]);
 

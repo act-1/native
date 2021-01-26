@@ -69,6 +69,7 @@ export default observer(UploadBanner);
 
 const styles = StyleSheet.create({
   bannerWrapper: {
+    top: 0,
     width: '100%',
     height: 70,
     paddingHorizontal: 12,

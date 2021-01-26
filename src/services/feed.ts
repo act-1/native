@@ -91,7 +91,6 @@ export async function newImagePost({ image, text }: NewImagePostProps) {
     const currentUser = auth().currentUser;
     if (currentUser) {
       const uploadedImage = await Storage.uploadPicture(image);
-      console.log(currentUser.uid, currentUser.displayName, currentUser.photoURL);
 
       const postRef = firestore().collection('posts').doc();
 

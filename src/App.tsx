@@ -46,9 +46,7 @@ function App() {
 
   useEffect(() => {
     if (store.feedStore.uploadStatus === 'in_progress') {
-      setTimeout(() => {
-        notificationRef.current?.show();
-      }, 400);
+      setTimeout(() => {}, 400);
     }
 
     if (store.feedStore.uploadStatus === 'done') {
