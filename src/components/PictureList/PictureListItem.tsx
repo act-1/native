@@ -20,16 +20,18 @@ function PictureListItem({ item, onLayout }: { item: IPicturePost; onLayout: (ev
       <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="s">
         <FastImage source={{ uri: item.authorPicture }} style={styles.profilePic} />
         <Box>
-          <Text variant="boxTitle">גיא טפר</Text>
-          <Box flexDirection="row" alignItems="center">
-            <Text
-              variant="boxSubtitle"
-              textAlign="left"
-              onPress={() => navigation.navigate('LocationPage', { locationId: 'habima' })}
-            >
-              כיכר הפעמון
-            </Text>
-          </Box>
+          <Text variant="boxTitle">{item.authorName}</Text>
+          {item.locationId && (
+            <Box flexDirection="row" alignItems="center">
+              <Text
+                variant="boxSubtitle"
+                textAlign="left"
+                onPress={() => navigation.navigate('LocationPage', { locationId: item.locationId })}
+              >
+                {item.locationName}
+              </Text>
+            </Box>
+          )}
         </Box>
       </Box>
       <Box style={{ marginHorizontal: -16, marginBottom: 8 }}>
@@ -45,7 +47,7 @@ function PictureListItem({ item, onLayout }: { item: IPicturePost; onLayout: (ev
           <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#fff' }}>{item.likeCounter}</Ticker>
         </Box>
         <Text variant="boxSubtitle" fontSize={14} textAlign="left">
-          {timeago.format(item.createdAt.toDate(), 'he')}
+          {item.createdAt && timeago.format(item.createdAt.toDate(), 'he')}
         </Text>
       </Box>
       <Box paddingHorizontal="m">

@@ -1,9 +1,15 @@
-import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import * as geofirestore from 'geofirestore';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
 import { IPost, IPicturePost } from '@types/post';
 import Storage, { uploadPicture } from './storage';
 import { ImagePickerResponse } from 'react-native-image-picker';
+import { ILocation } from '@types/location';
+import { createTimestamp } from '@utils/date-utils';
+
+const GeoFirestore = geofirestore.initializeApp(firestore());
+const postsCollection = GeoFirestore.collection('posts');
 
 export async function getAllPosts(userId: string): Promise<IPost[]> {
   try {
@@ -83,19 +89,16 @@ export async function updateCheckInCount(): Promise<{ updated: boolean; action: 
 type NewImagePostProps = {
   image: ImagePickerResponse;
   text?: string;
-  locationId?: string;
+  location?: ILocation;
 };
 
-export async function newImagePost({ image, text }: NewImagePostProps) {
+export async function newImagePost({ image, text, location }: NewImagePostProps) {
   try {
     const currentUser = auth().currentUser;
     if (currentUser) {
       const uploadedImage = await Storage.uploadPicture(image);
 
-      const postRef = firestore().collection('posts').doc();
-
       const postData = {
-        id: postRef.id,
         type: 'picture',
         authorId: currentUser.uid,
         authorName: currentUser.displayName,
@@ -111,20 +114,33 @@ export async function newImagePost({ image, text }: NewImagePostProps) {
         text,
       };
 
-      postRef.set({
-        ...postData,
-        createdAt: firestore.FieldValue.serverTimestamp(),
-        updatedAt: firestore.FieldValue.serverTimestamp(),
-      });
+      if (location) {
+        const postRef = postsCollection.doc();
+        postRef.set({
+          ...postData,
+          id: postRef.id,
+          locationId: location.id,
+          locationCity: location.city,
+          locationName: location.name,
+          province: location.province,
+          coordinates: new firebase.firestore.GeoPoint(location.coordinates._latitude, location.coordinates._longitude),
+          createdAt: firestore.FieldValue.serverTimestamp(),
+          updatedAt: firestore.FieldValue.serverTimestamp(),
+        });
+      } else {
+        const postRef = firestore().collection('posts').doc();
+        postRef.set({
+          ...postData,
+          id: postRef.id,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+          updatedAt: firestore.FieldValue.serverTimestamp(),
+        });
+      }
 
-      return { ...postData, createdAt: new Date(), updatedAt: new Date() };
-      /**
-       * locationId
-       * locationName
-       * locationCity
-       * locationProvince
-       * coordinates (GeoFirestore)
-       */
+      // Create timestamps to reflect firestore values
+      const createdAtTimestamp = createTimestamp(new Date().getTime() / 1000, 0);
+
+      return { ...postData, createdAt: createdAtTimestamp, updatedAt: new Date() };
     }
   } catch (err) {
     console.error(err);
@@ -142,7 +158,6 @@ export async function getRecentPictures(): Promise<IPicturePost[]> {
       .get();
 
     const posts = postsSnapshot.docs.map((post) => post.data() as IPicturePost);
-    console.log(posts);
     return posts;
   } catch (err) {
     throw err;

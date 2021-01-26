@@ -3,11 +3,10 @@ import { StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { PictureList } from '@components';
 import Icon from 'react-native-vector-icons/Feather';
+import { IPicturePost } from '@types/post';
 
-class LocationPictureFeed extends Component {
-  render() {
-    return <PictureList />;
-  }
+function LocationPictureFeed({ pictures }: { pictures: IPicturePost[] }) {
+  return <PictureList pictures={pictures} />;
 }
 
 export default LocationPictureFeed;

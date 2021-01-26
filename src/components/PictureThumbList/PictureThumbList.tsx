@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image';
 import { IPicturePost } from '@types/post';
 import { Box } from '../../components';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 
 const tempPics = Array.from(Array(30).keys());

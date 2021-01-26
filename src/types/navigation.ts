@@ -1,6 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { ImagePickerResponse } from 'react-native-image-picker';
+import { ILocation } from './location';
 
 export type TabBarProps = BottomTabScreenProps<TabBarParamList>;
 export type SelectLocationScreenProps = BottomTabScreenProps<RootStackParamList, 'CheckInSelectLocation'>;
@@ -25,7 +26,7 @@ export type RootStackParamList = {
   SignUpNavigator: undefined;
   SignUpForm: undefined;
   ActionScreen: undefined;
-  NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal' };
+  NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: ILocation };
   SelectLocation: undefined;
 };
 

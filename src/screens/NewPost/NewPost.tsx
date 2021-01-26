@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, Image, StyleSheet, Dimensions, Alert } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useStore } from '../../stores';
@@ -13,16 +13,17 @@ const deviceWidth = Dimensions.get('window').width;
 function NewPost({ navigation, route }: NewPostProps) {
   const { userStore, feedStore } = useStore();
   const [content, setContent] = useState('');
-  const { image, completionScreen } = route.params;
+  const { image, completionScreen, location } = route.params;
+
+  useEffect(() => {
+    console.log(location);
+  }, [location]);
 
   const uploadPost = async () => {
     try {
-      feedStore.uploadImage({ image, text: content });
+      feedStore.uploadImage({ image, text: content, location });
 
-      // If came from location page, just go back.
-      // If came from action screen, pop to the modal's first screen and close the modal.
-      const routes = navigation.dangerouslyGetParent()!.dangerouslyGetState().routes;
-      console.log(routes);
+      // How to route on completion
       if (completionScreen === 'closeModal') {
         navigation.popToTop();
         navigation.goBack();

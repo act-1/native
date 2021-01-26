@@ -24,8 +24,8 @@ function LocationActions({ location }: { location: ILocation }) {
 
   const openCamera = async () => {
     try {
-      await launchCamera({ mediaType: 'photo' }, (response) => {
-        console.log(response);
+      await launchCamera({ mediaType: 'photo', quality: 1 }, (image) => {
+        navigation.navigate('ActionModal', { screen: 'NewPost', params: { image, location } });
       });
     } catch (err) {
       console.log(err);
@@ -59,9 +59,9 @@ function LocationActions({ location }: { location: ILocation }) {
 
   return (
     <Box flexDirection="row" justifyContent="space-evenly" backgroundColor="greyBackground" paddingVertical="xm" marginBottom="m">
-      <CircularButton iconName="map-pin" color="blue" text="צ׳ק אין" onPress={() => null} />
+      {/* <CircularButton iconName="map-pin" color="blue" text="צ׳ק אין" onPress={() => null} /> */}
       <CircularButton iconName="camera" color="blue" text="העלאת תמונה" onPress={displayUploadOptions} />
-      <CircularButton iconName="share" color="blue" text="הזמנת חברים" onPress={() => null} />
+      {/* <CircularButton iconName="share" color="blue" text="הזמנת חברים" onPress={() => null} /> */}
     </Box>
   );
 }

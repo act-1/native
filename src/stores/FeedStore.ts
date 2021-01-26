@@ -1,12 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import perf from '@react-native-firebase/perf';
 import auth from '@react-native-firebase/auth';
-import storage from '@react-native-firebase/storage';
 import FeedService, { getAllPosts, likePost, newImagePost, unlikePost } from '@services/feed';
 import { IPost } from '@types/post';
 import { updateArrayItem } from '@utils/array-utils';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import rootStore from './RootStore';
+import { ILocation } from '@types/location';
 
 class FeedStore {
   rootStore: null | rootStore = null;
@@ -72,20 +71,20 @@ class FeedStore {
    *
    * Therefor we moved it here for resolving the issue faster.
    */
-  async uploadImage({ image, text }: { image: ImagePickerResponse; text?: string }) {
+  async uploadImage({ image, text, location }: { image: ImagePickerResponse; text?: string; location?: ILocation }) {
     try {
       runInAction(() => {
         this.uploadStatus = 'in_progress';
       });
 
-      const postData = await newImagePost({ image, text });
+      const postData = await newImagePost({ image, text, location });
       // Upload to firestore
 
       runInAction(() => {
         this.uploadStatus = 'done';
       });
 
-      this.rootStore?.exploreStore.addRecentPicture(postData);
+      // this.rootStore?.exploreStore.addRecentPicture(postData);
 
       setTimeout(() => {
         runInAction(() => {
