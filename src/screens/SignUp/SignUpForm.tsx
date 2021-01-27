@@ -116,7 +116,13 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
       <Box height={1} backgroundColor="seperator" style={{ marginBottom: 24 }} />
 
       <Box flexDirection="row" justifyContent="center" borderColor="seperator" marginBottom="xm">
-        <RoundedButton text="סיום הרשמה" color="blue" onPress={onSubmit} disabled={displayName.length < 2} loading={isLoading} />
+        <RoundedButton
+          text="סיום הרשמה"
+          color="blue"
+          onPress={onSubmit}
+          disabled={displayName.length < 2 || province.length === 0}
+          loading={isLoading}
+        />
       </Box>
     </Box>
   );
