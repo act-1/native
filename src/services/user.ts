@@ -80,6 +80,21 @@ export async function updateUserDisplayName(displayName: string) {
   }
 }
 
+export async function updateUserProvince(province: string) {
+  try {
+    const user = auth().currentUser;
+
+    if (!user) {
+      throw new Error('User is not authenticated.');
+    }
+
+    const userRef = firestore().collection('users').doc(user.uid);
+    return userRef.update({ province });
+  } catch (err) {
+    throw err;
+  }
+}
+
 export async function updateUserPicture(pictureUrl: string, filePath: string) {
   try {
     const user = auth().currentUser;

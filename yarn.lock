@@ -1894,6 +1894,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-10.4.1.tgz#f999656abaab9523b82ac77d12b43076d620ad78"
   integrity sha512-EJm/leacBsNFdMDtglReIvnNNQLl75w4TtOq+DOxPWnMDlBQDVx1DZ2bJjexSQgFZmZG1QBnE6UH9PcriroNxg==
 
+"@react-native-picker/picker@^1.8.3", "@react-native-picker/picker@^1.9.10":
+  version "1.9.10"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.9.10.tgz#c0d445453e91077cc85a3f0a6d0074d44d21e438"
+  integrity sha512-g0C0RLjXXGE4UfmGxNtAOY3LE5Epz8+ck/rB1oErJowskIIG83U6LVqH9oFrx1Hq1k/lbVQGgabURlE0QQ1MHA==
+
 "@react-navigation/bottom-tabs@5.11.4":
   version "5.11.4"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.11.4.tgz#0dd182a3d2f96473b7064268bbdc4cd76b80e9e0"
@@ -7907,6 +7912,14 @@ react-native-permissions@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.0.0.tgz#d9d107700741d41f8392f202f35a61f481fb0e68"
   integrity sha512-zBvf+o3NhgKmBk1I06GzZXaDfc9SUyO4M5TMcaCF1pwG1h4sI+XAv3gWSbryl6WnaZQc1zA+g7SocSoYcpJN5g==
+
+react-native-picker-select@^8.0.4:
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-picker-select/-/react-native-picker-select-8.0.4.tgz#3f7f1f42df69b06e7d2c10338288332a6c40fd10"
+  integrity sha512-orBjPIwBkV5oipyVw263YNMI56f6Kj3p/ejabZoCYYNSG3AiLVVhC2RqsxMgDA7IayyURAW+AlV+mDJyVqLBkg==
+  dependencies:
+    "@react-native-picker/picker" "^1.8.3"
+    lodash.isequal "^4.5.0"
 
 react-native-reanimated@2.0.0-alpha.8:
   version "2.0.0-alpha.8"
