@@ -11,20 +11,18 @@ import { NewPostProps } from '../../types/navigation';
 const deviceWidth = Dimensions.get('window').width;
 
 function NewPost({ navigation, route }: NewPostProps) {
-  const { userStore, feedStore } = useStore();
+  const { userStore, feedStore, exploreStore } = useStore();
   const [caption, setCaption] = useState('');
   const { image, completionScreen, location } = route.params;
-  console.log('Before: ', caption);
 
   const uploadPost = async () => {
     try {
-      console.log('NewPost: ', caption);
       feedStore.uploadImage({ image, text: caption, location });
 
       // How to route on completion
       if (completionScreen === 'closeModal') {
-        navigation.popToTop();
-        navigation.goBack();
+        navigation.navigate('ExploreMain');
+        exploreStore.setCurrentFilter('recent');
       } else {
         navigation.goBack();
       }

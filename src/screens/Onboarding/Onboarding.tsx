@@ -25,6 +25,10 @@ function Onboarding() {
     pages.current?.scrollToPage(currentIndex + 1);
   };
 
+  const scrollToPage = (index: number) => {
+    pages.current?.scrollToPage(index);
+  };
+
   const onScrollEnd = (index: number) => {
     setCurrentIndex(index);
   };
@@ -33,7 +37,7 @@ function Onboarding() {
     <Welcome nextPage={nextPage} key="welcome" style={{ marginBottom: insets.bottom + 55 }} />,
     <About nextPage={nextPage} key="about" />,
     <Features nextPage={nextPage} key="features" />,
-    <Providers nextPage={nextPage} currentIndex={currentIndex} key="providers" />,
+    <Providers nextPage={nextPage} currentIndex={currentIndex} scrollToPage={scrollToPage} key="providers" />,
     <SignUpForm currentIndex={currentIndex} key="signUpForm" />,
   ];
 

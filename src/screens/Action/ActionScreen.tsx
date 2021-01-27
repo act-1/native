@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import { Box } from '../../components';
 import ActionButton from './ActionButton';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -11,24 +12,28 @@ export default function ActionScreen({ navigation }: ActionScreenProps) {
   const openLibrary = async () => {
     try {
       await launchImageLibrary({ mediaType: 'photo', quality: 1 }, (image) => {
+        if (image.didCancel === true) return; // TODO: ANALYTICS HERE
+
         navigation.navigate('NewPost', { image, completionScreen: 'closeModal' });
       });
     } catch (err) {
       if (err.code === 'E_PERMISSION_MISSING') {
-        Alert.alert(err.code);
+        Alert.alert('יש לספק הרשאת גישה לספריית התמונות.');
       }
     }
   };
 
   const openCamera = async () => {
     try {
-      await launchCamera({ mediaType: 'photo' }, (response) => {
-        console.log(response);
+      await launchCamera({ mediaType: 'photo' }, (image) => {
+        if (image.didCancel === true) return; // TODO: ANALYTICS HERE
+
+        navigation.navigate('NewPost', { image, completionScreen: 'closeModal' });
       });
     } catch (err) {
       console.log(err);
       if (err.code === 'E_PERMISSION_MISSING') {
-        Alert.alert(err.code);
+        Alert.alert('יש לספק הרשאות שימוש במצלמה.');
       }
     }
   };

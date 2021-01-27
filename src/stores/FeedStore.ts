@@ -84,7 +84,7 @@ class FeedStore {
         this.uploadStatus = 'done';
       });
 
-      // this.rootStore?.exploreStore.addRecentPicture(postData);
+      this.rootStore?.exploreStore.addRecentPicture(postData);
 
       setTimeout(() => {
         runInAction(() => {

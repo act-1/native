@@ -67,7 +67,6 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     );
 
     return () => {
-      console.log('goodbye');
       unsubscribe();
     };
   }, [route.params.locationId]);

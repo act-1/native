@@ -3,50 +3,6 @@ import { check, PERMISSIONS, request, PermissionStatus } from 'react-native-perm
 import Geolocation from 'react-native-geolocation-service';
 
 function extractPositionCoords(position: Geolocation.GeoPosition): LatLng {
-  if !(position) throw new Error("No position was provided.")
-  const { coords } = position;
-  const coordinates: LatLng = [coords.latitude, coords.longitude];
-  return coordinates;
-}
-
-/**
- * Check if the user has granted location permission.
- */
-export async function checkLocationPermission(): Promise<PermissionStatus> {
-  const permissionType = Platform.OS === 'ios' ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-
-  try {
-    const result = await check(permissionType);
-    return result;
-  } catch (err) {
-    console.error(err);
-    return err;
-  }
-}
-
-/**
- * Check if the user has granted location permission.
- */
-export async function requestLocationPermission(): Promise<PermissionStatus> {
-  const permissionType = Platform.OS === 'ios' ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-
-  try {
-    const result = await request(permissionType);
-    return result;
-  } catch (err) {
-    console.error(err);
-    return err;
-  }
-}
-
-export async function getCurrentPosition(): Promise<LatLng> {
-  try {
-    let coordinates: LatLng | undefined;
-aimport { Platform } from 'react-native';
-import { check, PERMISSIONS, request, PermissionStatus } from 'react-native-permissions';
-import Geolocation from 'react-native-geolocation-service';
-
-function extractPositionCoords(position: Geolocation.GeoPosition): LatLng {
   if (!position) throw new Error('No position was provided.');
   const { coords } = position;
   const coordinates: LatLng = [coords.latitude, coords.longitude];

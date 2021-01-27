@@ -9,7 +9,7 @@ import { useStore } from '../../../stores';
 import { observer } from 'mobx-react-lite';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
+function Providers({ nextPage, scrollToPage, currentIndex }: BoardingScreenProps) {
   const store = useStore();
   const { userStore } = store;
   const [isLoading, setIsLoading] = useState(false);
@@ -39,8 +39,10 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
         }
       }
 
-      if (result.isNewUser === false) {
-        await store.initApp();
+      // For cases when the userData is already available (user has been authenticated but not finished signup)
+      if (userStore.userData?.signUpCompleted === false) {
+        setIsLoading(false);
+        nextPage();
       }
     } catch (err) {
       if (err.code === 'auth/account-exists-with-different-credential') {
@@ -53,18 +55,28 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
   };
 
   // Upload picture once the user document has been created.
+  // If the user document already exists - check whether they completed the sign up.
   useEffect(() => {
-    if (userStore.userData?.signupCompleted === false && highResPhoto.length > 0 && uploadingProfilePic === false) {
-      setUploadingProfilePic(true);
-      uploadProfilePictureFromURL(highResPhoto)
-        .then(() => {
-          setIsLoading(false);
-          nextPage();
-        })
-        .catch((err) => {
-          console.log(err);
-          crashlytics().recordError(err);
-        });
+    if (currentIndex === 3) {
+      if (userStore.userData?.signupCompleted === false && highResPhoto.length > 0 && uploadingProfilePic === false) {
+        setUploadingProfilePic(true);
+        uploadProfilePictureFromURL(highResPhoto)
+          .then(() => {
+            setIsLoading(false);
+            nextPage();
+          })
+          .catch((err) => {
+            console.log(err);
+            crashlytics().recordError(err);
+          });
+      }
+    }
+
+    if (currentIndex! <= 3) {
+      if (userStore.userData?.signupCompleted === false && highResPhoto === '') {
+        setIsLoading(false);
+        scrollToPage(4);
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,8 +112,8 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
         text="המשך ללא התחברות"
         color="grey"
         onPress={() => signIn('google')}
-        style={{ marginBottom: 42, opacity: 0.4 }} */}
-      />
+        style={{ marginBottom: 42, opacity: 0.4 }} 
+      />*/}
     </Box>
   );
 }

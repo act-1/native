@@ -28,6 +28,7 @@ type RTDBCheckIn = {
 
 type BoardingScreenProps = {
   nextPage: () => void;
+  scrollToPage: (index: number) => void;
   style?: ViewStyle;
   currentIndex?: number;
 };
