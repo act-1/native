@@ -28,7 +28,7 @@ export type RootStackParamList = {
   ActionScreen: undefined;
   NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: ILocation };
   SelectLocation: undefined;
-  ExploreMain: undefined;
+  Explore: undefined;
 };
 
 type TabBarParamList = {

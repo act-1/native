@@ -21,7 +21,7 @@ function NewPost({ navigation, route }: NewPostProps) {
 
       // How to route on completion
       if (completionScreen === 'closeModal') {
-        navigation.navigate('ExploreMain');
+        navigation.navigate('Explore', { screen: 'ExploreList' });
         exploreStore.setCurrentFilter('recent');
       } else {
         navigation.goBack();

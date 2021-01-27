@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Animated, Easing, StyleSheet } from 'react-native';
+import { Platform, Animated, Easing, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { Box } from '../';
@@ -67,21 +67,26 @@ function UploadBanner() {
 
 export default observer(UploadBanner);
 
+const isAndroid = Platform.OS === 'android';
+
 const styles = StyleSheet.create({
   bannerWrapper: {
     top: 0,
-    width: '100%',
+    width: isAndroid ? '105%' : '100%',
     height: 70,
+
     paddingHorizontal: 12,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    backgroundColor: isAndroid ? '#222222' : undefined,
+    elevation: 5,
   },
 
   bannerText: {
     fontFamily: 'AtlasDL3.1AAA-Bold',
     fontSize: 16,
-    color: '#fff',
     textAlign: 'left',
+    color: '#fff',
   },
 });

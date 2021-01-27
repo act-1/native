@@ -118,7 +118,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
 
       if (location) {
         postRef = postsCollection.doc();
-        postRef.set({
+        await postRef.set({
           ...postData,
           id: postRef.id,
           locationId: location.id,
@@ -131,7 +131,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
         });
       } else {
         postRef = firestore().collection('posts').doc();
-        postRef.set({
+        await postRef.set({
           ...postData,
           id: postRef.id,
           createdAt: firestore.FieldValue.serverTimestamp(),
@@ -141,7 +141,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
 
       const postDocument = await postRef.get();
 
-      return postDocument.data() as IPicutrePost;
+      return postDocument.data() as IPicturePost;
     }
   } catch (err) {
     console.error(err);
