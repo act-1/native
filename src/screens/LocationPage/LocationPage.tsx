@@ -35,10 +35,12 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
   const [locatinoPictures, setLocationPictures] = useState<IPicturePost[]>([]);
 
   React.useLayoutEffect(() => {
-    navigation.setOptions({
-      title: location?.name,
-    });
-  }, [navigation, location]);
+    if (location?.name) {
+      navigation.setOptions({
+        headerTitle: location.name,
+      });
+    }
+  }, [location, navigation]);
 
   useEffect(() => {
     const query = firestore()
@@ -50,12 +52,10 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
 
     const unsubscribe = query.onSnapshot(
       (snapshot) => {
-        console.log(snapshot);
         if (snapshot === null) return;
         snapshot.docChanges().forEach((change) => {
           if (change.type === 'added') {
             const picture = change.doc.data() as IPicturePost;
-            console.log(picture);
             setLocationPictures((prevState) => [picture, ...prevState]);
           }
         });

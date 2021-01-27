@@ -1,15 +1,10 @@
 import React from 'react';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
-
 import { LocationPage } from '@screens/LocationPage';
-import { Explore, ExploreList } from '@screens/Explore';
+import { ExploreList } from '@screens/Explore';
 import Icon from 'react-native-vector-icons/Feather';
 
 const ExploreStack = createStackNavigator();
-// const ExploreStack = createNativeStackNavigator();
-// const ExploreStack = createSharedElementStackNavigator();
 
 function ExploreNavigator() {
   return (
@@ -41,14 +36,13 @@ function ExploreNavigator() {
         ),
       })}
     >
-      <ExploreStack.Screen name="ExploreMain" component={Explore} />
       <ExploreStack.Screen
         name="ExploreList"
         options={({ navigation }) => ({
           title: 'נבחרות',
-          headerShown: true,
+          headerShown: false,
           gestureEnabled: true,
-          headerBackTitle: '',
+
           headerLeft: () => (
             <Icon
               name={'arrow-right'}
@@ -67,7 +61,7 @@ function ExploreNavigator() {
         })}
         component={ExploreList}
       />
-      <ExploreStack.Screen name="LocationPage" options={{ headerShown: true, headerBackTitle: '' }} component={LocationPage} />
+      <ExploreStack.Screen name="LocationPage" options={{ headerShown: true, headerTitle: '' }} component={LocationPage} />
     </ExploreStack.Navigator>
   );
 }

@@ -17,7 +17,7 @@ function PictureList({ pictures, title, initialIndex }: { pictures: IPicturePost
   const flatListRef = useRef<FlatList>(null);
 
   React.useLayoutEffect(() => {
-    if (title) {
+    if (title !== '') {
       navigation.setOptions({
         title,
       });
@@ -28,7 +28,7 @@ function PictureList({ pictures, title, initialIndex }: { pictures: IPicturePost
     // This is a hack to solve `initialScrollToIndex` issue, when the items didn't have enough time to render initially
     // and the method failed.
     if (initialIndex) {
-      let wait = new Promise((resolve) => setTimeout(resolve, 150));
+      let wait = new Promise((resolve) => setTimeout(resolve, 70));
       wait.then(() => {
         flatListRef.current!.scrollToIndex({ index: initialIndex, animated: false });
       });
@@ -43,8 +43,7 @@ function PictureList({ pictures, title, initialIndex }: { pictures: IPicturePost
       renderItem={({ item, index }) => (
         <PictureListItem item={item} onLayout={(object) => (itemHeights[index] = object.nativeEvent.layout.height)} />
       )}
-      getItemLayout={initialIndex ? getItemLayout : null}
-      initialNumToRender={initialIndex ? 1000 : 3} // TODO: Critical - if there are more than 10 items the compoennt crashes without this.
+      initialNumToRender={2}
     />
   );
 }

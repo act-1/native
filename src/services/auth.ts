@@ -87,7 +87,7 @@ async function getFacebookProfilePicture(token: any): Promise<string> {
 // THIS IS A TEST
 
 GoogleSignin.configure({
-  webClientId: '1020584583644-u615q508uscq381sjbirrkpuf0h66rdt.apps.googleusercontent.com',
+  webClientId: '406747409884-o1b33t3s3iu4ed3shgbd104f39l5khek.apps.googleusercontent.com',
 });
 
 export async function googleLogin() {
