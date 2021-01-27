@@ -60,8 +60,7 @@ function PictureThumbList({ pictures }: { pictures: IPicturePost[] }) {
     </TouchableOpacity>
   );
   const standardPicturesArray = toJS(pictures);
-  console.log(loadedImages.length, pictures.length);
-  console.log(loadedImages.length >= pictures.length);
+
   return (
     <Box>
       <FlatList

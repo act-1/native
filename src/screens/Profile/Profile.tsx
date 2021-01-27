@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
+import auth from '@react-native-firebase/auth';
 import FastImage from 'react-native-fast-image';
 import { Box, Text } from '../../components';
 import { observer } from 'mobx-react-lite';
@@ -12,6 +13,12 @@ function Profile({ navigation }: ProfileScreenProps) {
   return (
     <Box paddingTop="m" justifyContent="center" alignItems="center">
       <FastImage source={{ uri: userStore.userData?.profilePicture }} style={styles.profilePicture} />
+      <Button
+        title="התנתקות"
+        onPress={() => {
+          userStore.signOut();
+        }}
+      />
     </Box>
   );
 }
@@ -22,6 +29,7 @@ const styles = StyleSheet.create({
   profilePicture: {
     width: 90,
     height: 90,
+    marginBottom: 6,
     borderRadius: 50,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },

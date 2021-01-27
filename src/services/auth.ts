@@ -87,7 +87,7 @@ async function getFacebookProfilePicture(token: any): Promise<string> {
 // THIS IS A TEST
 
 GoogleSignin.configure({
-  webClientId: '406747409884-7jee6664iuf0mrgv9mgih2clomd388hi.apps.googleusercontent.com',
+  webClientId: '1020584583644-u615q508uscq381sjbirrkpuf0h66rdt.apps.googleusercontent.com',
 });
 
 export async function googleLogin() {
@@ -101,8 +101,6 @@ export async function googleLogin() {
     // Sign-in the user with the credential
     const userCredential = await auth().signInWithCredential(googleCredential);
     const { additionalUserInfo } = userCredential;
-
-    console.log(additionalUserInfo);
 
     if (additionalUserInfo?.isNewUser) {
       const photoURL: string = additionalUserInfo.profile!.picture;

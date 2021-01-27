@@ -12,7 +12,6 @@ class FeedStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
-    this.getFeaturedPictures();
   }
 
   setCurrentFilter = (filter: 'featured' | 'recent') => {

@@ -33,16 +33,22 @@ function App() {
       }
     };
 
-    // Initalize data if the user authenticated.
-    // Otherwise, hide the splash screen to show the onboarding screen.
-    if (store.userStore.user && !store.intializedApp) {
-      initApp();
-    } else {
+    if (store.initalizedApp) return;
+
+    if (store.userStore.initializedUser && store.userStore.userData === null) {
       RNBootSplash.hide({ fade: true });
+      return;
     }
 
+    if (store.userStore.initializedUser && !store.intializedApp) {
+      initApp();
+    }
+
+    // Initalize data if the user authenticated.
+    // Otherwise, hide the splash screen to show the onboarding screen.
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store.userStore.user]);
+  }, [store.userStore.initializedUser, store.userStore.userData]);
 
   useEffect(() => {
     if (store.feedStore.uploadStatus === 'in_progress') {

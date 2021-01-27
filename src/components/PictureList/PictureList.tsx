@@ -44,7 +44,7 @@ function PictureList({ pictures, title, initialIndex }: { pictures: IPicturePost
         <PictureListItem item={item} onLayout={(object) => (itemHeights[index] = object.nativeEvent.layout.height)} />
       )}
       getItemLayout={initialIndex ? getItemLayout : null}
-      initialNumToRender={1000} // TODO: Critical - if there are more than 10 items the compoennt crashes without this.
+      initialNumToRender={initialIndex ? 1000 : 3} // TODO: Critical - if there are more than 10 items the compoennt crashes without this.
     />
   );
 }

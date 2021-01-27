@@ -114,8 +114,10 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
         text,
       };
 
+      let postRef = null;
+
       if (location) {
-        const postRef = postsCollection.doc();
+        postRef = postsCollection.doc();
         postRef.set({
           ...postData,
           id: postRef.id,
@@ -128,7 +130,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
           updatedAt: firestore.FieldValue.serverTimestamp(),
         });
       } else {
-        const postRef = firestore().collection('posts').doc();
+        postRef = firestore().collection('posts').doc();
         postRef.set({
           ...postData,
           id: postRef.id,
@@ -137,10 +139,9 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
         });
       }
 
-      // Create timestamps to reflect firestore values
-      const createdAtTimestamp = createTimestamp(new Date().getTime() / 1000, 0);
+      const postDocument = await postRef.get();
 
-      return { ...postData, createdAt: createdAtTimestamp, updatedAt: new Date() };
+      return postDocument.data() as IPicutrePost;
     }
   } catch (err) {
     console.error(err);

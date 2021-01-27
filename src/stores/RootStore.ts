@@ -32,6 +32,7 @@ class RootStore {
         await this.feedStore.getPosts(),
         await this.userStore.refreshFCMToken(),
         await this.userStore.getUserEvents(),
+        await this.exploreStore.getFeaturedPictures(),
       ]);
 
       runInAction(() => {

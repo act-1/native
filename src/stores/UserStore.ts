@@ -22,6 +22,7 @@ class UserStore {
   userCurrentPosition: LatLng | undefined;
   lastCheckIn: CheckInParams | null = null;
   userData: FirebaseFirestoreTypes.DocumentData | null = null;
+  initializedUser = false;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -46,6 +47,13 @@ class UserStore {
           }
         });
       }
+
+      // If no user is logged in, mark the user initalization process as done.
+      if (user === null) {
+        runInAction(() => {
+          this.initializedUser = true;
+        });
+      }
     });
   }
 
@@ -64,14 +72,35 @@ class UserStore {
     firestore()
       .collection('users')
       .doc(userId)
-      .onSnapshot((doc) => {
-        if (doc?.data()) {
+      .onSnapshot(
+        (doc) => {
+          if (this.initializedUser === false) {
+            runInAction(() => {
+              this.initializedUser = true;
+            });
+          }
+
+          if (doc === null) {
+            runInAction(() => {
+              this.userData = null;
+            });
+            return;
+          }
+
           runInAction(() => {
             this.userData = doc.data()!;
-            console.log(doc.data());
           });
+        },
+        (err: any) => {
+          console.error('User Data Listener:, ', err.code);
         }
-      });
+      );
+  }
+
+  signOut() {
+    auth().signOut();
+    this.userData = null;
+    userDataListenerActive = false;
   }
 
   async getUserEvents() {

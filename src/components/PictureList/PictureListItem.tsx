@@ -51,7 +51,7 @@ function PictureListItem({ item, onLayout }: { item: IPicturePost; onLayout: (ev
         </Text>
       </Box>
       <Box paddingHorizontal="m">
-        <Text variant="text" fontSize={14} marginBottom="s">
+        <Text variant="text" fontSize={16} marginBottom="xm">
           {item.text}
         </Text>
       </Box>

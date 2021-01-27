@@ -10,28 +10,32 @@ function LocationActions({ location }: { location: ILocation }) {
 
   const { showActionSheetWithOptions } = useActionSheet();
 
+  // TODO: Refactor to use same code as in new post screen.
   const openLibrary = async () => {
     try {
       await launchImageLibrary({ mediaType: 'photo', quality: 1 }, (image) => {
+        if (image.didCancel === true) return; // TODO: ANALYTICS HERE
         navigation.navigate('ActionModal', { screen: 'NewPost', params: { image, location } });
       });
     } catch (err) {
-      if (err.code === 'E_PERMISSION_MISSING') {
-        Alert.alert(err.code);
-      }
+      console.log(err);
+      // if (err.code === 'E_PERMISSION_MISSING') {
+      //   Alert.alert(err.code);
+      // }
     }
   };
 
   const openCamera = async () => {
     try {
       await launchCamera({ mediaType: 'photo', quality: 1 }, (image) => {
+        if (image.didCancel === true) return; // TODO: ANALYTICS HERE
         navigation.navigate('ActionModal', { screen: 'NewPost', params: { image, location } });
       });
     } catch (err) {
       console.log(err);
-      if (err.code === 'E_PERMISSION_MISSING') {
-        Alert.alert(err.code);
-      }
+      // if (err.code === 'E_PERMISSION_MISSING') {
+      //   Alert.alert(err.code);
+      // }
     }
   };
 
