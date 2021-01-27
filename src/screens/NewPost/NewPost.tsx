@@ -12,16 +12,14 @@ const deviceWidth = Dimensions.get('window').width;
 
 function NewPost({ navigation, route }: NewPostProps) {
   const { userStore, feedStore } = useStore();
-  const [content, setContent] = useState('');
+  const [caption, setCaption] = useState('');
   const { image, completionScreen, location } = route.params;
-
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
+  console.log('Before: ', caption);
 
   const uploadPost = async () => {
     try {
-      feedStore.uploadImage({ image, text: content, location });
+      console.log('NewPost: ', caption);
+      feedStore.uploadImage({ image, text: caption, location });
 
       // How to route on completion
       if (completionScreen === 'closeModal') {
@@ -40,7 +38,7 @@ function NewPost({ navigation, route }: NewPostProps) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => <HeaderButton text="פרסום" onPress={uploadPost} color="primaryRed" />,
+      headerRight: () => <HeaderButton text="פרסום" onPress={() => uploadPost()} color="primaryRed" />,
     });
   }, [navigation]);
 
@@ -50,8 +48,8 @@ function NewPost({ navigation, route }: NewPostProps) {
         <Box flexDirection="row" alignItems="center" marginBottom="m">
           <FastImage source={{ uri: userStore.userData?.profilePicture }} style={styles.profilePicture} />
           <TextInput
-            value={content}
-            onChangeText={setContent}
+            value={caption}
+            onChangeText={setCaption}
             placeholder="מסר לאומה..."
             placeholderTextColor="grey"
             style={styles.textInput}
