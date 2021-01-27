@@ -3,6 +3,7 @@ import { check, PERMISSIONS, request, PermissionStatus } from 'react-native-perm
 import Geolocation from 'react-native-geolocation-service';
 
 function extractPositionCoords(position: Geolocation.GeoPosition): LatLng {
+  if !(position) throw new Error("No position was provided.")
   const { coords } = position;
   const coordinates: LatLng = [coords.latitude, coords.longitude];
   return coordinates;
