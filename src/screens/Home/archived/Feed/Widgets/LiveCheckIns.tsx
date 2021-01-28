@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Text, LocationBox } from '../../../../components';
+import { Box, Text, LocationBox } from '../../../../../components';
 import database from '@react-native-firebase/database';
 
 function LiveCheckIns() {
