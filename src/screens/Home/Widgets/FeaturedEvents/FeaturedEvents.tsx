@@ -4,8 +4,9 @@ import { observer } from 'mobx-react-lite';
 import analytics from '@react-native-firebase/analytics';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../../../../stores';
-import { Box, Text, EventBox } from '../../../../components';
+import { Box } from '../../../../components';
 import { IEvent } from '@types/event';
+import EventCompactBox from './EventCompactBox';
 
 type EventsWidgetProps = {
   style?: ViewStyle;
@@ -24,7 +25,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
     <Box style={style}>
       <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
         {eventStore.events.slice(0, 5).map((event: IEvent, index: number) => (
-          <EventBox variant="compactBox" {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
+          <EventCompactBox {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
         ))}
       </ScrollView>
     </Box>
@@ -39,19 +40,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
 });
-
-// const event = {
-//   locationCity: 'תל אביב',
-//   title: 'מצילות את הדמוקרטיה',
-//   attendingCount: 161,
-//   date: 'היום ',
-// };
-
-// function FeaturedEvent({ event }) {
-//   return (
-//     <Box>
-//       <FastImage
-//       <Text>{event.title}</Text>
-//     </Box>
-//   );
-// }

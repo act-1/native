@@ -82,7 +82,7 @@ function StickyHeaderScrollView({ children, goBack, headerTitle, thumbnail }: St
       <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }], height: HEADER_MAX_HEIGHT }]}>
         <AnimatedImage
           style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
-          source={{ uri: thumbnail.href }}
+          source={{ uri: thumbnail }}
         />
       </Animated.View>
 

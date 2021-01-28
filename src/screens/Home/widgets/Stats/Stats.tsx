@@ -1,19 +1,25 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Box, Text } from '../../../../components';
+import { Box } from '../../../../components';
 import Icon from 'react-native-vector-icons/Feather';
 import StatItem from './StatItem';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 function Stats() {
-  return (
-    <Box style={styles.statsWrapper}>
-      <Box flexDirection="row">
-        <StatItem title="השבוע" count={1024} />
-        <StatItem title="עכשיו" count={320} />
-      </Box>
+  const navigation = useNavigation();
 
-      <Icon name="arrow-left" size={16} color="white" />
-    </Box>
+  return (
+    <TouchableNativeFeedback onPress={() => navigation.navigate('Live')}>
+      <Box style={styles.statsWrapper}>
+        <Box flexDirection="row">
+          <StatItem title="השבוע" count={1024} />
+          <StatItem title="עכשיו" count={320} />
+        </Box>
+
+        <Icon name="arrow-left" size={16} color="white" />
+      </Box>
+    </TouchableNativeFeedback>
   );
 }
 

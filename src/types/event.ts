@@ -8,7 +8,7 @@ export type IEvent = {
   city: string;
   startDate: Date;
   endDate: Date;
-  thumbnail: URL;
+  thumbnail: string;
   content: string;
   organizers: { id: string; profilePicture: string; name: string }[];
   attendingCount: number;
