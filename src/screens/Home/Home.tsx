@@ -1,14 +1,14 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { View, StatusBar, StyleSheet } from 'react-native';
+import { View, StatusBar, StyleSheet, ScrollView } from 'react-native';
 import Stats from './widgets/Stats';
 
 function Home() {
   return (
-    <View style={styles.homeWrapper}>
+    <ScrollView style={styles.homeWrapper}>
       <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
       <Stats />
-    </View>
+    </ScrollView>
   );
 }
 
