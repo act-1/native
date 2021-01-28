@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import { LiveFeed } from '@screens/LiveFeed';
+import LiveFeed from '@screens/LiveFeed';
 import Icon from 'react-native-vector-icons/Feather';
 
-const ExploreStack = createStackNavigator();
+const LiveStack = createStackNavigator();
 
-function ExploreNavigator() {
+function LiveNavigator() {
   return (
-    <ExploreStack.Navigator
+    <LiveStack.Navigator
       screenOptions={({ navigation }) => ({
         gestureEnabled: true,
         headerShown: false,
@@ -18,51 +18,34 @@ function ExploreNavigator() {
         },
         ...TransitionPresets.SlideFromRightIOS,
         headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
-        headerLeft: () => (
-          <Icon
-            name={'arrow-right'}
-            size={28}
-            color={'#fff'}
-            style={{
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 1 },
-              shadowOpacity: 1,
-              shadowRadius: 2,
-              marginLeft: 6,
-            }}
-            onPress={() => navigation.goBack()}
-          />
-        ),
+        // headerLeft: () => (
+        //   <Icon
+        //     name={'arrow-right'}
+        //     size={28}
+        //     color={'#fff'}
+        //     style={{
+        //       shadowColor: '#000',
+        //       shadowOffset: { width: 0, height: 1 },
+        //       shadowOpacity: 1,
+        //       shadowRadius: 2,
+        //       marginLeft: 6,
+        //     }}
+        //     onPress={() => navigation.goBack()}
+        //   />
+        // ),
       })}
     >
-      <ExploreStack.Screen
-        name="ExploreList"
+      <LiveStack.Screen
+        name="LiveFeed"
         options={({ navigation }) => ({
-          title: 'נבחרות',
-          headerShown: false,
+          title: 'פיד מחאה',
+          headerShown: true,
           gestureEnabled: true,
-
-          headerLeft: () => (
-            <Icon
-              name={'arrow-right'}
-              size={28}
-              color={'#fff'}
-              style={{
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 1 },
-                shadowOpacity: 1,
-                shadowRadius: 2,
-                marginLeft: 6,
-              }}
-              onPress={() => navigation.goBack()}
-            />
-          ),
         })}
-        component={ExploreList}
+        component={LiveFeed}
       />
-      <ExploreStack.Screen name="LocationPage" options={{ headerShown: true, headerTitle: '' }} component={LocationPage} />
-    </ExploreStack.Navigator>
+    </LiveStack.Navigator>
   );
 }
 
-export default ExploreNavigator;
+export default LiveNavigator;
