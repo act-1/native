@@ -13,16 +13,17 @@ function Home() {
       <Stats />
       <Box paddingHorizontal="m" marginTop="m" marginBottom="xm">
         <Text variant="largeTitle" color="lightText">
-          הפגנות קרובות
-        </Text>
-      </Box>
-      <FeaturedEvents style={{ marginBottom: 12 }} />
-      <Box paddingHorizontal="m" marginTop="m" marginBottom="xm">
-        <Text variant="largeTitle" color="lightText">
           תמונות נבחרות
         </Text>
       </Box>
-      <FeaturedPictures style={{ marginBottom: 48 }} />
+      <FeaturedPictures style={{ marginBottom: 12 }} />
+
+      <Box paddingHorizontal="m" marginTop="m" marginBottom="xm">
+        <Text variant="largeTitle" color="lightText">
+          הפגנות קרובות
+        </Text>
+      </Box>
+      <FeaturedEvents style={{ marginBottom: 24 }} />
     </ScrollView>
   );
 }

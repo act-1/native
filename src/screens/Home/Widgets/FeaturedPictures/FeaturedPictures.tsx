@@ -15,6 +15,12 @@ const images = [
   {
     url: 'https://placekitten.com/1980/1020',
   },
+  {
+    url: 'https://images1.calcalist.co.il/PicServer3/2020/10/01/1024583/Moti_Ka_AI5I1968_l.jpg',
+  },
+  {
+    url: 'https://a7.org/pictures/812/812280.jpg',
+  },
 ];
 
 type EventsWidgetProps = {
@@ -27,6 +33,7 @@ function FeaturedPictures({ style }) {
   const [galleryImageIndex, setImageIndex] = useState(0);
 
   const onPicturePress = (index: number) => {
+    console.log(index);
     setImageIndex(index);
     setDisplayGallery(true);
     analytics().logEvent('pictures_widget_picture_press', { picture_idnex: index + 1 });
@@ -59,21 +66,22 @@ function FeaturedPictures({ style }) {
         ref={carouselRef}
         data={images}
         hasParallaxImages={true}
+        autoplay={true}
+        autoplayInterval={5200}
+        loop={true}
         renderItem={({ item, index }, parallaxProps) => (
-          <FeaturedPictureBox {...item} parallaxProps={parallaxProps} onPress={() => onPicturePress(index)} />
+          <FeaturedPictureBox
+            {...item}
+            parallaxProps={parallaxProps}
+            pictureIndex={index}
+            onPress={(pictureIndex: number) => onPicturePress(pictureIndex)}
+          />
         )}
         sliderWidth={screenWidth}
-        itemWidth={screenWidth - 30}
+        itemWidth={screenWidth - 60}
       />
     </Box>
   );
 }
 
 export default FeaturedPictures;
-
-const styles = StyleSheet.create({
-  featuredEvents: {
-    paddingVertical: 16,
-    paddingHorizontal: 12,
-  },
-});

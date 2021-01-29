@@ -14,8 +14,9 @@ type FeaturedPicturesProps = {
   authorName: string;
   authorPicture: string;
   url: string;
+  pictureIndex: number;
   parallaxProps: AdditionalParallaxProps;
-  onPress: () => void;
+  onPress: (pictureIndex: number) => void;
 };
 
 function FeaturedPictureBox({
@@ -25,10 +26,20 @@ function FeaturedPictureBox({
   authorName,
   authorPicture,
   parallaxProps,
+  pictureIndex,
   onPress,
 }: FeaturedPicturesProps) {
   return (
-    <TouchableScale activeScale={0.98} friction={7} onPress={onPress} style={styles.item}>
+    <TouchableScale
+      activeScale={0.99}
+      friction={8}
+      onPress={() => {
+        HapticFeedback.trigger('impactLight');
+        onPress(pictureIndex);
+      }}
+      // onPressOut={() => HapticFeedback.trigger('impactLight')}
+      style={styles.item}
+    >
       {/* <FastImage
         style={{ width: 282, height: 136, borderRadius: 8, justifyContent: 'flex-end', alignItems: 'center' }}
         source={{ uri: pictureUrl }}
@@ -61,7 +72,7 @@ export default FeaturedPictureBox;
 
 const styles = StyleSheet.create({
   item: {
-    width: screenWidth - 30,
+    width: screenWidth - 60,
     height: 220,
   },
   imageContainer: {
