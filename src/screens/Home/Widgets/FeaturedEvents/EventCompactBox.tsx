@@ -3,6 +3,7 @@ import { Box, Text } from '../../../../components';
 import FastImage from 'react-native-fast-image';
 import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 type EventBoxProps = {
   title: string;
@@ -16,13 +17,14 @@ type EventBoxProps = {
 function EventCompactBox({ title, attendingCount, city, thumbnail, onPress }: EventBoxProps) {
   return (
     <TouchableScale
-      activeScale={0.98}
-      friction={7}
+      activeScale={0.96}
+      friction={20}
       onPress={onPress}
       onPressIn={() => HapticFeedback.trigger('impactLight')}
       onPressOut={() => HapticFeedback.trigger('impactLight')}
       style={{ marginHorizontal: 12 }}
     >
+      {/* <TouchableNativeFeedback> */}
       <FastImage
         style={{ width: 154, height: 180, borderRadius: 8, justifyContent: 'flex-end', alignItems: 'center' }}
         source={{ uri: thumbnail }}
@@ -52,6 +54,7 @@ function EventCompactBox({ title, attendingCount, city, thumbnail, onPress }: Ev
           {attendingCount} יוצאים להפגין
         </Text>
       </Box>
+      {/* </TouchableNativeFeedback> */}
     </TouchableScale>
   );
 }

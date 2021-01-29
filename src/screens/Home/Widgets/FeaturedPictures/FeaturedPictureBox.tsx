@@ -28,8 +28,8 @@ function FeaturedPictureBox({ blurhash, pictureUrl, locationName, date, parallax
 
   return (
     <TouchableScale
-      activeScale={0.99}
-      friction={8}
+      activeScale={0.96}
+      friction={20}
       onPress={() => {
         HapticFeedback.trigger('impactLight');
         onPress();
