@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginRight: 10,
   },
+  compactBoxImage: { width: 140, height: 148, borderRadius: 8 },
   thumbBoxInfo: {
     height: 95,
     padding: 5,
@@ -90,9 +91,11 @@ const styles = StyleSheet.create({
 const imageStyle = {
   listBox: styles.listBoxImage,
   thumbBox: styles.thumbBoxImage,
+  compactBox: styles.compactBoxImage,
 };
 
 const eventInfo = {
   listBox: styles.listBoxInfo,
   thumbBox: styles.thumbBoxInfo,
+  compactBox: styles.thumbBoxInfo,
 };

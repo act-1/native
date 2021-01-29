@@ -1675,6 +1675,13 @@
   dependencies:
     deep-assign "^3.0.0"
 
+"@react-native-community/blur@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/blur/-/blur-3.6.0.tgz#31c9e0f2770519c9b5c4f99418f192246f0d4db8"
+  integrity sha512-GtDBhpX2pQcjl4VopOC8FktrVufrEfYRwVeMQ2WWckqKIv2BdwvlvWvj88L1WmEdBr9UNcm3rtgz+d+YXkmirA==
+  dependencies:
+    prop-types "^15.5.10"
+
 "@react-native-community/cli-debugger-ui@^4.13.1":
   version "4.13.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.13.1.tgz#07de6d4dab80ec49231de1f1fbf658b4ad39b32c"
@@ -7860,6 +7867,11 @@ react-native-image-crop-picker@^0.35.2:
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.35.2.tgz#21e085e40cb5724e1e986b8eba59ef23df19598c"
   integrity sha512-4nHAYwnemFJLzVJPl5dhNB+WQgNp41MLJjyYCypatMZl2GJD+EVXnu5eSUQE+UOpaIEhSVtqK5Y3OQ93hMhosQ==
 
+react-native-image-pan-zoom@^2.1.12:
+  version "2.1.12"
+  resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"
+  integrity sha512-BF66XeP6dzuANsPmmFsJshM2Jyh/Mo1t8FsGc1L9Q9/sVP8MJULDabB1hms+eAoqgtyhMr5BuXV3E1hJ5U5H6Q==
+
 react-native-image-picker@^3.1.4:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-3.1.4.tgz#99cd18074fbfe1d70e8281040df201d31005577d"
@@ -7869,6 +7881,13 @@ react-native-image-resizer@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/react-native-image-resizer/-/react-native-image-resizer-1.4.2.tgz#8573c0f956eb8a62824999b9dbcec4ebeefb9a75"
   integrity sha512-owYyKdNnbxtBtNoMjodpUvrSQJ6HM+K/cHTeCyu1GpQwSk5MzGIwOt6Ng84cYLkodKEvLrLknnewTx/pCj4Eeg==
+
+react-native-image-zoom-viewer@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-zoom-viewer/-/react-native-image-zoom-viewer-3.0.1.tgz#a2bd5fb3bda15e0686ce88fcde8576726495d7fb"
+  integrity sha512-la6s5DNSuq4GCRLsi5CZ29FPjgTpdCuGIRdO5T9rUrAtxrlpBPhhSnHrbmPVxsdtOUvxHacTh2Gfa9+RraMZQA==
+  dependencies:
+    react-native-image-pan-zoom "^2.1.12"
 
 react-native-in-app-message@^1.0.32:
   version "1.0.32"

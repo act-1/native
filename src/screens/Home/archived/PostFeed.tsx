@@ -3,8 +3,8 @@ import analytics from '@react-native-firebase/analytics';
 import auth from '@react-native-firebase/auth';
 import { Image, Button, ScrollView, RefreshControl } from 'react-native';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../stores';
-import { Box, Text, PostBox } from '../../components';
+import { useStore } from '../../../stores';
+import { Box, Text, PostBox } from '../../../components';
 import { EventsWidget, LiveCheckIns } from './Feed/Widgets';
 import { IPost } from '@types/post';
 
