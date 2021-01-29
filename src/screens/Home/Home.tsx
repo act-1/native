@@ -48,7 +48,7 @@ function Home() {
           onCancel={() => setDisplayGallery(false)}
         />
         <Box position="absolute" top={35} left={15}>
-          <CircularButton onPress={() => setDisplayGallery(false)} iconName="x" color="white" size="small" />
+          <CircularButton onPress={() => setDisplayGallery(false)} iconName="x" color="white" size="large" />
         </Box>
       </Modal>
     </ScrollView>

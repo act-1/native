@@ -13,6 +13,7 @@ function Stats() {
     <TouchableNativeFeedback onPress={() => navigation.navigate('Live')}>
       <Box style={styles.statsWrapper}>
         <Box flexDirection="row">
+          <StatItem title="מפגינים" count={3501} />
           <StatItem title="השבוע" count={1024} />
           <StatItem title="עכשיו" count={320} />
         </Box>
