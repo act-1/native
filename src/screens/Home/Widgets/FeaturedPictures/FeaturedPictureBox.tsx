@@ -1,9 +1,13 @@
-import React from 'react';
-import { StyleSheet, Dimensions, Platform } from 'react-native';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { StyleSheet, Animated, Dimensions, Platform } from 'react-native';
 import { Box, Text } from '../../../../components';
+import { Blurhash } from 'react-native-blurhash';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';
+import useImagePlaceholder from './useImagePlaceholder';
+
+const AnimatedBlurHash = Animated.createAnimatedComponent(Blurhash);
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -18,7 +22,10 @@ type FeaturedPicturesProps = {
   onPress: () => void;
 };
 
-function FeaturedPictureBox({ url: pictureUrl, locationName, date, parallaxProps, onPress }: FeaturedPicturesProps) {
+function FeaturedPictureBox({ blurhash, pictureUrl, locationName, date, parallaxProps, onPress }: FeaturedPicturesProps) {
+  const { onImageLoadEnd, onImageLoadError, placeholderOpacity, renderPlaceholder } = useImagePlaceholder();
+  const blurhashStyle = useMemo(() => [styles.item, { opacity: placeholderOpacity }], [placeholderOpacity]);
+
   return (
     <TouchableScale
       activeScale={0.99}
@@ -34,15 +41,24 @@ function FeaturedPictureBox({ url: pictureUrl, locationName, date, parallaxProps
         containerStyle={styles.imageContainer}
         style={styles.image}
         parallaxFactor={0.05}
+        onLoad={onImageLoadEnd}
+        onError={onImageLoadError}
         {...parallaxProps}
       />
+
       <Box style={styles.pictureInfo}>
         <Text variant="boxTitle" fontSize={16}>
-          כיכר פריז
+          {locationName}
         </Text>
         <Text variant="text" fontSize={15} opacity={0.9}>
           לפני 24 דק׳
         </Text>
+      </Box>
+
+      <Box style={styles.blurhash}>
+        {renderPlaceholder && (
+          <AnimatedBlurHash blurhash={blurhash} decodeWidth={16} decodeHeight={16} resizeMode="cover" style={blurhashStyle} />
+        )}
       </Box>
     </TouchableScale>
   );
@@ -73,6 +89,11 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
+  },
+  blurhash: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 20,
+    overflow: 'hidden',
   },
 });
 

@@ -1,10 +1,14 @@
 import React, { useState, useRef } from 'react';
-import { Modal, StyleSheet, Dimensions } from 'react-native';
+import { Modal, Dimensions } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { Box, Text, CircularButton } from '../../../../components';
 import Carousel from 'react-native-snap-carousel';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import FeaturedPictureBox from './FeaturedPictureBox';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../../../stores';
+import { IPicturePost } from '@types/post';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -28,26 +32,38 @@ type EventsWidgetProps = {
 };
 
 function FeaturedPictures({ style }) {
-  const carouselRef = useRef<Carousel<any>>(null);
+  const { exploreStore } = useStore();
   const [displayGallery, setDisplayGallery] = useState(false);
   const [galleryImageIndex, setImageIndex] = useState(0);
+  const carouselRef = useRef<Carousel<any>>(null);
+  const insets = useSafeAreaInsets();
+
+  const imageUrls = React.useMemo(
+    () =>
+      exploreStore.featuredPictures.map((item: IPicturePost) => ({
+        url: item.pictureUrl,
+      })),
+    [exploreStore.featuredPictures]
+  );
 
   const onPicturePress = (index: number) => {
     setImageIndex(index);
+    console.log(index);
     setDisplayGallery(true);
     analytics().logEvent('pictures_widget_picture_press', { picture_idnex: index + 1 });
   };
 
-  const onGalleryChange = (index: number) => {
-    carouselRef.current?.snapToItem(index);
+  const onGalleryChange = (index: number | undefined) => {
+    if (index) {
+      carouselRef.current?.snapToItem(index);
+    }
   };
 
   return (
     <Box style={style}>
-      <Modal visible={displayGallery} transparent={true} animationType="slide">
+      <Modal visible={displayGallery} transparent={true} onRequestClose={() => setDisplayGallery(false)} animationType="slide">
         <ImageViewer
-          renderIndicator={() => null}
-          imageUrls={images}
+          imageUrls={imageUrls}
           useNativeDriver={true}
           index={galleryImageIndex}
           enableSwipeDown={true}
@@ -56,14 +72,14 @@ function FeaturedPictures({ style }) {
           onChange={onGalleryChange}
           onCancel={() => setDisplayGallery(false)}
         />
-        <Box position="absolute" top={35} left={15}>
+        <Box position="absolute" top={insets.top + 20} left={15}>
           <CircularButton onPress={() => setDisplayGallery(false)} iconName="x" color="white" size="large" />
         </Box>
       </Modal>
 
       <Carousel
         ref={carouselRef}
-        data={images}
+        data={exploreStore.featuredPictures}
         hasParallaxImages={true}
         autoplay={true}
         autoplayInterval={5200}
@@ -78,4 +94,4 @@ function FeaturedPictures({ style }) {
   );
 }
 
-export default FeaturedPictures;
+export default observer(FeaturedPictures);

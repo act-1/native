@@ -52,6 +52,7 @@
     "react": "16.13.1",
     "react-content-loader": "^6.0.1",
     "react-native": "0.63.4",
+    "react-native-blurhash": "^1.0.29",
     "react-native-bootsplash": "^3.1.2",
     "react-native-config": "^1.4.1",
     "react-native-device-info": "7.3.1",

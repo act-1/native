@@ -7819,6 +7819,11 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
+react-native-blurhash@^1.0.29:
+  version "1.0.29"
+  resolved "https://registry.yarnpkg.com/react-native-blurhash/-/react-native-blurhash-1.0.29.tgz#75d0e6b656a7a57704c302af0832e5f210542723"
+  integrity sha512-ECAXPANYyZpmKMyD3ZsCo/Wj/cUYa6YO0jG+VKbWswOh+FCLXHP8kw2cdjzANTu43DqntLlhXRyPRUWRAsgFsA==
+
 react-native-bootsplash@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-3.1.2.tgz#17b80c3312b3fa6d5af0b76a41b80ffd33912ec9"
