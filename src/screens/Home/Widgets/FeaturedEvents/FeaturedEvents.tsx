@@ -37,6 +37,5 @@ export default observer(EventsWidget);
 const styles = StyleSheet.create({
   featuredEvents: {
     width: '100%',
-    paddingHorizontal: 12,
   },
 });

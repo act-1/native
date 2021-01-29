@@ -21,6 +21,7 @@ function EventCompactBox({ title, attendingCount, city, thumbnail, onPress }: Ev
       onPress={onPress}
       onPressIn={() => HapticFeedback.trigger('impactLight')}
       onPressOut={() => HapticFeedback.trigger('impactLight')}
+      style={{ marginHorizontal: 12 }}
     >
       <FastImage
         style={{ width: 154, height: 180, borderRadius: 8, justifyContent: 'flex-end', alignItems: 'center' }}
@@ -36,16 +37,16 @@ function EventCompactBox({ title, attendingCount, city, thumbnail, onPress }: Ev
           justifyContent="center"
         >
           <Text variant="boxTitle" color="mainBackground" textAlign="center">
-            מחר
+            היום
           </Text>
         </Box>
       </FastImage>
       <Box alignItems="flex-start" flex={1} width={148}>
-        <Text variant="boxSubtitle" fontSize={14}>
+        <Text variant="boxSubtitle" fontSize={14} marginTop="xs">
           {city}
         </Text>
         <Text variant="boxTitle" fontSize={14}>
-          {title} בעולם
+          {title}
         </Text>
         <Text variant="boxSubtitle" fontSize={14}>
           {attendingCount} יוצאים להפגין

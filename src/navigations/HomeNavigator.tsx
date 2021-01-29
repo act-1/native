@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Platform, Text } from 'react-native';
 import { Home } from '../screens';
 import { RootStackParamList } from '../types/navigation';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -18,7 +18,7 @@ function HomeNavigator() {
           headerTitleStyle: {
             fontSize: 22,
             fontFamily: 'AtlasDL3.1AAA-Bold',
-            fontWeight: '700',
+            fontWeight: Platform.select({ ios: '700', android: null }),
             letterSpacing: 0.4,
             color: '#EC534B',
           },

@@ -23,7 +23,7 @@ function Home() {
           הפגנות קרובות
         </Text>
       </Box>
-      <FeaturedEvents style={{ marginBottom: 24 }} />
+      <FeaturedEvents style={{ marginBottom: 42 }} />
     </ScrollView>
   );
 }
