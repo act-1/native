@@ -22,7 +22,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
   };
 
   return (
-    <Box style={style}>
+    <Box style={style} flex={1} width="100%">
       <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
         {eventStore.events.slice(0, 5).map((event: IEvent, index: number) => (
           <EventCompactBox {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
@@ -36,6 +36,7 @@ export default observer(EventsWidget);
 
 const styles = StyleSheet.create({
   featuredEvents: {
+    width: '100%',
     paddingHorizontal: 12,
   },
 });

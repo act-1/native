@@ -33,7 +33,6 @@ function FeaturedPictures({ style }) {
   const [galleryImageIndex, setImageIndex] = useState(0);
 
   const onPicturePress = (index: number) => {
-    console.log(index);
     setImageIndex(index);
     setDisplayGallery(true);
     analytics().logEvent('pictures_widget_picture_press', { picture_idnex: index + 1 });
@@ -69,13 +68,8 @@ function FeaturedPictures({ style }) {
         autoplay={true}
         autoplayInterval={5200}
         loop={true}
-        renderItem={({ item, index }, parallaxProps) => (
-          <FeaturedPictureBox
-            {...item}
-            parallaxProps={parallaxProps}
-            pictureIndex={index}
-            onPress={(pictureIndex: number) => onPicturePress(pictureIndex)}
-          />
+        renderItem={({ item, dataIndex }, parallaxProps) => (
+          <FeaturedPictureBox {...item} parallaxProps={parallaxProps} onPress={() => onPicturePress(dataIndex)} />
         )}
         sliderWidth={screenWidth}
         itemWidth={screenWidth - 60}
