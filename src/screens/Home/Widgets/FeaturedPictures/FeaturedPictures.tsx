@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Modal, Dimensions } from 'react-native';
+import { Modal, Dimensions, ViewStyle } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { Box, Text, CircularButton } from '../../../../components';
 import Carousel from 'react-native-snap-carousel';
@@ -12,26 +12,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const images = [
-  {
-    url: 'https://media.reshet.tv/image/upload/t_main_image_article,f_auto,q_auto/v1596087348/protst1_j79xag.png',
-  },
-  {
-    url: 'https://placekitten.com/1980/1020',
-  },
-  {
-    url: 'https://images1.calcalist.co.il/PicServer3/2020/10/01/1024583/Moti_Ka_AI5I1968_l.jpg',
-  },
-  {
-    url: 'https://a7.org/pictures/812/812280.jpg',
-  },
-];
-
 type EventsWidgetProps = {
   style?: ViewStyle;
 };
 
-function FeaturedPictures({ style }) {
+function FeaturedPictures({ style }: EventsWidgetProps) {
   const { exploreStore } = useStore();
   const [displayGallery, setDisplayGallery] = useState(false);
   const [galleryImageIndex, setImageIndex] = useState(0);

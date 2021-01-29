@@ -64,7 +64,7 @@ function FeaturedPictureBox({ blurhash, pictureUrl, locationName, date, parallax
   );
 }
 
-export default FeaturedPictureBox;
+export default React.memo(FeaturedPictureBox);
 
 const styles = StyleSheet.create({
   item: {
