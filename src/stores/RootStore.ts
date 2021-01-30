@@ -29,7 +29,6 @@ class RootStore {
     try {
       await Promise.all([
         await this.eventStore.getEvents(),
-        await this.feedStore.getPosts(),
         await this.userStore.refreshFCMToken(),
         await this.userStore.getUserEvents(),
         await this.exploreStore.getFeaturedPictures(),
