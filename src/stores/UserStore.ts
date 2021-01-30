@@ -8,7 +8,7 @@ import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
 import EventsAPI from '@services/events';
 import { getUserFCMToken, createUserFCMToken, getUserData } from '@services/user';
-import { createUserCheckIn } from '@services/checkIn';
+import { createCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
@@ -199,11 +199,15 @@ class UserStore {
 
   async checkIn(checkInData: CheckInParams) {
     try {
-      const { checkIn } = await createUserCheckIn(checkInData);
-      this.lastCheckIn = checkIn;
-      await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
+      const { displayName, profilePicture } = this.userData as any;
+      const checkInInfo = { checkInData, displayName, profilePicture };
+      const result = await createCheckIn(checkInInfo);
+      console.log('result: ', result);
+      // this.lastCheckIn = checkIn;
+      // await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return checkIn;
     } catch (err) {
+      console.error(err);
       throw err;
     }
   }

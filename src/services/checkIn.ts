@@ -7,6 +7,7 @@ let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.c
 // TODO: Set as a default
 if (__DEV__) {
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
+  // hola
   database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
 }
 
@@ -14,13 +15,13 @@ const profilePicturePlaceholderURL =
   'https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/profilePicturePlaceholder.png?alt=media&token=06884d2b-b32d-4799-b906-280a7f52ba43';
 
 type PublicCheckInProps = {
-  checkInInfo: CheckInParams;
+  checkInData: CheckInParams;
   displayName: string | null;
   profilePictureURL?: string | null;
 };
 
-async function publicCheckIn({ checkInInfo, displayName, profilePictureURL }: PublicCheckInProps) {
-  const { locationId, locationName, locationCity, eventId, eventEndDate } = checkInInfo;
+export async function createCheckIn({ checkInData, displayName, profilePictureURL }: PublicCheckInProps) {
+  const { locationId, locationName, locationCity, eventId, eventEndDate } = checkInData;
 
   // 1.5 hours from now - the default check in expiration time.
   let expireAt = new Date();
@@ -46,8 +47,11 @@ async function publicCheckIn({ checkInInfo, displayName, profilePictureURL }: Pu
       isActive: true,
     });
 
-    console.log(checkInRef.key);
+    const checkInSnapshot = await checkInRef.once('value');
+
+    return checkInSnapshot.val();
   } catch (err) {
+    console.error(err);
     throw err;
   }
 }
@@ -82,5 +86,5 @@ export async function deleteCheckIn({ checkInId, locationId, isActive = true }: 
 }
 
 export default {
-  publicCheckIn,
+  createCheckIn,
 };
