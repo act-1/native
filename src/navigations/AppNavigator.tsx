@@ -101,7 +101,7 @@ function AppNavigator() {
       {userStore.userData?.signupCompleted ? (
         <>
           <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-          <RootStack.Screen name="ActionModal" component={ActionNavigator} options={{ headerShown: false }} />
+          <RootStack.Screen name="ActionModal" component={CheckInNavigator} options={{ headerShown: false }} />
           <RootStack.Screen name="SignUpModal" component={SignUpNavigator} options={{ headerShown: false }} />
         </>
       ) : (
