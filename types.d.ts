@@ -20,7 +20,7 @@ type RTDBCheckIn = {
   userId: string;
   displayName: string;
   profilePicture: string;
-  createdAt: string;
+  createdAt: number;
   expireAt: string;
   eventId: string | null;
   isActive: boolean;

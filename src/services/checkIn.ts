@@ -1,6 +1,8 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { firebase } from '@react-native-firebase/database';
+import 'react-native-get-random-values';
+import { nanoid } from 'nanoid';
 
 let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
 
@@ -17,10 +19,10 @@ const profilePicturePlaceholderURL =
 type PublicCheckInProps = {
   checkInData: CheckInParams;
   displayName: string | null;
-  profilePictureURL?: string | null;
+  profilePicture?: string | null;
 };
 
-export async function createCheckIn({ checkInData, displayName, profilePictureURL }: PublicCheckInProps) {
+export async function createCheckIn({ checkInData, displayName, profilePicture }: PublicCheckInProps) {
   const { locationId, locationName, locationCity, eventId, eventEndDate } = checkInData;
 
   // 1.5 hours from now - the default check in expiration time.
@@ -34,20 +36,23 @@ export async function createCheckIn({ checkInData, displayName, profilePictureUR
   }
 
   try {
-    const checkInRef = await database.ref('checkIns').push({
+    const id = nanoid();
+
+    await database.ref(`checkIns/${id}`).set({
+      id,
       locationId,
       locationName,
       locationCity,
       userId: auth().currentUser!.uid,
       displayName: displayName ? displayName : '',
-      profilePicture: profilePictureURL ? profilePictureURL : profilePicturePlaceholderURL,
+      profilePicture: profilePicture || profilePicturePlaceholderURL,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
       expireAt,
       eventId: eventId || null,
       isActive: true,
     });
 
-    const checkInSnapshot = await checkInRef.once('value');
+    const checkInSnapshot = await database.ref(`checkIns/${id}`).once('value');
 
     return checkInSnapshot.val();
   } catch (err) {

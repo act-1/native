@@ -1,118 +1,127 @@
-import React from 'react';
-import { ScrollView, Image, StyleSheet, PixelRatio, Dimensions } from 'react-native';
-import { BlurView } from '@react-native-community/blur';
-import FastImage from 'react-native-fast-image';
-import { Box, Text } from '../../components';
+import React, { useState, useEffect } from 'react';
+import { useStore } from '../../stores';
+import { LogBox, View, Button, FlatList, Platform, UIManager } from 'react-native';
+import LiveFeedEntry from './LiveFeedEntry';
+import database from '@react-native-firebase/database';
 
-let fontSize = 13.4;
-const wideScreen = Dimensions.get('screen').width >= 390;
+// LogBox.ignoreLogs(['Encountered']);
 
-if (wideScreen) {
-  fontSize = 14.5;
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
 }
 
-type LiveFeedEntry = {
-  profilePicture: string;
-  displayName: string;
-  locationName: string;
-};
-
-type LiveFeedPictureEntry = LiveFeedEntry & {
-  pictureUrl: string;
-};
-
-function LiveFeedEntry({ profilePicture, displayName, locationName }: LiveFeedEntry) {
-  return (
-    <Box flexDirection="row" alignItems="center" justifyContent="space-between" paddingHorizontal="m" marginBottom="m">
-      <Box flexDirection="row" alignItems="center">
-        <FastImage source={{ uri: profilePicture }} style={styles.entryProfilePic} />
-        <Box flexDirection="row">
-          <Text variant="boxTitle" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-            {displayName}
-          </Text>
-          <Text variant="text" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-            {' '}
-            מפגינה עכשיו ב
-          </Text>
-          <Text variant="text" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-            {locationName}
-          </Text>
-        </Box>
-      </Box>
-      <Box flexDirection="row" justifyContent="center" alignItems="center">
-        <Text variant="boxTitle" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-          10
-        </Text>
-        <Image source={require('@assets/icons/fist-action.png')} style={{ width: 25, marginLeft: 7.5, resizeMode: 'contain' }} />
-      </Box>
-    </Box>
-  );
-}
-
-function LiveFeedPictureEntry({ profilePicture, displayName, locationName, pictureUrl }: LiveFeedPictureEntry) {
-  return (
-    <FastImage style={{ width: '100%', height: 270 }} source={{ uri: pictureUrl }}>
-      <Box justifyContent="flex-end" height="100%">
-        <Box zIndex={2} flexDirection="row" justifyContent="space-between" alignItems="center" paddingHorizontal="m">
-          <Box flexDirection="row" alignItems="center">
-            <FastImage source={{ uri: profilePicture }} style={styles.entryProfilePic} />
-            <Text variant="smallText" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-              {displayName}
-            </Text>
-            <Text variant="smallText" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-              {' '}
-              מפגינה עכשיו ב
-            </Text>
-            <Text variant="smallText" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-              {locationName}
-            </Text>
-          </Box>
-          <Box flexDirection="row" justifyContent="center" alignItems="center">
-            <Text variant="boxTitle" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-              10
-            </Text>
-            <Image
-              source={require('@assets/icons/fist-action.png')}
-              style={{ width: 25, marginLeft: 7.5, resizeMode: 'contain' }}
-            />
-          </Box>
-        </Box>
-        <BlurView blurAmount={1} style={styles.blurView} />
-      </Box>
-    </FastImage>
-  );
-}
+// To avoid onEndReached initial render call
+let startedScroll = false;
 
 export default function LiveFeed() {
+  const { userStore } = useStore();
+  const [checkIns, setCheckIns] = useState<RTDBCheckIn[]>([]);
+  const [isFetching, setFetching] = useState(false);
+  // const [initialLoading, setInitialLoading] = useState(false);
+
+  useEffect(() => {
+    const query = database().ref('checkIns').orderByChild('createdAt').limitToLast(30);
+
+    query.on('child_added', (snapshot) => {
+      setCheckIns((prevState) => {
+        return [{ ...snapshot.val() }, ...prevState];
+      });
+    });
+
+    // query.once('value', () => {
+    //   setLoading(false);
+    // });
+
+    return () => {
+      query.off();
+    };
+  }, []);
+
+  // Fetch older items
+  const fetchOlderItems = () => {
+    if (isFetching) setTimeout(() => fetchOlderItems(), 250);
+    if (startedScroll) {
+      console.log('start...');
+      setFetching(true);
+
+      const lastCheckInTimestamp = (checkIns[checkIns.length - 1].createdAt - 1) as number;
+      const query = database().ref('checkIns').orderByChild('createdAt').endAt(lastCheckInTimestamp).limitToLast(30);
+
+      query.once('value', (snapshot) => {
+        const snapshotValue = snapshot.val();
+
+        if (snapshotValue) {
+          const newCheckIns = Object.values(snapshotValue) as RTDBCheckIn[];
+          const sortedCheckIns = newCheckIns.sort((a, b) => a.createdAt - b.createdAt).reverse();
+          sortedCheckIns.forEach((c) => console.log(c.displayName));
+
+          console.log('end');
+          setCheckIns((prevState) => [...prevState, ...sortedCheckIns]);
+          setFetching(false);
+        } else {
+          // Fetched all pictures
+          // setFetching(true);
+        }
+      });
+    }
+  };
+
+  // // If reached page bottom, fetch more pictures
+  // useEffect(() => {
+  //   if (visible && !fetching) {
+  //     setFetchingState(true);
+  //     const lastPictureTimestamp = pictures[pictures.length - 1].createdAt - 1;
+  //     const picturesQuery = realtimeDB.ref(`live_feed`).orderByChild('createdAt').endAt(lastPictureTimestamp).limitToLast(10);
+
+  //     picturesQuery.once('value', (snapshot) => {
+  //       const snapshotValue = snapshot.val();
+  //       if (snapshotValue) {
+  //         const newPictures = Object.values(snapshotValue)
+  //           .reverse()
+  //           .map((picture) => ({ ...picture, id: nanoid() }));
+
+  //         setPictures((prevState) => [...prevState, ...newPictures]);
+  //         setFetchingState(false);
+  //       } else {
+  //         // Fetched all pictures
+  //         setFetchedAll(true);
+  //       }
+  //     });
+  //   }
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [visible]);
+
+  const renderItem = ({ item }) => (
+    <LiveFeedEntry profilePicture={item.profilePicture} displayName={item.displayName} locationName={item.locationName} />
+  );
   return (
-    <ScrollView>
-      <LiveFeedEntry
-        profilePicture="https://randomuser.me/api/portraits/women/87.jpg"
-        displayName="מלי לוי"
-        locationName="צומת הרצליה"
+    <>
+      <FlatList
+        data={checkIns}
+        renderItem={renderItem}
+        onMomentumScrollBegin={() => (startedScroll = true)}
+        onEndReachedThreshold={0.5}
+        onEndReached={fetchOlderItems}
+        keyExtractor={(item) => item.id}
       />
-      <LiveFeedPictureEntry
-        profilePicture="https://randomuser.me/api/portraits/women/80.jpg"
-        displayName="חן יצחקי"
-        locationName="צומת הרצליה"
-        pictureUrl="https://images.globes.co.il/images/NewGlobes/big_image_800/2020/FD9FE066786FF3AE8199BFD492B9404C_800x392.20200725T213427.jpg"
-      />
-    </ScrollView>
+      <View style={{ marginBottom: 50 }}>
+        <Button
+          title="צ׳ק אין"
+          onPress={() => {
+            userStore.checkIn({
+              isActive: true,
+              locationCity: 'תל אביב - יפו',
+              locationId: 'habima',
+              locationName: 'כיכר שדגשדגש',
+              userId: 'd8GSM5GdfuW0KDlH7dy8oqd5ngz1',
+            });
+          }}
+        />
+        <Button title="MORE" onPress={() => fetchOlderItems()} />
+      </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  entryProfilePic: {
-    width: 28,
-    height: 28,
-    marginRight: 10,
-    borderRadius: 25,
-  },
-  blurView: {
-    justifyContent: 'flex-end',
-    height: 44,
-    position: 'absolute',
-    left: 0,
-    right: 0,
-  },
-});
