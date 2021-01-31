@@ -25,14 +25,14 @@ class RootStore {
     this.exploreStore = new exploreStore(this);
   }
 
+  // Initalization of the app during splash screen
   async initApp() {
     try {
-      await Promise.all([
-        await this.eventStore.getEvents(),
-        await this.userStore.refreshFCMToken(),
-        await this.userStore.getUserEvents(),
-        await this.exploreStore.getFeaturedPictures(),
-      ]);
+      await Promise.all([await this.userStore.refreshFCMToken(), await this.exploreStore.getFeaturedPictures()]);
+
+      // The following fetches won't hold the splash screen hide
+      this.eventStore.getEvents();
+      this.userStore.getUserEvents();
 
       runInAction(() => {
         this.intializedApp = true;
