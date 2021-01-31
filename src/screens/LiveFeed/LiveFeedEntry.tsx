@@ -30,7 +30,7 @@ export default function LiveFeedEntry({ profilePicture, displayName, locationNam
         justifyContent="space-between"
         paddingHorizontal="m"
         marginBottom="m"
-        minHeight={30}
+        minHeight={45}
       >
         <Box flexDirection="row" alignItems="center">
           <FastImage source={{ uri: profilePicture }} style={styles.entryProfilePic} />
@@ -47,7 +47,7 @@ export default function LiveFeedEntry({ profilePicture, displayName, locationNam
             </Text>
           </Box>
         </Box>
-        <Box flexDirection="row" justifyContent="center" alignItems="center">
+        {/* <Box flexDirection="row" justifyContent="center" alignItems="center">
           <Text variant="boxTitle" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
             10
           </Text>
@@ -55,7 +55,7 @@ export default function LiveFeedEntry({ profilePicture, displayName, locationNam
             source={require('@assets/icons/fist-action.png')}
             style={{ width: 25, marginLeft: 7.5, resizeMode: 'contain' }}
           />
-        </Box>
+        </Box> */}
       </Box>
     </Animatable.View>
   );
