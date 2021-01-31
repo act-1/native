@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ScrollView, StyleSheet, ViewStyle, Dimensions } from 'react-native';
+import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import analytics from '@react-native-firebase/analytics';
 import { useNavigation } from '@react-navigation/native';
