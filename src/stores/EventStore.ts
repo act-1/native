@@ -9,6 +9,7 @@ import rootStore from './RootStore';
 
 class EventStore {
   rootStore: null | rootStore = null;
+  eventsLoaded = false;
   events: IEvent[] | [] = [];
 
   constructor(rootStore: rootStore) {
@@ -21,6 +22,7 @@ class EventStore {
       const events = await EventsAPI.getEventList();
       runInAction(() => {
         this.events = events;
+        this.eventsLoaded = true;
       });
       return events;
     } catch (err) {
