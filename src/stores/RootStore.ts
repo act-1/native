@@ -33,6 +33,7 @@ class RootStore {
       // The following fetches won't hold the splash screen hide
       this.eventStore.getEvents();
       this.userStore.getUserEvents();
+      this.feedStore.getPosts();
 
       runInAction(() => {
         this.intializedApp = true;

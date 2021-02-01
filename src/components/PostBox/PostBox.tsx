@@ -27,7 +27,7 @@ if (windowWidth > 400) {
 
 function PostBox(props: PostBoxProps) {
   const { feedStore } = useStore();
-  const { id: postId, authorName, authorPicture, content, likeCounter, liked, timestamp, style } = props;
+  const { id: postId, authorName, authorPicture, content, likeCounter, liked, pictureUrl, createdAt, style } = props;
 
   const likePress = async () => {
     try {
@@ -56,7 +56,7 @@ function PostBox(props: PostBoxProps) {
                 {authorName}
               </Text>
               <Text variant="boxSubtitle" fontSize={fontSize}>
-                {timeago.format(timestamp, 'he')}
+                {timeago.format(createdAt, 'he')}
               </Text>
             </Box>
           </Box>
@@ -71,9 +71,13 @@ function PostBox(props: PostBoxProps) {
               />
             </Box>
 
+            {pictureUrl && (
+              <FastImage source={{ uri: pictureUrl }} style={{ width: '80%', height: 400, borderRadius: 4, marginBottom: 8 }} />
+            )}
+
             <Pressable onPress={likePress} accessibilityLabel="אהבתי">
               <Box width="100%" flexDirection="row" alignItems="center" marginBottom="s">
-                <Icon name="thumbs-up" color={liked ? '#ec534b' : '#999999'} size={18} style={{ marginRight: 6 }} />
+                <Icon name="heart" color={liked ? '#ec534b' : '#999999'} size={18} style={{ marginRight: 6 }} />
                 <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#ec534b' : '#999999' }}>{likeCounter}</Ticker>
               </Box>
             </Pressable>

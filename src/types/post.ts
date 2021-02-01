@@ -9,7 +9,8 @@ export type IPost = {
   content: string;
   likeCounter: number;
   liked?: boolean;
-  timestamp: FirebaseFirestoreTypes.Timestamp;
+  type: 'post';
+  createdAt: FirebaseFirestoreTypes.Timestamp;
 };
 
 export type IPicturePost = {
