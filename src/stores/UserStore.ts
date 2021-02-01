@@ -200,21 +200,13 @@ class UserStore {
   async checkIn(checkInData: CheckInParams) {
     try {
       const { displayName, profilePicture } = this.userData as any;
-      console.log(displayName, profilePicture);
-      new Array(50).fill(0).forEach((i, index) => {
-        const checkInInfo = {
-          checkInData,
-          displayName: index + 49,
-          profilePicture: `https://randomuser.me/api/portraits/men/${index}.jpg`,
-        };
 
-        setTimeout(() => {
-          createCheckIn(checkInInfo);
-        }, index * 1000);
-      });
-      // console.log('result: ', result);
-      // this.lastCheckIn = checkIn;
-      // await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
+      const checkInInfo = { checkInData, displayName, profilePicture };
+
+      const checkIn = await createCheckIn(checkInInfo);
+
+      this.lastCheckIn = checkIn;
+      await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return null;
     } catch (err) {
       console.error(err);
