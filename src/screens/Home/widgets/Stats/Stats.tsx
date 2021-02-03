@@ -10,7 +10,7 @@ function Stats() {
   const navigation = useNavigation();
 
   return (
-    <TouchableNativeFeedback onPress={() => navigation.navigate('Live')}>
+    <TouchableNativeFeedback onPress={() => navigation.navigate('Community')}>
       <Box style={styles.statsWrapper}>
         <Box flexDirection="row">
           <StatItem title="מפגינים" count={3501} />

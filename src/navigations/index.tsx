@@ -4,4 +4,4 @@ export { default as CheckInNavigator } from './CheckInNavigator';
 export { default as ActionNavigator } from './CheckInNavigator';
 export { default as ProfileNavigator } from './ProfileNavigator';
 export { default as ExploreNavigator } from './ExploreNavigator';
-export { default as LiveNavigator } from './LiveNavigator';
+export { default as CommunityNavigator } from './CommunityNavigator';
