@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Community from '@screens/Community';
 import Icon from 'react-native-vector-icons/Feather';
@@ -13,7 +14,8 @@ function CommunityNavigator() {
         headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
         headerTitleStyle: {
           fontSize: 22,
-          fontFamily: 'AtlasDL3.1AAA-Medium',
+          fontFamily: 'AtlasDL3.1AAA-Bold',
+          fontWeight: Platform.select({ ios: '700', android: null }),
           color: '#EC534B',
         },
       })}

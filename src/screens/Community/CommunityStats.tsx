@@ -9,7 +9,7 @@ const CommunityStats = () => {
     <TouchableNativeFeedback>
       <Box style={styles.communityStatsWrapper}>
         <Text variant="boxTitle" fontSize={15} opacity={0.84} marginBottom="s">
-          3,401 יצאו להפגין בשבוע האחרון
+          3,401 יצאו להפגין השבוע
         </Text>
         <Box flexDirection="row">
           <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=3' }} style={styles.communityStatsProfilePic} />
