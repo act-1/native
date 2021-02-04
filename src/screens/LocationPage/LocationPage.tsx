@@ -11,13 +11,10 @@ import { LocationScreenProps } from '@types/navigation';
 import { ILocation } from '@types/location';
 import { fetchLocation } from '@services/locations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import SheetSignUp from '../SignUp/SheetSignUp';
-import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { LocationActions, LocationCounter, LocationPictureFeed } from './components';
 import CheckInService from '@services/checkIn';
 import { updateCheckInCount } from '@services/feed';
 import { IPicturePost } from '@types/post';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
 
 firebase.app().database().setLoggingEnabled(true);
@@ -136,66 +133,3 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
 });
-
-// const removeCheckIn = async () => {
-//   try {
-//     if (location !== null && userStore.lastCheckIn !== null) {
-//       const result = await deleteCheckIn({ checkInId: userStore.lastCheckIn.id, locationId: location.id });
-//       if (result.deleted) {
-//         await userStore.deleteLastCheckIn();
-//         navigation.goBack();
-//       }
-//     }
-//   } catch (err) {
-//     crashlytics().recordError(err);
-//     console.error(err);
-//   }
-// };
-
-/**
- * 
- * 
-  /**
-   * const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  const snapPoints = useMemo(() => ['1%', '25%'], []);
-
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-    analytics().logEvent('location_page_sign_up_sheet_display');
-  }, []);
-
-  const dismissModal = () => bottomSheetModalRef!.current!.dismiss();
-   
-
-
- * 
-          {/* {userStore.user.isAnonymous && (
-            <Box justifyContent="center" alignItems="center" height={110}>
-              <Text
-                variant="text"
-                style={{ color: '#FFC000' }}
-                textAlign="center"
-                fontWeight="700"
-                lineHeight={21.5}
-                paddingHorizontal="s"
-                marginBottom="xm"
-              >
-                רוצים לצרף את תמונתכם לרשימת המפגינים.ות ב{location.name}?
-              </Text>
-              <RoundedButton text="הצטרפות לרשימה" onPress={handlePresentModalPress} color="yellow" />
-            </Box>
-          )} 
-
-          <BottomSheetModal
-            ref={bottomSheetModalRef}
-            index={1}
-            snapPoints={snapPoints}
-            backgroundComponent={() => (
-              <Box style={{ ...StyleSheet.absoluteFillObject, bottom: -1000, backgroundColor: '#333438' }} />
-            )}
-          >
-            <SheetSignUp dismissModal={dismissModal} />
-          </BottomSheetModal> 
-
- */
