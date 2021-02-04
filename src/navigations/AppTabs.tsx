@@ -15,10 +15,10 @@ const icons: any = {
     iconName: 'home',
   },
   Community: {
-    iconName: 'globe',
+    iconName: 'users',
   },
   Events: {
-    iconName: 'calendar',
+    iconName: 'inbox',
   },
   Profile: {
     iconName: 'user',
@@ -68,10 +68,10 @@ const AppTabs = () => {
       }}
     >
       <Tab.Screen name="Home" component={HomeNavigator} />
-      <Tab.Screen name="Community" component={CommunityNavigator} />
       <Tab.Screen name="Action" component={ActionNavigator} />
-      <Tab.Screen name="Events" component={EventsNavigator} />
-      <Tab.Screen name="Profile" component={ProfileNavigator} />
+      <Tab.Screen name="Community" component={CommunityNavigator} />
+      {/* <Tab.Screen name="Events" component={EventsNavigator} />
+      <Tab.Screen name="Profile" component={ProfileNavigator} /> */}
     </Tab.Navigator>
   );
 };
