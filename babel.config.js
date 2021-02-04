@@ -14,7 +14,6 @@ const plugins = [
       },
     },
   ],
-  'react-native-reanimated/plugin',
 ];
 
 module.exports = {

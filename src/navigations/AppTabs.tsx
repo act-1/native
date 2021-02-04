@@ -5,7 +5,7 @@ import { LocationScreenProps } from '@types/navigation';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { HomeNavigator, EventsNavigator, ActionNavigator, ProfileNavigator, LiveNavigator } from './';
+import { HomeNavigator, EventsNavigator, ActionNavigator, ProfileNavigator, CommunityNavigator } from './';
 import TouchableScale from 'react-native-touchable-scale';
 import HapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/Feather';
@@ -14,11 +14,11 @@ const icons: any = {
   Home: {
     iconName: 'home',
   },
-  Live: {
-    iconName: 'globe',
+  Community: {
+    iconName: 'users',
   },
   Events: {
-    iconName: 'calendar',
+    iconName: 'inbox',
   },
   Profile: {
     iconName: 'user',
@@ -68,10 +68,10 @@ const AppTabs = () => {
       }}
     >
       <Tab.Screen name="Home" component={HomeNavigator} />
-      <Tab.Screen name="Live" component={LiveNavigator} />
       <Tab.Screen name="Action" component={ActionNavigator} />
-      <Tab.Screen name="Events" component={EventsNavigator} />
-      <Tab.Screen name="Profile" component={ProfileNavigator} />
+      <Tab.Screen name="Community" component={CommunityNavigator} />
+      {/* <Tab.Screen name="Events" component={EventsNavigator} />
+      <Tab.Screen name="Profile" component={ProfileNavigator} /> */}
     </Tab.Navigator>
   );
 };
