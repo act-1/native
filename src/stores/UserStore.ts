@@ -89,6 +89,7 @@ class UserStore {
 
           runInAction(() => {
             this.userData = doc.data()!;
+            this.initializedUser = true;
           });
         },
         (err: any) => {

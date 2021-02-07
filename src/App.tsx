@@ -14,6 +14,8 @@ import UploadBanner from '@components/UploadBanner';
 import AppNavigator from './navigations/AppNavigator';
 import RNBootSplash from 'react-native-bootsplash';
 
+let initalizedApp = false;
+
 function App() {
   const routeNameRef = React.useRef();
   const navigationRef = React.useRef();
@@ -25,7 +27,13 @@ function App() {
       try {
         await inAppMessaging().setMessagesDisplaySuppressed(true);
         await store.initApp();
-        await RNBootSplash.hide({ fade: true });
+
+        // Allow enough time for AppNavigation to reflect changes to user properties
+        // before hiding the splash screen
+        setTimeout(async () => {
+          await RNBootSplash.hide({ fade: true });
+        }, 350);
+
         inAppMessaging().setMessagesDisplaySuppressed(false);
       } catch (err) {
         // TODO: Log to crashlytics
@@ -33,14 +41,16 @@ function App() {
       }
     };
 
-    if (store.initalizedApp) return;
+    if (initalizedApp) return;
 
     if (store.userStore.initializedUser && store.userStore.userData === null) {
+      console.log('HO!', store.userStore.initializedUser);
       RNBootSplash.hide({ fade: true });
       return;
     }
 
-    if (store.userStore.initializedUser && !store.intializedApp) {
+    if (store.userStore.initializedUser) {
+      initalizedApp = true;
       initApp();
     }
 

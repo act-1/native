@@ -1,5 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { makeAutoObservable } from 'mobx';
 
 import userStore from './UserStore';
 import locationStore from './LocationStore';
@@ -14,8 +13,6 @@ class RootStore {
   feedStore: feedStore;
   mediaStore: mediaStore;
 
-  intializedApp = false;
-
   constructor() {
     makeAutoObservable(this);
     this.userStore = new userStore(this);
@@ -28,16 +25,10 @@ class RootStore {
   // Initalization of the app during splash screen
   async initApp() {
     try {
-      await Promise.all([await this.userStore.refreshFCMToken(), await this.mediaStore.getFeaturedPictures()]);
-
-      // The following fetches won't hold the splash screen hide
+      this.mediaStore.getFeaturedPictures();
       this.eventStore.getEvents();
       this.userStore.getUserEvents();
-      this.feedStore.getPosts();
-
-      runInAction(() => {
-        this.intializedApp = true;
-      });
+      this.userStore.refreshFCMToken();
 
       return true;
     } catch (err) {
