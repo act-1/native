@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Box, Text } from '../../components';
 import { StatusBar, StyleSheet, ScrollView } from 'react-native';
-import Stats from './Widgets/Stats';
-import FeaturedEvents from './Widgets/FeaturedEvents';
-import FeaturedPictures from './Widgets/FeaturedPictures';
+import { Stats, FeaturedEvents, FeaturedPictures } from '@components/Widgets';
 
 function Home() {
   return (

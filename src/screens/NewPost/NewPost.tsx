@@ -11,7 +11,7 @@ import { NewPostProps } from '../../types/navigation';
 const deviceWidth = Dimensions.get('window').width;
 
 function NewPost({ navigation, route }: NewPostProps) {
-  const { userStore, feedStore, exploreStore } = useStore();
+  const { userStore, feedStore, mediaStore } = useStore();
   const [caption, setCaption] = useState('');
   const { image, completionScreen, location } = route.params;
 
@@ -22,7 +22,7 @@ function NewPost({ navigation, route }: NewPostProps) {
       // How to route on completion
       if (completionScreen === 'closeModal') {
         navigation.navigate('Explore', { screen: 'ExploreList' });
-        exploreStore.setCurrentFilter('recent');
+        mediaStore.setCurrentFilter('recent');
       } else {
         navigation.goBack();
       }

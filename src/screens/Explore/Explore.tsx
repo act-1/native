@@ -6,24 +6,24 @@ import { useStore } from '../../stores';
 import ExploreHeader from './ExploreHeader';
 
 function Explore() {
-  const { exploreStore } = useStore();
+  const { mediaStore } = useStore();
 
   useEffect(() => {
-    if (exploreStore.currentFilter === 'recent' && exploreStore.recentPictures.length === 0) {
-      exploreStore.getRecentPictures();
+    if (mediaStore.currentFilter === 'recent' && mediaStore.recentPictures.length === 0) {
+      mediaStore.getRecentPictures();
     }
 
-    if (exploreStore.currentFilter === 'featured' && exploreStore.featuredPictures.length === 0) {
-      exploreStore.getFeaturedPictures();
+    if (mediaStore.currentFilter === 'featured' && mediaStore.featuredPictures.length === 0) {
+      mediaStore.getFeaturedPictures();
     }
-  }, [exploreStore, exploreStore.currentFilter]);
+  }, [mediaStore, mediaStore.currentFilter]);
 
   return (
     <Box>
       <SafeAreaView />
       <ExploreHeader />
       <PictureThumbList
-        pictures={exploreStore.currentFilter === 'featured' ? exploreStore.featuredPictures : exploreStore.recentPictures}
+        pictures={mediaStore.currentFilter === 'featured' ? mediaStore.featuredPictures : mediaStore.recentPictures}
       />
     </Box>
   );
