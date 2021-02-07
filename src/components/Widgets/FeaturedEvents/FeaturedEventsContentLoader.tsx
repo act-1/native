@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { Box } from '../../../../components';
+import { Box } from '../..';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 
 const { width: deviceWidth, height: deviceHeight } = Dimensions.get('window');

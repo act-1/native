@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text } from '../../../../components';
+import { Box, Text } from '../..';
 import FastImage from 'react-native-fast-image';
 import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';

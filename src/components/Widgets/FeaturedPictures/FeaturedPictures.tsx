@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { Modal, Dimensions, ViewStyle } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
-import { Box, Text, CircularButton } from '../../../../components';
+import { Box, CircularButton } from '../..';
 import Carousel from 'react-native-snap-carousel';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import FeaturedPictureBox from './FeaturedPictureBox';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../../stores';
+import { useStore } from '../../../stores';
 import { IPicturePost } from '@types/post';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 

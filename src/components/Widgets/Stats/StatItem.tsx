@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text } from '../../../../components';
+import { Box, Text } from '../..';
 
 type StatItemProps = {
   title: string;

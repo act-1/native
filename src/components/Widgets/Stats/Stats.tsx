@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Box } from '../../../../components';
+import { Box } from '../..';
 import Icon from 'react-native-vector-icons/Feather';
 import StatItem from './StatItem';
 import { useNavigation } from '@react-navigation/native';
