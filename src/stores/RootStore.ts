@@ -5,14 +5,14 @@ import userStore from './UserStore';
 import locationStore from './LocationStore';
 import feedStore from './FeedStore';
 import eventStore from './EventStore';
-import exploreStore from './ExploreStore';
+import mediaStore from './mediaStore';
 
 class RootStore {
   userStore: userStore;
   locationStore: locationStore;
   eventStore: eventStore;
   feedStore: feedStore;
-  exploreStore: exploreStore;
+  mediaStore: mediaStore;
 
   intializedApp = false;
 
@@ -22,13 +22,13 @@ class RootStore {
     this.locationStore = new locationStore(this);
     this.eventStore = new eventStore(this);
     this.feedStore = new feedStore(this);
-    this.exploreStore = new exploreStore(this);
+    this.mediaStore = new mediaStore(this);
   }
 
   // Initalization of the app during splash screen
   async initApp() {
     try {
-      await Promise.all([await this.userStore.refreshFCMToken(), await this.exploreStore.getFeaturedPictures()]);
+      await Promise.all([await this.userStore.refreshFCMToken(), await this.mediaStore.getFeaturedPictures()]);
 
       // The following fetches won't hold the splash screen hide
       this.eventStore.getEvents();

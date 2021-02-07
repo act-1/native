@@ -17,7 +17,7 @@ function FilterButton({ title, selected, onPress }: { title: string; value: stri
 }
 
 export default function ExploreHeader() {
-  const { exploreStore } = useStore();
+  const { mediaStore } = useStore();
 
   return (
     <SafeAreaView>
@@ -30,14 +30,14 @@ export default function ExploreHeader() {
         <FilterButton
           title="נבחרות"
           value="featured"
-          selected={exploreStore.currentFilter === 'featured'}
-          onPress={() => exploreStore.setCurrentFilter('featured')}
+          selected={mediaStore.currentFilter === 'featured'}
+          onPress={() => mediaStore.setCurrentFilter('featured')}
         />
         <FilterButton
           title="אחרונות"
           value="recent"
-          selected={exploreStore.currentFilter === 'recent'}
-          onPress={() => exploreStore.setCurrentFilter('recent')}
+          selected={mediaStore.currentFilter === 'recent'}
+          onPress={() => mediaStore.setCurrentFilter('recent')}
         />
         {/* <FilterButton title="באיזורי" value="recent" />
         <FilterButton title="ירושלים" value="recent" />

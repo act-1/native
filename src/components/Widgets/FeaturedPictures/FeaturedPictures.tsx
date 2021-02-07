@@ -17,7 +17,7 @@ type EventsWidgetProps = {
 };
 
 function FeaturedPictures({ style }: EventsWidgetProps) {
-  const { exploreStore } = useStore();
+  const { mediaStore } = useStore();
   const [displayGallery, setDisplayGallery] = useState(false);
   const [galleryImageIndex, setImageIndex] = useState(0);
   const carouselRef = useRef<Carousel<any>>(null);
@@ -25,10 +25,10 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
 
   const imageUrls = React.useMemo(
     () =>
-      exploreStore.featuredPictures.map((item: IPicturePost) => ({
+      mediaStore.featuredPictures.map((item: IPicturePost) => ({
         url: item.pictureUrl,
       })),
-    [exploreStore.featuredPictures]
+    [mediaStore.featuredPictures]
   );
 
   const onPicturePress = (index: number) => {
@@ -64,7 +64,7 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
 
       <Carousel
         ref={carouselRef}
-        data={exploreStore.featuredPictures}
+        data={mediaStore.featuredPictures}
         hasParallaxImages={true}
         autoplay={true}
         autoplayInterval={5200}
