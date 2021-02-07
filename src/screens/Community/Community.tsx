@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Text } from '../../components';
-import { LatestPictures } from '@components/Widgets';
+import { RecentPictures } from '@components/Widgets';
 import CommunityStats from './CommunityStats';
 import LiveLocationBox from './LiveLocationBox';
 
@@ -13,7 +13,7 @@ const Community = () => {
         תמונות אחרונות
       </Text>
 
-      <LatestPictures />
+      <RecentPictures />
 
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="xm">
         הפגנות בשבוע האחרון

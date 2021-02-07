@@ -5,7 +5,7 @@ import userStore from './UserStore';
 import locationStore from './LocationStore';
 import feedStore from './FeedStore';
 import eventStore from './EventStore';
-import mediaStore from './mediaStore';
+import mediaStore from './MediaStore';
 
 class RootStore {
   userStore: userStore;
