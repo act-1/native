@@ -4,11 +4,12 @@ import analytics from '@react-native-firebase/analytics';
 import { Box, CircularButton } from '../..';
 import Carousel from 'react-native-snap-carousel';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import FeaturedPictureBox from './FeaturedPictureBox';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../stores';
 import { IPicturePost } from '@types/post';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import FeaturedPictureBox from './FeaturedPictureBox';
+import FeaturedPicturesContentLoader from './FeaturedPicturesContentLoader';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -33,7 +34,6 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
 
   const onPicturePress = (index: number) => {
     setImageIndex(index);
-    console.log(index);
     setDisplayGallery(true);
     analytics().logEvent('pictures_widget_picture_press', { picture_idnex: index + 1 });
   };
@@ -43,6 +43,10 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
       carouselRef.current?.snapToItem(index);
     }
   };
+
+  if (mediaStore.featuredPictures.length === 0) {
+    return <FeaturedPicturesContentLoader style={style} />;
+  }
 
   return (
     <Box style={style}>
