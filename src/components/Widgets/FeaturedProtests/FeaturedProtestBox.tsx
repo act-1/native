@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
-import { Box, Text } from '../../components';
+import { Box, Text } from '../..';
 import FastImage from 'react-native-fast-image';
 import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';
@@ -16,7 +16,7 @@ type LiveLocationBoxProps = {
 const { width: deviceWidth } = Dimensions.get('screen');
 const boxWidth = deviceWidth / 2 - 32; // Substract 12 margins
 
-function LiveLocationBox({ city, locationName, attendingCount, thumbnail, onPress }: LiveLocationBoxProps) {
+function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onPress }: LiveLocationBoxProps) {
   return (
     <TouchableScale
       activeScale={0.96}
@@ -69,7 +69,7 @@ function LiveLocationBox({ city, locationName, attendingCount, thumbnail, onPres
   );
 }
 
-export default React.memo(LiveLocationBox);
+export default React.memo(FeaturedProtestBox);
 
 const styles = StyleSheet.create({
   communityStatsWrapper: {
