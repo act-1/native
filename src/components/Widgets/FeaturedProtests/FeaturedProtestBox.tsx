@@ -13,8 +13,12 @@ type LiveLocationBoxProps = {
   onPress: () => void;
 };
 
+function getRandomNumber() {
+  return Math.floor(Math.random() * 80) + 1;
+}
+
 const { width: deviceWidth } = Dimensions.get('screen');
-const boxWidth = deviceWidth / 2 - 32; // Substract 12 margins
+const boxWidth = 204; // Substract 12 margins
 
 function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onPress }: LiveLocationBoxProps) {
   return (
@@ -29,7 +33,7 @@ function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onP
       <FastImage
         style={{
           width: boxWidth,
-          height: 180,
+          height: 160,
           justifyContent: 'flex-end',
           alignItems: 'center',
           marginBottom: 6,
@@ -43,17 +47,32 @@ function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onP
           alignSelf="center"
           alignItems="center"
           justifyContent="center"
-          style={{ backgroundColor: 'rgba(0,0,0,0.87)' }}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
         >
           <Text variant="boxTitle" fontSize={14} color="primaryColor" textAlign="center" marginBottom="xs">
             {attendingCount} מפגינים עכשיו
           </Text>
           <Box flexDirection="row">
-            <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=3' }} style={styles.attendingProfilePic} />
-            <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=4' }} style={styles.attendingProfilePic} />
-            <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=5' }} style={styles.attendingProfilePic} />
-            <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=17' }} style={styles.attendingProfilePic} />
-            <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=7' }} style={styles.attendingProfilePic} />
+            <FastImage
+              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
+              style={styles.attendingProfilePic}
+            />
+            <FastImage
+              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
+              style={styles.attendingProfilePic}
+            />
+            <FastImage
+              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
+              style={styles.attendingProfilePic}
+            />
+            <FastImage
+              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
+              style={styles.attendingProfilePic}
+            />
+            <FastImage
+              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
+              style={styles.attendingProfilePic}
+            />
           </Box>
         </Box>
       </FastImage>

@@ -42,12 +42,12 @@ function Home() {
           </Box>
         </TouchableNativeFeedback>
       </Box> */}
-      {/* 
+
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         הפגנות קרובות
       </Text>
 
-      <FeaturedEvents style={{ marginBottom: 42 }} /> */}
+      <FeaturedEvents style={{ marginBottom: 42 }} />
     </ScrollView>
   );
 }

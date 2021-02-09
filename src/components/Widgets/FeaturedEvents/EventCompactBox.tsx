@@ -6,14 +6,16 @@ import TouchableScale from 'react-native-touchable-scale';
 
 type EventBoxProps = {
   title: string;
+  shortTitle?: string;
   locationName: string;
   city: string;
   attendingCount: number;
   thumbnail: string;
+  compactThumbnail?: string;
   onPress: () => void;
 };
 
-function EventCompactBox({ title, attendingCount, city, thumbnail, onPress }: EventBoxProps) {
+function EventCompactBox({ title, shortTitle, attendingCount, city, thumbnail, compactThumbnail, onPress }: EventBoxProps) {
   return (
     <TouchableScale
       activeScale={0.96}
@@ -25,7 +27,7 @@ function EventCompactBox({ title, attendingCount, city, thumbnail, onPress }: Ev
     >
       <FastImage
         style={{ width: 154, height: 180, borderRadius: 8, justifyContent: 'flex-end', alignItems: 'center' }}
-        source={{ uri: thumbnail }}
+        source={{ uri: compactThumbnail || thumbnail }}
       >
         <Box
           backgroundColor="mainForeground"
@@ -46,7 +48,7 @@ function EventCompactBox({ title, attendingCount, city, thumbnail, onPress }: Ev
           {city}
         </Text>
         <Text variant="boxTitle" fontSize={14}>
-          {title}
+          {shortTitle || title}
         </Text>
         <Text variant="boxSubtitle" fontSize={14}>
           {attendingCount} יוצאים להפגין

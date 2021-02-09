@@ -22,10 +22,12 @@ export async function getEventList(): Promise<IEvent[]> {
     (doc): IEvent => ({
       id: doc.id,
       title: doc.title,
+      shortTitle: doc.shortTitle,
       locationId: doc.locationId,
       locationName: doc.locationName,
       city: doc.city,
       thumbnail: doc.thumbnail,
+      compactThumbnail: doc.compactThumbnail,
       content: doc.content,
       organizers: doc.organizers,
       attendingCount: doc.attendingCount,
