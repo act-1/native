@@ -47,3 +47,32 @@ const styles = StyleSheet.create({
     minWidth: '100%',
   },
 });
+
+/**
+
+  return (
+    <Box style={style} flex={1} width="100%">
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{ marginBottom: 24 }}>
+        <FeaturedProtestBox
+          thumbnail="https://www.activestills.org/media-lib/main_image44946_medium.jpg?rnd=1755488128"
+          city="ירושלים"
+          locationName="כיכר פריז"
+          attendingCount={3021}
+        />
+        <FeaturedProtestBox
+          thumbnail="https://www.activestills.org/media-lib/main_image44700_medium.jpg?rnd=1562778758"
+          city="תל אביב"
+          locationName="כיכר רבין"
+          attendingCount={432}
+        />
+        <FeaturedProtestBox
+          thumbnail="https://www.activestills.org/media-lib/main_image44881_medium.jpg?rnd=976453698"
+          city="הרצליה"
+          locationName="רחבת הסינמטק"
+          attendingCount={189}
+        />
+      </ScrollView>
+    </Box>
+  );
+}
+ */

@@ -45,8 +45,8 @@ function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onP
           justifyContent="center"
           style={{ backgroundColor: 'rgba(0,0,0,0.87)' }}
         >
-          <Text variant="boxTitle" fontSize={14} color="important" textAlign="center" marginBottom="xs">
-            {attendingCount} יצאו להפגין
+          <Text variant="boxTitle" fontSize={14} color="primaryColor" textAlign="center" marginBottom="xs">
+            {attendingCount} מפגינים עכשיו
           </Text>
           <Box flexDirection="row">
             <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=3' }} style={styles.attendingProfilePic} />

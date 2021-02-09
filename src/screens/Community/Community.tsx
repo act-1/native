@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Text } from '../../components';
 import { RecentPictures, FeaturedProtests } from '@components/Widgets';
 import CommunityStats from './CommunityStats';
