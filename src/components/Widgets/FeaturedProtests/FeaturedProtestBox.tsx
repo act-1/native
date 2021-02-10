@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
-import { Box, Text } from '../../components';
+import { Box, Text } from '../..';
 import FastImage from 'react-native-fast-image';
 import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';
@@ -13,10 +13,14 @@ type LiveLocationBoxProps = {
   onPress: () => void;
 };
 
-const { width: deviceWidth } = Dimensions.get('screen');
-const boxWidth = deviceWidth / 2 - 32; // Substract 12 margins
+function getRandomNumber() {
+  return Math.floor(Math.random() * 80) + 1;
+}
 
-function LiveLocationBox({ city, locationName, attendingCount, thumbnail, onPress }: LiveLocationBoxProps) {
+const { width: deviceWidth } = Dimensions.get('screen');
+const boxWidth = 204; // Substract 12 margins
+
+function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onPress }: LiveLocationBoxProps) {
   return (
     <TouchableScale
       activeScale={0.96}
@@ -29,7 +33,7 @@ function LiveLocationBox({ city, locationName, attendingCount, thumbnail, onPres
       <FastImage
         style={{
           width: boxWidth,
-          height: 180,
+          height: 160,
           justifyContent: 'flex-end',
           alignItems: 'center',
           marginBottom: 6,
@@ -43,17 +47,32 @@ function LiveLocationBox({ city, locationName, attendingCount, thumbnail, onPres
           alignSelf="center"
           alignItems="center"
           justifyContent="center"
-          style={{ backgroundColor: 'rgba(0,0,0,0.87)' }}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
         >
-          <Text variant="boxTitle" fontSize={14} color="important" textAlign="center" marginBottom="xs">
-            {attendingCount} יצאו להפגין
+          <Text variant="boxTitle" fontSize={14} color="primaryColor" textAlign="center" marginBottom="xs">
+            {attendingCount} מפגינים עכשיו
           </Text>
           <Box flexDirection="row">
-            <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=3' }} style={styles.attendingProfilePic} />
-            <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=4' }} style={styles.attendingProfilePic} />
-            <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=5' }} style={styles.attendingProfilePic} />
-            <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=17' }} style={styles.attendingProfilePic} />
-            <FastImage source={{ uri: 'https://i.pravatar.cc/150?img=7' }} style={styles.attendingProfilePic} />
+            <FastImage
+              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
+              style={styles.attendingProfilePic}
+            />
+            <FastImage
+              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
+              style={styles.attendingProfilePic}
+            />
+            <FastImage
+              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
+              style={styles.attendingProfilePic}
+            />
+            <FastImage
+              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
+              style={styles.attendingProfilePic}
+            />
+            <FastImage
+              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
+              style={styles.attendingProfilePic}
+            />
           </Box>
         </Box>
       </FastImage>
@@ -69,7 +88,7 @@ function LiveLocationBox({ city, locationName, attendingCount, thumbnail, onPres
   );
 }
 
-export default React.memo(LiveLocationBox);
+export default React.memo(FeaturedProtestBox);
 
 const styles = StyleSheet.create({
   communityStatsWrapper: {

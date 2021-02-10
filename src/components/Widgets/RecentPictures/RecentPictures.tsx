@@ -13,21 +13,20 @@ function LatestPictures() {
         <FastImage
           style={[styles.latestPicture, { flex: 0.63, height: 236 }]}
           source={{
-            uri: 'https://res.cloudinary.com/onekm/image/upload/v1604302954/weekend_pictures/31-10-2020/balfur_mm.jpg',
+            uri: 'https://www.activestills.org/media-lib/main_image45426_medium.jpg',
           }}
         />
         <Box flex={0.37}>
           <FastImage
             style={[styles.latestPicture, { height: 112, marginLeft: 12, marginBottom: 12 }]}
             source={{
-              uri:
-                'https://res.cloudinary.com/onekm/image/upload/v1604615196/protest_pictures/eoLv9Kb4x3sFBcAkcdMh/2020-11-06/43NNNdgVmB1GJmL9tFN_L.jpg',
+              uri: 'https://www.activestills.org/media-lib/main_image44730_medium.jpg',
             }}
           />
           <FastImage
             style={[styles.latestPicture, { height: 112, marginLeft: 12 }]}
             source={{
-              uri: 'https://res.cloudinary.com/onekm/image/upload/v1604256862/weekend_pictures/31-10-2020/pinkfront.jpg',
+              uri: 'https://www.activestills.org/media-lib/main_image8159_medium.jpg',
             }}
           />
         </Box>
@@ -36,7 +35,7 @@ function LatestPictures() {
         <FastImage
           style={[styles.latestPicture, { flex: 0.9, height: 112 }]}
           source={{
-            uri: 'https://res.cloudinary.com/onekm/image/upload/v1604304193/weekend_pictures/31-10-2020/balfur-acab_x3gvb7.jpg',
+            uri: 'https://www.activestills.org/media-lib/main_image30529_medium.jpg',
           }}
         />
         <FastImage
