@@ -18,30 +18,11 @@ function Home() {
 
       <FeaturedPictures style={{ marginBottom: 12 }} />
 
-      <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+      {/* <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         עכשיו מפגינים
       </Text>
 
-      <FeaturedProtests />
-
-      {/* <Box> */}
-      {/* <TouchableNativeFeedback>
-        <Box style={styles.upcomingProtestsButton}>
-          <Icon name="calendar" size={16} color="white" />
-          <Text variant="boxTitle" marginLeft="s">
-            הפגנות קרובות
-          </Text>
-        </Box>
-      </TouchableNativeFeedback> */}
-      {/* <TouchableNativeFeedback>
-          <Box style={styles.upcomingProtestsButton}>
-            <Icon name="camera" size={16} color="white" />
-            <Text variant="boxTitle" marginLeft="s">
-              תמונות אחרונות
-            </Text>
-          </Box>
-        </TouchableNativeFeedback>
-      </Box> */}
+      <FeaturedProtests /> */}
 
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         הפגנות קרובות
