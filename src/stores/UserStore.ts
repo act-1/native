@@ -7,7 +7,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
 import EventsAPI from '@services/events';
-import { getUserFCMToken, createUserFCMToken, getUserData } from '@services/user';
+import { getUserFCMToken, createUserFCMToken } from '@services/user';
 import { createCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
