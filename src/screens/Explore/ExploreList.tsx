@@ -6,27 +6,27 @@ import { useStore } from '../../stores';
 import ExploreHeader from './ExploreHeader';
 
 function ExploreList({ route }) {
-  const { exploreStore } = useStore();
-  const title = exploreStore.currentFilter === 'featured' ? 'נבחרות' : 'אחרונות';
+  const { mediaStore } = useStore();
+  const title = mediaStore.currentFilter === 'featured' ? 'נבחרות' : 'אחרונות';
 
   useEffect(() => {
-    if (exploreStore.currentFilter === 'recent' && exploreStore.recentPictures.length === 0) {
-      exploreStore.getRecentPictures();
+    if (mediaStore.currentFilter === 'recent' && mediaStore.recentPictures.length === 0) {
+      mediaStore.getRecentPictures();
     }
 
-    if (exploreStore.currentFilter === 'featured' && exploreStore.featuredPictures.length === 0) {
-      exploreStore.getFeaturedPictures();
+    if (mediaStore.currentFilter === 'featured' && mediaStore.featuredPictures.length === 0) {
+      mediaStore.getFeaturedPictures();
     }
-  }, [exploreStore, exploreStore.currentFilter]);
+  }, [mediaStore, mediaStore.currentFilter]);
 
   return (
     <>
       <ExploreHeader />
-      {exploreStore.currentFilter === 'featured' && (
-        <PictureList pictures={exploreStore.featuredPictures} initialIndex={route.params?.initialIndex} title={title} />
+      {mediaStore.currentFilter === 'featured' && (
+        <PictureList pictures={mediaStore.featuredPictures} initialIndex={route.params?.initialIndex} title={title} />
       )}
-      {exploreStore.currentFilter === 'recent' && (
-        <PictureList pictures={exploreStore.recentPictures} initialIndex={route.params?.initialIndex} title={title} />
+      {mediaStore.currentFilter === 'recent' && (
+        <PictureList pictures={mediaStore.recentPictures} initialIndex={route.params?.initialIndex} title={title} />
       )}
     </>
   );
@@ -36,7 +36,7 @@ export default observer(ExploreList);
 
 {
   /* <PictureList
-pictures={exploreStore.currentFilter === 'featured' ? exploreStore.featuredPictures : exploreStore.recentPictures}
+pictures={mediaStore.currentFilter === 'featured' ? mediaStore.featuredPictures : mediaStore.recentPictures}
 initialIndex={route.params?.initialIndex}
 title={title}
 /> */

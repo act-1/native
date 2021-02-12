@@ -13,11 +13,15 @@ const postsCollection = GeoFirestore.collection('posts');
 
 export async function getAllPosts(userId: string): Promise<IPost[]> {
   try {
-    const postsQuerySnapshot = await firestore().collection('posts').orderBy('timestamp', 'desc').get();
+    const postsQuerySnapshot = await firestore()
+      .collection('posts')
+      .where('type', '==', 'post')
+      .orderBy('createdAt', 'desc')
+      .get();
     const postsDocuments = postsQuerySnapshot.docs.map(
       (doc): FirebaseFirestoreTypes.DocumentData => ({
         ...doc.data(),
-        timestamp: doc.data().timestamp.toDate(),
+        createdAt: doc.data().createdAt.toDate(),
         id: doc.id,
       })
     );

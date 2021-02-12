@@ -3,7 +3,7 @@ import rootStore from './RootStore';
 import { IPicturePost } from '@types/post';
 import FeedService from '@services/feed';
 
-class FeedStore {
+class MediaStore {
   rootStore: null | rootStore = null;
   currentFilter: 'featured' | 'recent' = 'featured';
   featuredPictures: IPicturePost[] = [];
@@ -47,4 +47,4 @@ class FeedStore {
   }
 }
 
-export default FeedStore;
+export default MediaStore;

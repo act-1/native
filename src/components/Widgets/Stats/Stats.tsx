@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Box } from '../../../../components';
+import { Box } from '../..';
 import Icon from 'react-native-vector-icons/Feather';
 import StatItem from './StatItem';
 import { useNavigation } from '@react-navigation/native';
@@ -10,7 +10,7 @@ function Stats() {
   const navigation = useNavigation();
 
   return (
-    <TouchableNativeFeedback onPress={() => navigation.navigate('Live')}>
+    <TouchableNativeFeedback onPress={() => navigation.navigate('Community')}>
       <Box style={styles.statsWrapper}>
         <Box flexDirection="row">
           <StatItem title="מפגינים" count={3501} />

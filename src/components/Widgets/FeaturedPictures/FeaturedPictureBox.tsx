@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Animated, Dimensions, Platform } from 'react-native';
-import { Box, Text } from '../../../../components';
+import { Box, Text } from '../..';
 import { Blurhash } from 'react-native-blurhash';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import HapticFeedback from 'react-native-haptic-feedback';

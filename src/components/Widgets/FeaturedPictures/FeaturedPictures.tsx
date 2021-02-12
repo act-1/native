@@ -1,14 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { Modal, Dimensions, ViewStyle } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
-import { Box, Text, CircularButton } from '../../../../components';
+import { Box, CircularButton } from '../..';
 import Carousel from 'react-native-snap-carousel';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import FeaturedPictureBox from './FeaturedPictureBox';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../../stores';
+import { useStore } from '../../../stores';
 import { IPicturePost } from '@types/post';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import FeaturedPictureBox from './FeaturedPictureBox';
+import FeaturedPicturesContentLoader from './FeaturedPicturesContentLoader';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -17,7 +18,7 @@ type EventsWidgetProps = {
 };
 
 function FeaturedPictures({ style }: EventsWidgetProps) {
-  const { exploreStore } = useStore();
+  const { mediaStore } = useStore();
   const [displayGallery, setDisplayGallery] = useState(false);
   const [galleryImageIndex, setImageIndex] = useState(0);
   const carouselRef = useRef<Carousel<any>>(null);
@@ -25,15 +26,14 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
 
   const imageUrls = React.useMemo(
     () =>
-      exploreStore.featuredPictures.map((item: IPicturePost) => ({
+      mediaStore.featuredPictures.map((item: IPicturePost) => ({
         url: item.pictureUrl,
       })),
-    [exploreStore.featuredPictures]
+    [mediaStore.featuredPictures]
   );
 
   const onPicturePress = (index: number) => {
     setImageIndex(index);
-    console.log(index);
     setDisplayGallery(true);
     analytics().logEvent('pictures_widget_picture_press', { picture_idnex: index + 1 });
   };
@@ -43,6 +43,10 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
       carouselRef.current?.snapToItem(index);
     }
   };
+
+  if (mediaStore.featuredPictures.length === 0) {
+    return <FeaturedPicturesContentLoader style={style} />;
+  }
 
   return (
     <Box style={style}>
@@ -64,7 +68,7 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
 
       <Carousel
         ref={carouselRef}
-        data={exploreStore.featuredPictures}
+        data={mediaStore.featuredPictures}
         hasParallaxImages={true}
         autoplay={true}
         autoplayInterval={5200}
