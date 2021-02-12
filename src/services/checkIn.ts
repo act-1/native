@@ -1,15 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { firebase } from '@react-native-firebase/database';
-
-let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
-
-// TODO: Set as a default
-if (__DEV__) {
-  // database = firebase.app().database('http://localhost:9000/?ns=act1co');
-  // hola
-  database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
-}
+import { RealtimeDatabase } from '@services/databaseWrapper';
 
 const profilePicturePlaceholderURL =
   'https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/profilePicturePlaceholder.png?alt=media&token=06884d2b-b32d-4799-b906-280a7f52ba43';
@@ -50,8 +42,6 @@ export async function createCheckIn({
     // Create check in documents
     const checkInRef = firestore().collection('checkIns').doc();
     await checkInRef.set({ ...checkInInfo, id: checkInRef.id });
-    console.log(checkInRef);
-    // await database.ref(`locationCounter/${locationId}`).set(firebase.database.ServerValue.increment(1));
 
     return { ok: true, checkIn: { ...checkInInfo, id: checkInRef.id, createdAt: new Date(), expireAt } };
   } catch (err) {
@@ -73,7 +63,7 @@ type PublicCheckInProps = {
 //     // const publicCheckInPerf = userDoc.data().publicCheckIn;
 
 //     // if (publicCheckInPerf === true) {
-//     return database.ref(`checkIns/${locationId}/${checkInId}`).set({
+//     return RealtimeDatabase.database.ref(`checkIns/${locationId}/${checkInId}`).set({
 //       id: checkInId,
 //       locationId,
 //       locationName,
@@ -81,7 +71,7 @@ type PublicCheckInProps = {
 //       userId: auth().currentUser!.uid,
 //       displayName: displayName ? displayName : '',
 //       profilePicture: profilePictureURL ? profilePictureURL : profilePicturePlaceholderURL,
-//       createdAt: firebase.database.ServerValue.TIMESTAMP,
+//       createdAt: RealtimeDatabase.database.ServerValue.TIMESTAMP,
 //       expireAt,
 //       eventId: eventId || null,
 //       isActive: true,
@@ -114,7 +104,7 @@ export async function deleteCheckIn({ checkInId, locationId, isActive = true }: 
 
     // Decrement the location counter in the realtime database if the check in is currently active.
     if (isActive) {
-      await database.ref(`locationCounter/${locationId}`).set(firebase.database.ServerValue.increment(-1));
+      await RealtimeDatabase.database.ref(`locationCounter/${locationId}`).set(firebase.database.ServerValue.increment(-1));
     }
 
     return { deleted: true };
