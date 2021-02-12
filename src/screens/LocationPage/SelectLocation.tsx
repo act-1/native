@@ -40,7 +40,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       {
         text: 'אישור',
         onPress: () => {
-          // navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
+          navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
           userStore
             .checkIn({ ...checkInData, locationId, locationName, locationCity, eventId })
             .then(() => {
