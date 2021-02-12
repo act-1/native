@@ -200,12 +200,7 @@ class UserStore {
 
   async checkIn(checkInData: CheckInParams) {
     try {
-      const { displayName, profilePicture } = this.userData as any;
-
-      const checkInInfo = { checkInData, displayName, profilePicture };
-
-      const checkIn = await createCheckIn(checkInInfo);
-
+      const { checkIn } = await createCheckIn(checkInData);
       this.lastCheckIn = checkIn;
       await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return null;
