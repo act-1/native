@@ -47,10 +47,6 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
       await updateUserProvince(province);
       await updateUserDisplayName(displayName);
       analytics().logEvent('sign_up_form_submitted');
-
-      // Add public check in
-      // const checkInInfo = userStore.lastCheckIn;
-      // await CheckInService.publicCheckIn({ checkInInfo, displayName, profilePictureURL });
     } catch (err) {
       setLoading(false);
       console.log(err);

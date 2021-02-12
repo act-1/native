@@ -3,13 +3,16 @@ type LatLng = [number, number];
 type CheckInParams = {
   id: string;
   userId: string;
+  displayName: string;
+  profilePicture: string;
   locationId: string;
   locationName: string;
   locationCity: string;
-  eventId?: string;
+  eventId: string | null;
   eventEndDate?: Date;
   expireAt: Date;
   createdAt: Date;
+  isActive: boolean;
 };
 
 type RTDBCheckIn = {
@@ -20,7 +23,7 @@ type RTDBCheckIn = {
   userId: string;
   displayName: string;
   profilePicture: string;
-  createdAt: string;
+  createdAt: number;
   expireAt: string;
   eventId: string | null;
   isActive: boolean;

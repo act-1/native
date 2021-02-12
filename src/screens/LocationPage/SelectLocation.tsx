@@ -21,7 +21,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
     let locationId = '';
     let eventId: null | string = null;
 
-    // Normalize event / location data for check in
+    // Since the location can be either an event or location objects, we have to mormalize the data.
     if (checkInData.endDate) {
       eventId = checkInData.id;
       locationId = checkInData.locationId;
@@ -78,7 +78,9 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
           <Box width="100%">
             {locationStore.nearbyLocations.map((location: any) => {
               if (location.type === 'event') {
-                return <EventBox key={location.locationId} {...location} onPress={() => onLocationPress({ ...location })} />;
+                // The location object in this case is an event
+                const eventData = location;
+                return <EventBox key={eventData.locationId} {...eventData} onPress={() => onLocationPress({ ...eventData })} />;
               } else {
                 return (
                   <LocationBox

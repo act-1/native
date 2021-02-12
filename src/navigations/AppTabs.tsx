@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { LocationScreenProps } from '@types/navigation';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -70,8 +69,6 @@ const AppTabs = () => {
       <Tab.Screen name="Home" component={HomeNavigator} />
       <Tab.Screen name="Action" component={ActionNavigator} />
       <Tab.Screen name="Community" component={CommunityNavigator} />
-      {/* <Tab.Screen name="Events" component={EventsNavigator} />
-      <Tab.Screen name="Profile" component={ProfileNavigator} /> */}
     </Tab.Navigator>
   );
 };

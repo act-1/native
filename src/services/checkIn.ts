@@ -7,13 +7,14 @@ let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.c
 // TODO: Set as a default
 if (__DEV__) {
   // database = firebase.app().database('http://localhost:9000/?ns=act1co');
-  // database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
+  // hola
+  database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
 }
 
 const profilePicturePlaceholderURL =
   'https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/profilePicturePlaceholder.png?alt=media&token=06884d2b-b32d-4799-b906-280a7f52ba43';
 
-export async function createUserCheckIn({
+export async function createCheckIn({
   locationId,
   locationName,
   locationCity,
@@ -21,7 +22,7 @@ export async function createUserCheckIn({
   eventEndDate,
 }: CheckInParams): Promise<{ ok: Boolean; checkIn: CheckInParams }> {
   try {
-    const userId = auth().currentUser?.uid;
+    const { uid: userId, displayName, photoURL } = auth().currentUser!;
 
     // 1.5 hours from now - the default check in expiration time.
     let expireAt = new Date();
@@ -39,33 +40,20 @@ export async function createUserCheckIn({
       locationId,
       locationName,
       locationCity,
+      displayName: displayName || '',
       createdAt: firestore.FieldValue.serverTimestamp(),
       expireAt,
+      profilePicture: photoURL || profilePicturePlaceholderURL,
+      isActive: true,
     };
 
     // Create check in documents
     const checkInRef = firestore().collection('checkIns').doc();
-    const userCheckInRef = firestore().collection(`users/${userId}/checkIns`).doc(checkInRef.id);
+    await checkInRef.set({ ...checkInInfo, id: checkInRef.id });
+    console.log(checkInRef);
+    // await database.ref(`locationCounter/${locationId}`).set(firebase.database.ServerValue.increment(1));
 
-    const batch = firestore().batch();
-    batch.set(checkInRef, { ...checkInInfo, isActive: true });
-    batch.set(userCheckInRef, { ...checkInInfo, isActive: true, id: checkInRef.id });
-    await batch.commit();
-
-    // Increment the location counter in the realtime database.
-    await database.ref(`locationCounter/${locationId}`).set(firebase.database.ServerValue.increment(1));
-
-    // Retrieve the saved check in object
-    const checkInDocument = await userCheckInRef.get();
-    const checkInData: CheckInParams = checkInDocument.data();
-
-    // // check if user is not anonymous
-    if (auth().currentUser?.isAnonymous === false) {
-      const { displayName, photoURL } = auth().currentUser!;
-      await publicCheckIn({ checkInInfo: checkInData, displayName, profilePictureURL: photoURL });
-    }
-
-    return { ok: true, checkIn: { ...checkInData, createdAt: new Date(), expireAt, id: checkInDocument.id } };
+    return { ok: true, checkIn: { ...checkInInfo, id: checkInRef.id, createdAt: new Date(), expireAt } };
   } catch (err) {
     throw err;
   }
@@ -77,34 +65,34 @@ type PublicCheckInProps = {
   profilePictureURL?: string | null;
 };
 
-async function publicCheckIn({ checkInInfo, displayName, profilePictureURL }: PublicCheckInProps) {
-  const { locationId, locationName, locationCity, id: checkInId, eventId, expireAt } = checkInInfo;
-  try {
-    // Get user public check in perferences
-    // const userDoc = await firestore().collection('users').doc(userId).get();
-    // const publicCheckInPerf = userDoc.data().publicCheckIn;
+// async function publicCheckIn({ checkInInfo, displayName, profilePictureURL }: PublicCheckInProps) {
+//   const { locationId, locationName, locationCity, id: checkInId, eventId, expireAt } = checkInInfo;
+//   try {
+//     // Get user public check in perferences
+//     // const userDoc = await firestore().collection('users').doc(userId).get();
+//     // const publicCheckInPerf = userDoc.data().publicCheckIn;
 
-    // if (publicCheckInPerf === true) {
-    return database.ref(`checkIns/${locationId}/${checkInId}`).set({
-      id: checkInId,
-      locationId,
-      locationName,
-      locationCity,
-      userId: auth().currentUser!.uid,
-      displayName: displayName ? displayName : '',
-      profilePicture: profilePictureURL ? profilePictureURL : profilePicturePlaceholderURL,
-      createdAt: firebase.database.ServerValue.TIMESTAMP,
-      expireAt,
-      eventId: eventId || null,
-      isActive: true,
-    });
-    // } else {
-    //   return { ok: false, message: 'The user set public check in off.' };
-    // }
-  } catch (err) {
-    throw err;
-  }
-}
+//     // if (publicCheckInPerf === true) {
+//     return database.ref(`checkIns/${locationId}/${checkInId}`).set({
+//       id: checkInId,
+//       locationId,
+//       locationName,
+//       locationCity,
+//       userId: auth().currentUser!.uid,
+//       displayName: displayName ? displayName : '',
+//       profilePicture: profilePictureURL ? profilePictureURL : profilePicturePlaceholderURL,
+//       createdAt: firebase.database.ServerValue.TIMESTAMP,
+//       expireAt,
+//       eventId: eventId || null,
+//       isActive: true,
+//     });
+//     // } else {
+//     //   return { ok: false, message: 'The user set public check in off.' };
+//     // }
+//   } catch (err) {
+//     throw err;
+//   }
+// }
 
 type DeleteCheckInParams = {
   checkInId: string;
@@ -134,7 +122,3 @@ export async function deleteCheckIn({ checkInId, locationId, isActive = true }: 
     throw err;
   }
 }
-
-export default {
-  publicCheckIn,
-};
