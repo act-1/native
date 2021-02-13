@@ -10,11 +10,17 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import Icon from 'react-native-vector-icons/Feather';
 import { CheckInFormScreenProps } from '@types/navigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { userStore } = useStore();
   const [textContent, setTextContent] = useState('');
   const [isAnonymous, setAnonymous] = useState(false);
+
+  const updateAnonymousState = (value: boolean) => {
+    setAnonymous(value);
+    Alert.prompt("צ'ק אין אנונימי", ".שימו לב: תמונתכם לא תופיע והצ'ק אין לא יישמר בפרופיל האישי.");
+  };
 
   const submitCheckIn = () => {
     navigation.dispatch(StackActions.replace('LocationPage', { locationId: route.params.checkInData.locationId }));
@@ -32,7 +38,6 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
         }
       });
   };
-  console.log(route.params.checkInData);
 
   return (
     <Box flex={1}>
@@ -62,7 +67,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
         </Box>
         <Box>
           <CircularButton
-            onPress={() => setAnonymous(!isAnonymous)}
+            onPress={updateAnonymousState}
             color={isAnonymous ? 'red' : 'black'}
             iconName="lock"
             size="large"
