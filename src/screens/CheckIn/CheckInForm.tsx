@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, KeyboardAvoidingView, TouchableOpacity, TextInput, Platform, StyleSheet } from 'react-native';
+import { Alert, ActionSheetIOS, KeyboardAvoidingView, TouchableOpacity, TextInput, Platform, StyleSheet } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -11,12 +11,41 @@ import { useStore } from '../../stores';
 import Icon from 'react-native-vector-icons/Feather';
 import { CheckInFormScreenProps } from '@types/navigation';
 import { useActionSheet } from '@expo/react-native-action-sheet';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { showActionSheetWithOptions } = useActionSheet();
   const { userStore } = useStore();
   const [textContent, setTextContent] = useState('');
   const [isAnonymous, setAnonymous] = useState(false);
+
+  const updateAnonymousState = (value: boolean) => {
+    const actionSheetOptions = {
+      options: ['חזרה', 'פומבי', 'פרטי', 'אנונימי'],
+      cancelButtonIndex: 0,
+      userInterfaceStyle: 'dark',
+    };
+
+    const callback = (buttonIndex) => {
+      if (buttonIndex === 0) {
+        // cancel action
+      } else if (buttonIndex === 1) {
+        // setResult(Math.floor(Math.random() * 100) + 1);
+      } else if (buttonIndex === 2) {
+        // setResult("🔮");
+      }
+    };
+
+    const message =
+      'פומבי - הצ׳ק אין יהיה חשוף לציבור\nפרטי - הצ׳ק אין יהיה חשוף רק בפרופיל הפרטי שלכם\nאנונימי - הצ׳ק אין יבוצע באופן אנונימי לחלוטין ולא יהיה משוייך אל חשבונכם\n';
+    Alert.alert('הגדרות פרטיות', message);
+
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions(actionSheetOptions, callback);
+    } else {
+      showActionSheetWithOptions(actionSheetOptions, callback);
+    }
+  };
 
   const submitCheckIn = () => {
     navigation.dispatch(StackActions.replace('LocationPage', { locationId: route.params.checkInData.locationId }));
@@ -62,10 +91,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
           </Box>
         </Box>
         <Box>
-          <CircularButton color="black" iconName="globe" size="large" iconSize={18} />
-          <Text variant="text" marginTop="xs" fontSize={12} textAlign="center">
-            פומבי
-          </Text>
+          <CircularButton color="black" iconName="globe" size="large" iconSize={18} onPress={updateAnonymousState} />
         </Box>
       </Box>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
