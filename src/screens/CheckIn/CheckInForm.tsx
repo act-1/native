@@ -13,13 +13,19 @@ import { CheckInFormScreenProps } from '@types/navigation';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const privacyIcon = {
+  PUBLIC: 'globe',
+  PRIVATE: 'lock',
+  ANONYMOUS: 'eye-off',
+};
+
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { showActionSheetWithOptions } = useActionSheet();
   const { userStore } = useStore();
   const [textContent, setTextContent] = useState('');
-  const [isAnonymous, setAnonymous] = useState(false);
+  const [privacyMode, setPrivacyMode] = useState<'PUBLIC' | 'PRIVATE' | 'ANONYMOUS'>('PUBLIC');
 
-  const updateAnonymousState = (value: boolean) => {
+  const updateAnonymousState = async () => {
     const actionSheetOptions = {
       options: ['חזרה', 'פומבי', 'פרטי', 'אנונימי'],
       cancelButtonIndex: 0,
@@ -27,18 +33,23 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
     };
 
     const callback = (buttonIndex) => {
-      if (buttonIndex === 0) {
-        // cancel action
-      } else if (buttonIndex === 1) {
-        // setResult(Math.floor(Math.random() * 100) + 1);
+      if (buttonIndex === 1) {
+        setPrivacyMode('PUBLIC');
       } else if (buttonIndex === 2) {
-        // setResult("🔮");
+        setPrivacyMode('PRIVATE');
+      } else if (buttonIndex === 3) {
+        setPrivacyMode('ANONYMOUS');
       }
     };
 
-    const message =
-      'פומבי - הצ׳ק אין יהיה חשוף לציבור\nפרטי - הצ׳ק אין יהיה חשוף רק בפרופיל הפרטי שלכם\nאנונימי - הצ׳ק אין יבוצע באופן אנונימי לחלוטין ולא יהיה משוייך אל חשבונכם\n';
-    Alert.alert('הגדרות פרטיות', message);
+    const privacyMessageShown = await AsyncStorage.getItem('checkIn_privacy_message_shown');
+
+    if (privacyMessageShown !== 'true') {
+      const message =
+        'פומבי - הצ׳ק אין יהיה חשוף לציבור\nפרטי - הצ׳ק אין יהיה חשוף רק בפרופיל הפרטי שלכם\nאנונימי - הצ׳ק אין יבוצע באופן אנונימי לחלוטין ולא יהיה משוייך אל חשבונכם\n';
+      Alert.alert('הגדרות פרטיות', message);
+      AsyncStorage.setItem('checkIn_privacy_message_shown', 'true');
+    }
 
     if (Platform.OS === 'ios') {
       ActionSheetIOS.showActionSheetWithOptions(actionSheetOptions, callback);
@@ -91,7 +102,13 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
           </Box>
         </Box>
         <Box>
-          <CircularButton color="black" iconName="globe" size="large" iconSize={18} onPress={updateAnonymousState} />
+          <CircularButton
+            color="black"
+            iconName={privacyIcon[privacyMode]}
+            size="large"
+            iconSize={18}
+            onPress={updateAnonymousState}
+          />
         </Box>
       </Box>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -110,14 +127,12 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
           />
         </Box>
 
-        <Box flex={1}>
-          <Box flexDirection="row" alignItems="center">
-            <Box flex={1} marginLeft="m">
-              <RoundedButton onPress={() => navigation.navigate('Home')} color="grey" text="ביטול" style={{ width: '100%' }} />
-            </Box>
-            <Box flex={1} marginHorizontal="m">
-              <RoundedButton onPress={submitCheckIn} color="blue" text="צ׳ק אין" style={{ width: '100%' }} />
-            </Box>
+        <Box flexDirection="row" alignItems="center" flex={1}>
+          <Box flex={1} marginLeft="m">
+            <RoundedButton onPress={() => navigation.navigate('Home')} color="grey" text="ביטול" style={{ width: '100%' }} />
+          </Box>
+          <Box flex={1} marginHorizontal="m">
+            <RoundedButton onPress={submitCheckIn} color="blue" text="צ׳ק אין" style={{ width: '100%' }} />
           </Box>
         </Box>
       </KeyboardAvoidingView>
