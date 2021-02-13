@@ -10,8 +10,10 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import Icon from 'react-native-vector-icons/Feather';
 import { CheckInFormScreenProps } from '@types/navigation';
+import { useActionSheet } from '@expo/react-native-action-sheet';
 
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
+  const { showActionSheetWithOptions } = useActionSheet();
   const { userStore } = useStore();
   const [textContent, setTextContent] = useState('');
   const [isAnonymous, setAnonymous] = useState(false);
@@ -32,7 +34,6 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
         }
       });
   };
-  console.log(route.params.checkInData);
 
   return (
     <Box flex={1}>
@@ -61,13 +62,10 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
           </Box>
         </Box>
         <Box>
-          <CircularButton
-            onPress={() => setAnonymous(!isAnonymous)}
-            color={isAnonymous ? 'red' : 'black'}
-            iconName="lock"
-            size="large"
-            iconSize={18}
-          />
+          <CircularButton color="black" iconName="globe" size="large" iconSize={18} />
+          <Text variant="text" marginTop="xs" fontSize={12} textAlign="center">
+            פומבי
+          </Text>
         </Box>
       </Box>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -86,12 +84,14 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
           />
         </Box>
 
-        <Box flexDirection="row" alignItems="center" flex={1}>
-          <Box flex={1} marginLeft="m">
-            <RoundedButton onPress={() => navigation.navigate('Home')} color="grey" text="ביטול" style={{ width: '100%' }} />
-          </Box>
-          <Box flex={1} marginHorizontal="m">
-            <RoundedButton onPress={submitCheckIn} color="blue" text="צ׳ק אין" style={{ width: '100%' }} />
+        <Box flex={1}>
+          <Box flexDirection="row" alignItems="center">
+            <Box flex={1} marginLeft="m">
+              <RoundedButton onPress={() => navigation.navigate('Home')} color="grey" text="ביטול" style={{ width: '100%' }} />
+            </Box>
+            <Box flex={1} marginHorizontal="m">
+              <RoundedButton onPress={submitCheckIn} color="blue" text="צ׳ק אין" style={{ width: '100%' }} />
+            </Box>
           </Box>
         </Box>
       </KeyboardAvoidingView>
