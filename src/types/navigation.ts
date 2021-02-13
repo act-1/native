@@ -22,7 +22,7 @@ export type RootStackParamList = {
   EventList: undefined;
   EventPage: { eventId: string };
   CheckInSelectLocation: undefined;
-  CheckInForm: undefined;
+  CheckInForm: { checkInData: CheckInParams };
   LocationPage: { locationId: string };
   Profile: undefined;
   SignUpNavigator: undefined;

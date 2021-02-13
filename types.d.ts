@@ -8,11 +8,13 @@ type CheckInParams = {
   locationId: string;
   locationName: string;
   locationCity: string;
-  eventId: string | null;
+  eventId?: string | null;
+  eventName?: string | null;
   eventEndDate?: Date;
   expireAt: Date;
   createdAt: Date;
   isActive: boolean;
+  textContent?: string;
 };
 
 type RTDBCheckIn = {

@@ -39,8 +39,10 @@ function CheckInNavigator({ navigation }) {
         name="LocationPage"
         component={LocationPage}
         options={{
+          headerShown: true,
           headerTitle: '',
           headerTransparent: true,
+          headerLeft: null,
           headerRightContainerStyle: { marginRight: 12 },
           headerRight: () => (
             <Box flexDirection="row">

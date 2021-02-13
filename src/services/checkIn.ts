@@ -12,6 +12,7 @@ export async function createCheckIn({
   locationCity,
   eventId,
   eventEndDate,
+  textContent,
 }: CheckInParams): Promise<{ ok: Boolean; checkIn: CheckInParams }> {
   try {
     const { uid: userId, displayName, photoURL } = auth().currentUser!;
@@ -36,6 +37,7 @@ export async function createCheckIn({
       createdAt: firestore.FieldValue.serverTimestamp(),
       expireAt,
       profilePicture: photoURL || profilePicturePlaceholderURL,
+      textContent: textContent || null,
       isActive: true,
     };
 

@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
-import { Alert, Image, StatusBar, Platform, ScrollView } from 'react-native';
-import { StackActions } from '@react-navigation/native';
-import crashlytics from '@react-native-firebase/crashlytics';
+import { ScrollView } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { SelectLocationScreenProps } from '@types/navigation';
-import { Box, Text, LocationBox, EventBox } from '../../components';
+import { Box, LocationBox, EventBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-import { ILocation } from '@types/location';
 import LocationPermissionMessage from './LocationPermissionMessage';
-import HapticFeedback from 'react-native-haptic-feedback';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore, locationStore } = useStore();
@@ -20,10 +16,12 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
     let locationCity = checkInData.city;
     let locationId = '';
     let eventId: null | string = null;
+    let eventName: null | string = null;
 
     // Since the location can be either an event or location objects, we have to mormalize the data.
     if (checkInData.endDate) {
       eventId = checkInData.id;
+      eventName = checkInData.title;
       locationId = checkInData.locationId;
       locationName = checkInData.locationName;
 
@@ -35,29 +33,9 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       analytics().logEvent('check_in_select_location');
     }
 
-    navigation.navigate('CheckInForm');
-    // Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
-    //   { text: 'לא עכשיו', onPress: () => analytics().logEvent('check_in_alert_cancel') },
-    //   {
-    //     text: 'אישור',
-    //     onPress: () => {
-    //       navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
-    //       userStore
-    //         .checkIn({ ...checkInData, locationId, locationName, locationCity, eventId })
-    //         .then(() => {
-    //           analytics().logEvent('check_in_success');
-    //         })
-    //         .catch((err: any) => {
-    //           crashlytics().log('Check in denied; already exists.');
-    //           if (userStore.lastCheckIn) crashlytics().setAttribute('lastCheckInId', userStore.lastCheckIn.id);
-    //           crashlytics().recordError(err);
-    //           if (err.code === 'already-exists') {
-    //             Alert.alert("נראה שיש לך כבר צ'ק אין פעיל 🤭");
-    //           }
-    //         });
-    //     },
-    //   },
-    // ]);
+    navigation.navigate('CheckInForm', {
+      checkInData: { ...checkInData, locationId, locationName, locationCity, eventId, eventName },
+    });
   };
 
   useEffect(() => {
