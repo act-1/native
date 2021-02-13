@@ -3,6 +3,7 @@ import { Platform, Pressable, StyleSheet } from 'react-native';
 import { Box, Text, CircularButton } from '@components';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SelectLocation, LocationPage } from '@screens/LocationPage';
+import { CheckInForm } from '@screens/CheckIn';
 
 const CheckInStack = createStackNavigator();
 
@@ -33,11 +34,11 @@ function CheckInNavigator({ navigation }) {
           headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
         }}
       />
+      <CheckInStack.Screen name="CheckInForm" component={CheckInForm} options={{ headerShown: false }} />
       <CheckInStack.Screen
         name="LocationPage"
         component={LocationPage}
         options={{
-          headerShown: true,
           headerTitle: '',
           headerTransparent: true,
           headerRightContainerStyle: { marginRight: 12 },

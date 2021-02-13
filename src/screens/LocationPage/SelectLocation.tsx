@@ -35,28 +35,29 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       analytics().logEvent('check_in_select_location');
     }
 
-    Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
-      { text: 'לא עכשיו', onPress: () => analytics().logEvent('check_in_alert_cancel') },
-      {
-        text: 'אישור',
-        onPress: () => {
-          navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
-          userStore
-            .checkIn({ ...checkInData, locationId, locationName, locationCity, eventId })
-            .then(() => {
-              analytics().logEvent('check_in_success');
-            })
-            .catch((err: any) => {
-              crashlytics().log('Check in denied; already exists.');
-              if (userStore.lastCheckIn) crashlytics().setAttribute('lastCheckInId', userStore.lastCheckIn.id);
-              crashlytics().recordError(err);
-              if (err.code === 'already-exists') {
-                Alert.alert("נראה שיש לך כבר צ'ק אין פעיל 🤭");
-              }
-            });
-        },
-      },
-    ]);
+    navigation.navigate('CheckInForm');
+    // Alert.alert('צ׳ק אין', 'האם לעשות צ׳ק אין להפגנה?', [
+    //   { text: 'לא עכשיו', onPress: () => analytics().logEvent('check_in_alert_cancel') },
+    //   {
+    //     text: 'אישור',
+    //     onPress: () => {
+    //       navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
+    //       userStore
+    //         .checkIn({ ...checkInData, locationId, locationName, locationCity, eventId })
+    //         .then(() => {
+    //           analytics().logEvent('check_in_success');
+    //         })
+    //         .catch((err: any) => {
+    //           crashlytics().log('Check in denied; already exists.');
+    //           if (userStore.lastCheckIn) crashlytics().setAttribute('lastCheckInId', userStore.lastCheckIn.id);
+    //           crashlytics().recordError(err);
+    //           if (err.code === 'already-exists') {
+    //             Alert.alert("נראה שיש לך כבר צ'ק אין פעיל 🤭");
+    //           }
+    //         });
+    //     },
+    //   },
+    // ]);
   };
 
   useEffect(() => {
