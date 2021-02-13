@@ -6,7 +6,8 @@ import { buttonColors } from '../ButtonColors';
 
 type CircularButtonProps = {
   iconName: string;
-  color: 'blue' | 'green' | 'grey' | 'white';
+  iconSize?: number;
+  color?: 'blue' | 'darkBlue' | 'green' | 'red' | 'yellow' | 'grey' | 'porcelain' | 'white' | 'black';
   onPress?: () => void;
   text?: string;
   size?: 'small' | 'large';
@@ -28,7 +29,7 @@ function getButtonDimenions(size: string): ViewStyle {
   };
 }
 
-function CircularButton({ iconName, color, text, onPress, size = 'large', loading, style }: CircularButtonProps) {
+function CircularButton({ iconName, iconSize = 25, color, text, onPress, size = 'large', loading, style }: CircularButtonProps) {
   const [pressed, setPressed] = useState(false);
   const { initialColor, pressedColor, iconColor } = buttonColors[color];
   const buttonDimensions = getButtonDimenions(size);
@@ -50,7 +51,7 @@ function CircularButton({ iconName, color, text, onPress, size = 'large', loadin
         {loading ? (
           <ActivityIndicator color={iconColor ? iconColor : 'white'} />
         ) : (
-          <Icon name={iconName} size={25} color={iconColor ? iconColor : 'white'} />
+          <Icon name={iconName} size={iconSize} color={iconColor ? iconColor : 'white'} />
         )}
       </Pressable>
       {text && (
