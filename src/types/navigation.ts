@@ -9,6 +9,7 @@ export type SelectLocationScreenProps = BottomTabScreenProps<RootStackParamList,
 export type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
 export type EventPageScreenProps = StackScreenProps<RootStackParamList, 'EventPage'>;
 export type EventListScreenProps = StackScreenProps<RootStackParamList, 'EventList'>;
+export type CheckInFormScreenProps = StackScreenProps<RootStackParamList, 'CheckInForm'>;
 export type LocationScreenProps = StackScreenProps<RootStackParamList, 'LocationPage'>;
 export type ProfileScreenProps = StackScreenProps<RootStackParamList, 'Profile'>;
 export type ActionScreenProps = StackScreenProps<RootStackParamList, 'ActionScreen'>;
