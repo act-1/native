@@ -14,6 +14,7 @@ import { CheckInFormScreenProps } from '@types/navigation';
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { userStore } = useStore();
   const [textContent, setTextContent] = useState('');
+  const [isAnonymous, setAnonymous] = useState(false);
 
   const submitCheckIn = () => {
     navigation.dispatch(StackActions.replace('LocationPage', { locationId: route.params.checkInData.locationId }));
@@ -60,7 +61,13 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
           </Box>
         </Box>
         <Box>
-          <CircularButton color="black" iconName="lock" size="large" iconSize={18} />
+          <CircularButton
+            onPress={() => setAnonymous(!isAnonymous)}
+            color={isAnonymous ? 'red' : 'black'}
+            iconName="lock"
+            size="large"
+            iconSize={18}
+          />
         </Box>
       </Box>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
