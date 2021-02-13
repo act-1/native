@@ -32,7 +32,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
       userInterfaceStyle: 'dark',
     };
 
-    const callback = (buttonIndex) => {
+    const callback = (buttonIndex: number) => {
       if (buttonIndex === 1) {
         setPrivacyMode('PUBLIC');
       } else if (buttonIndex === 2) {
