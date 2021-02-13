@@ -1,21 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Animated, View, ActivityIndicator, StyleSheet, Dimensions, ViewStyle } from 'react-native';
-import { firebase } from '@react-native-firebase/database';
+import { RealtimeDatabase } from '@services/databaseWrapper';
 import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-snap-carousel';
 import { chunkArray } from '@utils/array-utils';
 import { Box, Text, Ticker } from '../../../components';
 import { useStore } from '../../../stores';
-
-firebase.app().database().setLoggingEnabled(true);
-let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
-
-// TODO: Set as a default
-if (__DEV__) {
-  // database = firebase.app().database('http://localhost:9000/?ns=act1co');
-  database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
-}
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -49,10 +40,11 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
   // Subscribe to location count & public check ins
   useEffect(() => {
     // TODO: Filter by createdAt property
-    const checkInsQuery = database.ref(`/checkIns/${locationId}`).orderByChild('isActive').equalTo(true);
-    const checkInCount = database.ref(`/locationCounter/${locationId}`);
+    const checkInsQuery = RealtimeDatabase.database.ref(`/checkIns/${locationId}`).orderByChild('isActive').equalTo(true);
+    const checkInCount = RealtimeDatabase.database.ref(`/locationCounter/${locationId}`);
 
     checkInsQuery.once('value', (snapshot) => {
+      console.log(snapshot.val());
       if (snapshot.val()) {
         setIsLoading(false);
       }

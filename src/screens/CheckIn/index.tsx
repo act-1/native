@@ -1,1 +1,1 @@
-export { default as CheckInPage } from './CheckInPage';
+export { default as CheckInForm } from './CheckInForm';

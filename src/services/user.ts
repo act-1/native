@@ -3,24 +3,6 @@ import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
 import { getDeviceId, getUniqueId } from 'react-native-device-info';
 
-/**
- * Fetches the user's firestore document data.
- * @param userId - The user Id to fetch.
- */
-export async function getUserData(userId: string) {
-  try {
-    const userSnapshot = await firestore().collection('users').doc(userId).get();
-    if (userSnapshot.exists) {
-      const userData = userSnapshot.data();
-      return userData;
-    } else {
-      throw new Error("The user doesn't exist in firestore.");
-    }
-  } catch (err) {
-    throw err;
-  }
-}
-
 export async function getUserFCMToken(userId: string, fcmToken: string) {
   try {
     return await firestore().collection(`users/${userId}/devices`).doc(fcmToken).get();

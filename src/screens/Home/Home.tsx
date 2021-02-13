@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import functions from '@react-native-firebase/functions';
 import { Box, Text } from '../../components';
-import { StatusBar, StyleSheet, ScrollView } from 'react-native';
+import { StatusBar, StyleSheet, ScrollView, Button } from 'react-native';
 import { Stats, FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
@@ -11,7 +12,7 @@ function Home() {
     <ScrollView style={styles.homeWrapper}>
       <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
       <Stats />
-
+      <Button title="check in update" onPress={() => functions().httpsCallable('updateCheckInCountManually')()} />
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         תמונות נבחרות
       </Text>

@@ -51,6 +51,10 @@ function RoundedButton({
   let { initialColor, pressedColor, textColor } = buttonColors[disabled ? 'grey' : color];
   const buttonDimensions = getButtonDimenions(size);
 
+  // Override button dimensions.
+  if (style?.width) buttonDimensions.width = style.width;
+  if (style?.height) buttonDimensions.height = style.height;
+
   return (
     <Box
       justifyContent="center"

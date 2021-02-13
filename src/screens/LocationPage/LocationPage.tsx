@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import { firebase } from '@react-native-firebase/database';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { Box, Text, StickyHeaderScrollView } from '../../components';
@@ -16,15 +15,6 @@ import CheckInService from '@services/checkIn';
 import { updateCheckInCount } from '@services/feed';
 import { IPicturePost } from '@types/post';
 import FastImage from 'react-native-fast-image';
-
-firebase.app().database().setLoggingEnabled(true);
-let database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com');
-
-// TODO: Set as a default
-if (__DEV__) {
-  database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
-  // database = firebase.app().database('http://localhost:9000/?ns=act1co');
-}
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const { userStore } = useStore();

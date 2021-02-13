@@ -1,118 +1,128 @@
-import React from 'react';
-import { ScrollView, Image, StyleSheet, PixelRatio, Dimensions } from 'react-native';
-import { BlurView } from '@react-native-community/blur';
-import FastImage from 'react-native-fast-image';
-import { Box, Text } from '../../components';
+import React, { useState, useEffect } from 'react';
+import { useStore } from '../../stores';
+import { Button, FlatList, RefreshControl, View } from 'react-native';
+import LiveFeedEntry from './LiveFeedEntry';
+import database from '@react-native-firebase/database';
 
-let fontSize = 13.4;
-const wideScreen = Dimensions.get('screen').width >= 390;
+// To avoid onEndReached initial render call
+let startedScroll = false;
 
-if (wideScreen) {
-  fontSize = 14.5;
-}
-
-type LiveFeedEntry = {
-  profilePicture: string;
-  displayName: string;
-  locationName: string;
-};
-
-type LiveFeedPictureEntry = LiveFeedEntry & {
-  pictureUrl: string;
-};
-
-function LiveFeedEntry({ profilePicture, displayName, locationName }: LiveFeedEntry) {
-  return (
-    <Box flexDirection="row" alignItems="center" justifyContent="space-between" paddingHorizontal="m" marginBottom="m">
-      <Box flexDirection="row" alignItems="center">
-        <FastImage source={{ uri: profilePicture }} style={styles.entryProfilePic} />
-        <Box flexDirection="row">
-          <Text variant="boxTitle" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-            {displayName}
-          </Text>
-          <Text variant="text" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-            {' '}
-            מפגינה עכשיו ב
-          </Text>
-          <Text variant="text" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-            {locationName}
-          </Text>
-        </Box>
-      </Box>
-      <Box flexDirection="row" justifyContent="center" alignItems="center">
-        <Text variant="boxTitle" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-          10
-        </Text>
-        <Image source={require('@assets/icons/fist-action.png')} style={{ width: 25, marginLeft: 7.5, resizeMode: 'contain' }} />
-      </Box>
-    </Box>
-  );
-}
-
-function LiveFeedPictureEntry({ profilePicture, displayName, locationName, pictureUrl }: LiveFeedPictureEntry) {
-  return (
-    <FastImage style={{ width: '100%', height: 270 }} source={{ uri: pictureUrl }}>
-      <Box justifyContent="flex-end" height="100%">
-        <Box zIndex={2} flexDirection="row" justifyContent="space-between" alignItems="center" paddingHorizontal="m">
-          <Box flexDirection="row" alignItems="center">
-            <FastImage source={{ uri: profilePicture }} style={styles.entryProfilePic} />
-            <Text variant="smallText" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-              {displayName}
-            </Text>
-            <Text variant="smallText" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-              {' '}
-              מפגינה עכשיו ב
-            </Text>
-            <Text variant="smallText" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-              {locationName}
-            </Text>
-          </Box>
-          <Box flexDirection="row" justifyContent="center" alignItems="center">
-            <Text variant="boxTitle" fontSize={fontSize} maxFontSizeMultiplier={1.1}>
-              10
-            </Text>
-            <Image
-              source={require('@assets/icons/fist-action.png')}
-              style={{ width: 25, marginLeft: 7.5, resizeMode: 'contain' }}
-            />
-          </Box>
-        </Box>
-        <BlurView blurAmount={1} style={styles.blurView} />
-      </Box>
-    </FastImage>
-  );
-}
-
+// TODO: Measure refresh with perf and analytics
 export default function LiveFeed() {
+  const { userStore } = useStore();
+  const [checkIns, setCheckIns] = useState<RTDBCheckIn[]>([]);
+  const [isFetchingNew, setFetchingNew] = useState(false);
+  const [isFetchingOld, setFetchingOld] = useState(false);
+
+  useEffect(() => {
+    const query = database().ref('checkIns').orderByChild('createdAt').limitToLast(30);
+
+    query.once('value', (snapshot) => {
+      const snapshotValue = snapshot.val();
+      if (snapshotValue) {
+        setCheckIns((prevState) => {
+          const newCheckIns = Object.values(snapshotValue) as RTDBCheckIn[];
+          const sortedCheckIns = newCheckIns.sort((a, b) => a.createdAt - b.createdAt).reverse();
+          console.log(sortedCheckIns);
+
+          return [...sortedCheckIns, ...prevState];
+        });
+      }
+    });
+
+    return () => {
+      query.off();
+    };
+  }, []);
+
+  const fetchNewItems = () => {
+    setFetchingNew(true);
+
+    const firstCheckIn = (checkIns[0].createdAt + 1) as number;
+    const query = database().ref('checkIns').orderByChild('createdAt').startAt(firstCheckIn).limitToLast(30);
+
+    query.once('value', (snapshot) => {
+      const snapshotValue = snapshot.val();
+
+      if (snapshotValue) {
+        const newCheckIns = Object.values(snapshotValue) as RTDBCheckIn[];
+        const sortedCheckIns = newCheckIns.sort((a, b) => a.createdAt - b.createdAt);
+
+        setCheckIns((prevState) => [...sortedCheckIns, ...prevState]);
+        setFetchingNew(false);
+      } else {
+        // Fetched all pictures
+        // It returns fast usually so we provide a bit delay.
+        setTimeout(() => {
+          setFetchingNew(false);
+        }, 450);
+      }
+    });
+  };
+
+  const fetchOlderItems = () => {
+    if (isFetchingOld) setTimeout(() => fetchOlderItems(), 250);
+    if (startedScroll) {
+      setFetchingOld(true);
+      console.log('fetching..');
+      const lastCheckInTimestamp = (checkIns[checkIns.length - 1].createdAt - 1) as number;
+      const query = database().ref('checkIns').orderByChild('createdAt').endAt(lastCheckInTimestamp).limitToLast(30);
+
+      query.once('value', (snapshot) => {
+        const snapshotValue = snapshot.val();
+
+        if (snapshotValue) {
+          const newCheckIns = Object.values(snapshotValue) as RTDBCheckIn[];
+          const sortedCheckIns = newCheckIns.sort((a, b) => a.createdAt - b.createdAt).reverse();
+          sortedCheckIns.forEach((c) => console.log(c.displayName));
+
+          console.log('end');
+          setCheckIns((prevState) => [...prevState, ...sortedCheckIns]);
+          setFetchingOld(false);
+        } else {
+          // Fetched all pictures
+          setFetchingOld(false);
+        }
+      });
+    }
+  };
+
+  const renderItem = ({ item }) => (
+    <LiveFeedEntry profilePicture={item.profilePicture} displayName={item.displayName} locationName={item.locationName} />
+  );
   return (
-    <ScrollView>
-      <LiveFeedEntry
-        profilePicture="https://randomuser.me/api/portraits/women/87.jpg"
-        displayName="מלי לוי"
-        locationName="צומת הרצליה"
+    <>
+      <FlatList
+        data={checkIns}
+        renderItem={renderItem}
+        onMomentumScrollBegin={() => (startedScroll = true)}
+        onEndReachedThreshold={0.3}
+        refreshControl={<RefreshControl refreshing={isFetchingNew} onRefresh={fetchNewItems} tintColor="white" />}
+        onEndReached={fetchOlderItems}
+        keyExtractor={(item) => item.id}
+        maintainVisibleContentPosition={0}
       />
-      <LiveFeedPictureEntry
-        profilePicture="https://randomuser.me/api/portraits/women/80.jpg"
-        displayName="חן יצחקי"
-        locationName="צומת הרצליה"
-        pictureUrl="https://images.globes.co.il/images/NewGlobes/big_image_800/2020/FD9FE066786FF3AE8199BFD492B9404C_800x392.20200725T213427.jpg"
-      />
-    </ScrollView>
+      <View style={{ marginBottom: 30 }}>
+        <Button
+          title="add me!"
+          onPress={() =>
+            setCheckIns((prevState) => [
+              {
+                createdAt: 1612024143840,
+                displayName: 122223,
+                id: '232323222-111CvSN',
+                isActive: true,
+                locationCity: 'תל אביב - יפו',
+                locationId: 'habima',
+                locationName: 'כיכר הבימה',
+                profilePicture: 'https://randomuser.me/api/portraits/men/100.jpg',
+                userId: 'd8GSM5GdfuW0KDlH7dy8oqd5ngz1',
+              },
+              ...prevState,
+            ])
+          }
+        />
+      </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  entryProfilePic: {
-    width: 28,
-    height: 28,
-    marginRight: 10,
-    borderRadius: 25,
-  },
-  blurView: {
-    justifyContent: 'flex-end',
-    height: 44,
-    position: 'absolute',
-    left: 0,
-    right: 0,
-  },
-});
