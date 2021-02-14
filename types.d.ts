@@ -2,9 +2,9 @@ type LatLng = [number, number];
 
 type CheckInParams = {
   id: string;
-  userId: string;
-  displayName: string;
-  profilePicture: string;
+  userId?: string;
+  displayName?: string;
+  profilePicture?: string;
   locationId: string;
   locationName: string;
   locationCity: string;
@@ -14,7 +14,8 @@ type CheckInParams = {
   expireAt: Date;
   createdAt: Date;
   isActive: boolean;
-  textContent?: string;
+  textContent: string | null;
+  privacySetting: 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
 };
 
 type RTDBCheckIn = {
