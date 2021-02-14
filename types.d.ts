@@ -1,5 +1,7 @@
 type LatLng = [number, number];
 
+type PrivacyOptions = 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
+
 type CheckInParams = {
   id: string;
   userId?: string;
@@ -15,7 +17,7 @@ type CheckInParams = {
   createdAt: Date;
   isActive: boolean;
   textContent: string | null;
-  privacySetting: 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
+  privacySetting: PrivacyOptions;
 };
 
 type RTDBCheckIn = {

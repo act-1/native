@@ -14,8 +14,8 @@ const privacyIcon = {
 };
 
 type setPrivacyModeProps = {
-  privacySetting: 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
-  setPrivacySetting: React.Dispatch<React.SetStateAction<'PUBLIC' | 'PRIVATE' | 'ANONYMOUS'>>;
+  privacySetting: PrivacyOptions;
+  setPrivacySetting: React.Dispatch<React.SetStateAction<PrivacyOptions>>;
   locationName: string;
   locationCity: string;
   goBack: () => void;
