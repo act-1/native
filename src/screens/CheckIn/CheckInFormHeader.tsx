@@ -14,14 +14,14 @@ const privacyIcon = {
 };
 
 type setPrivacyModeProps = {
-  privacyMode: 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
-  setPrivacyMode: React.Dispatch<React.SetStateAction<'PUBLIC' | 'PRIVATE' | 'ANONYMOUS'>>;
+  privacySetting: 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
+  setPrivacySetting: React.Dispatch<React.SetStateAction<'PUBLIC' | 'PRIVATE' | 'ANONYMOUS'>>;
   locationName: string;
   locationCity: string;
   goBack: () => void;
 };
 
-function CheckInFormHeader({ privacyMode, setPrivacyMode, locationName, locationCity, goBack }: setPrivacyModeProps) {
+function CheckInFormHeader({ privacySetting, setPrivacySetting, locationName, locationCity, goBack }: setPrivacyModeProps) {
   const { showActionSheetWithOptions } = useActionSheet();
   const updateAnonymousState = async () => {
     const actionSheetOptions = {
@@ -32,11 +32,11 @@ function CheckInFormHeader({ privacyMode, setPrivacyMode, locationName, location
 
     const callback = (buttonIndex: number) => {
       if (buttonIndex === 1) {
-        setPrivacyMode('PUBLIC');
+        setPrivacySetting('PUBLIC');
       } else if (buttonIndex === 2) {
-        setPrivacyMode('PRIVATE');
+        setPrivacySetting('PRIVATE');
       } else if (buttonIndex === 3) {
-        setPrivacyMode('ANONYMOUS');
+        setPrivacySetting('ANONYMOUS');
       }
     };
 
@@ -81,7 +81,7 @@ function CheckInFormHeader({ privacyMode, setPrivacyMode, locationName, location
       <Box>
         <CircularButton
           color="black"
-          iconName={privacyIcon[privacyMode]}
+          iconName={privacyIcon[privacySetting]}
           size="large"
           iconSize={18}
           onPress={updateAnonymousState}

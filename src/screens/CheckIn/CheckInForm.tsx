@@ -13,14 +13,14 @@ import CheckInFormHeader from './CheckInFormHeader';
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { userStore } = useStore();
   const [textContent, setTextContent] = useState('');
-  const [privacyMode, setPrivacyMode] = useState<'PUBLIC' | 'PRIVATE' | 'ANONYMOUS'>('PUBLIC');
+  const [privacySetting, setPrivacySetting] = useState<'PUBLIC' | 'PRIVATE' | 'ANONYMOUS'>('PUBLIC');
 
   const { locationName, locationCity, locationId } = route.params.checkInData;
 
   const submitCheckIn = () => {
     navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
     userStore
-      .checkIn({ ...route.params.checkInData, textContent })
+      .checkIn({ ...route.params.checkInData, privacySetting, textContent })
       .then(() => {
         analytics().logEvent('check_in_success');
       })
@@ -37,8 +37,8 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   return (
     <Box flex={1}>
       <CheckInFormHeader
-        privacyMode={privacyMode}
-        setPrivacyMode={setPrivacyMode}
+        privacySetting={privacySetting}
+        setPrivacySetting={setPrivacySetting}
         locationName={locationName}
         locationCity={locationCity}
         goBack={navigation.goBack}
