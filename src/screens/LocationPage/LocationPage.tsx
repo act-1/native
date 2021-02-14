@@ -3,7 +3,7 @@ import { StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { Box, Text, StickyHeaderScrollView } from '../../components';
+import { Box, Text, PostBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
@@ -19,7 +19,7 @@ import FastImage from 'react-native-fast-image';
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
-  const [locatinoPictures, setLocationPictures] = useState<IPicturePost[]>([]);
+  const [locationPictures, setLocationPictures] = useState<IPicturePost[]>([]);
 
   React.useLayoutEffect(() => {
     if (location?.name) {
@@ -99,11 +99,26 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
         style={styles.locationThumb}
       />
       <Box marginTop="m">
-        <LocationCounter locationId={location.id} />
-
+        <Box paddingHorizontal="xm" marginBottom="m">
+          <Text variant="extraLargeTitle" marginBottom="xxs">
+            {location.name}
+          </Text>
+          <Text variant="largeTitle" fontSize={16} fontWeight="500" opacity={0.8}>
+            {location.city}
+          </Text>
+        </Box>
         <LocationActions location={location} />
 
-        <LocationPictureFeed pictures={locatinoPictures} />
+        <LocationCounter locationId={location.id} />
+
+        <Box paddingHorizontal="xm" marginBottom="s">
+          <Text variant="largeTitle" marginBottom="xxs">
+            פיד הפגנה
+          </Text>
+        </Box>
+
+        <PostBox />
+        {/* <LocationPictureFeed pictures={locationPictures} /> */}
       </Box>
     </ScrollView>
   );
