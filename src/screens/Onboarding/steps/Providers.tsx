@@ -82,6 +82,16 @@ function Providers({ nextPage, scrollToPage, currentIndex }: BoardingScreenProps
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userStore.userData]);
 
+  useEffect(() => {
+    // If the user quit the app before submitting the sign up form, redirect them to the form on app open.
+    if (userStore.user && !userStore.userData?.signupCompleted) {
+      // Timeout to avoid background messing up animation.
+      setTimeout(() => {
+        scrollToPage(4);
+      }, 250);
+    }
+  }, [userStore.userData]);
+
   return (
     <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xm">
       <Spinner

@@ -49,9 +49,13 @@ function App() {
       return;
     }
 
-    if (store.userStore.initializedUser) {
+    if (store.userStore.initializedUser && store.userStore.user !== null && store.userStore.userData?.signupCompleted) {
       initalizedApp = true;
       initApp();
+    }
+
+    if (store.userStore.initializedUser) {
+      RNBootSplash.hide({ fade: true });
     }
 
     // Initalize data if the user authenticated.

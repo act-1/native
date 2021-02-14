@@ -15,7 +15,9 @@ import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
 timeago.register('he', he);
 
-type PostBoxProps = {};
+type PostBoxProps = {
+  post: IPost;
+};
 
 const windowWidth = Dimensions.get('window').width;
 let fontSize = 16;
@@ -23,7 +25,7 @@ if (windowWidth > 400) {
   fontSize = 17;
 }
 
-function PostBox(props: PostBoxProps) {
+function PostBox({ post }: PostBoxProps) {
   const { feedStore } = useStore();
   // const { id: postId, authorName, authorPicture, content, likeCounter, liked, pictureUrl, createdAt, style } = props;
 
@@ -41,12 +43,7 @@ function PostBox(props: PostBoxProps) {
   return (
     <Box alignItems="flex-start" style={[{ backgroundColor: '#0a0d0f' }]}>
       <Box flexDirection="row" paddingHorizontal="m">
-        <FastImage
-          source={{
-            uri: 'https://avatars.githubusercontent.com/u/13344923?s=460&u=608d14c4d6c542d8f173dc2093e1763a7d18794c&v=4',
-          }}
-          style={styles.authorImage}
-        />
+        <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} />
         <Box marginTop="m" style={{ marginLeft: 10 }}>
           <Box alignItems="flex-start" backgroundColor="seperator" style={styles.messageBubble}>
             <Box style={styles.arrowContainer}>
@@ -61,22 +58,20 @@ function PostBox(props: PostBoxProps) {
               </Svg>
             </Box>
 
-            {true && (
+            {post.pictureUrl && (
               <FastImage
-                source={{
-                  uri: 'https://media.reshet.tv/image/upload/t_main_image_article,f_auto,q_auto/v1596087348/protst1_j79xag.png',
-                }}
+                source={{ uri: post.pictureUrl }}
                 style={{
                   width: scale(265),
                   marginHorizontal: -12,
-                  height: 200,
+                  height: post.pictureHeight / (post.pictureWidth / deviceWidth),
                   marginTop: -15,
                   marginBottom: 8,
                   zIndex: 1,
                   borderTopRightRadius: 25,
                   borderTopLeftRadius: 25,
                 }}
-                // item.pictureHeight / (item.pictureWidth / deviceWidth)
+                //
               />
             )}
 

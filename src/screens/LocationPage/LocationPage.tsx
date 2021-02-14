@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
-import firestore from '@react-native-firebase/firestore';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { Box, Text, PostBox } from '../../components';
+import { Box, Text, ProtestFeed } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
 import { ILocation } from '@types/location';
 import { fetchLocation } from '@services/locations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LocationActions, LocationCounter, LocationPictureFeed } from './components';
-import CheckInService from '@services/checkIn';
-import { updateCheckInCount } from '@services/feed';
-import { IPicturePost } from '@types/post';
+import { LocationActions, LocationCounter } from './components';
 import FastImage from 'react-native-fast-image';
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
-  const [locationPictures, setLocationPictures] = useState<IPicturePost[]>([]);
 
   React.useLayoutEffect(() => {
     if (location?.name) {
@@ -28,35 +23,6 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
       });
     }
   }, [location, navigation]);
-
-  useEffect(() => {
-    const query = firestore()
-      .collection('posts')
-      .where('locationId', '==', route.params.locationId)
-      .where('archived', '==', false)
-      .orderBy('createdAt')
-      .limit(10);
-
-    const unsubscribe = query.onSnapshot(
-      (snapshot) => {
-        if (snapshot === null) return;
-        snapshot.docChanges().forEach((change) => {
-          if (change.type === 'added') {
-            const picture = change.doc.data() as IPicturePost;
-            setLocationPictures((prevState) => [picture, ...prevState]);
-          }
-        });
-      },
-      (error) => {
-        crashlytics().recordError(error);
-        console.error(error);
-      }
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, [route.params.locationId]);
 
   // Retrieve location information.
   // First try to hit the cache - then fetch from firestore.
@@ -117,8 +83,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           </Text>
         </Box>
 
-        <PostBox />
-        {/* <LocationPictureFeed pictures={locationPictures} /> */}
+        <ProtestFeed locationId={route.params.locationId} />
       </Box>
     </ScrollView>
   );
