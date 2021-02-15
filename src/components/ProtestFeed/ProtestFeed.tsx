@@ -21,6 +21,8 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
       .orderBy('createdAt')
       .limit(10);
 
+    // TODO: Sort by createdAt.
+
     const unsubscribe = query.onSnapshot(
       (snapshot) => {
         if (snapshot === null) return;

@@ -3,7 +3,6 @@ import { Pressable, StyleSheet, ViewStyle, Dimensions } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
-import HTML from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/Feather';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { Box, Text, Ticker } from '../../components';
@@ -51,7 +50,7 @@ function PostBox({ post }: PostBoxProps) {
           <Box alignItems="flex-start" backgroundColor="seperator" style={styles.messageBubble}>
             <Box style={styles.arrowContainer}>
               <Svg
-                style={{ left: -4 }}
+                style={{ left: -6 }}
                 width={15.5}
                 height={17.5}
                 viewBox="32.484 17.5 15.515 17.5"
@@ -67,28 +66,24 @@ function PostBox({ post }: PostBoxProps) {
                 style={{
                   width: scale(265),
                   marginHorizontal: -12,
-                  height: post.pictureHeight / (post.pictureWidth / deviceWidth),
+                  height: post.pictureHeight / (post.pictureWidth / scale(205)),
                   marginTop: -15,
-                  marginBottom: 8,
+                  marginBottom: post.textContent ? 6 : 0,
                   zIndex: 1,
                   borderTopRightRadius: 25,
                   borderTopLeftRadius: 25,
                 }}
+
                 //
               />
             )}
 
             <Box paddingRight="xxl" marginBottom="s">
-              {/* <HTML
-                html={`<p>${}</p>`}
-                textSelectable={true}
-                tagsStyles={{
-                  p: { textAlign: 'left', fontSize, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#fff' },
-                }}
-              /> */}
-              <Text variant="text" fontFamily="AtlasDL3.1AAA-Medium">
-                {post.textContent}
-              </Text>
+              {post && post.textContent?.length! > 0 && (
+                <Text variant="text" fontFamily="AtlasDL3.1AAA-Medium">
+                  {post.textContent}
+                </Text>
+              )}
             </Box>
 
             <Box flexDirection="row" alignItems="center">

@@ -79,7 +79,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     </Box>
   );
 
-  return <ProtestFeed locationId={route.params.locationId} headerComponent={locationPageHeader} setListRef={setListRef} />;
+  return <ProtestFeed locationId={route.params.locationId} headerComponent={locationPageHeader} />;
 }
 
 export default observer(LocationPage);
