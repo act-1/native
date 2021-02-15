@@ -13,7 +13,7 @@ import CheckInFormHeader from './CheckInFormHeader';
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { userStore } = useStore();
   const [textContent, setTextContent] = useState('');
-  const [privacySetting, setPrivacySetting] = useState<'PUBLIC' | 'PRIVATE' | 'ANONYMOUS'>('PUBLIC');
+  const [privacySetting, setPrivacySetting] = useState<PrivacyOptions>('PUBLIC');
 
   const { locationName, locationCity, locationId } = route.params.checkInData;
 
