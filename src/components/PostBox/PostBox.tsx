@@ -12,10 +12,12 @@ import { scale } from 'react-native-size-matters';
 
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 timeago.register('he', he);
 
 type PostBoxProps = {
   post: Post;
+  onPicturePress: (url: string) => void;
 };
 
 const deviceWidth = Dimensions.get('window').width;
@@ -27,7 +29,7 @@ if (deviceWidth > 400) {
   baseBoxWith = 275;
 }
 
-function PostBox({ post }: PostBoxProps) {
+function PostBox({ post, onPicturePress }: PostBoxProps) {
   const { feedStore } = useStore();
   // const { id: postId, authorName, authorPicture, content, likeCounter, liked, pictureUrl, createdAt, style } = props;
 
@@ -61,21 +63,21 @@ function PostBox({ post }: PostBoxProps) {
             </Box>
 
             {post.type === 'picture' && (
-              <FastImage
-                source={{ uri: post.pictureUrl }}
-                style={{
-                  width: scale(265),
-                  marginHorizontal: -12,
-                  height: post.pictureHeight / (post.pictureWidth / scale(205)),
-                  marginTop: -15,
-                  marginBottom: post.textContent ? 6 : 0,
-                  zIndex: 1,
-                  borderTopRightRadius: 25,
-                  borderTopLeftRadius: 25,
-                }}
-
-                //
-              />
+              <TouchableOpacity onPress={() => onPicturePress(post.pictureUrl)} activeOpacity={0.7}>
+                <FastImage
+                  source={{ uri: post.pictureUrl }}
+                  style={{
+                    width: scale(265),
+                    marginHorizontal: -12,
+                    height: post.pictureHeight / (post.pictureWidth / scale(205)),
+                    marginTop: -15,
+                    marginBottom: post.textContent ? 6 : 0,
+                    zIndex: 1,
+                    borderTopRightRadius: 25,
+                    borderTopLeftRadius: 25,
+                  }}
+                />
+              </TouchableOpacity>
             )}
 
             <Box paddingRight="xxl" marginBottom="s">

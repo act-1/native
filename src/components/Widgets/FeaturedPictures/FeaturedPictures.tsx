@@ -10,6 +10,7 @@ import { PicturePost } from '@types/collections';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FeaturedPictureBox from './FeaturedPictureBox';
 import FeaturedPicturesContentLoader from './FeaturedPicturesContentLoader';
+import FastImage from 'react-native-fast-image';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -60,6 +61,15 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
           saveToLocalByLongPress={false}
           onChange={onGalleryChange}
           onCancel={() => setDisplayGallery(false)}
+          renderImage={(props) => (
+            <FastImage
+              {...props}
+              style={{ width: '100%', height: '100%' }}
+              source={{
+                uri: props.source.uri,
+              }}
+            />
+          )}
         />
         <Box position="absolute" top={insets.top + 20} left={15}>
           <CircularButton onPress={() => setDisplayGallery(false)} iconName="x" color="white" size="large" />

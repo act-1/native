@@ -4,6 +4,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import { StyleSheet, FlatList } from 'react-native';
 import { Post } from '@types/collections';
 import PostBox from '../PostBox';
+import { ImageViewer } from '..';
 
 type ProtestFeedProps = {
   headerComponent: JSX.Element;
@@ -12,6 +13,13 @@ type ProtestFeedProps = {
 
 function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
   const [locationPosts, setLocationPosts] = useState<Post[]>([]);
+  const [imageViewerVisiblity, setViewerVisibility] = useState(false);
+  const [currentPictureUrl, setPictureUrl] = useState('');
+
+  const selectPicture = (imageUrl: string) => {
+    setPictureUrl(imageUrl);
+    setViewerVisibility(true);
+  };
 
   useEffect(() => {
     const query = firestore()
@@ -45,13 +53,20 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
   }, [locationId]);
 
   return (
-    <FlatList
-      ListHeaderComponent={headerComponent}
-      data={locationPosts}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <PostBox post={item} />}
-      initialNumToRender={2}
-    />
+    <>
+      <ImageViewer
+        isVisible={imageViewerVisiblity}
+        setViewerVisiblity={(isVisible) => setViewerVisibility(isVisible)}
+        imageUrl={currentPictureUrl}
+      />
+      <FlatList
+        ListHeaderComponent={headerComponent}
+        data={locationPosts}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <PostBox post={item} onPicturePress={selectPicture} />}
+        initialNumToRender={2}
+      />
+    </>
   );
 }
 
