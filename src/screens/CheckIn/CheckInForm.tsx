@@ -62,6 +62,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
             autoCorrect={false}
             multiline={true}
             maxLength={142}
+            keyboardType="twitter"
             onChangeText={(value) => setTextContent(value)}
             value={textContent}
           />
@@ -84,6 +85,7 @@ export default observer(CheckInForm);
 
 const styles = StyleSheet.create({
   textInput: {
+    padding: 1, // iOS not showing the indicator correctly.
     color: '#fff',
     textAlign: 'right',
     fontSize: 24,

@@ -15,6 +15,7 @@ if (__DEV__) {
   firebase.auth().useEmulator('http://localhost:9099');
   const db = firestore();
   db.settings({ host: 'localhost:8080', ssl: false });
+  // functions().useFunctionsEmulator('http://localhost:5001');
 }
 
 messaging().setBackgroundMessageHandler(async (remoteMessage) => {

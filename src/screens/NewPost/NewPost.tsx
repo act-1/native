@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   textInput: {
-    // padding: 12,
+    flex: 1,
     paddingVertical: 12,
     paddingLeft: 1,
     paddingRight: 52,
