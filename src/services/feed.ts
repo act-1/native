@@ -117,6 +117,7 @@ export async function createTextPost({ textContent, locationData }: CreateTextPo
         coordinates: new firebase.firestore.GeoPoint(locationData.coordinates._latitude, locationData.coordinates._longitude),
         createdAt: firestore.FieldValue.serverTimestamp(),
         updatedAt: firestore.FieldValue.serverTimestamp(),
+        archived: false,
       });
     }
   } catch (err) {
