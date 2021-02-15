@@ -19,9 +19,9 @@ type PostBoxProps = {
   post: Post;
 };
 
-const windowWidth = Dimensions.get('window').width;
+const deviceWidth = Dimensions.get('window').width;
 let fontSize = 16;
-if (windowWidth > 400) {
+if (deviceWidth > 400) {
   fontSize = 17;
 }
 
@@ -41,7 +41,7 @@ function PostBox({ post }: PostBoxProps) {
   };
 
   return (
-    <Box alignItems="flex-start" style={[{ backgroundColor: '#0a0d0f' }]}>
+    <Box alignItems="flex-start" marginBottom="s" style={[{ backgroundColor: '#0a0d0f' }]}>
       <Box flexDirection="row" paddingHorizontal="m">
         <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} />
         <Box marginTop="m" style={{ marginLeft: 10 }}>
@@ -58,7 +58,7 @@ function PostBox({ post }: PostBoxProps) {
               </Svg>
             </Box>
 
-            {post.pictureUrl && (
+            {post.type === 'picture' && (
               <FastImage
                 source={{ uri: post.pictureUrl }}
                 style={{
@@ -76,33 +76,35 @@ function PostBox({ post }: PostBoxProps) {
             )}
 
             <Box paddingRight="xxl" marginBottom="s">
-              <HTML
-                html={'<p>אין מצבאין מצבאין מצבאין מצבאין מצבאין מצבאין מצבאין מצב!</p>'}
+              {/* <HTML
+                html={`<p>${}</p>`}
                 textSelectable={true}
                 tagsStyles={{
                   p: { textAlign: 'left', fontSize, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#fff' },
                 }}
-              />
+              /> */}
+              <Text variant="text" fontFamily="AtlasDL3.1AAA-Medium">
+                {post.textContent}
+              </Text>
             </Box>
 
             <Box flexDirection="row" alignItems="center">
-              <Text color="lightText" fontFamily="AtlasDL3.1AAA-Medium" fontSize={14} marginRight="xs">
-                גיא טפר
+              <Text color="lightText" fontFamily="AtlasDL3.1AAA-Medium" fontSize={14} style={{ marginRight: 6 }}>
+                {post.authorName}
               </Text>
               <Text variant="boxSubtitle" fontSize={14}>
-                {/* {timeago.format(createdAt, 'he')} */}
-                לפני 24 דק׳
+                {timeago.format(post.createdAt.toDate(), 'he')}
               </Text>
             </Box>
           </Box>
           <Pressable
             onPress={likePress}
             accessibilityLabel="אהבתי"
-            style={{ alignSelf: 'flex-end', marginTop: 8, marginRight: 12 }}
+            style={{ alignSelf: 'flex-start', marginTop: 8, marginLeft: 8 }}
           >
             <Box width="100%" flexDirection="row" alignItems="center">
+              <Icon name="heart" color={false ? '#ec534b' : '#999999'} size={22} style={{ marginRight: 6 }} />
               <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#999999' }}>42</Ticker>
-              <Icon name="heart" color={false ? '#ec534b' : '#999999'} size={22} style={{ marginLeft: 6 }} />
             </Box>
           </Pressable>
         </Box>
@@ -115,13 +117,13 @@ export default observer(PostBox);
 
 const styles = StyleSheet.create({
   authorImage: {
-    width: 45,
-    height: 45,
+    width: 40,
+    height: 40,
     borderRadius: 25,
     alignSelf: 'flex-end',
   },
   messageBubble: {
-    maxWidth: scale(275),
+    maxWidth: scale(280),
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginLeft: 2,
