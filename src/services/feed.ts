@@ -90,6 +90,40 @@ export async function updateCheckInCount(): Promise<{ updated: boolean; action: 
   }
 }
 
+type CreateTextPostProps = {
+  textContent: string;
+  locationData: {
+    locationId: string;
+    locationName: string;
+    locationCity: string;
+    locationProvince: string;
+    coordinates: { _latitude: number; _longitude: number };
+  };
+};
+
+export async function createTextPost({ textContent, locationData }: CreateTextPostProps) {
+  try {
+    const currentUser = auth().currentUser;
+    if (currentUser) {
+      const postRef = postsCollection.doc();
+
+      await postRef.set({
+        id: postRef.id,
+        authorId: currentUser.uid,
+        authorName: currentUser.displayName,
+        authorPicture: currentUser.photoURL,
+        textContent,
+        ...locationData,
+        coordinates: new firebase.firestore.GeoPoint(locationData.coordinates._latitude, locationData.coordinates._longitude),
+        createdAt: firestore.FieldValue.serverTimestamp(),
+        updatedAt: firestore.FieldValue.serverTimestamp(),
+      });
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
 type NewImagePostProps = {
   image: ImagePickerResponse;
   text?: string;

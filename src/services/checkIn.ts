@@ -1,15 +1,29 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { firebase } from '@react-native-firebase/database';
+import * as geofirestore from 'geofirestore';
 import { RealtimeDatabase } from '@services/databaseWrapper';
 
 const profilePicturePlaceholderURL =
   'https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/profilePicturePlaceholder.png?alt=media&token=06884d2b-b32d-4799-b906-280a7f52ba43';
 
+const GeoFirestore = geofirestore.initializeApp(firestore());
+const checkInsCollection = GeoFirestore.collection('checkIns');
+
 export async function createCheckIn(checkInData: CheckInParams): Promise<{ ok: Boolean; checkIn: CheckInParams }> {
   try {
     const { uid: userId, displayName, photoURL } = auth().currentUser!;
-    const { eventEndDate, eventId, textContent, locationId, locationName, locationCity, privacySetting } = checkInData;
+    const {
+      eventEndDate,
+      eventId,
+      textContent,
+      locationId,
+      locationName,
+      locationCity,
+      locationProvince,
+      coordinates,
+      privacySetting,
+    } = checkInData;
 
     // 2 hours from now - the default check in expiration time.
     let expireAt = new Date();
@@ -25,8 +39,10 @@ export async function createCheckIn(checkInData: CheckInParams): Promise<{ ok: B
       locationId,
       locationName,
       locationCity,
+      locationProvince,
       expireAt,
       privacySetting,
+      coordinates: new firebase.firestore.GeoPoint(coordinates._latitude, coordinates._longitude),
       eventId: eventId || null,
       textContent: textContent || null,
       createdAt: firestore.FieldValue.serverTimestamp(),
@@ -41,8 +57,8 @@ export async function createCheckIn(checkInData: CheckInParams): Promise<{ ok: B
       });
     }
 
-    // Create check in documents
-    const checkInRef = firestore().collection('checkIns').doc();
+    // Create check in document
+    const checkInRef = checkInsCollection.doc();
     await checkInRef.set({ ...checkInInfo, id: checkInRef.id });
 
     return { ok: true, checkIn: { ...checkInInfo, id: checkInRef.id, createdAt: new Date(), expireAt } };
