@@ -4,6 +4,7 @@ import { Box, Text, CircularButton } from '@components';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SelectLocation, LocationPage } from '@screens/LocationPage';
 import { CheckInForm } from '@screens/CheckIn';
+import NewPost from '@screens/NewPost';
 
 const CheckInStack = createStackNavigator();
 
@@ -15,7 +16,6 @@ function CheckInNavigator({ navigation }) {
         component={SelectLocation}
         options={{
           title: 'צ׳ק אין',
-          headerTintColor: '#697CFF',
           headerRight: () => (
             <Pressable onPress={() => navigation.goBack()} style={styles.dismissButton}>
               <Text color="lightText" fontSize={16}>
@@ -56,6 +56,19 @@ function CheckInNavigator({ navigation }) {
             </Box>
           ),
           headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
+        }}
+      />
+      <CheckInStack.Screen
+        name="NewPost"
+        component={NewPost}
+        options={{
+          headerTitle: '',
+          headerShown: true,
+          headerRightContainerStyle: { marginRight: 12 },
+          headerLeftContainerStyle: { marginLeft: 2, marginBottom: 4 },
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
+          headerStatusBarHeight: Platform.OS === 'ios' ? 6 : 0, // Modal height issues on iOS
         }}
       />
     </CheckInStack.Navigator>

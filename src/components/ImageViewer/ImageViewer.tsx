@@ -28,6 +28,7 @@ function ImageViewer({ imageUrl, isVisible, setViewerVisiblity }: ImageViewerPro
             style={{ width: '100%', height: '100%' }}
             source={{
               uri: props.source.uri,
+              cache: 'cacheOnly',
             }}
           />
         )}

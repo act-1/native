@@ -72,6 +72,7 @@ const isAndroid = Platform.OS === 'android';
 const styles = StyleSheet.create({
   bannerWrapper: {
     top: 0,
+    zIndex: 5,
     width: isAndroid ? '105%' : '100%',
     height: 70,
 

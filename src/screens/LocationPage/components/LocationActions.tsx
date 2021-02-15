@@ -14,6 +14,7 @@ function LocationActions({ location }: { location: ILocation }) {
   const openLibrary = async () => {
     try {
       await launchImageLibrary({ mediaType: 'photo', quality: 1 }, (image) => {
+        console.log(image);
         if (image.didCancel === true) return; // TODO: ANALYTICS HERE
         navigation.navigate('ActionModal', { screen: 'NewPost', params: { image, location } });
       });
@@ -62,8 +63,19 @@ function LocationActions({ location }: { location: ILocation }) {
   };
 
   return (
-    <Box flexDirection="row" justifyContent="space-evenly" backgroundColor="greyBackground" paddingVertical="xm" marginBottom="m">
-      {/* <CircularButton iconName="map-pin" color="blue" text="צ׳ק אין" onPress={() => null} /> */}
+    <Box
+      flexDirection="row"
+      justifyContent="space-evenly"
+      backgroundColor="sectionListSeperator"
+      paddingVertical="xm"
+      marginBottom="m"
+    >
+      <CircularButton
+        iconName="message-circle"
+        color="blue"
+        text="שליחת עדכון"
+        onPress={() => navigation.navigate('ActionModal', { screen: 'NewPost', params: { location } })}
+      />
       <CircularButton iconName="camera" color="blue" text="העלאת תמונה" onPress={displayUploadOptions} />
       {/* <CircularButton iconName="share" color="blue" text="הזמנת חברים" onPress={() => null} /> */}
     </Box>

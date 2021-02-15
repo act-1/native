@@ -9,14 +9,15 @@ type HeaderButtonProps = {
   text?: string;
   loading?: boolean;
   style?: ViewStyle;
+  disabled?: boolean;
 };
 
-function HeaderButton({ color, text, onPress, loading, style }: HeaderButtonProps) {
+function HeaderButton({ color, text, onPress, loading, disabled = false, style }: HeaderButtonProps) {
   const { textColor, initialColor } = buttonColors[color];
 
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
-      <Box style={[{ backgroundColor: initialColor }, styles.button, style]} marginBottom="s">
+    <TouchableOpacity activeOpacity={0.8} onPress={disabled ? undefined : onPress}>
+      <Box style={[{ backgroundColor: disabled ? 'grey' : initialColor }, styles.button, style]} marginBottom="s">
         {loading ? (
           <ActivityIndicator color={textColor || 'white'} />
         ) : (

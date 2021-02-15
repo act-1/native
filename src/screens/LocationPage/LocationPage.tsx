@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, ActivityIndicator } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -10,10 +10,13 @@ import { ILocation } from '@types/location';
 import { fetchLocation } from '@services/locations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LocationActions, LocationCounter } from './components';
+import { Notification as BannerNotification } from 'react-native-in-app-message';
+import UploadBanner from '@components/UploadBanner';
 import FastImage from 'react-native-fast-image';
 
 function LocationPage({ navigation, route }: LocationScreenProps) {
-  const { userStore } = useStore();
+  const { feedStore } = useStore();
+  const notificationRef = useRef<BannerNotification>(null);
   const [location, setLocation] = useState<ILocation | null>(null);
 
   // Retrieve location information.
@@ -42,6 +45,22 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     getLocationData(route.params.locationId);
   }, [route.params.locationId]);
 
+  // Post upload status.
+  useEffect(() => {
+    if (feedStore.uploadStatus === 'in_progress') {
+      setTimeout(() => {
+        notificationRef.current?.show();
+      }, 400);
+    }
+
+    if (feedStore.uploadStatus === 'done') {
+      // Wait for the completion to finish and hide the banner
+      setTimeout(() => {
+        notificationRef.current?.hide();
+      }, 2700);
+    }
+  }, [feedStore.uploadStatus]);
+
   if (location === null) {
     return (
       <Box justifyContent="center" alignItems="center" flex={1}>
@@ -66,12 +85,12 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             {location.city}
           </Text>
         </Box>
-        <LocationActions location={location} />
 
         <LocationCounter locationId={location.id} />
+        <LocationActions location={location} />
 
-        <Box paddingHorizontal="xm" marginBottom="s">
-          <Text variant="largeTitle" marginBottom="xxs">
+        <Box paddingLeft="xm" marginBottom="s">
+          <Text variant="largeTitle" fontSize={26} marginBottom="xxs">
             פיד הפגנה
           </Text>
         </Box>
@@ -79,7 +98,19 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
     </Box>
   );
 
-  return <ProtestFeed locationId={route.params.locationId} headerComponent={locationPageHeader} />;
+  return (
+    <>
+      <BannerNotification
+        customComponent={<UploadBanner />}
+        ref={notificationRef}
+        showKnob={false}
+        blurType="light"
+        autohide={false}
+        hideStatusBar={false}
+      />
+      <ProtestFeed locationId={route.params.locationId} headerComponent={locationPageHeader} />
+    </>
+  );
 }
 
 export default observer(LocationPage);

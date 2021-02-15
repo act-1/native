@@ -33,7 +33,7 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
       .where('locationId', '==', locationId)
       .where('archived', '==', false)
       .orderBy('createdAt')
-      .limit(10);
+      .limit(20);
 
     // TODO: Sort by createdAt.
 
@@ -67,6 +67,9 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
       />
       <FlatList
         ListHeaderComponent={headerComponent}
+        maintainVisibleContentPosition={{
+          minIndexForVisible: 1,
+        }}
         data={locationPosts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
