@@ -1,13 +1,13 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import rootStore from './RootStore';
-import { IPicturePost } from '@types/post';
+import { Post, PicturePost } from '@types/collections';
 import FeedService from '@services/feed';
 
 class MediaStore {
   rootStore: null | rootStore = null;
   currentFilter: 'featured' | 'recent' = 'featured';
-  featuredPictures: IPicturePost[] = [];
-  recentPictures: IPicturePost[] = [];
+  featuredPictures: Post[] = [];
+  recentPictures: Post[] = [];
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -42,7 +42,7 @@ class MediaStore {
     }
   }
 
-  async addRecentPicture(picturePost: IPicturePost) {
+  async addRecentPicture(picturePost: PicturePost) {
     this.recentPictures = [picturePost, ...this.recentPictures];
   }
 }

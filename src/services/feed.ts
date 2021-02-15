@@ -2,7 +2,7 @@ import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-fireb
 import * as geofirestore from 'geofirestore';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
-import { IPost, IPicturePost } from '@types/post';
+import { Post, PicturePost } from '@types/collections';
 import Storage, { uploadPicture } from './storage';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import { ILocation } from '@types/location';
@@ -11,7 +11,7 @@ import { createTimestamp } from '@utils/date-utils';
 const GeoFirestore = geofirestore.initializeApp(firestore());
 const postsCollection = GeoFirestore.collection('posts');
 
-export async function getAllPosts(userId: string): Promise<IPost[]> {
+export async function getAllPosts(userId: string): Promise<Post[]> {
   try {
     const postsQuerySnapshot = await firestore()
       .collection('posts')
@@ -28,14 +28,14 @@ export async function getAllPosts(userId: string): Promise<IPost[]> {
 
     // Check if the user has liked each post
     const withUserLikes = postsDocuments.map(
-      async (post): IPost => {
+      async (post): Post => {
         // TODO: Update with the current user id
         const liked = await checkUserPostLike(post.id, userId);
         return { ...post, liked };
       }
     );
 
-    const posts: IPost[] = await Promise.all(withUserLikes);
+    const posts: Post[] = await Promise.all(withUserLikes);
 
     return posts;
   } catch (err) {
@@ -145,7 +145,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
 
       const postDocument = await postRef.get();
 
-      return postDocument.data() as IPicturePost;
+      return postDocument.data() as PicturePost;
     }
   } catch (err) {
     console.error(err);
@@ -153,7 +153,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
   }
 }
 
-export async function getRecentPictures(): Promise<IPicturePost[]> {
+export async function getRecentPictures(): Promise<PicturePost[]> {
   try {
     const postsSnapshot = await firestore()
       .collection('posts')
@@ -162,14 +162,14 @@ export async function getRecentPictures(): Promise<IPicturePost[]> {
       .orderBy('createdAt', 'desc')
       .get();
 
-    const posts = postsSnapshot.docs.map((post) => post.data() as IPicturePost);
+    const posts = postsSnapshot.docs.map((post) => post.data() as PicturePost);
     return posts;
   } catch (err) {
     throw err;
   }
 }
 
-export async function getFeaturedPictures(): Promise<IPicturePost[]> {
+export async function getFeaturedPictures(): Promise<PicturePost[]> {
   try {
     const postsSnapshot = await firestore()
       .collection('posts')
@@ -177,7 +177,7 @@ export async function getFeaturedPictures(): Promise<IPicturePost[]> {
       .where('featured', '==', true)
       .get();
 
-    const posts = postsSnapshot.docs.map((post) => post.data() as IPicturePost);
+    const posts = postsSnapshot.docs.map((post) => post.data() as PicturePost);
     return posts;
   } catch (err) {
     throw err;

@@ -7,7 +7,7 @@ import HTML from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/Feather';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { Box, Text, Ticker } from '../../components';
-import { IPost } from '@types/post';
+import { Post } from '@types/collections';
 import Svg, { Path } from 'react-native-svg';
 import { scale } from 'react-native-size-matters';
 
@@ -16,7 +16,7 @@ import he from 'timeago.js/lib/lang/he';
 timeago.register('he', he);
 
 type PostBoxProps = {
-  post: IPost;
+  post: Post;
 };
 
 const windowWidth = Dimensions.get('window').width;

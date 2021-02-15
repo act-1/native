@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Dimensions, StyleSheet, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { IPicturePost } from '@types/post';
+import { PicturePost } from '@types/collections';
 import { Box } from '../../components';
 import { toJS } from 'mobx';
 import { useNavigation } from '@react-navigation/native';
@@ -42,7 +42,7 @@ const placeholderThumb = (index: number, loadedImages: number[]) => {
   return <Rect x={x} y={y} width={placeholderThumbSize} height={placeholderThumbSize} key={index} />;
 };
 
-function PictureThumbList({ pictures }: { pictures: IPicturePost[] }) {
+function PictureThumbList({ pictures }: { pictures: PicturePost[] }) {
   const navigation = useNavigation();
   const [loadedImages, setLoadedImages] = useState<number[]>([]);
 
@@ -50,7 +50,7 @@ function PictureThumbList({ pictures }: { pictures: IPicturePost[] }) {
     setLoadedImages([]);
   }, []);
 
-  const renderThumbItem = ({ item, index }: { item: IPicturePost; index: number }) => (
+  const renderThumbItem = ({ item, index }: { item: PicturePost; index: number }) => (
     <TouchableOpacity onPress={() => navigation.navigate('ExploreList', { initialIndex: index })}>
       <FastImage
         style={styles.imageThumb}

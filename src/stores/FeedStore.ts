@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import auth from '@react-native-firebase/auth';
 import FeedService, { getAllPosts, likePost, newImagePost, unlikePost } from '@services/feed';
-import { IPost } from '@types/post';
+import { Post } from '@types/collections';
 import { updateArrayItem } from '@utils/array-utils';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import rootStore from './RootStore';
@@ -9,7 +9,7 @@ import { ILocation } from '@types/location';
 
 class FeedStore {
   rootStore: null | rootStore = null;
-  posts: IPost[] = [];
+  posts: Post[] = [];
   uploadProgress = 0;
   uploadStatus: 'pending' | 'in_progress' | 'done' = 'pending';
 

@@ -4,7 +4,7 @@ import { Box, Text, Ticker } from '../';
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Feather';
-import { IPicturePost } from '@types/post';
+import { PicturePost } from '@types/collections';
 
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
@@ -12,7 +12,7 @@ timeago.register('he', he);
 
 const deviceWidth = Dimensions.get('window').width;
 
-function PictureListItem({ item, onLayout }: { item: IPicturePost; onLayout: (event: LayoutChangeEvent) => void }) {
+function PictureListItem({ item, onLayout }: { item: PicturePost; onLayout: (event: LayoutChangeEvent) => void }) {
   const navigation = useNavigation();
 
   return (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { StyleSheet, FlatList } from 'react-native';
-import { IPost } from '@types/post';
+import { Post } from '@types/collections';
 import PostBox from '../PostBox';
 
 type ProtestFeedProps = {
@@ -10,7 +10,7 @@ type ProtestFeedProps = {
 };
 
 function ProtestFeed({ locationId }: ProtestFeedProps) {
-  const [locationPosts, setLocationPosts] = useState<IPost[]>([]);
+  const [locationPosts, setLocationPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const query = firestore()
@@ -25,7 +25,7 @@ function ProtestFeed({ locationId }: ProtestFeedProps) {
         if (snapshot === null) return;
         snapshot.docChanges().forEach((change) => {
           if (change.type === 'added') {
-            const post = change.doc.data() as IPost;
+            const post = change.doc.data() as Post;
             setLocationPosts((prevState) => [post, ...prevState]);
           }
         });
