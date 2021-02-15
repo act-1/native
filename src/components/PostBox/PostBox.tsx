@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 25,
     alignSelf: 'flex-end',
+    marginLeft: 2,
   },
   messageBubble: {
     maxWidth: scale(baseBoxWith),

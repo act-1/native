@@ -67,7 +67,6 @@ function NewPost({ navigation, route }: NewPostProps) {
             placeholderTextColor="grey"
             style={styles.textInput}
             multiline={true}
-            keyboardAppearance="dark"
             autoFocus={!image}
             keyboardType="twitter"
           />

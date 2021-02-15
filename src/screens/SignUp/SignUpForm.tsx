@@ -72,7 +72,6 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
           accessibilityLabel="הזינו את שמכם"
           placeholder="הזינו את שמכם.ן"
           placeholderTextColor="#8d8d8d"
-          keyboardAppearance="dark"
           onChangeText={(text) => setDisplayName(text)}
           returnKeyType={isAndroid ? undefined : 'next'}
           onSubmitEditing={() => {

@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 function Home() {
   return (
-    <ScrollView style={styles.homeWrapper}>
+    <ScrollView style={styles.homeWrapper} showsVerticalScrollIndicator={false}>
       <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
       <Stats />
       <Button title="check in update" onPress={() => functions().httpsCallable('updateCheckInCountManually')()} />

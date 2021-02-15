@@ -104,7 +104,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Box>
 
               <MapView
-                style={{ height: 175, marginHorizontal: -12, marginBottom: 16 }}
+                style={{ height: 200, marginHorizontal: -12, marginBottom: 16 }}
                 maxZoomLevel={16}
                 minZoomLevel={14}
                 mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}

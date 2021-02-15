@@ -88,7 +88,7 @@ function Onboarding() {
           style={{ flex: 1, position: 'absolute' }}
           ref={pages}
           onScrollEnd={onScrollEnd}
-          scrollEnabled={false}
+          scrollEnabled={true}
           indicatorOpacity={0}
           progress={pageProgress}
           indicatorColor="black"

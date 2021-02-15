@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, Alert, ActionSheetIOS, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import { Box, Text } from '../../components';
 import { CircularButton } from '@components/Buttons';
 import Icon from 'react-native-vector-icons/Feather';
@@ -31,6 +31,7 @@ function CheckInFormHeader({
   goBack,
 }: setPrivacyModeProps) {
   const { showActionSheetWithOptions } = useActionSheet();
+
   const updateAnonymousState = async () => {
     const actionSheetOptions = {
       options: ['חזרה', 'פומבי', 'פרטי', 'אנונימי'],
@@ -58,11 +59,7 @@ function CheckInFormHeader({
       AsyncStorage.setItem('checkIn_privacy_message_shown', 'true');
     }
 
-    if (Platform.OS === 'ios') {
-      ActionSheetIOS.showActionSheetWithOptions(actionSheetOptions, callback);
-    } else {
-      showActionSheetWithOptions(actionSheetOptions, callback);
-    }
+    showActionSheetWithOptions(actionSheetOptions, callback);
   };
 
   return (

@@ -41,25 +41,23 @@ function LocationActions({ location }: { location: ILocation }) {
   };
 
   const displayUploadOptions = () => {
-    const options = ['צילום תמונה חדשה', 'בחירה מספריית התמונות', 'ביטול'];
-    const cancelButtonIndex = 3;
+    const actionSheetOptions = {
+      options: ['צילום תמונה חדשה', 'בחירה מספריית התמונות', 'ביטול'],
+      containerStyle: { paddingBottom: 5 },
+      message: 'העלאת תמונה',
+      cancelButtonIndex: 3,
+    };
 
-    showActionSheetWithOptions(
-      {
-        options,
-        containerStyle: { paddingBottom: 5 },
-        message: 'העלאת תמונה',
-        cancelButtonIndex,
-      },
-      (buttonIndex) => {
-        if (buttonIndex === 0) {
-          openCamera();
-        }
-        if (buttonIndex === 1) {
-          openLibrary();
-        }
+    const callback = (buttonIndex: number) => {
+      if (buttonIndex === 0) {
+        openCamera();
       }
-    );
+      if (buttonIndex === 1) {
+        openLibrary();
+      }
+    };
+
+    showActionSheetWithOptions(actionSheetOptions, callback);
   };
 
   return (
