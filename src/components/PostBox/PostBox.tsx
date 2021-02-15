@@ -21,8 +21,11 @@ type PostBoxProps = {
 
 const deviceWidth = Dimensions.get('window').width;
 let fontSize = 16;
+let baseBoxWith = 300;
+
 if (deviceWidth > 400) {
   fontSize = 17;
+  baseBoxWith = 275;
 }
 
 function PostBox({ post }: PostBoxProps) {
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   messageBubble: {
-    maxWidth: scale(280),
+    maxWidth: scale(baseBoxWith),
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginLeft: 2,

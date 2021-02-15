@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { Box, Text, ProtestFeed } from '../../components';
@@ -15,14 +15,6 @@ import FastImage from 'react-native-fast-image';
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const { userStore } = useStore();
   const [location, setLocation] = useState<ILocation | null>(null);
-
-  React.useLayoutEffect(() => {
-    if (location?.name) {
-      navigation.setOptions({
-        headerTitle: location.name,
-      });
-    }
-  }, [location, navigation]);
 
   // Retrieve location information.
   // First try to hit the cache - then fetch from firestore.
@@ -58,8 +50,9 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
       </Box>
     );
   }
-  return (
-    <ScrollView style={{ flex: 1 }}>
+
+  const locationPageHeader = (
+    <Box>
       <FastImage
         source={{ uri: 'https://res.cloudinary.com/onekm/image/upload/v1604300825/weekend_pictures/31-10-2020/zomet_oh.jpg' }}
         style={styles.locationThumb}
@@ -82,11 +75,11 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
             פיד הפגנה
           </Text>
         </Box>
-
-        <ProtestFeed locationId={route.params.locationId} />
       </Box>
-    </ScrollView>
+    </Box>
   );
+
+  return <ProtestFeed locationId={route.params.locationId} headerComponent={locationPageHeader} setListRef={setListRef} />;
 }
 
 export default observer(LocationPage);

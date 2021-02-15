@@ -6,10 +6,11 @@ import { Post } from '@types/collections';
 import PostBox from '../PostBox';
 
 type ProtestFeedProps = {
+  headerComponent: JSX.Element;
   locationId: string;
 };
 
-function ProtestFeed({ locationId }: ProtestFeedProps) {
+function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
   const [locationPosts, setLocationPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -43,6 +44,7 @@ function ProtestFeed({ locationId }: ProtestFeedProps) {
 
   return (
     <FlatList
+      ListHeaderComponent={headerComponent}
       data={locationPosts}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <PostBox post={item} />}
