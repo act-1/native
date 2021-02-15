@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Pressable, StyleSheet, Dimensions } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
-import Icon from 'react-native-vector-icons/Feather';
+import LottieView from 'lottie-react-native';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { Box, Text, Ticker } from '../../components';
 import { Post } from '@types/collections';
@@ -33,12 +33,19 @@ if (deviceWidth > 400) {
 
 function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
   const [liked, setLiked] = useState(false);
+  const lottieHeart = useRef<LottieView>(null);
   const { feedStore } = useStore();
 
   const likePress = async () => {
     try {
       const hapticMethod = liked ? 'impactMedium' : 'impactLight';
       HapticFeedback.trigger(hapticMethod);
+
+      if (liked) {
+        lottieHeart.current!.reset();
+      } else {
+        lottieHeart.current!.play(12, 100);
+      }
 
       const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
       updatePostLikeCount(post.id, newLikeCount);
@@ -55,6 +62,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
   useEffect(() => {
     if (feedStore.userPostLikes.includes(post.id)) {
       setLiked(true);
+      lottieHeart.current!.play(99, 100);
     }
   }, [feedStore.userPostLikes]);
 
@@ -111,14 +119,18 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
               </Text>
             </Box>
           </Box>
-          <Pressable
-            onPress={likePress}
-            accessibilityLabel="אהבתי"
-            style={{ alignSelf: 'flex-start', marginTop: 8, marginLeft: 8 }}
-          >
+          <Pressable onPress={likePress} accessibilityLabel="אהבתי" style={{ alignSelf: 'flex-start', marginTop: -8 }}>
             <Box width="100%" flexDirection="row" alignItems="center">
-              <Icon name="heart" color={liked ? '#ec534b' : '#999999'} size={22} style={{ marginRight: 6 }} />
-              <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#ec534b' : '#999999' }}>{post.likeCount}</Ticker>
+              <Box marginBottom="xxs" opacity={0.79}>
+                <LottieView
+                  ref={lottieHeart}
+                  source={require('@assets/heart-animation.json')}
+                  style={{ width: 55, marginRight: -16, marginLeft: -4 }}
+                  loop={false}
+                  speed={1.3}
+                />
+              </Box>
+              <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#b41f40' : '#999999' }}>{post.likeCount}</Ticker>
             </Box>
           </Pressable>
         </Box>
