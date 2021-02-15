@@ -14,6 +14,7 @@ const privacyIcon = {
 };
 
 type setPrivacyModeProps = {
+  profilePicture: string;
   privacySetting: PrivacyOptions;
   setPrivacySetting: React.Dispatch<React.SetStateAction<PrivacyOptions>>;
   locationName: string;
@@ -21,7 +22,14 @@ type setPrivacyModeProps = {
   goBack: () => void;
 };
 
-function CheckInFormHeader({ privacySetting, setPrivacySetting, locationName, locationCity, goBack }: setPrivacyModeProps) {
+function CheckInFormHeader({
+  profilePicture,
+  privacySetting,
+  setPrivacySetting,
+  locationName,
+  locationCity,
+  goBack,
+}: setPrivacyModeProps) {
   const { showActionSheetWithOptions } = useActionSheet();
   const updateAnonymousState = async () => {
     const actionSheetOptions = {
@@ -60,12 +68,7 @@ function CheckInFormHeader({ privacySetting, setPrivacySetting, locationName, lo
   return (
     <Box height={80} backgroundColor="seperator" flexDirection="row" alignItems="center" paddingHorizontal="m">
       <Box flexDirection="row" alignItems="center" flex={1}>
-        <FastImage
-          source={{
-            uri: 'https://avatars.githubusercontent.com/u/13344923?s=460&u=608d14c4d6c542d8f173dc2093e1763a7d18794c&v=4',
-          }}
-          style={styles.profilePicture}
-        />
+        <FastImage source={{ uri: profilePicture }} style={styles.profilePicture} />
         <Box marginLeft="m">
           <Text variant="boxTitle" fontSize={17} marginBottom="xxs">
             {locationName}, {locationCity}

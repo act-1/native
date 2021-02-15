@@ -44,7 +44,6 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
     const checkInCount = RealtimeDatabase.database.ref(`/locationCounter/${locationId}`);
 
     checkInsQuery.once('value', (snapshot) => {
-      console.log(snapshot.val());
       if (snapshot.val()) {
         setIsLoading(false);
       }
@@ -114,7 +113,7 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
         <FastImage
           source={{ uri: checkIn.profilePicture }}
           style={[styles.profilePic, { marginLeft: index === 0 ? 0 : -12 }]}
-          key={checkIn.id}
+          key={checkIn.createdAt}
         />
       ))}
     </Box>

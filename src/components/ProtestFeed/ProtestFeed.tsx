@@ -24,7 +24,6 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
 
   const updatePostLikeCount = (postId: string, likeCount: number) => {
     const updatedPosts = updateArrayByObjectId(locationPosts, postId, { likeCount });
-    console.log(updatedPosts[0]);
     setLocationPosts(updatedPosts);
   };
 

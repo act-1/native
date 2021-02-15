@@ -28,7 +28,7 @@ class UserStore {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
     this.initUserLocation();
-
+    // auth().signOut();
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user?.uid) {
         if (userDataListenerActive === false) {
@@ -141,7 +141,6 @@ class UserStore {
         return userFCMToken;
       } else {
         const token = await createUserFCMToken(userId, FCMToken);
-        console.log('to', token);
         return token;
       }
     } catch (err) {

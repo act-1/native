@@ -48,12 +48,16 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
       }
 
       const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
+
       updatePostLikeCount(post.id, newLikeCount);
+      feedStore.updatePostLike(post.id, !liked);
       setLiked((prevState) => !prevState);
 
       const updateFunction = liked ? unlikePost : likePost;
+
       await updateFunction(post.id);
     } catch (err) {
+      feedStore.updatePostLike(post.id, !liked);
       setLiked((prevState) => !prevState);
       console.error(err); // TODO: Record to crashlytics.
     }
@@ -64,7 +68,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
       setLiked(true);
       lottieHeart.current!.play(99, 100);
     }
-  }, [feedStore.userPostLikes]);
+  }, []);
 
   return (
     <Box alignItems="flex-start" marginBottom="s" style={[{ backgroundColor: '#0a0d0f' }]}>

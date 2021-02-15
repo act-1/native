@@ -37,3 +37,13 @@ export function chunkArray(array: Array<any>, size: number) {
   }
   return result;
 }
+
+/**
+ * Removes the provided item from the array.
+ * @param array The array to update.
+ * @param item The item to remove from the array.
+ * @returns A new array without the provided item.
+ */
+export function remvoeArrayItem(array: Array<any>, item: any) {
+  return array.filter((value) => item !== value);
+}

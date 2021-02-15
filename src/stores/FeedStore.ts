@@ -2,9 +2,10 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import auth from '@react-native-firebase/auth';
 import { likePost, unlikePost, newImagePost, getAllPostLikes } from '@services/feed';
 import { Post } from '@types/collections';
-import { updateArrayItem } from '@utils/array-utils';
+import { remvoeArrayItem, updateArrayItem } from '@utils/array-utils';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import rootStore from './RootStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ILocation } from '@types/location';
 
 class FeedStore {
@@ -16,44 +17,43 @@ class FeedStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
+    this.getUserLikes();
   }
 
   async getUserLikes() {
     try {
-      const postIds = await getAllPostLikes();
-      runInAction(() => {
-        this.userPostLikes = postIds;
-      });
+      // await AsyncStorage.clear();
+      const fetchedUserLikes = await AsyncStorage.getItem('fetchedUserLikes');
+
+      if (!fetchedUserLikes) {
+        const postIds = await getAllPostLikes();
+
+        await AsyncStorage.setItem('fetchedUserLikes', 'true');
+        await AsyncStorage.setItem('userPostLikes', JSON.stringify(postIds));
+
+        runInAction(() => {
+          this.userPostLikes = postIds;
+        });
+      } else {
+        const cachedPostLikes = await AsyncStorage.getItem('userPostLikes');
+
+        if (cachedPostLikes) {
+          this.userPostLikes = JSON.parse(cachedPostLikes);
+        }
+      }
     } catch (err) {
       console.error('Get user post likes error: ', err);
     }
   }
 
   async updatePostLike(postId: string, liked: boolean) {
-    const initialPosts = this.posts;
-
-    // Find the post object in the posts array.
-    const postIndex = initialPosts.findIndex((post) => post.id === postId);
-    const postObject = initialPosts[postIndex];
-
-    // Create a new post object with the updated like counter & like status.
-    const likeCount = liked ? postObject.likeCount + 1 : postObject.likeCount - 1;
-    const updatedPostObject = { ...postObject, liked, likeCount };
-
-    // Update the posts array with the updated object.
-    // This updates the UI instantly. We'll revert later if the request fails.
-    this.posts = updateArrayItem(initialPosts, postIndex, updatedPostObject);
-
-    try {
-      const updateFunction = liked ? likePost : unlikePost;
-      return await updateFunction(postId);
-    } catch (err) {
-      // Revert to the initial posts if the request has failed.
-      runInAction(() => {
-        this.posts = initialPosts;
-      });
-      throw err;
+    if (liked) {
+      this.userPostLikes.push(postId);
+    } else {
+      this.userPostLikes = remvoeArrayItem(this.userPostLikes, postId);
     }
+    console.log(this.userPostLikes);
+    await AsyncStorage.setItem('userPostLikes', JSON.stringify(this.userPostLikes));
   }
 
   setUploadProgress(progress: number) {

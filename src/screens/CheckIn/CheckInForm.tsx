@@ -43,6 +43,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   return (
     <Box flex={1}>
       <CheckInFormHeader
+        profilePicture={userStore.userData.profilePicture}
         privacySetting={privacySetting}
         setPrivacySetting={setPrivacySetting}
         locationName={locationName}
@@ -51,7 +52,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
       />
 
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <Box margin="m" flexGrow={1.5}>
+        <Box margin="m" flexGrow={1}>
           <TextInput
             keyboardAppearance="dark"
             placeholder="מסר לאומה..."
