@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import auth from '@react-native-firebase/auth';
-import FeedService, { getAllPosts, likePost, newImagePost, unlikePost } from '@services/feed';
+import { likePost, unlikePost, newImagePost, getAllPostLikes } from '@services/feed';
 import { Post } from '@types/collections';
 import { updateArrayItem } from '@utils/array-utils';
 import { ImagePickerResponse } from 'react-native-image-picker';
@@ -9,7 +9,7 @@ import { ILocation } from '@types/location';
 
 class FeedStore {
   rootStore: null | rootStore = null;
-  posts: Post[] = [];
+  userPostLikes: string[] = [];
   uploadProgress = 0;
   uploadStatus: 'pending' | 'in_progress' | 'done' = 'pending';
 
@@ -18,20 +18,14 @@ class FeedStore {
     this.rootStore = rootStore;
   }
 
-  async getPosts() {
+  async getUserLikes() {
     try {
-      const userId = auth().currentUser?.uid;
-      if (userId) {
-        getAllPosts(userId).then((posts) => {
-          runInAction(() => {
-            this.posts = posts;
-            return posts;
-          });
-        });
-      }
+      const postIds = await getAllPostLikes();
+      runInAction(() => {
+        this.userPostLikes = postIds;
+      });
     } catch (err) {
-      console.error('Get posts:', err);
-      throw err;
+      console.error('Get user post likes error: ', err);
     }
   }
 
@@ -43,8 +37,8 @@ class FeedStore {
     const postObject = initialPosts[postIndex];
 
     // Create a new post object with the updated like counter & like status.
-    const likeCounter = liked ? postObject.likeCounter + 1 : postObject.likeCounter - 1;
-    const updatedPostObject = { ...postObject, liked, likeCounter };
+    const likeCount = liked ? postObject.likeCount + 1 : postObject.likeCount - 1;
+    const updatedPostObject = { ...postObject, liked, likeCount };
 
     // Update the posts array with the updated object.
     // This updates the UI instantly. We'll revert later if the request fails.

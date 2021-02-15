@@ -17,7 +17,7 @@ type PostBase = {
   province?: string;
   coordinates?: { _latitude: number; _longitude: number };
 
-  likeCounter: number;
+  likeCount: number;
 
   archived: boolean;
   createdAt: FirebaseFirestoreTypes.Timestamp;

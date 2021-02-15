@@ -5,6 +5,7 @@ import { StyleSheet, FlatList } from 'react-native';
 import { Post } from '@types/collections';
 import PostBox from '../PostBox';
 import { ImageViewer } from '..';
+import { updateArrayByObjectId } from '@utils/array-utils';
 
 type ProtestFeedProps = {
   headerComponent: JSX.Element;
@@ -19,6 +20,12 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
   const selectPicture = (imageUrl: string) => {
     setPictureUrl(imageUrl);
     setViewerVisibility(true);
+  };
+
+  const updatePostLikeCount = (postId: string, likeCount: number) => {
+    const updatedPosts = updateArrayByObjectId(locationPosts, postId, { likeCount });
+    console.log(updatedPosts[0]);
+    setLocationPosts(updatedPosts);
   };
 
   useEffect(() => {
@@ -63,7 +70,9 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
         ListHeaderComponent={headerComponent}
         data={locationPosts}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <PostBox post={item} onPicturePress={selectPicture} />}
+        renderItem={({ item }) => (
+          <PostBox post={item} onPicturePress={selectPicture} updatePostLikeCount={updatePostLikeCount} />
+        )}
         initialNumToRender={2}
       />
     </>

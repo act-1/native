@@ -1,5 +1,5 @@
-import React from 'react';
-import { Pressable, StyleSheet, ViewStyle, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Pressable, StyleSheet, Dimensions } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
@@ -8,6 +8,7 @@ import HapticFeedback from 'react-native-haptic-feedback';
 import { Box, Text, Ticker } from '../../components';
 import { Post } from '@types/collections';
 import Svg, { Path } from 'react-native-svg';
+import { likePost, unlikePost } from '@services/feed';
 import { scale } from 'react-native-size-matters';
 
 import * as timeago from 'timeago.js';
@@ -18,6 +19,7 @@ timeago.register('he', he);
 type PostBoxProps = {
   post: Post;
   onPicturePress: (url: string) => void;
+  updatePostLikeCount: (postId: string, likeCount: number) => void;
 };
 
 const deviceWidth = Dimensions.get('window').width;
@@ -29,20 +31,32 @@ if (deviceWidth > 400) {
   baseBoxWith = 275;
 }
 
-function PostBox({ post, onPicturePress }: PostBoxProps) {
+function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
+  const [liked, setLiked] = useState(false);
   const { feedStore } = useStore();
-  // const { id: postId, authorName, authorPicture, content, likeCounter, liked, pictureUrl, createdAt, style } = props;
 
   const likePress = async () => {
-    // try {
-    //   // Update post like with it's opposite like state.
-    //   const hapticMethod = liked ? 'impactMedium' : 'impactLight';
-    //   HapticFeedback.trigger(hapticMethod);
-    //   await feedStore.updatePostLike(postId, !liked);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const hapticMethod = liked ? 'impactMedium' : 'impactLight';
+      HapticFeedback.trigger(hapticMethod);
+
+      const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
+      updatePostLikeCount(post.id, newLikeCount);
+      setLiked((prevState) => !prevState);
+
+      const updateFunction = liked ? unlikePost : likePost;
+      await updateFunction(post.id);
+    } catch (err) {
+      setLiked((prevState) => !prevState);
+      console.error(err); // TODO: Record to crashlytics.
+    }
   };
+
+  useEffect(() => {
+    if (feedStore.userPostLikes.includes(post.id)) {
+      setLiked(true);
+    }
+  }, [feedStore.userPostLikes]);
 
   return (
     <Box alignItems="flex-start" marginBottom="s" style={[{ backgroundColor: '#0a0d0f' }]}>
@@ -93,7 +107,7 @@ function PostBox({ post, onPicturePress }: PostBoxProps) {
                 {post.authorName}
               </Text>
               <Text variant="boxSubtitle" fontSize={14}>
-                {timeago.format(post.createdAt.toDate(), 'he')}
+                {timeago.format(post.createdAt?.toDate(), 'he')}
               </Text>
             </Box>
           </Box>
@@ -103,8 +117,8 @@ function PostBox({ post, onPicturePress }: PostBoxProps) {
             style={{ alignSelf: 'flex-start', marginTop: 8, marginLeft: 8 }}
           >
             <Box width="100%" flexDirection="row" alignItems="center">
-              <Icon name="heart" color={false ? '#ec534b' : '#999999'} size={22} style={{ marginRight: 6 }} />
-              <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#999999' }}>42</Ticker>
+              <Icon name="heart" color={liked ? '#ec534b' : '#999999'} size={22} style={{ marginRight: 6 }} />
+              <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#ec534b' : '#999999' }}>{post.likeCount}</Ticker>
             </Box>
           </Pressable>
         </Box>

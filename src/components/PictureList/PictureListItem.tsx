@@ -44,7 +44,7 @@ function PictureListItem({ item, onLayout }: { item: PicturePost; onLayout: (eve
       <Box paddingHorizontal="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="s">
         <Box flexDirection="row" alignItems="center">
           <Icon name="heart" color={false ? '#ec534b' : '#fff'} size={19} style={{ marginRight: 6 }} />
-          <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#fff' }}>{item.likeCounter}</Ticker>
+          <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#fff' }}>{item.likeCount}</Ticker>
         </Box>
         <Text variant="boxSubtitle" fontSize={14} textAlign="left">
           {item.createdAt && timeago.format(item.createdAt.toDate(), 'he')}

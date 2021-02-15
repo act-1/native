@@ -29,6 +29,7 @@ class RootStore {
       this.eventStore.getEvents();
       this.userStore.getUserEvents();
       this.userStore.refreshFCMToken();
+      this.feedStore.getUserLikes();
 
       return true;
     } catch (err) {

@@ -54,7 +54,7 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
       const checkIn = snapshot.val();
 
       setCheckIns((prevState) => {
-        if (checkIn.userId === userStore.user.uid && carouselRef?.current) {
+        if (checkIn.userId === userStore.user?.uid && carouselRef?.current) {
           // Changing to previous carousel item, so the profile picture will have enough time to load,
           // and to prevent cases when the user will miss seeing their profile picture showing up initially.
           carouselRef.current.snapToItem(prevState.length - 1, false);
