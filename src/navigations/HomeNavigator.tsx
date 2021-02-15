@@ -23,11 +23,11 @@ function HomeNavigator() {
           letterSpacing: 0.4,
           color: '#EC534B',
         },
-        headerRight: () => (
-          <Box marginRight="xm" flexDirection="row">
-            <Icon name="inbox" size={24} color="#d4d4d4" style={{ marginRight: 4 }} />
-          </Box>
-        ),
+        // headerRight: () => (
+        //   <Box marginRight="xm" flexDirection="row">
+        //     <Icon name="inbox" size={24} color="#d4d4d4" style={{ marginRight: 4 }} />
+        //   </Box>
+        // ),
         headerLeft: () => (
           <Box marginLeft="xm" marginBottom="xxs">
             <FastImage

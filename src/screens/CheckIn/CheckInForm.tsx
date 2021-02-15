@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, KeyboardAvoidingView, TextInput, Platform, StyleSheet } from 'react-native';
+import { Alert, KeyboardAvoidingView, TextInput, Dimensions, Platform, StyleSheet } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -10,6 +10,8 @@ import { useStore } from '../../stores';
 import { createTextPost } from '@services/feed';
 import { CheckInFormScreenProps } from '@types/navigation';
 import CheckInFormHeader from './CheckInFormHeader';
+
+const { width: deviceWidth } = Dimensions.get('screen');
 
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { userStore } = useStore();
@@ -52,9 +54,8 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
       />
 
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <Box margin="m" flexGrow={1}>
+        <Box margin="m" flexGrow={deviceWidth > 400 ? 1.5 : 1}>
           <TextInput
-            keyboardAppearance="dark"
             placeholder="מסר לאומה..."
             placeholderTextColor="#737373"
             style={styles.textInput}
