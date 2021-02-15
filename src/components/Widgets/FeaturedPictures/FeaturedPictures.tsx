@@ -6,7 +6,7 @@ import Carousel from 'react-native-snap-carousel';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../stores';
-import { IPicturePost } from '@types/post';
+import { PicturePost } from '@types/collections';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FeaturedPictureBox from './FeaturedPictureBox';
 import FeaturedPicturesContentLoader from './FeaturedPicturesContentLoader';
@@ -26,7 +26,7 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
 
   const imageUrls = React.useMemo(
     () =>
-      mediaStore.featuredPictures.map((item: IPicturePost) => ({
+      mediaStore.featuredPictures.map((item: PicturePost) => ({
         url: item.pictureUrl,
       })),
     [mediaStore.featuredPictures]

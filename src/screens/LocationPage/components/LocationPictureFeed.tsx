@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { PictureList } from '@components';
 import Icon from 'react-native-vector-icons/Feather';
-import { IPicturePost } from '@types/post';
+import { PicturePost } from '@types/collections';
 
-function LocationPictureFeed({ pictures }: { pictures: IPicturePost[] }) {
+function LocationPictureFeed({ pictures }: { pictures: PicturePost[] }) {
   return <PictureList pictures={pictures} />;
 }
 

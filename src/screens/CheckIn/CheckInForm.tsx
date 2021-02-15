@@ -7,6 +7,7 @@ import { Box, Text } from '../../components';
 import { RoundedButton } from '@components/Buttons';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
+import { createTextPost } from '@services/feed';
 import { CheckInFormScreenProps } from '@types/navigation';
 import CheckInFormHeader from './CheckInFormHeader';
 
@@ -15,13 +16,18 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const [textContent, setTextContent] = useState('');
   const [privacySetting, setPrivacySetting] = useState<PrivacyOptions>('PUBLIC');
 
-  const { locationName, locationCity, locationId } = route.params.checkInData;
+  const { locationId, locationName, locationCity, locationProvince, coordinates } = route.params.checkInData;
 
   const submitCheckIn = () => {
     navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
     userStore
       .checkIn({ ...route.params.checkInData, privacySetting, textContent })
       .then(() => {
+        // If the user added text, create a new text post
+        if (textContent) {
+          const locationData = { locationId, locationName, locationCity, locationProvince, coordinates };
+          createTextPost({ textContent, locationData });
+        }
         analytics().logEvent('check_in_success');
       })
       .catch((err: any) => {

@@ -40,6 +40,7 @@ class UserStore {
 
         // TODO: Extract to function
         runInAction(async () => {
+          // await AsyncStorage.clear();
           const checkIn = await AsyncStorage.getItem('lastCheckIn');
           if (checkIn) {
             const lastCheckIn = JSON.parse(checkIn);
@@ -132,16 +133,19 @@ class UserStore {
       }
 
       const FCMToken = await messaging().getToken();
-      const userFCMToken = await getUserFCMToken(userId, FCMToken);
 
+      const userFCMToken = await getUserFCMToken(userId, FCMToken);
+      console.log(userFCMToken.exists);
       if (userFCMToken.exists) {
         // In the future we might want to update the active state.
         return userFCMToken;
       } else {
         const token = await createUserFCMToken(userId, FCMToken);
+        console.log('to', token);
         return token;
       }
     } catch (err) {
+      console.log(err);
       console.error('Refresh FCM Token: ', err);
       crashlytics().recordError(err);
     }

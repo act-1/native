@@ -10,6 +10,8 @@ type CheckInParams = {
   locationId: string;
   locationName: string;
   locationCity: string;
+  locationProvince: string;
+  coordinates: { _latitude: number; _longitude: number } | any; // Any as a temp workaround for GeoPoint values
   eventId?: string | null;
   eventName?: string | null;
   eventEndDate?: Date;

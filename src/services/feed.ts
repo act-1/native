@@ -2,7 +2,7 @@ import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-fireb
 import * as geofirestore from 'geofirestore';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
-import { IPost, IPicturePost } from '@types/post';
+import { Post, PicturePost } from '@types/collections';
 import Storage, { uploadPicture } from './storage';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import { ILocation } from '@types/location';
@@ -11,7 +11,7 @@ import { createTimestamp } from '@utils/date-utils';
 const GeoFirestore = geofirestore.initializeApp(firestore());
 const postsCollection = GeoFirestore.collection('posts');
 
-export async function getAllPosts(userId: string): Promise<IPost[]> {
+export async function getAllPosts(userId: string): Promise<Post[]> {
   try {
     const postsQuerySnapshot = await firestore()
       .collection('posts')
@@ -28,14 +28,14 @@ export async function getAllPosts(userId: string): Promise<IPost[]> {
 
     // Check if the user has liked each post
     const withUserLikes = postsDocuments.map(
-      async (post): IPost => {
+      async (post): Post => {
         // TODO: Update with the current user id
         const liked = await checkUserPostLike(post.id, userId);
         return { ...post, liked };
       }
     );
 
-    const posts: IPost[] = await Promise.all(withUserLikes);
+    const posts: Post[] = await Promise.all(withUserLikes);
 
     return posts;
   } catch (err) {
@@ -85,6 +85,41 @@ export async function updateCheckInCount(): Promise<{ updated: boolean; action: 
   try {
     const result = await functions().httpsCallable('updateCheckInCountManually')();
     return result.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+type CreateTextPostProps = {
+  textContent: string;
+  locationData: {
+    locationId: string;
+    locationName: string;
+    locationCity: string;
+    locationProvince: string;
+    coordinates: { _latitude: number; _longitude: number };
+  };
+};
+
+export async function createTextPost({ textContent, locationData }: CreateTextPostProps) {
+  try {
+    const currentUser = auth().currentUser;
+    if (currentUser) {
+      const postRef = postsCollection.doc();
+
+      await postRef.set({
+        id: postRef.id,
+        authorId: currentUser.uid,
+        authorName: currentUser.displayName,
+        authorPicture: currentUser.photoURL,
+        textContent,
+        ...locationData,
+        coordinates: new firebase.firestore.GeoPoint(locationData.coordinates._latitude, locationData.coordinates._longitude),
+        createdAt: firestore.FieldValue.serverTimestamp(),
+        updatedAt: firestore.FieldValue.serverTimestamp(),
+        archived: false,
+      });
+    }
   } catch (err) {
     throw err;
   }
@@ -145,7 +180,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
 
       const postDocument = await postRef.get();
 
-      return postDocument.data() as IPicturePost;
+      return postDocument.data() as PicturePost;
     }
   } catch (err) {
     console.error(err);
@@ -153,7 +188,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
   }
 }
 
-export async function getRecentPictures(): Promise<IPicturePost[]> {
+export async function getRecentPictures(): Promise<PicturePost[]> {
   try {
     const postsSnapshot = await firestore()
       .collection('posts')
@@ -162,14 +197,14 @@ export async function getRecentPictures(): Promise<IPicturePost[]> {
       .orderBy('createdAt', 'desc')
       .get();
 
-    const posts = postsSnapshot.docs.map((post) => post.data() as IPicturePost);
+    const posts = postsSnapshot.docs.map((post) => post.data() as PicturePost);
     return posts;
   } catch (err) {
     throw err;
   }
 }
 
-export async function getFeaturedPictures(): Promise<IPicturePost[]> {
+export async function getFeaturedPictures(): Promise<PicturePost[]> {
   try {
     const postsSnapshot = await firestore()
       .collection('posts')
@@ -177,7 +212,7 @@ export async function getFeaturedPictures(): Promise<IPicturePost[]> {
       .where('featured', '==', true)
       .get();
 
-    const posts = postsSnapshot.docs.map((post) => post.data() as IPicturePost);
+    const posts = postsSnapshot.docs.map((post) => post.data() as PicturePost);
     return posts;
   } catch (err) {
     throw err;

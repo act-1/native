@@ -14,7 +14,9 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const onLocationPress = async (checkInData: any) => {
     let locationName = '';
     let locationCity = checkInData.city;
+    let locationProvince = checkInData.province;
     let locationId = '';
+
     let eventId: null | string = null;
     let eventName: null | string = null;
 
@@ -34,7 +36,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
     }
 
     navigation.navigate('CheckInForm', {
-      checkInData: { ...checkInData, locationId, locationName, locationCity, eventId, eventName },
+      checkInData: { ...checkInData, locationId, locationName, locationCity, locationProvince, eventId, eventName },
     });
   };
 

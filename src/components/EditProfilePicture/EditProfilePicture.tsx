@@ -70,11 +70,11 @@ function EditProfilePicture() {
             <Image source={{ uri: pictureUrl }} style={styles.profilePicture} />
           )}
         </Box>
-      </Pressable>
 
-      <Text color="link" fontSize={18} fontWeight="500" onPress={dislpayActionSheet}>
-        שינוי תמונה
-      </Text>
+        <Text color="link" fontSize={18} fontWeight="500" onPress={dislpayActionSheet}>
+          שינוי תמונה
+        </Text>
+      </Pressable>
     </Box>
   );
 }
