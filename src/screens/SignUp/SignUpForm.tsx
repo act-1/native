@@ -72,6 +72,7 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
           accessibilityLabel="הזינו את שמכם"
           placeholder="הזינו את שמכם.ן"
           placeholderTextColor="#8d8d8d"
+          keyboardAppearance="dark"
           onChangeText={(text) => setDisplayName(text)}
           returnKeyType={isAndroid ? undefined : 'next'}
           onSubmitEditing={() => {
@@ -88,24 +89,32 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
         onValueChange={(value) => setProvince(value)}
         useNativeAndroidPickerStyle={false}
         style={{
+          modalViewMiddle: {
+            borderTopColor: '#2f2f2f',
+            backgroundColor: '#2f2f2f',
+          },
+          modalViewBottom: {
+            backgroundColor: '#2c2c2c',
+          },
+
           placeholder: { fontSize: 20, fontWeight: 'bold', color: '#8d8d8d' },
           chevronContainer: { opacity: 0 },
           inputIOS: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#fff', marginBottom: 16 },
           inputAndroid: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#fff', marginBottom: 16, padding: 0 },
         }}
         items={[
-          { label: 'הגליל העליון', value: 'הגליל העליון' },
-          { label: 'הגליל התחתון', value: 'הגליל התחתון' },
-          { label: 'חיפה והקריות', value: 'חיפה והקריות' },
-          { label: 'חוף הכרמל', value: 'חוף הכרמל' },
-          { label: 'ירושלים', value: 'ירושלים' },
-          { label: 'השרון', value: 'השרון' },
-          { label: 'תל אביב', value: 'תל אביב' },
-          { label: 'המרכז', value: 'המרכז' },
-          { label: 'השפלה', value: 'השפלה' },
-          { label: 'הנגב', value: 'הנגב' },
-          { label: 'חוף אשקלון ועוטף עזה', value: 'חוף אשקלון ועוטף עזה' },
-          { label: 'אילת והערבה', value: 'אילת והערבה' },
+          { label: 'הגליל העליון', value: 'הגליל העליון', color: '#fafafa' },
+          { label: 'הגליל התחתון', value: 'הגליל התחתון', color: '#fafafa' },
+          { label: 'חיפה והקריות', value: 'חיפה והקריות', color: '#fafafa' },
+          { label: 'חוף הכרמל', value: 'חוף הכרמל', color: '#fafafa' },
+          { label: 'ירושלים', value: 'ירושלים', color: '#fafafa' },
+          { label: 'השרון', value: 'השרון', color: '#fafafa' },
+          { label: 'תל אביב', value: 'תל אביב', color: '#fafafa' },
+          { label: 'המרכז', value: 'המרכז', color: '#fafafa' },
+          { label: 'השפלה', value: 'השפלה', color: '#fafafa' },
+          { label: 'הנגב', value: 'הנגב', color: '#fafafa' },
+          { label: 'חוף אשקלון ועוטף עזה', value: 'חוף אשקלון ועוטף עזה', color: '#fafafa' },
+          { label: 'אילת והערבה', value: 'אילת והערבה', color: '#fafafa' },
         ]}
       />
 
