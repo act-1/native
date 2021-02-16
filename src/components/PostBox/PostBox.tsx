@@ -23,11 +23,9 @@ type PostBoxProps = {
 };
 
 const deviceWidth = Dimensions.get('window').width;
-let fontSize = 16;
 let baseBoxWith = 300;
 
 if (deviceWidth > 400) {
-  fontSize = 17;
   baseBoxWith = 275;
 }
 
@@ -42,9 +40,9 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
       HapticFeedback.trigger(hapticMethod);
 
       if (liked) {
-        lottieHeart.current!.reset();
+        lottieHeart.current!.play(18, 28);
       } else {
-        lottieHeart.current!.play(12, 100);
+        lottieHeart.current!.play(3, 14);
       }
 
       const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
@@ -123,18 +121,18 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
               </Text>
             </Box>
           </Box>
-          <Pressable onPress={likePress} accessibilityLabel="אהבתי" style={{ alignSelf: 'flex-start', marginTop: -8 }}>
+          <Pressable onPress={likePress} accessibilityLabel="אהבתי" style={{ alignSelf: 'flex-start', paddingTop: 6 }}>
             <Box width="100%" flexDirection="row" alignItems="center">
-              <Box marginBottom="xxs" opacity={0.79}>
+              <Box paddingLeft="s" style={{ marginRight: 6 }}>
                 <LottieView
                   ref={lottieHeart}
                   source={require('@assets/heart-animation.json')}
-                  style={{ width: 55, marginRight: -16, marginLeft: -4 }}
+                  style={{ width: 22.5 }}
                   loop={false}
-                  speed={1.3}
+                  speed={1}
                 />
               </Box>
-              <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#b41f40' : '#999999' }}>{post.likeCount}</Ticker>
+              <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#eb524b' : '#999999' }}>{post.likeCount}</Ticker>
             </Box>
           </Pressable>
         </Box>
