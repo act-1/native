@@ -64,7 +64,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
   useEffect(() => {
     if (feedStore.userPostLikes.includes(post.id)) {
       setLiked(true);
-      lottieHeart.current!.play(99, 100);
+      lottieHeart.current!.play(17, 18);
     }
   }, []);
 
