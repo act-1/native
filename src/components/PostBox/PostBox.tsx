@@ -10,6 +10,7 @@ import { Post } from '@types/collections';
 import Svg, { Path } from 'react-native-svg';
 import { likePost, unlikePost } from '@services/feed';
 import { scale } from 'react-native-size-matters';
+import { ContextMenuView } from 'react-native-ios-context-menu';
 
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
@@ -32,7 +33,58 @@ if (deviceWidth > 400) {
 function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
   const [liked, setLiked] = useState(false);
   const lottieHeart = useRef<LottieView>(null);
-  const { feedStore } = useStore();
+
+  const { userStore, feedStore } = useStore();
+
+  const menuItems = React.useMemo(() => {
+    const items = [];
+
+    if (post.type === 'picture') {
+      items.push({
+        actionKey: 'save-image',
+        actionTitle: 'שמירת תמונה',
+        icon: {
+          iconType: 'SYSTEM',
+          iconValue: 'square.and.arrow.down.fill',
+        },
+      });
+    }
+
+    if (post.type === 'text') {
+      items.push({
+        actionKey: 'copy-text',
+        actionTitle: 'העתקה',
+        icon: {
+          iconType: 'SYSTEM',
+          iconValue: 'doc.on.doc.fill',
+        },
+      });
+    }
+
+    if (post.authorId === userStore.user?.uid) {
+      items.push({
+        actionKey: 'delete',
+        actionTitle: 'מחיקה',
+        menuAttributes: ['destructive'], // <- make menu action "destructive"
+        icon: {
+          iconType: 'SYSTEM',
+          iconValue: 'trash.circle.fill',
+        },
+      });
+    } else {
+      items.push({
+        actionKey: 'report',
+        menuAttributes: ['destructive'],
+        actionTitle: 'דיווח',
+        icon: {
+          iconType: 'SYSTEM',
+          iconValue: 'exclamationmark.bubble.fill',
+        },
+      });
+    }
+
+    return items;
+  }, []);
 
   const likePress = async () => {
     try {
@@ -69,75 +121,86 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
   }, []);
 
   return (
-    <Box alignItems="flex-start" marginBottom="s" style={[{ backgroundColor: '#0a0d0f' }]}>
-      <Box flexDirection="row" paddingHorizontal="xm">
-        <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} />
-        <Box marginTop="m" style={{ marginLeft: 10 }}>
-          <Box alignItems="flex-start" backgroundColor="seperator" style={styles.messageBubble}>
-            <Box style={styles.arrowContainer}>
-              <Svg
-                style={{ left: -6 }}
-                width={15.5}
-                height={17.5}
-                viewBox="32.484 17.5 15.515 17.5"
-                enable-background="new 32.485 17.5 15.515 17.5"
-              >
-                <Path d="M48,35c-7-4-6-8.75-6-17.5C28,17.5,29,35,48,35z" fill={'#222222'} x="0" y="0" />
-              </Svg>
-            </Box>
-
-            {post.type === 'picture' && (
-              <TouchableOpacity onPress={() => onPicturePress(post.pictureUrl)} activeOpacity={0.7}>
-                <FastImage
-                  source={{ uri: post.pictureUrl }}
-                  style={{
-                    width: scale(265),
-                    marginHorizontal: -12,
-                    height: post.pictureHeight / (post.pictureWidth / scale(205)),
-                    marginTop: -15,
-                    marginBottom: post.textContent ? 6 : 0,
-                    zIndex: 1,
-                    borderTopRightRadius: 25,
-                    borderTopLeftRadius: 25,
-                  }}
-                />
-              </TouchableOpacity>
-            )}
-
-            <Box paddingRight="xxl" marginBottom="s">
-              {post && post.textContent?.length! > 0 && (
-                <Text variant="text" fontFamily="AtlasDL3.1AAA-Medium">
-                  {post.textContent}
-                </Text>
-              )}
-            </Box>
-
-            <Box flexDirection="row" alignItems="center">
-              <Text color="lightText" fontFamily="AtlasDL3.1AAA-Medium" fontSize={14} style={{ marginRight: 6 }}>
-                {post.authorName}
-              </Text>
-              <Text variant="boxSubtitle" fontSize={14}>
-                {timeago.format(post.createdAt?.toDate(), 'he')}
-              </Text>
-            </Box>
-          </Box>
-          <Pressable onPress={likePress} accessibilityLabel="אהבתי" style={{ alignSelf: 'flex-start', paddingTop: 6 }}>
-            <Box width="100%" flexDirection="row" alignItems="center">
-              <Box paddingLeft="s" style={{ marginRight: 6 }}>
-                <LottieView
-                  ref={lottieHeart}
-                  source={require('@assets/heart-animation.json')}
-                  style={{ width: 22.5 }}
-                  loop={false}
-                  speed={1}
-                />
+    <ContextMenuView
+      onLongPress={() => alert(1)}
+      onPressMenuItem={({ nativeEvent }) => {
+        alert(`${nativeEvent.actionKey} was pressed`);
+      }}
+      menuConfig={{
+        menuTitle: '',
+        menuItems,
+      }}
+    >
+      <Box alignItems="flex-start" marginBottom="s">
+        <Box flexDirection="row" paddingHorizontal="xm">
+          <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} />
+          <Box marginTop="m" style={{ marginLeft: 10 }}>
+            <Box alignItems="flex-start" backgroundColor="seperator" style={styles.messageBubble}>
+              <Box style={styles.arrowContainer}>
+                <Svg
+                  style={{ left: -6 }}
+                  width={15.5}
+                  height={17.5}
+                  viewBox="32.484 17.5 15.515 17.5"
+                  enable-background="new 32.485 17.5 15.515 17.5"
+                >
+                  <Path d="M48,35c-7-4-6-8.75-6-17.5C28,17.5,29,35,48,35z" fill={'#222222'} x="0" y="0" />
+                </Svg>
               </Box>
-              <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#eb524b' : '#999999' }}>{post.likeCount}</Ticker>
+
+              {post.type === 'picture' && (
+                <TouchableOpacity onPress={() => onPicturePress(post.pictureUrl)} activeOpacity={0.7}>
+                  <FastImage
+                    source={{ uri: post.pictureUrl }}
+                    style={{
+                      width: scale(265),
+                      marginHorizontal: -12,
+                      height: post.pictureHeight / (post.pictureWidth / scale(205)),
+                      marginTop: -15,
+                      marginBottom: post.textContent ? 6 : 0,
+                      zIndex: 1,
+                      borderTopRightRadius: 25,
+                      borderTopLeftRadius: 25,
+                    }}
+                  />
+                </TouchableOpacity>
+              )}
+
+              <Box paddingRight="xxl" marginBottom="s">
+                {post && post.textContent?.length! > 0 && (
+                  <Text variant="text" fontFamily="AtlasDL3.1AAA-Medium">
+                    {post.textContent}
+                  </Text>
+                )}
+              </Box>
+
+              <Box flexDirection="row" alignItems="center">
+                <Text color="lightText" fontFamily="AtlasDL3.1AAA-Medium" fontSize={14} style={{ marginRight: 6 }}>
+                  {post.authorName}
+                </Text>
+                <Text variant="boxSubtitle" fontSize={14}>
+                  {timeago.format(post.createdAt?.toDate(), 'he')}
+                </Text>
+              </Box>
             </Box>
-          </Pressable>
+            <Pressable onPress={likePress} accessibilityLabel="אהבתי" style={{ alignSelf: 'flex-start', paddingTop: 6 }}>
+              <Box width="100%" flexDirection="row" alignItems="center">
+                <Box paddingLeft="s" style={{ marginRight: 6 }}>
+                  <LottieView
+                    ref={lottieHeart}
+                    source={require('@assets/heart-animation.json')}
+                    style={{ width: 22.5 }}
+                    loop={false}
+                    speed={1}
+                  />
+                </Box>
+                <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#eb524b' : '#999999' }}>{post.likeCount}</Ticker>
+              </Box>
+            </Pressable>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </ContextMenuView>
   );
 }
 
