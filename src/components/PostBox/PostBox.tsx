@@ -61,7 +61,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
         icon: {
           iconType: 'SYSTEM',
           iconValue: 'doc.on.doc.fill',
-          androidIcon: <Icon name="copy" size={20} color="#ededed" />,
+          androidIcon: 'copy',
         },
       });
     }
@@ -74,7 +74,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
         icon: {
           iconType: 'SYSTEM',
           iconValue: 'trash.circle.fill',
-          androidIcon: <Icon name="trash-2" size={20} color="#d32f2f" />,
+          androidIcon: 'trash-2',
         },
       });
     } else {
@@ -122,7 +122,13 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
   // Relevant only for android devices
   const openPostActionSheet = () => {
     const options = menuItems.map((item) => item.actionTitle);
-    const icons = menuItems.map((item) => item.icon.androidIcon);
+    const icons = menuItems.map((item) => (
+      <Icon
+        name={item.icon.androidIcon as string}
+        size={20}
+        color={item.menuAttributes?.includes('destructive') ? '#d32f2f' : '#ededed'}
+      />
+    ));
 
     const actionSheetOptions = {
       options,
@@ -130,7 +136,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
       cancelButtonIndex: 3,
       textStyle: { marginLeft: -20, marginBottom: 4, color: '#ededed' },
       destructiveButtonIndex: options.length - 1,
-      containerStyle: { backgroundColor: '#2a2a29', paddingBottom: 5 },
+      containerStyle: { backgroundColor: '#2a2a29' },
       showSeparators: true,
       separatorStyle: { backgroundColor: '#3b3b3b' },
     };
@@ -153,10 +159,8 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
       lottieHeart.current!.play(17, 18);
     }
   }, []);
-
   return (
     <ContextMenuView
-      onLongPress={() => alert(1)}
       onPressMenuItem={({ nativeEvent }: { nativeEvent: { actionKey: string } }) => {
         if (nativeEvent.actionKey === 'copy' && post.type === 'text') {
           copyToClipboard(post.textContent);
