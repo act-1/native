@@ -152,6 +152,14 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
   }
 }
 
+export function archivePost(postId: string) {
+  return firestore().collection('posts').doc(postId).update({
+    archived: true,
+    updatedAt: firestore.FieldValue.serverTimestamp(),
+    archivedAt: firestore.FieldValue.serverTimestamp(),
+  });
+}
+
 export async function getRecentPictures(): Promise<PicturePost[]> {
   try {
     const postsSnapshot = await firestore()
@@ -187,4 +195,5 @@ export default {
   newImagePost,
   getRecentPictures,
   getFeaturedPictures,
+  archivePost,
 };

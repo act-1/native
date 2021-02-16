@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { Alert, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { Post } from '@types/collections';
 import PostBox from '../PostBox';
+import FeedService from '@services/feed';
 import { ImageViewer } from '..';
-import { updateArrayByObjectId } from '@utils/array-utils';
+import { removeArrayItem, updateArrayByObjectId } from '@utils/array-utils';
 
 type ProtestFeedProps = {
   headerComponent: JSX.Element;
@@ -43,6 +44,32 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
     if (likeCount < 0) return;
     const updatedPosts = updateArrayByObjectId(locationPosts, postId, { likeCount });
     setLocationPosts(updatedPosts);
+  };
+
+  const archivePost = async (postId: string) => {
+    try {
+      Alert.alert('למחוק את הפוסט?', '', [
+        {
+          text: 'ביטול',
+          style: 'cancel',
+        },
+        {
+          text: 'אישור',
+          style: 'destructive',
+          onPress: async () => {
+            const postDocument = locationPosts.find((post) => post.id === postId);
+            const updatedPosts = removeArrayItem(locationPosts, postDocument);
+            setLocationPosts(updatedPosts);
+
+            await FeedService.archivePost(postId);
+            console.log('archived');
+          },
+        },
+      ]);
+    } catch (err) {
+      crashlytics().recordError(err);
+      console.error(err);
+    }
   };
 
   const loadMorePosts = () => {
@@ -120,7 +147,12 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
         data={locationPosts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <PostBox post={item} onPicturePress={selectPicture} updatePostLikeCount={updatePostLikeCount} />
+          <PostBox
+            post={item}
+            onPicturePress={selectPicture}
+            updatePostLikeCount={updatePostLikeCount}
+            archivePost={archivePost}
+          />
         )}
         initialNumToRender={2}
         showsVerticalScrollIndicator={false}

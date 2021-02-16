@@ -22,13 +22,14 @@ type PostBoxProps = {
   post: Post;
   onPicturePress: (url: string) => void;
   updatePostLikeCount: (postId: string, likeCount: number) => void;
+  archivePost: (postId: string) => void;
 };
 
 const copyToClipboard = (text: string) => {
   Clipboard.setString(text);
 };
 
-function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
+function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: PostBoxProps) {
   const [liked, setLiked] = useState(false);
   const lottieHeart = useRef<LottieView>(null);
 
@@ -125,6 +126,9 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
         if (nativeEvent.actionKey === 'copy' && post.type === 'text') {
           copyToClipboard(post.textContent);
         }
+        if (nativeEvent.actionKey === 'delete') {
+          archivePost(post.id);
+        }
       }}
       menuConfig={{
         menuTitle: '',
@@ -140,16 +144,10 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
                 <TouchableOpacity onPress={() => onPicturePress(post.pictureUrl)} activeOpacity={0.7}>
                   <FastImage
                     source={{ uri: post.pictureUrl }}
-                    style={{
-                      width: scale(265),
-                      marginHorizontal: -12,
-                      height: post.pictureHeight / (post.pictureWidth / scale(205)),
-                      marginTop: -15,
-                      marginBottom: post.textContent ? 6 : 0,
-                      zIndex: 1,
-                      borderTopRightRadius: 25,
-                      borderTopLeftRadius: 25,
-                    }}
+                    style={[
+                      styles.postPicture,
+                      { height: post.pictureHeight / (post.pictureWidth / scale(205)), marginBottom: post.textContent ? 6 : 0 },
+                    ]}
                   />
                 </TouchableOpacity>
               )}
@@ -202,7 +200,14 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignSelf: 'flex-end',
   },
-
+  postPicture: {
+    width: scale(265),
+    marginHorizontal: -12,
+    marginTop: -15,
+    zIndex: 1,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+  },
   likeCount: {
     color: '#999999',
     fontFamily: 'AtlasDL3.1AAA-Medium',
