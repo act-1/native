@@ -64,13 +64,13 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
   useEffect(() => {
     if (feedStore.userPostLikes.includes(post.id)) {
       setLiked(true);
-      lottieHeart.current!.play(99, 100);
+      lottieHeart.current!.play(17, 18);
     }
   }, []);
 
   return (
     <Box alignItems="flex-start" marginBottom="s" style={[{ backgroundColor: '#0a0d0f' }]}>
-      <Box flexDirection="row" paddingHorizontal="m">
+      <Box flexDirection="row" paddingHorizontal="xm">
         <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} />
         <Box marginTop="m" style={{ marginLeft: 10 }}>
           <Box alignItems="flex-start" backgroundColor="seperator" style={styles.messageBubble}>
@@ -149,7 +149,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 25,
     alignSelf: 'flex-end',
-    marginLeft: 2,
   },
   messageBubble: {
     maxWidth: scale(baseBoxWith),

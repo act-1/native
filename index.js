@@ -11,11 +11,10 @@ import { name as appName } from './app.json';
 
 // Use a local emulator in development
 if (__DEV__) {
-  functions().useFunctionsEmulator('http://localhost:5001');
-  firebase.auth().useEmulator('http://localhost:9099');
-  const db = firestore();
-  db.settings({ host: 'localhost:8080', ssl: false });
   // functions().useFunctionsEmulator('http://localhost:5001');
+  // firebase.auth().useEmulator('http://localhost:9099');
+  // const db = firestore();
+  // db.settings({ host: 'localhost:8080', ssl: false });
 }
 
 messaging().setBackgroundMessageHandler(async (remoteMessage) => {

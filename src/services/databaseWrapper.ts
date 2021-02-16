@@ -5,10 +5,10 @@ class DatabaseWrapper {
 
   constructor() {
     if (__DEV__) {
-      // Setup correct address and port of the firebase emulator: https://rnfirebase.io/database/usage#using-emulator
-      this.database = firebase.app().database('http://localhost:9000/?ns=act1-dev-default-rtdb');
+      // this.database = firebase.app().database('http://localhost:9000/?ns=act1-dev-default-rtdb');
+      this.database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
     } else {
-      // this.database = firebase.app().database('http://yourProductionUrl?ns=YOUR_PRODUCTION_DATABASE_NAME');
+      this.database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
     }
   }
 }
