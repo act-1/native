@@ -123,7 +123,7 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
     <View style={[style, { width: '100%', paddingVertical: 12, marginBottom: 12, backgroundColor: '#111111' }]}>
       <Animated.View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 8, opacity: fadeInOut }}>
         <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>{counter}</Ticker>
-        <Text variant="text" fontWeight="700" color="primaryColor" marginLeft="xs">
+        <Text variant="text" fontFamily="AtlasDL3.1AAA-Bold" color="primaryColor" marginLeft="xs">
           מפגינים עכשיו
         </Text>
       </Animated.View>
