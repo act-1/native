@@ -1,15 +1,17 @@
 <resources>
-
   <!-- Base application theme -->
-  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+  <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
     <!-- Your base theme customization -->
+    <item name="android:navigationBarColor">#0f1316</item>
+    <item name="android:windowLightNavigationBar">false</item>
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
   </style>
 
   <!-- Add the following lines (BootTheme should inherit from AppTheme) -->
   <style name="BootTheme" parent="AppTheme">
     <!-- set the generated bootsplash.xml drawable as activity background -->
     <item name="android:background">@drawable/bootsplash</item>
-    <item name="android:navigationBarColor">#0f1316</item>
   </style>
 
 </resources>
