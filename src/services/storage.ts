@@ -9,9 +9,9 @@ import ImageResizer from 'react-native-image-resizer';
 export async function uploadProfilePicture(imagePath: string) {
   try {
     // Workaround for non existing firebase storage emulator.
-    if (__DEV__) {
-      return true;
-    }
+    // if (__DEV__) {
+    //   return true;
+    // }
 
     const filePath = `/profilePictures/${auth().currentUser!.uid}/${nanoid(10)}.jpg`;
     const reference = storage().ref(filePath);
@@ -27,9 +27,9 @@ export async function uploadProfilePicture(imagePath: string) {
 export async function uploadProfilePictureFromURL(iamgeURL: string) {
   try {
     // Workaround for non existing firebase storage emulator.
-    if (__DEV__) {
-      return true;
-    }
+    // if (__DEV__) {
+    //   return true;
+    // }
 
     const filePath = `/profilePictures/${auth().currentUser!.uid}/${nanoid(10)}.jpg`;
     const reference = storage().ref(filePath);
