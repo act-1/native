@@ -84,12 +84,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               paddingVertical="xm"
               marginBottom="m"
             >
-              <CircularButton
-                iconName="check"
-                color={isAttending ? 'green' : 'grey'}
-                text={isAttending ? 'אני שם!' : 'אישור הגעה'}
-                onPress={attendEvent}
-              />
+              <CircularButton iconName="check" color={isAttending ? 'green' : 'grey'} text="אישור הגעה" onPress={attendEvent} />
               <CircularButton iconName="share" color="blue" text="הזמנת חברים" />
             </Box>
 
