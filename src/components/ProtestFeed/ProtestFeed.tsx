@@ -32,12 +32,20 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
       .collection('posts')
       .where('locationId', '==', locationId)
       .where('archived', '==', false)
-      .orderBy('createdAt')
-      .limit(20);
+      .orderBy('createdAt', 'desc');
 
-    // TODO: Sort by createdAt.
+    // Load initial posts
+    query
+      .limit(15)
+      .get()
+      .then((snapshot) => {
+        const posts = snapshot.docs.map((doc) => doc.data()) as Post[];
+        setLocationPosts(posts);
+      });
 
-    const unsubscribe = query.onSnapshot(
+    // Activate listener for new documents
+    const realtimeListener = query.where('createdAt', '>', new Date());
+    const unsubscribe = realtimeListener.onSnapshot(
       (snapshot) => {
         if (snapshot === null) return;
         snapshot.docChanges().forEach((change) => {
