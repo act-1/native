@@ -40,6 +40,7 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
   };
 
   const updatePostLikeCount = (postId: string, likeCount: number) => {
+    if (likeCount < 0) return;
     const updatedPosts = updateArrayByObjectId(locationPosts, postId, { likeCount });
     setLocationPosts(updatedPosts);
   };
