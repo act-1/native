@@ -77,6 +77,7 @@ export async function createTextPost({ textContent, locationData }: CreateTextPo
         textContent,
         ...locationData,
         likeCount: 0,
+        type: 'text',
         coordinates: new firebase.firestore.GeoPoint(locationData.coordinates._latitude, locationData.coordinates._longitude),
         createdAt: firestore.FieldValue.serverTimestamp(),
         updatedAt: firestore.FieldValue.serverTimestamp(),
