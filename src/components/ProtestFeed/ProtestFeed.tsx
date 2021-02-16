@@ -82,12 +82,14 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
         .get()
         .then((snapshot) => {
           const lastSnapshot = snapshot.docs[snapshot.docs.length - 1];
-          setLastPostSnapshot(lastSnapshot);
+          if (lastSnapshot) {
+            setLastPostSnapshot(lastSnapshot);
 
-          const posts = snapshot.docs.map((doc) => doc.data()) as Post[];
-          setLocationPosts((prevPosts) => [...prevPosts, ...posts]);
+            const posts = snapshot.docs.map((doc) => doc.data()) as Post[];
+            setLocationPosts((prevPosts) => [...prevPosts, ...posts]);
 
-          setFetchingPosts(false);
+            setFetchingPosts(false);
+          }
         });
     }
   };
@@ -141,7 +143,7 @@ function ProtestFeed({ headerComponent, locationId }: ProtestFeedProps) {
       />
       <FlatList
         ListHeaderComponent={headerComponent}
-        ListFooterComponent={() => <ActivityIndicator animating={fetchingPosts} />}
+        ListFooterComponent={() => <ActivityIndicator color="grey" animating={fetchingPosts} />}
         ListFooterComponentStyle={{ marginVertical: 16 }}
         maintainVisibleContentPosition={{ minIndexForVisible: 6 }}
         data={locationPosts}
