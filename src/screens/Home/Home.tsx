@@ -12,7 +12,7 @@ function Home() {
     <ScrollView style={styles.homeWrapper} showsVerticalScrollIndicator={false}>
       <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
       <Stats />
-      <Button title="check in update" onPress={() => functions().httpsCallable('updateCheckInCountManually')()} />
+      {/* <Button title="check in update" onPress={() => functions().httpsCallable('updateCheckInCountManually')()} /> */}
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         תמונות נבחרות
       </Text>
