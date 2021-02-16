@@ -11,6 +11,7 @@ import Svg, { Path } from 'react-native-svg';
 import { likePost, unlikePost } from '@services/feed';
 import { scale } from 'react-native-size-matters';
 import { ContextMenuView } from 'react-native-ios-context-menu';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
@@ -29,6 +30,10 @@ let baseBoxWith = 300;
 if (deviceWidth > 400) {
   baseBoxWith = 275;
 }
+
+const copyToClipboard = (text: string) => {
+  Clipboard.setString(text);
+};
 
 function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
   const [liked, setLiked] = useState(false);
@@ -52,7 +57,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
 
     if (post.type === 'text') {
       items.push({
-        actionKey: 'copy-text',
+        actionKey: 'copy',
         actionTitle: 'העתקה',
         icon: {
           iconType: 'SYSTEM',
@@ -123,8 +128,10 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
   return (
     <ContextMenuView
       onLongPress={() => alert(1)}
-      onPressMenuItem={({ nativeEvent }) => {
-        alert(`${nativeEvent.actionKey} was pressed`);
+      onPressMenuItem={({ nativeEvent }: { nativeEvent: { actionKey: string } }) => {
+        if (nativeEvent.actionKey === 'copy' && post.type === 'text') {
+          copyToClipboard(post.textContent);
+        }
       }}
       menuConfig={{
         menuTitle: '',
