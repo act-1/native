@@ -44,11 +44,9 @@ function LocationActions({ location }: { location: ILocation }) {
   const displayUploadOptions = () => {
     const actionSheetOptions = {
       options: ['צילום תמונה חדשה', 'בחירה מספריית התמונות', 'ביטול'],
-      message: 'העלאת תמונה',
       cancelButtonIndex: 3,
-      messageTextStyle: { color: '#ededed', fontWeight: 'bold', fontSize: 20, marginTop: 0 },
       textStyle: { marginLeft: -20, marginBottom: 4, color: '#ededed' },
-      containerStyle: { backgroundColor: '#2a2a29', paddingBottom: 5 },
+      containerStyle: { backgroundColor: '#2a2a29' },
       showSeparators: true,
       separatorStyle: { backgroundColor: '#3b3b3b' },
       icons: [
