@@ -10,7 +10,7 @@ function Welcome({ nextPage }: BoardingScreenProps) {
 
       <Box flex={1} justifyContent="flex-start" alignItems="center" style={{ paddingHorizontal: 36 }}>
         <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="m" style={{ writingDirection: 'rtl' }}>
-          מערכה ראשונה היא החלק הראשון שיוצר הכרות עם הגיבור.ה, היוצא.ת להתעמת עם האירוע המסית
+          מערכה ראשונה היא החלק הראשון היוצר הכרות עם הגיבור.ה היוצא.ת לפעול
         </Text>
         <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="xm" style={{ writingDirection: 'rtl' }}>
           אנו רואים את ACT1 ככלי המשרת אותנו, הגיבורים.ות במאבקים הקרובים לליבנו, בהם אנחנו מאמינים
