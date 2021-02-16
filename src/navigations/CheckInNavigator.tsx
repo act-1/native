@@ -68,7 +68,8 @@ function CheckInNavigator({ navigation }) {
           headerLeftContainerStyle: { marginLeft: 2, marginBottom: 4 },
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
-          headerStatusBarHeight: Platform.OS === 'ios' ? 6 : 0, // Modal height issues on iOS
+          headerTintColor: '#e0e0e0',
+          headerStatusBarHeight: 6,
         }}
       />
     </CheckInStack.Navigator>

@@ -24,6 +24,7 @@ function CommunityNavigator() {
         name="LiveFeed"
         options={({ navigation }) => ({
           title: 'קהילה',
+          headerTitleAlign: 'center',
         })}
         component={Community}
       />

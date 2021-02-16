@@ -2,7 +2,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import auth from '@react-native-firebase/auth';
 import { likePost, unlikePost, newImagePost, getAllPostLikes } from '@services/feed';
 import { Post } from '@types/collections';
-import { remvoeArrayItem, updateArrayItem } from '@utils/array-utils';
+import { removeArrayItem, updateArrayItem } from '@utils/array-utils';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -50,7 +50,7 @@ class FeedStore {
     if (liked) {
       this.userPostLikes.push(postId);
     } else {
-      this.userPostLikes = remvoeArrayItem(this.userPostLikes, postId);
+      this.userPostLikes = removeArrayItem(this.userPostLikes, postId);
     }
     console.log(this.userPostLikes);
     await AsyncStorage.setItem('userPostLikes', JSON.stringify(this.userPostLikes));

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Pressable, StyleSheet, Dimensions } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
@@ -7,32 +7,90 @@ import LottieView from 'lottie-react-native';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { Box, Text, Ticker } from '../../components';
 import { Post } from '@types/collections';
-import Svg, { Path } from 'react-native-svg';
 import { likePost, unlikePost } from '@services/feed';
 import { scale } from 'react-native-size-matters';
+import PostBoxBubble from './PostBoxBubble';
+import { ContextMenuView } from 'react-native-ios-context-menu';
+
+import { useActionSheet } from '@expo/react-native-action-sheet';
+import Icon from 'react-native-vector-icons/Feather';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableNativeFeedback, TouchableOpacity } from 'react-native-gesture-handler';
 timeago.register('he', he);
 
 type PostBoxProps = {
   post: Post;
   onPicturePress: (url: string) => void;
   updatePostLikeCount: (postId: string, likeCount: number) => void;
+  archivePost: (postId: string) => void;
 };
 
-const deviceWidth = Dimensions.get('window').width;
-let baseBoxWith = 300;
+const copyToClipboard = (text: string) => {
+  Clipboard.setString(text);
+};
 
-if (deviceWidth > 400) {
-  baseBoxWith = 275;
-}
-
-function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
+function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: PostBoxProps) {
   const [liked, setLiked] = useState(false);
   const lottieHeart = useRef<LottieView>(null);
-  const { feedStore } = useStore();
+
+  const { userStore, feedStore } = useStore();
+
+  const { showActionSheetWithOptions } = useActionSheet();
+
+  const menuItems = React.useMemo(() => {
+    const items = [];
+
+    if (post.type === 'picture') {
+      // items.push({
+      //   actionKey: 'save-image',
+      //   actionTitle: 'שמירת תמונה',
+      //   icon: {
+      //     iconType: 'SYSTEM',
+      //     iconValue: 'square.and.arrow.down.fill',
+      //   },
+      // });
+    }
+
+    if (post.type === 'text') {
+      items.push({
+        actionKey: 'copy',
+        actionTitle: 'העתקה',
+        icon: {
+          iconType: 'SYSTEM',
+          iconValue: 'doc.on.doc.fill',
+          androidIcon: 'copy',
+        },
+      });
+    }
+
+    if (post.authorId === userStore.user?.uid) {
+      items.push({
+        actionKey: 'delete',
+        actionTitle: 'מחיקה',
+        menuAttributes: ['destructive'], // <- make menu action "destructive"
+        icon: {
+          iconType: 'SYSTEM',
+          iconValue: 'trash.circle.fill',
+          androidIcon: 'trash-2',
+        },
+      });
+    } else {
+      items.push({
+        actionKey: 'report',
+        menuAttributes: ['destructive'],
+        actionTitle: 'דיווח',
+        icon: {
+          iconType: 'SYSTEM',
+          iconValue: 'exclamationmark.bubble.fill',
+        },
+      });
+    }
+
+    return items;
+  }, []);
 
   const likePress = async () => {
     try {
@@ -61,87 +119,120 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
     }
   };
 
+  // Relevant only for android devices
+  const openPostActionSheet = () => {
+    const options = menuItems.map((item) => item.actionTitle);
+    const icons = menuItems.map((item) => (
+      <Icon
+        name={item.icon.androidIcon as string}
+        size={20}
+        color={item.menuAttributes?.includes('destructive') ? '#d32f2f' : '#ededed'}
+      />
+    ));
+
+    const actionSheetOptions = {
+      options,
+      icons,
+      cancelButtonIndex: 3,
+      textStyle: { marginLeft: -20, marginBottom: 4, color: '#ededed' },
+      destructiveButtonIndex: options.length - 1,
+      containerStyle: { backgroundColor: '#2a2a29' },
+      showSeparators: true,
+      separatorStyle: { backgroundColor: '#3b3b3b' },
+    };
+
+    const callback = (buttonIndex: number) => {
+      if (buttonIndex > menuItems.length) return; // When pressing outside the action sheet, the buttonIndex is `options.length + 1` - outside the bounds of the menu items
+      if (menuItems[buttonIndex].actionKey === 'copy' && post.type === 'text') {
+        copyToClipboard(post.textContent);
+      } else if (menuItems[buttonIndex].actionKey === 'delete') {
+        archivePost(post.id);
+      }
+    };
+
+    showActionSheetWithOptions(actionSheetOptions, callback);
+  };
+
   useEffect(() => {
     if (feedStore.userPostLikes.includes(post.id)) {
       setLiked(true);
       lottieHeart.current!.play(17, 18);
     }
   }, []);
-
   return (
-    <Box alignItems="flex-start" marginBottom="s" style={[{ backgroundColor: '#0a0d0f' }]}>
-      <Box flexDirection="row" paddingHorizontal="xm">
-        <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} />
-        <Box marginTop="m" style={{ marginLeft: 10 }}>
-          <Box alignItems="flex-start" backgroundColor="seperator" style={styles.messageBubble}>
-            <Box style={styles.arrowContainer}>
-              <Svg
-                style={{ left: -6 }}
-                width={15.5}
-                height={17.5}
-                viewBox="32.484 17.5 15.515 17.5"
-                enable-background="new 32.485 17.5 15.515 17.5"
-              >
-                <Path d="M48,35c-7-4-6-8.75-6-17.5C28,17.5,29,35,48,35z" fill={'#222222'} x="0" y="0" />
-              </Svg>
-            </Box>
+    <ContextMenuView
+      onPressMenuItem={({ nativeEvent }: { nativeEvent: { actionKey: string } }) => {
+        if (nativeEvent.actionKey === 'copy' && post.type === 'text') {
+          copyToClipboard(post.textContent);
+        }
+        if (nativeEvent.actionKey === 'delete') {
+          archivePost(post.id);
+        }
+      }}
+      menuConfig={{
+        menuTitle: '',
+        menuItems,
+      }}
+    >
+      <Box alignItems="flex-start" marginBottom="s">
+        <Box flexDirection="row" paddingHorizontal="xm">
+          <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} />
+          <Box marginTop="m" style={{ marginLeft: 10 }}>
+            <TouchableNativeFeedback onLongPress={openPostActionSheet}>
+              <PostBoxBubble>
+                {post.type === 'picture' && (
+                  <TouchableOpacity onPress={() => onPicturePress(post.pictureUrl)} activeOpacity={0.7}>
+                    <FastImage
+                      source={{ uri: post.pictureUrl }}
+                      style={[
+                        styles.postPicture,
+                        { height: post.pictureHeight / (post.pictureWidth / scale(205)), marginBottom: post.textContent ? 6 : 0 },
+                      ]}
+                    />
+                  </TouchableOpacity>
+                )}
 
-            {post.type === 'picture' && (
-              <TouchableOpacity onPress={() => onPicturePress(post.pictureUrl)} activeOpacity={0.7}>
-                <FastImage
-                  source={{ uri: post.pictureUrl }}
-                  style={{
-                    width: scale(265),
-                    marginHorizontal: -12,
-                    height: post.pictureHeight / (post.pictureWidth / scale(205)),
-                    marginTop: -15,
-                    marginBottom: post.textContent ? 6 : 0,
-                    zIndex: 1,
-                    borderTopRightRadius: 25,
-                    borderTopLeftRadius: 25,
-                  }}
-                />
-              </TouchableOpacity>
-            )}
+                <Box paddingRight="xxl" marginBottom="s">
+                  {post && post.textContent?.length! > 0 && (
+                    <Text variant="text" fontFamily="AtlasDL3.1AAA-Medium">
+                      {post.textContent}
+                    </Text>
+                  )}
+                </Box>
 
-            <Box paddingRight="xxl" marginBottom="s">
-              {post && post.textContent?.length! > 0 && (
-                <Text variant="text" fontFamily="AtlasDL3.1AAA-Medium">
-                  {post.textContent}
-                </Text>
-              )}
-            </Box>
+                <Box flexDirection="row" alignItems="center">
+                  <Text color="lightText" fontFamily="AtlasDL3.1AAA-Medium" fontSize={14} style={{ marginRight: 6 }}>
+                    {post.authorName}
+                  </Text>
+                  <Text variant="boxSubtitle" fontSize={14}>
+                    {timeago.format(post.createdAt?.toDate(), 'he')}
+                  </Text>
+                </Box>
+              </PostBoxBubble>
+            </TouchableNativeFeedback>
 
-            <Box flexDirection="row" alignItems="center">
-              <Text color="lightText" fontFamily="AtlasDL3.1AAA-Medium" fontSize={14} style={{ marginRight: 6 }}>
-                {post.authorName}
-              </Text>
-              <Text variant="boxSubtitle" fontSize={14}>
-                {timeago.format(post.createdAt?.toDate(), 'he')}
-              </Text>
-            </Box>
-          </Box>
-          <Pressable onPress={likePress} accessibilityLabel="אהבתי" style={{ alignSelf: 'flex-start', paddingTop: 6 }}>
-            <Box width="100%" flexDirection="row" alignItems="center">
-              <Box paddingLeft="s" style={{ marginRight: 6 }}>
-                <LottieView
-                  ref={lottieHeart}
-                  source={require('@assets/heart-animation.json')}
-                  style={{ width: 22.5 }}
-                  loop={false}
-                  speed={1}
-                />
+            <Pressable onPress={likePress} accessibilityLabel="אהבתי" style={{ alignSelf: 'flex-start', paddingTop: 6 }}>
+              <Box width="100%" flexDirection="row" alignItems="center">
+                <Box paddingLeft="s" style={{ marginRight: 6 }}>
+                  <LottieView
+                    ref={lottieHeart}
+                    source={require('@assets/heart-animation.json')}
+                    style={{ width: 22.5 }}
+                    loop={false}
+                    speed={1}
+                  />
+                </Box>
+                <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#eb524b' : '#999999' }}>{post.likeCount}</Ticker>
               </Box>
-              <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#eb524b' : '#999999' }}>{post.likeCount}</Ticker>
-            </Box>
-          </Pressable>
+            </Pressable>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </ContextMenuView>
   );
 }
 
-export default observer(PostBox);
+export default React.memo(observer(PostBox));
 
 const styles = StyleSheet.create({
   authorImage: {
@@ -150,23 +241,13 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignSelf: 'flex-end',
   },
-  messageBubble: {
-    maxWidth: scale(baseBoxWith),
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginLeft: 2,
-    borderRadius: 20,
-  },
-  arrowContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: -1,
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
+  postPicture: {
+    width: scale(265),
+    marginHorizontal: -12,
+    marginTop: -15,
+    zIndex: 1,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
   },
   likeCount: {
     color: '#999999',

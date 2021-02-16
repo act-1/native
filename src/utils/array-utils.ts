@@ -44,6 +44,6 @@ export function chunkArray(array: Array<any>, size: number) {
  * @param item The item to remove from the array.
  * @returns A new array without the provided item.
  */
-export function remvoeArrayItem(array: Array<any>, item: any) {
+export function removeArrayItem(array: Array<any>, item: any) {
   return array.filter((value) => item !== value);
 }

@@ -77,6 +77,7 @@ export async function createTextPost({ textContent, locationData }: CreateTextPo
         textContent,
         ...locationData,
         likeCount: 0,
+        type: 'text',
         coordinates: new firebase.firestore.GeoPoint(locationData.coordinates._latitude, locationData.coordinates._longitude),
         createdAt: firestore.FieldValue.serverTimestamp(),
         updatedAt: firestore.FieldValue.serverTimestamp(),
@@ -151,6 +152,14 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
   }
 }
 
+export function archivePost(postId: string) {
+  return firestore().collection('posts').doc(postId).update({
+    archived: true,
+    updatedAt: firestore.FieldValue.serverTimestamp(),
+    archivedAt: firestore.FieldValue.serverTimestamp(),
+  });
+}
+
 export async function getRecentPictures(): Promise<PicturePost[]> {
   try {
     const postsSnapshot = await firestore()
@@ -186,4 +195,5 @@ export default {
   newImagePost,
   getRecentPictures,
   getFeaturedPictures,
+  archivePost,
 };

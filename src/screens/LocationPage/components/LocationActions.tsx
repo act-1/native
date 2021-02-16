@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { ILocation } from '@types/location';
+import Icon from 'react-native-vector-icons/Feather';
 
 function LocationActions({ location }: { location: ILocation }) {
   const navigation = useNavigation();
@@ -43,9 +44,16 @@ function LocationActions({ location }: { location: ILocation }) {
   const displayUploadOptions = () => {
     const actionSheetOptions = {
       options: ['צילום תמונה חדשה', 'בחירה מספריית התמונות', 'ביטול'],
-      containerStyle: { paddingBottom: 5 },
-      message: 'העלאת תמונה',
       cancelButtonIndex: 3,
+      textStyle: { marginLeft: -20, marginBottom: 4, color: '#ededed' },
+      containerStyle: { backgroundColor: '#2a2a29' },
+      showSeparators: true,
+      separatorStyle: { backgroundColor: '#3b3b3b' },
+      icons: [
+        <Icon name="camera" size={20} color="#ededed" />,
+        <Icon name="image" size={20} color="#ededed" />,
+        <Icon name="arrow-down" size={20} color="#ededed" />,
+      ],
     };
 
     const callback = (buttonIndex: number) => {
