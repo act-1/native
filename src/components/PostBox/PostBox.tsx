@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Pressable, StyleSheet, Dimensions } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
@@ -7,9 +7,9 @@ import LottieView from 'lottie-react-native';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { Box, Text, Ticker } from '../../components';
 import { Post } from '@types/collections';
-import Svg, { Path } from 'react-native-svg';
 import { likePost, unlikePost } from '@services/feed';
 import { scale } from 'react-native-size-matters';
+import PostBoxBubble from './PostBoxBubble';
 import { ContextMenuView } from 'react-native-ios-context-menu';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -23,13 +23,6 @@ type PostBoxProps = {
   onPicturePress: (url: string) => void;
   updatePostLikeCount: (postId: string, likeCount: number) => void;
 };
-
-const deviceWidth = Dimensions.get('window').width;
-let baseBoxWith = 300;
-
-if (deviceWidth > 400) {
-  baseBoxWith = 275;
-}
 
 const copyToClipboard = (text: string) => {
   Clipboard.setString(text);
@@ -142,19 +135,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
         <Box flexDirection="row" paddingHorizontal="xm">
           <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} />
           <Box marginTop="m" style={{ marginLeft: 10 }}>
-            <Box alignItems="flex-start" backgroundColor="seperator" style={styles.messageBubble}>
-              <Box style={styles.arrowContainer}>
-                <Svg
-                  style={{ left: -6 }}
-                  width={15.5}
-                  height={17.5}
-                  viewBox="32.484 17.5 15.515 17.5"
-                  enable-background="new 32.485 17.5 15.515 17.5"
-                >
-                  <Path d="M48,35c-7-4-6-8.75-6-17.5C28,17.5,29,35,48,35z" fill={'#222222'} x="0" y="0" />
-                </Svg>
-              </Box>
-
+            <PostBoxBubble>
               {post.type === 'picture' && (
                 <TouchableOpacity onPress={() => onPicturePress(post.pictureUrl)} activeOpacity={0.7}>
                   <FastImage
@@ -189,7 +170,8 @@ function PostBox({ post, onPicturePress, updatePostLikeCount }: PostBoxProps) {
                   {timeago.format(post.createdAt?.toDate(), 'he')}
                 </Text>
               </Box>
-            </Box>
+            </PostBoxBubble>
+
             <Pressable onPress={likePress} accessibilityLabel="אהבתי" style={{ alignSelf: 'flex-start', paddingTop: 6 }}>
               <Box width="100%" flexDirection="row" alignItems="center">
                 <Box paddingLeft="s" style={{ marginRight: 6 }}>
@@ -220,24 +202,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignSelf: 'flex-end',
   },
-  messageBubble: {
-    maxWidth: scale(baseBoxWith),
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginLeft: 2,
-    borderRadius: 20,
-  },
-  arrowContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: -1,
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
-  },
+
   likeCount: {
     color: '#999999',
     fontFamily: 'AtlasDL3.1AAA-Medium',
