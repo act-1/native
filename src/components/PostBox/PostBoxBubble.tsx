@@ -11,7 +11,7 @@ if (deviceWidth > 400) {
   baseBoxWith = 275;
 }
 
-export default function PostBoxBubble({ children }) {
+export default function PostBoxBubble({ children }: { children: React.ReactNode }) {
   return (
     <Box alignItems="flex-start" backgroundColor="seperator" style={styles.messageBubble}>
       <Box style={styles.arrowContainer}>
