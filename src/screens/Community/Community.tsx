@@ -14,11 +14,11 @@ const Community = () => {
 
       <RecentPicturesWidget />
 
-      <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="xm">
+      {/* <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="xm">
         הפגנות בשבוע האחרון
       </Text>
 
-      <FeaturedProtests />
+      <FeaturedProtests /> */}
     </ScrollView>
   );
 };

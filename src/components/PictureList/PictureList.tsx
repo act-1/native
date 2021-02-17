@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { PicturePost } from '@types/collections';
 import PictureListItem from './PictureListItem';
 

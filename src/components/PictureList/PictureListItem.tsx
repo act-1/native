@@ -13,13 +13,12 @@ timeago.register('he', he);
 
 const deviceWidth = Dimensions.get('window').width;
 
-function PictureListItem({
-  post,
-  updatePostLikeCount,
-}: {
+type PictureListItemProps = {
   post: PicturePost;
   updatePostLikeCount: (postId: string, likeCount: number) => void;
-}) {
+};
+
+function PictureListItem({ post, updatePostLikeCount }: PictureListItemProps) {
   const { feedStore } = useStore();
 
   const likePress = async () => {
