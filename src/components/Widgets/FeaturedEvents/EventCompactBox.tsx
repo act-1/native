@@ -3,11 +3,14 @@ import { Box, Text } from '../..';
 import FastImage from 'react-native-fast-image';
 import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';
+import { formatUpcomingDate } from '@utils/date-utils';
+import { startBatch } from 'mobx/dist/internal';
 
 type EventBoxProps = {
   title: string;
   shortTitle?: string;
   locationName: string;
+  startDate: Date;
   city: string;
   attendingCount: number;
   thumbnail: string;
@@ -15,7 +18,16 @@ type EventBoxProps = {
   onPress: () => void;
 };
 
-function EventCompactBox({ title, shortTitle, attendingCount, city, thumbnail, compactThumbnail, onPress }: EventBoxProps) {
+function EventCompactBox({
+  title,
+  shortTitle,
+  startDate,
+  attendingCount,
+  city,
+  thumbnail,
+  compactThumbnail,
+  onPress,
+}: EventBoxProps) {
   return (
     <TouchableScale
       activeScale={0.96}
@@ -39,7 +51,7 @@ function EventCompactBox({ title, shortTitle, attendingCount, city, thumbnail, c
           justifyContent="center"
         >
           <Text variant="boxTitle" color="mainBackground" textAlign="center">
-            היום
+            {formatUpcomingDate(startDate).replace('יום', '')}
           </Text>
         </Box>
       </FastImage>

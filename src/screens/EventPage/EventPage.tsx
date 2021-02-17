@@ -12,6 +12,7 @@ import EventPageCounter from './EventPageCounter';
 import EventPageDetail from './EventPageDetail';
 import { formatShortDate, formatUpcomingDate } from '@utils/date-utils';
 import mapStyle from '@utils/mapStyle.json';
+import HapticFeedback from 'react-native-haptic-feedback';
 import { format } from 'date-fns';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
@@ -33,9 +34,11 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
       if (!isAttending) {
         setAttending(true);
+        HapticFeedback.trigger('notificationSuccess');
         await eventStore.attendEvent({ eventId, attendingCount, eventDate: startDate });
       } else {
         setAttending(false);
+        HapticFeedback.trigger('notificationError');
         await eventStore.unattendEvent({ eventId, attendingCount });
       }
     } catch (err) {

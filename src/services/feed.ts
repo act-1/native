@@ -91,11 +91,11 @@ export async function createTextPost({ textContent, locationData }: CreateTextPo
 
 type NewImagePostProps = {
   image: ImagePickerResponse;
-  text?: string;
+  textContent?: string;
   location?: ILocation;
 };
 
-export async function newImagePost({ image, text, location }: NewImagePostProps) {
+export async function newImagePost({ image, textContent, location }: NewImagePostProps) {
   try {
     const currentUser = auth().currentUser;
     if (currentUser) {
@@ -114,7 +114,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
         featured: false,
         homeScreen: false,
         likeCount: 0,
-        text,
+        textContent,
       };
 
       let postRef = null;
@@ -143,8 +143,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
       }
 
       const postDocument = await postRef.get();
-
-      return postDocument.data() as PicturePost;
+      return postDocument;
     }
   } catch (err) {
     console.error(err);
@@ -159,18 +158,27 @@ export function archivePost(postId: string) {
     archivedAt: firestore.FieldValue.serverTimestamp(),
   });
 }
+type GetRecentPicturesProps = {
+  limit: number;
+  startAfter?: FirebaseFirestoreTypes.DocumentData;
+};
 
-export async function getRecentPictures(): Promise<PicturePost[]> {
+export async function getRecentPictures({ limit = 10, startAfter }: GetRecentPicturesProps) {
   try {
-    const postsSnapshot = await firestore()
+    const query = firestore()
       .collection('posts')
       .where('type', '==', 'picture')
       .where('archived', '==', false)
       .orderBy('createdAt', 'desc')
-      .get();
+      .limit(limit);
 
-    const posts = postsSnapshot.docs.map((post) => post.data() as PicturePost);
-    return posts;
+    if (startAfter) {
+      query.startAfter(startAfter);
+    }
+
+    const postsSnapshot = await query.get();
+
+    return postsSnapshot.docs;
   } catch (err) {
     throw err;
   }

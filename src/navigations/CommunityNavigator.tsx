@@ -1,7 +1,10 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+
 import Community from '@screens/Community';
+import RecentPictures from '@screens/Community/RecentPictures';
+
 import { Box } from '../components';
 import auth from '@react-native-firebase/auth';
 import FastImage from 'react-native-fast-image';
@@ -9,12 +12,14 @@ import FastImage from 'react-native-fast-image';
 const CommunityStack = createStackNavigator();
 
 function CommunityNavigator() {
-  const { photoURL: profilePicture } = auth().currentUser;
+  const { photoURL: profilePicture } = auth().currentUser!;
 
   return (
     <CommunityStack.Navigator
       screenOptions={({ navigation }) => ({
         gestureEnabled: true,
+        ...TransitionPresets.SlideFromRightIOS,
+        headerTintColor: '#8a8a8b',
         headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
         headerTitleStyle: {
           fontSize: 22,
@@ -22,23 +27,33 @@ function CommunityNavigator() {
           fontWeight: Platform.select({ ios: '700', android: null }),
           color: '#EC534B',
         },
-        headerLeft: () => (
-          <Box marginLeft="xm" marginBottom="xxs">
-            <FastImage
-              source={{ uri: profilePicture }}
-              style={{ width: 27, height: 27, borderRadius: 25, borderColor: '#e9e9e9' }}
-            />
-          </Box>
-        ),
       })}
     >
       <CommunityStack.Screen
-        name="LiveFeed"
-        options={({ navigation }) => ({
+        name="Community"
+        options={{
           title: 'קהילה',
           headerTitleAlign: 'center',
-        })}
+          headerBackTitle: 'קהילה',
+          headerLeft: () => (
+            <Box marginLeft="xm" marginBottom="xxs">
+              <FastImage
+                source={{ uri: profilePicture }}
+                style={{ width: 27, height: 27, borderRadius: 25, borderColor: '#e9e9e9' }}
+              />
+            </Box>
+          ),
+        }}
         component={Community}
+      />
+      <CommunityStack.Screen
+        name="RecentPictures"
+        options={{
+          title: 'תמונות אחרונות',
+          headerBackTitleVisible: false,
+          headerTitleAlign: 'center',
+        }}
+        component={RecentPictures}
       />
     </CommunityStack.Navigator>
   );

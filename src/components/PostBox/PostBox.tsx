@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
-import LottieView from 'lottie-react-native';
-import HapticFeedback from 'react-native-haptic-feedback';
-import { Box, Text, Ticker } from '../../components';
+import { Box, Text, LikeButton } from '../../components';
 import { Post } from '@types/collections';
 import { likePost, unlikePost } from '@services/feed';
 import { scale } from 'react-native-size-matters';
@@ -33,26 +31,12 @@ const copyToClipboard = (text: string) => {
 };
 
 function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: PostBoxProps) {
-  const [liked, setLiked] = useState(false);
-  const lottieHeart = useRef<LottieView>(null);
-
   const { userStore, feedStore } = useStore();
 
   const { showActionSheetWithOptions } = useActionSheet();
 
   const menuItems = React.useMemo(() => {
     const items = [];
-
-    if (post.type === 'picture') {
-      // items.push({
-      //   actionKey: 'save-image',
-      //   actionTitle: 'שמירת תמונה',
-      //   icon: {
-      //     iconType: 'SYSTEM',
-      //     iconValue: 'square.and.arrow.down.fill',
-      //   },
-      // });
-    }
 
     if (post.type === 'text') {
       items.push({
@@ -77,44 +61,24 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
           androidIcon: 'trash-2',
         },
       });
-    } else {
-      items.push({
-        actionKey: 'report',
-        menuAttributes: ['destructive'],
-        actionTitle: 'דיווח',
-        icon: {
-          iconType: 'SYSTEM',
-          iconValue: 'exclamationmark.bubble.fill',
-        },
-      });
     }
-
     return items;
   }, []);
 
   const likePress = async () => {
+    const liked = feedStore.userPostLikes.includes(post.id);
+
     try {
-      const hapticMethod = liked ? 'impactMedium' : 'impactLight';
-      HapticFeedback.trigger(hapticMethod);
-
-      if (liked) {
-        lottieHeart.current!.play(18, 28);
-      } else {
-        lottieHeart.current!.play(3, 14);
-      }
-
       const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
 
       updatePostLikeCount(post.id, newLikeCount);
       feedStore.updatePostLike(post.id, !liked);
-      setLiked((prevState) => !prevState);
 
       const updateFunction = liked ? unlikePost : likePost;
 
       await updateFunction(post.id);
     } catch (err) {
       feedStore.updatePostLike(post.id, !liked);
-      setLiked((prevState) => !prevState);
       console.error(err); // TODO: Record to crashlytics.
     }
   };
@@ -153,12 +117,6 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
     showActionSheetWithOptions(actionSheetOptions, callback);
   };
 
-  useEffect(() => {
-    if (feedStore.userPostLikes.includes(post.id)) {
-      setLiked(true);
-      lottieHeart.current!.play(17, 18);
-    }
-  }, []);
   return (
     <ContextMenuView
       onPressMenuItem={({ nativeEvent }: { nativeEvent: { actionKey: string } }) => {
@@ -186,7 +144,10 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
                       source={{ uri: post.pictureUrl }}
                       style={[
                         styles.postPicture,
-                        { height: post.pictureHeight / (post.pictureWidth / scale(205)), marginBottom: post.textContent ? 6 : 0 },
+                        {
+                          height: post.pictureHeight / (post.pictureWidth / scale(205)),
+                          marginBottom: post.textContent ? 6 : 0,
+                        },
                       ]}
                     />
                   </TouchableOpacity>
@@ -211,20 +172,12 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
               </PostBoxBubble>
             </TouchableNativeFeedback>
 
-            <Pressable onPress={likePress} accessibilityLabel="אהבתי" style={{ alignSelf: 'flex-start', paddingTop: 6 }}>
-              <Box width="100%" flexDirection="row" alignItems="center">
-                <Box paddingLeft="s" style={{ marginRight: 6 }}>
-                  <LottieView
-                    ref={lottieHeart}
-                    source={require('@assets/heart-animation.json')}
-                    style={{ width: 22.5 }}
-                    loop={false}
-                    speed={1}
-                  />
-                </Box>
-                <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#eb524b' : '#999999' }}>{post.likeCount}</Ticker>
-              </Box>
-            </Pressable>
+            <LikeButton
+              onPress={likePress}
+              liked={feedStore.userPostLikes.includes(post.id)}
+              likeCount={post.likeCount}
+              style={{ alignSelf: 'flex-start', paddingTop: 6 }}
+            />
           </Box>
         </Box>
       </Box>
@@ -248,10 +201,5 @@ const styles = StyleSheet.create({
     zIndex: 1,
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
-  },
-  likeCount: {
-    color: '#999999',
-    fontFamily: 'AtlasDL3.1AAA-Medium',
-    fontSize: 16,
   },
 });

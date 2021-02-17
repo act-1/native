@@ -44,7 +44,6 @@ function App() {
     if (initalizedApp) return;
 
     if (store.userStore.initializedUser && store.userStore.userData === null) {
-      console.log('HO!', store.userStore.initializedUser);
       RNBootSplash.hide({ fade: true });
       return;
     }

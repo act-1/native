@@ -1,13 +1,15 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import rootStore from './RootStore';
 import { Post, PicturePost } from '@types/collections';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import FeedService from '@services/feed';
+import { updateArrayByObjectId } from '@utils/array-utils';
 
 class MediaStore {
   rootStore: null | rootStore = null;
   currentFilter: 'featured' | 'recent' = 'featured';
   featuredPictures: Post[] = [];
-  recentPictures: Post[] = [];
+  recentPictures: FirebaseFirestoreTypes.DocumentData[] = [];
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -30,9 +32,9 @@ class MediaStore {
     }
   }
 
-  async getRecentPictures() {
+  async getRecentPictures({ limit, startAfter }: { limit: number; startAfter?: FirebaseFirestoreTypes.DocumentData }) {
     try {
-      const recentPictures = await FeedService.getRecentPictures();
+      const recentPictures = await FeedService.getRecentPictures({ limit, startAfter });
 
       runInAction(() => {
         this.recentPictures = recentPictures;
@@ -42,7 +44,7 @@ class MediaStore {
     }
   }
 
-  async addRecentPicture(picturePost: PicturePost) {
+  async addRecentPicture(picturePost: FirebaseFirestoreTypes.DocumentData) {
     this.recentPictures = [picturePost, ...this.recentPictures];
   }
 }

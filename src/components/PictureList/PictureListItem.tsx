@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, Dimensions, LayoutChangeEvent } from 'react-native';
-import { Box, Text, Ticker } from '../';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Dimensions } from 'react-native';
+import { Box, Text, LikeButton } from '../';
+import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
-import Icon from 'react-native-vector-icons/Feather';
+import { likePost, unlikePost } from '@services/feed';
 import { PicturePost } from '@types/collections';
+import Pinchable from 'react-native-pinchable';
 
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
@@ -12,47 +13,64 @@ timeago.register('he', he);
 
 const deviceWidth = Dimensions.get('window').width;
 
-function PictureListItem({ item, onLayout }: { item: PicturePost; onLayout: (event: LayoutChangeEvent) => void }) {
-  const navigation = useNavigation();
+type PictureListItemProps = {
+  post: PicturePost;
+  updatePostLikeCount: (postId: string, likeCount: number) => void;
+};
+
+function PictureListItem({ post, updatePostLikeCount }: PictureListItemProps) {
+  const { feedStore } = useStore();
+
+  const likePress = async () => {
+    const liked = feedStore.userPostLikes.includes(post.id);
+    try {
+      const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
+
+      updatePostLikeCount(post.id, newLikeCount);
+      feedStore.updatePostLike(post.id, !liked);
+
+      const updateFunction = liked ? unlikePost : likePost;
+
+      await updateFunction(post.id);
+    } catch (err) {
+      feedStore.updatePostLike(post.id, !liked);
+      console.error(err); // TODO: Record to crashlytics.
+    }
+  };
 
   return (
-    <Box onLayout={onLayout}>
+    <Box>
       <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="s">
-        <FastImage source={{ uri: item.authorPicture }} style={styles.profilePic} />
+        <FastImage source={{ uri: post.authorPicture }} style={styles.profilePic} />
         <Box>
-          <Text variant="boxTitle">{item.authorName}</Text>
-          {item.locationId && (
+          <Text variant="boxTitle">{post.authorName}</Text>
+          {post.locationId && (
             <Box flexDirection="row" alignItems="center">
-              <Text
-                variant="boxSubtitle"
-                textAlign="left"
-                onPress={() => navigation.navigate('LocationPage', { locationId: item.locationId })}
-              >
-                {item.locationName}
+              <Text variant="boxSubtitle" textAlign="left">
+                {post.locationName}
               </Text>
             </Box>
           )}
         </Box>
       </Box>
-      <Box style={{ marginHorizontal: -16, marginBottom: 8 }}>
-        {/* Height is calculated propotionaly to the device width */}
-        <FastImage
-          source={{ uri: item.pictureUrl }}
-          style={{ height: item.pictureHeight / (item.pictureWidth / deviceWidth), width: '100%' }}
-        />
-      </Box>
-      <Box paddingHorizontal="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="s">
-        <Box flexDirection="row" alignItems="center">
-          <Icon name="heart" color={false ? '#ec534b' : '#fff'} size={19} style={{ marginRight: 6 }} />
-          <Ticker textStyle={{ ...styles.likeCount, color: false ? '#ec534b' : '#fff' }}>{item.likeCount}</Ticker>
+      <Pinchable maximumZoomScale={3.75}>
+        <Box style={{ marginHorizontal: -16, marginBottom: 8 }}>
+          {/* Height is calculated propotionaly to the device width */}
+          <FastImage
+            source={{ uri: post.pictureUrl }}
+            style={{ height: post.pictureHeight / (post.pictureWidth / deviceWidth), width: '100%' }}
+          />
         </Box>
+      </Pinchable>
+      <Box paddingRight="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="s">
+        <LikeButton onPress={likePress} liked={feedStore.userPostLikes.includes(post.id)} likeCount={post.likeCount} />
         <Text variant="boxSubtitle" fontSize={14} textAlign="left">
-          {item.createdAt && timeago.format(item.createdAt.toDate(), 'he')}
+          {post.createdAt && timeago.format(post.createdAt.toDate(), 'he')}
         </Text>
       </Box>
       <Box paddingHorizontal="m">
         <Text variant="text" fontSize={16} marginBottom="xm">
-          {item.text}
+          {post.textContent}
         </Text>
       </Box>
     </Box>
