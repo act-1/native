@@ -33,7 +33,7 @@ function PictureList({ pictures, title, initialIndex }: { pictures: PicturePost[
       data={pictures}
       keyExtractor={(item) => item.id}
       renderItem={({ item, index }) => (
-        <PictureListItem item={item} onLayout={(object) => (itemHeights[index] = object.nativeEvent.layout.height)} />
+        <PictureListItem post={item} onLayout={(object) => (itemHeights[index] = object.nativeEvent.layout.height)} />
       )}
       initialNumToRender={2}
     />
