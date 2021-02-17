@@ -186,7 +186,10 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
                       source={{ uri: post.pictureUrl }}
                       style={[
                         styles.postPicture,
-                        { height: post.pictureHeight / (post.pictureWidth / scale(205)), marginBottom: post.textContent ? 6 : 0 },
+                        {
+                          height: post.pictureHeight / (post.pictureWidth / scale(205)),
+                          marginBottom: post.textContent ? 6 : 0,
+                        },
                       ]}
                     />
                   </TouchableOpacity>

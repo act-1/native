@@ -159,18 +159,27 @@ export function archivePost(postId: string) {
     archivedAt: firestore.FieldValue.serverTimestamp(),
   });
 }
+type GetRecentPicturesProps = {
+  limit: number;
+  startAfter: FirebaseFirestoreTypes.DocumentData;
+};
 
-export async function getRecentPictures(): Promise<PicturePost[]> {
+export async function getRecentPictures({ limit = 10, startAfter }: GetRecentPicturesProps) {
   try {
-    const postsSnapshot = await firestore()
+    const query = firestore()
       .collection('posts')
       .where('type', '==', 'picture')
       .where('archived', '==', false)
       .orderBy('createdAt', 'desc')
-      .get();
+      .limit(limit);
 
-    const posts = postsSnapshot.docs.map((post) => post.data() as PicturePost);
-    return posts;
+    if (startAfter) {
+      query.startAfter(startAfter);
+    }
+
+    const postsSnapshot = await query.get();
+
+    return postsSnapshot.docs;
   } catch (err) {
     throw err;
   }
