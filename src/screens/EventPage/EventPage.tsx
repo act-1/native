@@ -61,13 +61,12 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   return (
     <Box flex={1}>
       <StatusBar barStyle="light-content" />
-      {event === undefined ? (
-        <Box justifyContent="center" alignItems="center">
-          <ActivityIndicator size="small" />
-          <Text>טוענת...</Text>
-        </Box>
-      ) : (
-        <StickyHeaderScrollView goBack={() => navigation.goBack()} headerTitle={event.title} thumbnail={event.thumbnail}>
+      <StickyHeaderScrollView
+        goBack={() => navigation.goBack()}
+        headerTitle={event?.title || ''}
+        thumbnail={event?.thumbnail || ''}
+      >
+        {event && (
           <Box backgroundColor="mainBackground">
             <Box paddingVertical="xm" marginBottom="m" backgroundColor="mainBackground" alignItems="center">
               <Text style={{ writingDirection: 'rtl' }} variant="largeTitle" marginBottom="m" textAlign="center">
@@ -78,7 +77,9 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Text>
             </Box>
 
-            <EventPageCounter number={event.attendingCount} text="אישרו הגעה" style={{ marginBottom: 12 }} />
+            <Box marginBottom="m">
+              {event.attendingCount && <EventPageCounter number={event.attendingCount} text="אישרו הגעה" />}
+            </Box>
 
             <Box
               flexDirection="row"
@@ -143,8 +144,8 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Box>
             )}
           </Box>
-        </StickyHeaderScrollView>
-      )}
+        )}
+      </StickyHeaderScrollView>
     </Box>
   );
 }

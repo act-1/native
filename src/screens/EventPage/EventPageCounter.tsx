@@ -10,6 +10,8 @@ type EventPageCounterProps = {
 };
 
 function EventPageCounter({ number, text, style }: EventPageCounterProps) {
+  const formattedNumber = number.toLocaleString();
+
   return (
     <Box
       justifyContent="center"
@@ -18,7 +20,9 @@ function EventPageCounter({ number, text, style }: EventPageCounterProps) {
       borderColor="lightBorderColor"
       style={[styles.counterBox, style]}
     >
-      <Ticker textStyle={styles.countTextStyle}>{number.toLocaleString()}</Ticker>
+      <Box minHeight={35}>
+        <Ticker textStyle={styles.countTextStyle}>{formattedNumber}</Ticker>
+      </Box>
       <Text variant="text">{text}</Text>
     </Box>
   );

@@ -50,8 +50,8 @@ function CheckInFormHeader({
     };
 
     // Show privacy info message only once.
-    const privacyMessageShown = await AsyncStorage.getItem('checkIn_privacy_message_shown');
-
+    // const privacyMessageShown = await AsyncStorage.getItem('checkIn_privacy_message_shown');
+    const privacyMessageShown = 'true'; // TEMP: Need to improve the privacy info message
     if (privacyMessageShown !== 'true') {
       const message =
         'פומבי - הצ׳ק אין יהיה חשוף לציבור\nפרטי - הצ׳ק אין יהיה חשוף רק בפרופיל הפרטי שלכם\nאנונימי - הצ׳ק אין יבוצע באופן אנונימי לחלוטין ולא יהיה משוייך אל חשבונכם\n';

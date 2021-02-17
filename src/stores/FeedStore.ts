@@ -17,7 +17,6 @@ class FeedStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
-    this.getUserLikes();
   }
 
   async getUserLikes() {
