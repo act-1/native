@@ -144,7 +144,6 @@ class UserStore {
         return token;
       }
     } catch (err) {
-      console.log(err);
       console.error('Refresh FCM Token: ', err);
       crashlytics().recordError(err);
     }

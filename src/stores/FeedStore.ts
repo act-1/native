@@ -52,7 +52,7 @@ class FeedStore {
     } else {
       this.userPostLikes = removeArrayItem(this.userPostLikes, postId);
     }
-    console.log(this.userPostLikes);
+
     await AsyncStorage.setItem('userPostLikes', JSON.stringify(this.userPostLikes));
   }
 

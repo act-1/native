@@ -13,7 +13,7 @@ function ProfileNavigator() {
   const { userStore } = useStore();
 
   const userName = userStore.userData?.displayName;
-  console.log(userName);
+
   return (
     <ProfileStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#0a0a0a' } }}>
       <ProfileStack.Screen
