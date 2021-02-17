@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, Animated, Dimensions, Platform } from 'react-native';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { Box, Text } from '../..';
 import { Blurhash } from 'react-native-blurhash';
 import { ParallaxImage } from 'react-native-snap-carousel';
@@ -7,13 +8,19 @@ import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';
 import useImagePlaceholder from './useImagePlaceholder';
 
+import * as timeago from 'timeago.js';
+import he from 'timeago.js/lib/lang/he';
+timeago.register('he', he);
+
 const AnimatedBlurHash = Animated.createAnimatedComponent(Blurhash);
 
 const { width: screenWidth } = Dimensions.get('window');
 
 type FeaturedPicturesProps = {
+  blurhash: string;
+  pictureUrl: string;
   locationName: string;
-  date: string;
+  createdAt: FirebaseFirestoreTypes.Timestamp;
   authorName: string;
   authorPicture: string;
   url: string;
@@ -22,7 +29,7 @@ type FeaturedPicturesProps = {
   onPress: () => void;
 };
 
-function FeaturedPictureBox({ blurhash, pictureUrl, locationName, date, parallaxProps, onPress }: FeaturedPicturesProps) {
+function FeaturedPictureBox({ blurhash, pictureUrl, locationName, createdAt, parallaxProps, onPress }: FeaturedPicturesProps) {
   const { onImageLoadEnd, onImageLoadError, placeholderOpacity, renderPlaceholder } = useImagePlaceholder();
   const blurhashStyle = useMemo(() => [styles.item, { opacity: placeholderOpacity }], [placeholderOpacity]);
 
@@ -51,7 +58,7 @@ function FeaturedPictureBox({ blurhash, pictureUrl, locationName, date, parallax
           {locationName}
         </Text>
         <Text variant="text" fontSize={15} opacity={0.9}>
-          לפני 24 דק׳
+          {timeago.format(createdAt.toDate(), 'he')}
         </Text>
       </Box>
 
