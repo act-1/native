@@ -20,7 +20,7 @@ function NewPost({ navigation, route }: NewPostProps) {
   const uploadPost = async (textContent: string) => {
     try {
       if (image) {
-        feedStore.uploadImage({ image, text: caption, location });
+        feedStore.uploadImage({ image, textContent: caption, location });
       } else {
         const locationData = {
           locationId: location!.id,

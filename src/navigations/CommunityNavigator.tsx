@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 
 import Community from '@screens/Community';
 import RecentPictures from '@screens/Community/RecentPictures';
@@ -18,6 +18,7 @@ function CommunityNavigator() {
     <CommunityStack.Navigator
       screenOptions={({ navigation }) => ({
         gestureEnabled: true,
+        ...TransitionPresets.SlideFromRightIOS,
         headerTintColor: '#8a8a8b',
         headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
         headerTitleStyle: {

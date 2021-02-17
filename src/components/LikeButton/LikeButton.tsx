@@ -35,10 +35,11 @@ function LikeButton({ onPress, liked, likeCount, style }: LikeButtonProps) {
 
   useEffect(() => {
     if (liked) {
-      lottieHeart.current!.play(17, 18);
+      lottieHeart.current!.play(16, 17);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log('liked', liked);
 
   return (
     <Pressable onPress={buttonPress} accessibilityLabel="אהבתי" style={style}>

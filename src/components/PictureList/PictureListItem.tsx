@@ -1,14 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet, Dimensions, LayoutChangeEvent, Pressable } from 'react-native';
-import { Box, Text, Ticker } from '../';
+import React from 'react';
+import { StyleSheet, Dimensions } from 'react-native';
+import { Box, Text, LikeButton } from '../';
 import { useStore } from '../../stores';
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
-import LottieView from 'lottie-react-native';
 import { likePost, unlikePost } from '@services/feed';
 import { PicturePost } from '@types/collections';
 import Pinchable from 'react-native-pinchable';
-import HapticFeedback from 'react-native-haptic-feedback';
 
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
@@ -16,41 +14,35 @@ timeago.register('he', he);
 
 const deviceWidth = Dimensions.get('window').width;
 
-function PictureListItem({ post, onLayout }: { post: PicturePost; onLayout: (event: LayoutChangeEvent) => void }) {
+function PictureListItem({
+  post,
+  updatePostLikeCount,
+}: {
+  post: PicturePost;
+  updatePostLikeCount: (postId: string, likeCount: number) => void;
+}) {
   const { feedStore } = useStore();
   const navigation = useNavigation();
-  const [liked, setLiked] = useState(false);
-  const lottieHeart = useRef<LottieView>(null);
 
   const likePress = async () => {
+    const liked = feedStore.userPostLikes.includes(post.id);
     try {
-      const hapticMethod = liked ? 'impactMedium' : 'impactLight';
-      HapticFeedback.trigger(hapticMethod);
-
-      if (liked) {
-        lottieHeart.current!.play(18, 28);
-      } else {
-        lottieHeart.current!.play(3, 14);
-      }
-
       const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
 
-      // updatePostLikeCount(post.id, newLikeCount);
+      updatePostLikeCount(post.id, newLikeCount);
       feedStore.updatePostLike(post.id, !liked);
-      setLiked((prevState) => !prevState);
 
       const updateFunction = liked ? unlikePost : likePost;
 
       await updateFunction(post.id);
     } catch (err) {
       feedStore.updatePostLike(post.id, !liked);
-      setLiked((prevState) => !prevState);
       console.error(err); // TODO: Record to crashlytics.
     }
   };
 
   return (
-    <Box onLayout={onLayout}>
+    <Box>
       <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="s">
         <FastImage source={{ uri: post.authorPicture }} style={styles.profilePic} />
         <Box>
@@ -77,21 +69,8 @@ function PictureListItem({ post, onLayout }: { post: PicturePost; onLayout: (eve
           />
         </Box>
       </Pinchable>
-      <Box paddingHorizontal="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="s">
-        <Pressable onPress={likePress} accessibilityLabel="אהבתי">
-          <Box flexDirection="row" alignItems="center">
-            <Box style={{ marginRight: 6 }}>
-              <LottieView
-                ref={lottieHeart}
-                source={require('@assets/heart-animation.json')}
-                style={{ width: 22.5 }}
-                loop={false}
-                speed={1}
-              />
-            </Box>
-            <Ticker textStyle={{ ...styles.likeCount, color: liked ? '#ec534b' : '#fff' }}>{post.likeCount}</Ticker>
-          </Box>
-        </Pressable>
+      <Box paddingRight="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="s">
+        <LikeButton onPress={likePress} liked={feedStore.userPostLikes.includes(post.id)} likeCount={post.likeCount} />
         <Text variant="boxSubtitle" fontSize={14} textAlign="left">
           {post.createdAt && timeago.format(post.createdAt.toDate(), 'he')}
         </Text>

@@ -5,9 +5,17 @@ import { useStore } from '../../stores';
 import { PictureList } from '../../components';
 import { PicturePost } from '@types/collections';
 
+import { updateArrayByObjectId } from '@utils/array-utils';
+
 function RecentPictures() {
   const { mediaStore } = useStore();
   const [recentPictures, setRecentPictures] = useState<PicturePost[]>([]);
+
+  const updatePostLikeCount = (postId: string, likeCount: number) => {
+    if (likeCount < 0) return;
+    const updatedPosts = updateArrayByObjectId(recentPictures, postId, { likeCount });
+    setRecentPictures(updatedPosts);
+  };
 
   useEffect(() => {
     if (mediaStore.recentPictures.length > 0) {
@@ -17,7 +25,7 @@ function RecentPictures() {
     }
   }, [mediaStore.recentPictures]);
 
-  return <PictureList pictures={recentPictures} />;
+  return <PictureList pictures={recentPictures} updatePostLikeCount={updatePostLikeCount} />;
 }
 
 export default observer(RecentPictures);

@@ -91,11 +91,11 @@ export async function createTextPost({ textContent, locationData }: CreateTextPo
 
 type NewImagePostProps = {
   image: ImagePickerResponse;
-  text?: string;
+  textContent?: string;
   location?: ILocation;
 };
 
-export async function newImagePost({ image, text, location }: NewImagePostProps) {
+export async function newImagePost({ image, textContent, location }: NewImagePostProps) {
   try {
     const currentUser = auth().currentUser;
     if (currentUser) {
@@ -114,7 +114,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
         featured: false,
         homeScreen: false,
         likeCount: 0,
-        text,
+        textContent,
       };
 
       let postRef = null;
@@ -143,8 +143,7 @@ export async function newImagePost({ image, text, location }: NewImagePostProps)
       }
 
       const postDocument = await postRef.get();
-
-      return postDocument.data() as PicturePost;
+      return postDocument;
     }
   } catch (err) {
     console.error(err);

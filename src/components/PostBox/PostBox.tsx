@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
-import LottieView from 'lottie-react-native';
 import { Box, Text, LikeButton } from '../../components';
 import { Post } from '@types/collections';
 import { likePost, unlikePost } from '@services/feed';

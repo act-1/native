@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { Box, Text } from '../..';
 import FastImage from 'react-native-fast-image';
 
@@ -20,10 +20,11 @@ function RecentPicturesWidget() {
   const [recentPictures, setRecentPictures] = useState<PicturePost[]>([]);
 
   useEffect(() => {
+    console.log('RECENT ARR: ', mediaStore.recentPictures);
     if (mediaStore.recentPictures.length > 0) {
-      const picturesData: PicturePost[] = mediaStore.recentPictures.map(
-        (document: FirebaseFirestoreTypes.DocumentData) => document.data() as PicturePost
-      );
+      const picturesData: PicturePost[] = mediaStore.recentPictures.map((document: FirebaseFirestoreTypes.DocumentData) => {
+        return document.data() as PicturePost;
+      });
 
       const sortedPictures = picturesData.sort((a, b) => b.likeCount - a.likeCount);
       sortedPictures.forEach((l) => console.log(l.likeCount));
@@ -42,21 +43,24 @@ function RecentPicturesWidget() {
   return (
     <Box paddingHorizontal="m" marginBottom="l">
       <Box flexDirection="row" marginBottom="m">
-        <FastImage source={{ uri: recentPictures[0].pictureUrl }} style={{ flex: 0.63, height: 236 }} />
+        <FastImage source={{ uri: recentPictures[0].pictureUrl }} style={{ flex: 0.63, height: 236, borderRadius: 2 }} />
 
         <Box flex={0.37}>
-          <FastImage source={{ uri: recentPictures[1].pictureUrl }} style={{ height: 112, marginLeft: 12, marginBottom: 12 }} />
-          <FastImage source={{ uri: recentPictures[2].pictureUrl }} style={{ height: 112, marginLeft: 12 }} />
+          <FastImage
+            source={{ uri: recentPictures[1].pictureUrl }}
+            style={{ height: 112, marginLeft: 12, marginBottom: 12, borderRadius: 2 }}
+          />
+          <FastImage source={{ uri: recentPictures[2].pictureUrl }} style={{ height: 112, marginLeft: 12, borderRadius: 2 }} />
         </Box>
       </Box>
       <Box flexDirection="row" flex={1}>
-        <FastImage source={{ uri: recentPictures[3].pictureUrl }} style={{ flex: 0.9, height: 112 }} />
+        <FastImage source={{ uri: recentPictures[3].pictureUrl }} style={{ flex: 0.94, height: 112, borderRadius: 2 }} />
 
         <FastImage
           source={{
             uri: recentPictures[4].pictureUrl,
           }}
-          style={{ flex: 0.9, height: 112, marginLeft: 12 }}
+          style={{ flex: 0.94, height: 112, marginLeft: 12, borderRadius: 2 }}
         />
 
         <TouchableNativeFeedback onPress={() => navigation.navigate('RecentPictures')}>
@@ -85,6 +89,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   morePicturesBox: {
+    height: 112,
+    minWidth: Platform.select({ android: 112, ios: null }),
     borderColor: '#222222',
     borderWidth: 2,
     borderRadius: 4,

@@ -3,6 +3,7 @@ import rootStore from './RootStore';
 import { Post, PicturePost } from '@types/collections';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import FeedService from '@services/feed';
+import { updateArrayByObjectId } from '@utils/array-utils';
 
 class MediaStore {
   rootStore: null | rootStore = null;
@@ -43,7 +44,7 @@ class MediaStore {
     }
   }
 
-  async addRecentPicture(picturePost: PicturePost) {
+  async addRecentPicture(picturePost: FirebaseFirestoreTypes.DocumentData) {
     this.recentPictures = [picturePost, ...this.recentPictures];
   }
 }

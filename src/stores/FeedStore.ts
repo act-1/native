@@ -65,20 +65,28 @@ class FeedStore {
    *
    * Therefor we moved it here for resolving the issue faster.
    */
-  async uploadImage({ image, text, location }: { image: ImagePickerResponse; text?: string; location?: ILocation }) {
+  async uploadImage({
+    image,
+    textContent,
+    location,
+  }: {
+    image: ImagePickerResponse;
+    textContent?: string;
+    location?: ILocation;
+  }) {
     try {
       runInAction(() => {
         this.uploadStatus = 'in_progress';
       });
 
-      const postData = await newImagePost({ image, text, location });
+      const document = await newImagePost({ image, textContent, location });
       // Upload to firestore
 
       runInAction(() => {
         this.uploadStatus = 'done';
       });
 
-      this.rootStore?.mediaStore.addRecentPicture(postData);
+      this.rootStore?.mediaStore.addRecentPicture(document);
 
       setTimeout(() => {
         runInAction(() => {
