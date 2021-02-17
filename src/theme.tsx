@@ -115,6 +115,7 @@ const theme = createTheme({
     boxSubtitle: {
       fontFamily: 'AtlasDL3.1AAA-Regular',
       fontSize: 15,
+      textAlign: 'left',
       color: 'subText',
     },
     appLink: {
