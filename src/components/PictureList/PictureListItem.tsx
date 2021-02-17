@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { Box, Text, LikeButton } from '../';
 import { useStore } from '../../stores';
-import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import { likePost, unlikePost } from '@services/feed';
 import { PicturePost } from '@types/collections';
@@ -22,7 +21,6 @@ function PictureListItem({
   updatePostLikeCount: (postId: string, likeCount: number) => void;
 }) {
   const { feedStore } = useStore();
-  const navigation = useNavigation();
 
   const likePress = async () => {
     const liked = feedStore.userPostLikes.includes(post.id);
@@ -49,11 +47,7 @@ function PictureListItem({
           <Text variant="boxTitle">{post.authorName}</Text>
           {post.locationId && (
             <Box flexDirection="row" alignItems="center">
-              <Text
-                variant="boxSubtitle"
-                textAlign="left"
-                onPress={() => navigation.navigate('LocationPage', { locationId: post.locationId })}
-              >
+              <Text variant="boxSubtitle" textAlign="left">
                 {post.locationName}
               </Text>
             </Box>
