@@ -9,7 +9,7 @@ import FastImage from 'react-native-fast-image';
 const CommunityStack = createStackNavigator();
 
 function CommunityNavigator() {
-  const { photoURL: profilePicture } = auth().currentUser;
+  const { photoURL: profilePicture } = auth().currentUser!;
 
   return (
     <CommunityStack.Navigator
@@ -33,7 +33,7 @@ function CommunityNavigator() {
       })}
     >
       <CommunityStack.Screen
-        name="LiveFeed"
+        name="Community"
         options={({ navigation }) => ({
           title: 'קהילה',
           headerTitleAlign: 'center',

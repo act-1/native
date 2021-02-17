@@ -1,42 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Box, Text } from '../..';
-import { useNavigation } from '@react-navigation/native';
-// import ContentLoader, { Rect } from 'react-content-loader/native';
 import FastImage from 'react-native-fast-image';
 
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../../stores';
+import { PicturePost } from '@types/collections';
+
+import { useNavigation } from '@react-navigation/native';
+
+// import ContentLoader, { Rect } from 'react-content-loader/native';
+// const navigation = useNavigation();
+
 function LatestPictures() {
-  const navigation = useNavigation();
+  const { mediaStore } = useStore();
+  const [recentPictures, setRecentPictures] = useState<PicturePost[]>([]);
+
+  useEffect(() => {
+    if (mediaStore.recentPictures.length > 0) {
+      const picturesData: PicturePost[] = mediaStore.recentPictures.map(
+        (document: FirebaseFirestoreTypes.DocumentData) => document.data() as PicturePost
+      );
+
+      const sortedPictures = picturesData.sort((a, b) => b.likeCount - a.likeCount);
+      sortedPictures.forEach((l) => console.log(l.likeCount));
+      setRecentPictures(sortedPictures);
+    }
+  }, [mediaStore.recentPictures]);
+
+  useEffect(() => {
+    mediaStore.getRecentPictures({ limit: 5 });
+  }, [mediaStore]);
+
+  if (recentPictures.length === 0) {
+    return null;
+  }
 
   return (
     <Box paddingHorizontal="m" marginBottom="l">
       <Box flexDirection="row" marginBottom="m">
-        <FastImage
-          source={{ uri: 'https://www.activestills.org/media-lib/main_image45426_medium.jpg' }}
-          style={{ flex: 0.63, height: 236 }}
-        />
+        <FastImage source={{ uri: recentPictures[0].pictureUrl }} style={{ flex: 0.63, height: 236 }} />
 
         <Box flex={0.37}>
-          <FastImage
-            source={{ uri: 'https://www.activestills.org/media-lib/main_image44730_medium.jpg' }}
-            style={{ height: 112, marginLeft: 12, marginBottom: 12 }}
-          />
-          <FastImage
-            source={{ uri: 'https://www.activestills.org/media-lib/main_image8159_medium.jpg' }}
-            style={{ height: 112, marginLeft: 12 }}
-          />
+          <FastImage source={{ uri: recentPictures[1].pictureUrl }} style={{ height: 112, marginLeft: 12, marginBottom: 12 }} />
+          <FastImage source={{ uri: recentPictures[2].pictureUrl }} style={{ height: 112, marginLeft: 12 }} />
         </Box>
       </Box>
       <Box flexDirection="row" flex={1}>
-        <FastImage
-          source={{ uri: 'https://www.activestills.org/media-lib/main_image30529_medium.jpg' }}
-          style={{ flex: 0.9, height: 112 }}
-        />
+        <FastImage source={{ uri: recentPictures[3].pictureUrl }} style={{ flex: 0.9, height: 112 }} />
 
         <FastImage
           source={{
-            uri:
-              'https://res.cloudinary.com/onekm/image/upload/v1604615281/protest_pictures/eoLv9Kb4x3sFBcAkcdMh/2020-11-06/U0Pfwm_eVuiaP7H7XtS84.jpg',
+            uri: recentPictures[4].pictureUrl,
           }}
           style={{ flex: 0.9, height: 112, marginLeft: 12 }}
         />
@@ -58,7 +74,7 @@ function LatestPictures() {
   );
 }
 
-export default LatestPictures;
+export default observer(LatestPictures);
 
 const styles = StyleSheet.create({
   latestPicture: {

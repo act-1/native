@@ -31,7 +31,7 @@ class MediaStore {
     }
   }
 
-  async getRecentPictures({ limit, startAfter }: { limit: number; startAfter: FirebaseFirestoreTypes.DocumentData }) {
+  async getRecentPictures({ limit, startAfter }: { limit: number; startAfter?: FirebaseFirestoreTypes.DocumentData }) {
     try {
       const recentPictures = await FeedService.getRecentPictures({ limit, startAfter });
 

@@ -161,7 +161,7 @@ export function archivePost(postId: string) {
 }
 type GetRecentPicturesProps = {
   limit: number;
-  startAfter: FirebaseFirestoreTypes.DocumentData;
+  startAfter?: FirebaseFirestoreTypes.DocumentData;
 };
 
 export async function getRecentPictures({ limit = 10, startAfter }: GetRecentPicturesProps) {
