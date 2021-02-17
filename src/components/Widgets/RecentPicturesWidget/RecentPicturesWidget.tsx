@@ -9,11 +9,13 @@ import { useStore } from '../../../stores';
 import { PicturePost } from '@types/collections';
 
 import { useNavigation } from '@react-navigation/native';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 // import ContentLoader, { Rect } from 'react-content-loader/native';
-// const navigation = useNavigation();
 
-function LatestPictures() {
+function RecentPicturesWidget() {
+  const navigation = useNavigation();
+
   const { mediaStore } = useStore();
   const [recentPictures, setRecentPictures] = useState<PicturePost[]>([]);
 
@@ -57,24 +59,26 @@ function LatestPictures() {
           style={{ flex: 0.9, height: 112, marginLeft: 12 }}
         />
 
-        <Box
-          style={styles.morePicturesBox}
-          flex={1}
-          marginLeft="m"
-          alignItems="center"
-          justifyContent="center"
-          borderColor="seperator"
-        >
-          <Text variant="boxTitle" fontSize={14} textAlign="center">
-            לכל התמונות
-          </Text>
-        </Box>
+        <TouchableNativeFeedback onPress={() => navigation.navigate('RecentPictures')}>
+          <Box
+            style={styles.morePicturesBox}
+            flex={1}
+            marginLeft="m"
+            alignItems="center"
+            justifyContent="center"
+            borderColor="seperator"
+          >
+            <Text variant="boxTitle" fontSize={14} textAlign="center">
+              לכל התמונות
+            </Text>
+          </Box>
+        </TouchableNativeFeedback>
       </Box>
     </Box>
   );
 }
 
-export default observer(LatestPictures);
+export default observer(RecentPicturesWidget);
 
 const styles = StyleSheet.create({
   latestPicture: {

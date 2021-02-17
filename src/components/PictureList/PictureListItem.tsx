@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Feather';
 import { PicturePost } from '@types/collections';
+import Pinchable from 'react-native-pinchable';
 
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
@@ -34,13 +35,15 @@ function PictureListItem({ item, onLayout }: { item: PicturePost; onLayout: (eve
           )}
         </Box>
       </Box>
-      <Box style={{ marginHorizontal: -16, marginBottom: 8 }}>
-        {/* Height is calculated propotionaly to the device width */}
-        <FastImage
-          source={{ uri: item.pictureUrl }}
-          style={{ height: item.pictureHeight / (item.pictureWidth / deviceWidth), width: '100%' }}
-        />
-      </Box>
+      <Pinchable>
+        <Box style={{ marginHorizontal: -16, marginBottom: 8 }}>
+          {/* Height is calculated propotionaly to the device width */}
+          <FastImage
+            source={{ uri: item.pictureUrl }}
+            style={{ height: item.pictureHeight / (item.pictureWidth / deviceWidth), width: '100%' }}
+          />
+        </Box>
+      </Pinchable>
       <Box paddingHorizontal="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="s">
         <Box flexDirection="row" alignItems="center">
           <Icon name="heart" color={false ? '#ec534b' : '#fff'} size={19} style={{ marginRight: 6 }} />

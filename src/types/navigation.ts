@@ -31,6 +31,7 @@ export type RootStackParamList = {
   NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: ILocation };
   SelectLocation: undefined;
   Explore: undefined;
+  RecentPictures: undefined;
 };
 
 type TabBarParamList = {

@@ -16,14 +16,6 @@ function PictureList({ pictures, title, initialIndex }: { pictures: PicturePost[
   const navigation = useNavigation();
   const flatListRef = useRef<FlatList>(null);
 
-  React.useLayoutEffect(() => {
-    if (title !== '') {
-      navigation.setOptions({
-        title,
-      });
-    }
-  }, [navigation, title]);
-
   useEffect(() => {
     // This is a hack to solve `initialScrollToIndex` issue, when the items didn't have enough time to render initially
     // and the method failed.
