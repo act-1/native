@@ -1,15 +1,17 @@
 import React, { useRef, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, ActivityIndicator } from 'react-native';
 import { PicturePost } from '@types/collections';
 import PictureListItem from './PictureListItem';
 
 type PictureListProps = {
   pictures: PicturePost[];
   updatePostLikeCount: (postId: string, likeCount: number) => void;
+  fetchMorePictures: () => void;
+  fetchingPictures: boolean;
   initialIndex?: number;
 };
 
-function PictureList({ pictures, updatePostLikeCount, initialIndex }: PictureListProps) {
+function PictureList({ pictures, updatePostLikeCount, fetchMorePictures, fetchingPictures, initialIndex }: PictureListProps) {
   const [initialLoad, setInitialLoad] = useState(false);
   const flatListRef = useRef<FlatList>(null);
 
@@ -32,7 +34,10 @@ function PictureList({ pictures, updatePostLikeCount, initialIndex }: PictureLis
       renderItem={({ item }) => <PictureListItem post={item} updatePostLikeCount={updatePostLikeCount} />}
       initialNumToRender={6}
       onScrollToIndexFailed={() => {}}
+      ListFooterComponent={() => <ActivityIndicator color="grey" animating={fetchingPictures} />}
+      ListFooterComponentStyle={{ marginBottom: 60 }}
       onContentSizeChange={scrollToIndex}
+      onEndReached={fetchMorePictures}
     />
   );
 }

@@ -165,15 +165,23 @@ type GetRecentPicturesProps = {
 
 export async function getRecentPictures({ limit = 10, startAfter }: GetRecentPicturesProps) {
   try {
-    const query = firestore()
+    let query = firestore()
       .collection('posts')
       .where('type', '==', 'picture')
       .where('archived', '==', false)
       .orderBy('createdAt', 'desc')
       .limit(limit);
 
+    // There's a strange behavior with the startAfter and limit conditions if we build the
+    // query incrementally, so we create a new one.
     if (startAfter) {
-      query.startAfter(startAfter);
+      query = firestore()
+        .collection('posts')
+        .where('type', '==', 'picture')
+        .where('archived', '==', false)
+        .orderBy('createdAt', 'desc')
+        .startAfter(startAfter)
+        .limit(limit);
     }
 
     const postsSnapshot = await query.get();

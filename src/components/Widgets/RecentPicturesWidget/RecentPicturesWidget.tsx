@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Platform, StyleSheet } from 'react-native';
-import { Box, Text } from '../..';
+import { Box } from '../..';
 import FastImage from 'react-native-fast-image';
 
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
@@ -9,7 +9,6 @@ import { useStore } from '../../../stores';
 import { PicturePost } from '@types/collections';
 
 import { useNavigation } from '@react-navigation/native';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import TouchableScale from 'react-native-touchable-scale';
 
 import HapticFeedback from 'react-native-haptic-feedback';

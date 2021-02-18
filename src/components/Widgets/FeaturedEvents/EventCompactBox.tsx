@@ -49,6 +49,7 @@ function EventCompactBox({
           alignSelf="center"
           alignItems="center"
           justifyContent="center"
+          elevation={3}
         >
           <Text variant="boxTitle" color="mainBackground" textAlign="center">
             {formatUpcomingDate(startDate).replace('יום', '')}

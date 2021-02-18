@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginLeft: 2,
     borderRadius: 20,
+    elevation: 5,
   },
   arrowContainer: {
     position: 'absolute',
