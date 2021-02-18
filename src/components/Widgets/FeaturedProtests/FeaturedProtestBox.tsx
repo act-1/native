@@ -14,11 +14,10 @@ type LiveLocationBoxProps = {
 };
 
 function getRandomNumber() {
-  return Math.floor(Math.random() * 80) + 1;
+  return Math.floor(Math.random() * 60) + 1;
 }
 
-const { width: deviceWidth } = Dimensions.get('screen');
-const boxWidth = 204; // Substract 12 margins
+const boxWidth = 280; // Substract 12 margins
 
 function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onPress }: LiveLocationBoxProps) {
   return (
@@ -27,32 +26,30 @@ function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onP
       friction={20}
       onPress={onPress}
       onPressIn={() => HapticFeedback.trigger('impactLight')}
-      onPressOut={() => HapticFeedback.trigger('impactLight')}
+      onPressOut={() => HapticFeedback.trigger('impactMedium')}
       style={{ width: boxWidth, marginHorizontal: 12 }}
     >
       <FastImage
         style={{
           width: boxWidth,
-          height: 160,
+          height: 146,
           justifyContent: 'flex-end',
           alignItems: 'center',
           marginBottom: 6,
-          borderRadius: 8,
+          borderRadius: 4,
         }}
         source={{ uri: thumbnail }}
-      >
-        <Box
-          paddingVertical="s"
-          width={'100%'}
-          alignSelf="center"
-          alignItems="center"
-          justifyContent="center"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
-        >
-          <Text variant="boxTitle" fontSize={14} color="primaryColor" textAlign="center" marginBottom="xs">
-            {attendingCount} מפגינים עכשיו
-          </Text>
-          <Box flexDirection="row">
+      />
+
+      <Box alignItems="flex-start" flex={1}>
+        <Text variant="boxTitle" fontSize={16} marginBottom="xs">
+          טקס פרישה לדורון ידיד
+        </Text>
+        <Text variant="boxSubtitle" fontSize={14} marginBottom="xs">
+          {locationName}, {city}
+        </Text>
+        <Box width={'100%'} marginLeft="s">
+          <Box flexDirection="row" alignItems="center">
             <FastImage
               source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
               style={styles.attendingProfilePic}
@@ -75,14 +72,6 @@ function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onP
             />
           </Box>
         </Box>
-      </FastImage>
-      <Box alignItems="center" flex={1}>
-        <Text variant="boxTitle" fontSize={16}>
-          {locationName}
-        </Text>
-        <Text variant="boxSubtitle" fontSize={14}>
-          {city}
-        </Text>
       </Box>
     </TouchableScale>
   );
@@ -100,10 +89,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#191919',
   },
   attendingProfilePic: {
-    height: 30,
-    width: 30,
+    height: 32,
+    width: 32,
     borderRadius: 25,
-    borderWidth: 3,
+    borderWidth: 4,
     borderColor: '#0a0d0f',
     marginLeft: -8,
   },

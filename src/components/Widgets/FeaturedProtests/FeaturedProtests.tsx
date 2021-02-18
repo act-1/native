@@ -18,7 +18,7 @@ function FeaturedProtests({ style }: EventsWidgetProps) {
     <Box style={style} flex={1} width="100%">
       <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{ marginBottom: 24 }}>
         <FeaturedProtestBox
-          thumbnail="https://www.activestills.org/media-lib/main_image44700_medium.jpg?rnd=1562778758"
+          thumbnail="https://scontent.ftlv5-1.fna.fbcdn.net/v/t1.0-9/148103400_4944746045600209_1753518546398248567_n.jpg?_nc_cat=106&ccb=2&_nc_sid=340051&_nc_ohc=a3kqKd5jYX0AX-Kql4B&_nc_ht=scontent.ftlv5-1.fna&oh=7e0751d5bf3b29fefaf9e95e4409d4b2&oe=60483E85"
           city="ירושלים"
           locationName="כיכר פריז"
           attendingCount={3021}

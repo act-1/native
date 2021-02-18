@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
-import functions from '@react-native-firebase/functions';
 import { Box, Text } from '../../components';
-import { StatusBar, StyleSheet, ScrollView, Button } from 'react-native';
+import { StatusBar, StyleSheet, ScrollView, Animated } from 'react-native';
 import { Stats, FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Feather';
 
 function Home() {
+  const fadeInOut = useRef(new Animated.Value(1)).current;
+
+  const sequence = Animated.sequence([
+    Animated.timing(fadeInOut, {
+      toValue: 0,
+      duration: 1400,
+      delay: 850,
+      useNativeDriver: true,
+    }),
+    Animated.timing(fadeInOut, {
+      toValue: 1,
+      duration: 1400,
+      useNativeDriver: true,
+    }),
+  ]);
+
+  useEffect(() => {
+    Animated.loop(sequence).start();
+  }, []);
+
   return (
     <ScrollView style={styles.homeWrapper} showsVerticalScrollIndicator={false}>
       <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
@@ -19,9 +36,11 @@ function Home() {
 
       <FeaturedPictures style={{ marginBottom: 12 }} />
 
-      <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
-        עכשיו מפגינים
-      </Text>
+      <Animated.View style={{ opacity: fadeInOut }}>
+        <Text variant="largeTitle" color="important" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+          עכשיו מפגינים
+        </Text>
+      </Animated.View>
 
       <FeaturedProtests />
 
