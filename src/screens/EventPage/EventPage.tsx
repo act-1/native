@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, StatusBar, Image } from 'react-native';
+import { StatusBar, Image } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
@@ -7,13 +7,18 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { IEvent } from '@types/event';
 import { EventPageScreenProps } from '@types/navigation';
-import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
+import { Box, Text, StickyHeaderScrollView } from '../../components';
+
 import EventPageCounter from './EventPageCounter';
+import EventPageActions from './EventPageActions';
 import EventPageDetail from './EventPageDetail';
+
 import { formatShortDate, formatUpcomingDate } from '@utils/date-utils';
 import mapStyle from '@utils/mapStyle.json';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { format } from 'date-fns';
+
+const eventMode = 'live';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
@@ -81,16 +86,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               {event.attendingCount && <EventPageCounter number={event.attendingCount} text="אישרו הגעה" />}
             </Box>
 
-            <Box
-              flexDirection="row"
-              justifyContent="space-evenly"
-              backgroundColor="mainBackground"
-              paddingVertical="xm"
-              marginBottom="m"
-            >
-              <CircularButton iconName="check" color={isAttending ? 'green' : 'grey'} text="אישור הגעה" onPress={attendEvent} />
-              <CircularButton iconName="share" color="blue" text="הזמנת חברים" />
-            </Box>
+            <EventPageActions eventMode={eventMode} isAttending={isAttending} attendEvent={attendEvent} />
 
             <Box padding="m" marginBottom="m" backgroundColor="greyBackground">
               <Text variant="largeTitle" marginBottom="m">
