@@ -8,14 +8,7 @@ function RecentPicturesWidgetContentLoader({ loadedPictures }: { loadedPictures:
   if (!loadedPictures.includes(undefined)) return null;
 
   return (
-    <ContentLoader
-      width={deviceWidth}
-      height={360}
-      backgroundColor="#222222"
-      foregroundColor="#333333"
-      rtl
-      style={{ position: 'absolute', zIndex: 1 }}
-    >
+    <ContentLoader width={deviceWidth} height={360} backgroundColor="#222222" foregroundColor="#333333" rtl>
       {!loadedPictures[0] && <Rect x={12} y="0" width={'61.5%'} height={236} ry={2} />}
       {!loadedPictures[1] && <Rect x={deviceWidth - deviceWidth / 3 + 2} y="0" width={deviceWidth / 3.255} height={112} ry={2} />}
       {!loadedPictures[2] && (

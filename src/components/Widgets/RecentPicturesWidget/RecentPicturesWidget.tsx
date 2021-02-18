@@ -13,6 +13,7 @@ import TouchableScale from 'react-native-touchable-scale';
 
 import HapticFeedback from 'react-native-haptic-feedback';
 import { updateArrayItem } from '@utils/array-utils';
+import { Pressable } from 'react-native';
 
 function RecentPicturesWidget() {
   const navigation = useNavigation();
@@ -51,8 +52,10 @@ function RecentPicturesWidget() {
   };
 
   return (
-    <Box paddingHorizontal="m" marginBottom="l" height={360}>
-      <ContentLoader loadedPictures={loadedPictures} />
+    <Box paddingHorizontal="m" marginBottom="l" height={360} width="100%">
+      <Pressable style={{ position: 'absolute', zIndex: 1 }} onPress={() => navigation.navigate('RecentPictures')}>
+        <ContentLoader loadedPictures={loadedPictures} />
+      </Pressable>
       <Box flexDirection="row" marginBottom="m">
         <TouchableScale
           activeScale={0.95}
