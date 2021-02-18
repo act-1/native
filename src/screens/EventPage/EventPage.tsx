@@ -65,7 +65,6 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
   return (
     <Box flex={1}>
-      <StatusBar barStyle="light-content" />
       <StickyHeaderScrollView
         goBack={() => navigation.goBack()}
         headerTitle={event?.title || ''}
@@ -83,7 +82,9 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
             </Box>
 
             <Box marginBottom="m">
-              {event.attendingCount && <EventPageCounter number={event.attendingCount} text="אישרו הגעה" />}
+              {event.attendingCount && (
+                <EventPageCounter eventMode={eventMode} attendingCount={event.attendingCount} locationId={event.locationId} />
+              )}
             </Box>
 
             <EventPageActions eventMode={eventMode} isAttending={isAttending} attendEvent={attendEvent} />

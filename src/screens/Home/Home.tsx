@@ -19,11 +19,11 @@ function Home() {
 
       <FeaturedPictures style={{ marginBottom: 12 }} />
 
-      {/* <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+      <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         עכשיו מפגינים
       </Text>
 
-      <FeaturedProtests /> */}
+      <FeaturedProtests />
 
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         הפגנות קרובות

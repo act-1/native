@@ -1,5 +1,7 @@
 type LatLng = [number, number];
 
+type EventStatus = 'upcoming' | 'live' | 'past';
+
 type PrivacyOptions = 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
 
 type CheckInParams = {

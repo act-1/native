@@ -2,15 +2,21 @@ import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import { Box, Text } from '../../components';
 import Ticker from '@components/Ticker';
+import LocationCounter from '@screens/LocationPage/components/LocationCounter';
 
 type EventPageCounterProps = {
-  number: number;
-  text: string;
+  eventMode: EventStatus;
+  attendingCount: number;
+  locationId: string;
   style?: ViewStyle;
 };
 
-function EventPageCounter({ number, text, style }: EventPageCounterProps) {
-  const formattedNumber = number.toLocaleString();
+function EventPageCounter({ eventMode, attendingCount, locationId, style }: EventPageCounterProps) {
+  if (eventMode === 'live') {
+    return <LocationCounter locationId={locationId} />;
+  }
+
+  const formattedNumber = attendingCount.toLocaleString();
 
   return (
     <Box
