@@ -29,7 +29,7 @@ function EventPageCounter({ eventMode, attendingCount, locationId, style }: Even
       <Box minHeight={35}>
         <Ticker textStyle={styles.countTextStyle}>{formattedNumber}</Ticker>
       </Box>
-      <Text variant="text">{text}</Text>
+      <Text variant="text">יוצאים להפגין</Text>
     </Box>
   );
 }

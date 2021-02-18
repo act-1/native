@@ -18,7 +18,7 @@ import mapStyle from '@utils/mapStyle.json';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { format } from 'date-fns';
 
-const eventMode = 'live';
+const eventMode = 's';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
@@ -61,7 +61,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
         setAttending(true);
       }
     }
-  }, [eventStore.events, route.params, userStore.userEventIds]);
+  }, [route.params, eventStore.events]);
 
   return (
     <Box flex={1}>
@@ -82,7 +82,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
             </Box>
 
             <Box marginBottom="m">
-              {event.attendingCount && (
+              {event.attendingCount >= 0 && (
                 <EventPageCounter eventMode={eventMode} attendingCount={event.attendingCount} locationId={event.locationId} />
               )}
             </Box>
