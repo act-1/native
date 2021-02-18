@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Platform, StyleSheet } from 'react-native';
 import { Box } from '../..';
+import ContentLoader from './RecentPicturesWidgetContentLoader';
 import FastImage from 'react-native-fast-image';
 
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
@@ -12,14 +12,14 @@ import { useNavigation } from '@react-navigation/native';
 import TouchableScale from 'react-native-touchable-scale';
 
 import HapticFeedback from 'react-native-haptic-feedback';
-
-// import ContentLoader, { Rect } from 'react-content-loader/native';
+import { updateArrayItem } from '@utils/array-utils';
 
 function RecentPicturesWidget() {
   const navigation = useNavigation();
 
   const { mediaStore } = useStore();
   const [recentPictures, setRecentPictures] = useState<PicturePost[]>([]);
+  const [loadedPictures, setLoadedPictures] = useState<(true | undefined)[]>(new Array(6).fill(undefined));
 
   const navigateToPictureList = (pictureIndex: number) => {
     navigation.navigate('RecentPictures', { initialIndex: pictureIndex });
@@ -43,8 +43,16 @@ function RecentPicturesWidget() {
     return null;
   }
 
+  const onImageLoad = (imageIndex: number) => {
+    setLoadedPictures((prevState) => {
+      const updatedArray = updateArrayItem(prevState, imageIndex, true);
+      return updatedArray;
+    });
+  };
+
   return (
-    <Box paddingHorizontal="m" marginBottom="l">
+    <Box paddingHorizontal="m" marginBottom="l" height={360}>
+      <ContentLoader loadedPictures={loadedPictures} />
       <Box flexDirection="row" marginBottom="m">
         <TouchableScale
           activeScale={0.95}
@@ -54,7 +62,11 @@ function RecentPicturesWidget() {
           onPress={() => navigation.navigate('RecentPictures')}
           style={{ flex: 0.65, marginRight: 12 }}
         >
-          <FastImage source={{ uri: recentPictures[0].pictureUrl }} style={{ height: 236, borderRadius: 2 }} />
+          <FastImage
+            source={{ uri: recentPictures[0].pictureUrl }}
+            style={{ height: 236, borderRadius: 2 }}
+            onLoad={() => onImageLoad(0)}
+          />
         </TouchableScale>
         <Box flex={0.32} style={{ marginRight: -12 }}>
           <TouchableScale
@@ -67,6 +79,7 @@ function RecentPicturesWidget() {
             <FastImage
               source={{ uri: recentPictures[1].pictureUrl }}
               style={{ height: 112, marginBottom: 12, borderRadius: 2 }}
+              onLoad={() => onImageLoad(1)}
             />
           </TouchableScale>
           <TouchableScale
@@ -76,7 +89,11 @@ function RecentPicturesWidget() {
             onPressIn={() => HapticFeedback.trigger('impactLight')}
             onPressOut={() => HapticFeedback.trigger('impactLight')}
           >
-            <FastImage source={{ uri: recentPictures[2].pictureUrl }} style={{ height: 112, borderRadius: 2 }} />
+            <FastImage
+              source={{ uri: recentPictures[2].pictureUrl }}
+              style={{ height: 112, borderRadius: 2 }}
+              onLoad={() => onImageLoad(2)}
+            />
           </TouchableScale>
         </Box>
       </Box>
@@ -89,7 +106,11 @@ function RecentPicturesWidget() {
           onPressOut={() => HapticFeedback.trigger('impactLight')}
           style={{ flexGrow: 0.35 }}
         >
-          <FastImage source={{ uri: recentPictures[3].pictureUrl }} style={{ height: 112, borderRadius: 2 }} />
+          <FastImage
+            source={{ uri: recentPictures[3].pictureUrl }}
+            style={{ height: 112, borderRadius: 2 }}
+            onLoad={() => onImageLoad(3)}
+          />
         </TouchableScale>
         <TouchableScale
           activeScale={0.95}
@@ -99,7 +120,11 @@ function RecentPicturesWidget() {
           onPressOut={() => HapticFeedback.trigger('impactLight')}
           style={{ flexGrow: 0.35 }}
         >
-          <FastImage source={{ uri: recentPictures[4].pictureUrl }} style={{ height: 112, marginLeft: 12, borderRadius: 2 }} />
+          <FastImage
+            source={{ uri: recentPictures[4].pictureUrl }}
+            style={{ height: 112, marginLeft: 12, borderRadius: 2 }}
+            onLoad={() => onImageLoad(4)}
+          />
         </TouchableScale>
         <TouchableScale
           activeScale={0.95}
@@ -109,38 +134,15 @@ function RecentPicturesWidget() {
           onPressOut={() => HapticFeedback.trigger('impactLight')}
           style={{ flexGrow: 0.35 }}
         >
-          <FastImage source={{ uri: recentPictures[5].pictureUrl }} style={{ height: 112, marginLeft: 12, borderRadius: 2 }} />
+          <FastImage
+            source={{ uri: recentPictures[5].pictureUrl }}
+            style={{ height: 112, marginLeft: 12, borderRadius: 2 }}
+            onLoad={() => onImageLoad(5)}
+          />
         </TouchableScale>
-        {/* <TouchableNativeFeedback onPress={() => navigation.navigate('RecentPictures')}>
-          <Box
-            style={styles.morePicturesBox}
-            flex={1}
-            marginLeft="m"
-            alignItems="center"
-            justifyContent="center"
-            borderColor="seperator"
-          >
-            <Text variant="boxTitle" fontSize={14} textAlign="center">
-              לכל התמונות
-            </Text>
-          </Box>
-        </TouchableNativeFeedback> */}
       </Box>
     </Box>
   );
 }
 
 export default observer(RecentPicturesWidget);
-
-const styles = StyleSheet.create({
-  latestPicture: {
-    borderRadius: 4,
-  },
-  morePicturesBox: {
-    height: 112,
-    minWidth: Platform.select({ android: 112, ios: null }),
-    borderColor: '#222222',
-    borderWidth: 2,
-    borderRadius: 4,
-  },
-});
