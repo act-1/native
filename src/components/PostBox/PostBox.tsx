@@ -10,13 +10,13 @@ import { scale } from 'react-native-size-matters';
 import PostBoxBubble from './PostBoxBubble';
 import { ContextMenuView } from 'react-native-ios-context-menu';
 
+import { TouchableNativeFeedback, TouchableOpacity } from 'react-native-gesture-handler';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import Icon from 'react-native-vector-icons/Feather';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
-import { TouchableNativeFeedback, TouchableOpacity } from 'react-native-gesture-handler';
 timeago.register('he', he);
 
 type PostBoxProps = {

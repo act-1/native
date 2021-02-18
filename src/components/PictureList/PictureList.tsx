@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { FlatList } from 'react-native';
 import { PicturePost } from '@types/collections';
 import PictureListItem from './PictureListItem';
@@ -10,18 +10,18 @@ type PictureListProps = {
 };
 
 function PictureList({ pictures, updatePostLikeCount, initialIndex }: PictureListProps) {
+  const [initialLoad, setInitialLoad] = useState(false);
   const flatListRef = useRef<FlatList>(null);
 
-  useEffect(() => {
-    // This is a hack to solve `initialScrollToIndex` issue, when the items didn't have enough time to render initially
-    // and the method failed.
-    if (initialIndex) {
-      let wait = new Promise((resolve) => setTimeout(resolve, 70));
-      wait.then(() => {
-        flatListRef.current!.scrollToIndex({ index: initialIndex, animated: false });
-      });
+  const scrollToIndex = () => {
+    if (initialIndex && !initialLoad) {
+      setTimeout(() => {
+        flatListRef.current?.scrollToIndex({ index: initialIndex });
+      }, 420);
+
+      setInitialLoad(true);
     }
-  }, [initialIndex]);
+  };
 
   return (
     <FlatList
@@ -30,7 +30,9 @@ function PictureList({ pictures, updatePostLikeCount, initialIndex }: PictureLis
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <PictureListItem post={item} updatePostLikeCount={updatePostLikeCount} />}
-      initialNumToRender={2}
+      initialNumToRender={6}
+      onScrollToIndexFailed={() => {}}
+      onContentSizeChange={scrollToIndex}
     />
   );
 }

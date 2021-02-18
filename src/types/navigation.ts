@@ -14,6 +14,7 @@ export type LocationScreenProps = StackScreenProps<RootStackParamList, 'Location
 export type ProfileScreenProps = StackScreenProps<RootStackParamList, 'Profile'>;
 export type ActionScreenProps = StackScreenProps<RootStackParamList, 'ActionScreen'>;
 export type NewPostProps = StackScreenProps<RootStackParamList, 'NewPost'>;
+export type RecentPicturesProps = StackScreenProps<RootStackParamList, 'RecentPictures'>;
 
 export type RootStackParamList = {
   AppTabs: undefined;
@@ -31,7 +32,7 @@ export type RootStackParamList = {
   NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: ILocation };
   SelectLocation: undefined;
   Explore: undefined;
-  RecentPictures: undefined;
+  RecentPictures: { initialIndex?: number };
 };
 
 type TabBarParamList = {

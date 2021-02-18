@@ -32,7 +32,7 @@ type FeaturedPicturesProps = {
 function FeaturedPictureBox({ blurhash, pictureUrl, locationName, createdAt, parallaxProps, onPress }: FeaturedPicturesProps) {
   const { onImageLoadEnd, onImageLoadError, placeholderOpacity, renderPlaceholder } = useImagePlaceholder();
   const blurhashStyle = useMemo(() => [styles.item, { opacity: placeholderOpacity }], [placeholderOpacity]);
-
+  console.log(createdAt);
   return (
     <TouchableScale
       activeScale={0.96}

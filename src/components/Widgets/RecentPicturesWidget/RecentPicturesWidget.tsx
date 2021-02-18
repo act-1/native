@@ -10,6 +10,9 @@ import { PicturePost } from '@types/collections';
 
 import { useNavigation } from '@react-navigation/native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import TouchableScale from 'react-native-touchable-scale';
+
+import HapticFeedback from 'react-native-haptic-feedback';
 
 // import ContentLoader, { Rect } from 'react-content-loader/native';
 
@@ -19,21 +22,22 @@ function RecentPicturesWidget() {
   const { mediaStore } = useStore();
   const [recentPictures, setRecentPictures] = useState<PicturePost[]>([]);
 
-  useEffect(() => {
-    console.log('RECENT ARR: ', mediaStore.recentPictures);
-    if (mediaStore.recentPictures.length > 0) {
-      const picturesData: PicturePost[] = mediaStore.recentPictures.map((document: FirebaseFirestoreTypes.DocumentData) => {
-        return document.data() as PicturePost;
-      });
+  const navigateToPictureList = (pictureIndex: number) => {
+    navigation.navigate('RecentPictures', { initialIndex: pictureIndex });
+  };
 
-      const sortedPictures = picturesData.sort((a, b) => b.likeCount - a.likeCount);
-      sortedPictures.forEach((l) => console.log(l.likeCount));
-      setRecentPictures(sortedPictures);
+  useEffect(() => {
+    if (mediaStore.recentPictures.length > 0) {
+      const picturesData: PicturePost[] = mediaStore.recentPictures.map(
+        (document: FirebaseFirestoreTypes.DocumentData) => document.data() as PicturePost
+      );
+
+      setRecentPictures(picturesData);
     }
   }, [mediaStore.recentPictures]);
 
   useEffect(() => {
-    mediaStore.getRecentPictures({ limit: 5 });
+    mediaStore.getRecentPictures({ limit: 6 });
   }, [mediaStore]);
 
   if (recentPictures.length === 0) {
@@ -43,27 +47,72 @@ function RecentPicturesWidget() {
   return (
     <Box paddingHorizontal="m" marginBottom="l">
       <Box flexDirection="row" marginBottom="m">
-        <FastImage source={{ uri: recentPictures[0].pictureUrl }} style={{ flex: 0.63, height: 236, borderRadius: 2 }} />
-
-        <Box flex={0.37}>
-          <FastImage
-            source={{ uri: recentPictures[1].pictureUrl }}
-            style={{ height: 112, marginLeft: 12, marginBottom: 12, borderRadius: 2 }}
-          />
-          <FastImage source={{ uri: recentPictures[2].pictureUrl }} style={{ height: 112, marginLeft: 12, borderRadius: 2 }} />
+        <TouchableScale
+          activeScale={0.95}
+          friction={10}
+          onPressIn={() => HapticFeedback.trigger('impactLight')}
+          onPressOut={() => HapticFeedback.trigger('impactLight')}
+          onPress={() => navigation.navigate('RecentPictures')}
+          style={{ flex: 0.65, marginRight: 12 }}
+        >
+          <FastImage source={{ uri: recentPictures[0].pictureUrl }} style={{ height: 236, borderRadius: 2 }} />
+        </TouchableScale>
+        <Box flex={0.32} style={{ marginRight: -12 }}>
+          <TouchableScale
+            activeScale={0.95}
+            friction={10}
+            onPress={() => navigateToPictureList(1)}
+            onPressIn={() => HapticFeedback.trigger('impactLight')}
+            onPressOut={() => HapticFeedback.trigger('impactLight')}
+          >
+            <FastImage
+              source={{ uri: recentPictures[1].pictureUrl }}
+              style={{ height: 112, marginBottom: 12, borderRadius: 2 }}
+            />
+          </TouchableScale>
+          <TouchableScale
+            activeScale={0.95}
+            friction={10}
+            onPress={() => navigateToPictureList(2)}
+            onPressIn={() => HapticFeedback.trigger('impactLight')}
+            onPressOut={() => HapticFeedback.trigger('impactLight')}
+          >
+            <FastImage source={{ uri: recentPictures[2].pictureUrl }} style={{ height: 112, borderRadius: 2 }} />
+          </TouchableScale>
         </Box>
       </Box>
-      <Box flexDirection="row" flex={1}>
-        <FastImage source={{ uri: recentPictures[3].pictureUrl }} style={{ flex: 0.94, height: 112, borderRadius: 2 }} />
-
-        <FastImage
-          source={{
-            uri: recentPictures[4].pictureUrl,
-          }}
-          style={{ flex: 0.94, height: 112, marginLeft: 12, borderRadius: 2 }}
-        />
-
-        <TouchableNativeFeedback onPress={() => navigation.navigate('RecentPictures')}>
+      <Box flexDirection="row" flex={1} justifyContent="space-between">
+        <TouchableScale
+          activeScale={0.95}
+          friction={10}
+          onPress={() => navigateToPictureList(3)}
+          onPressIn={() => HapticFeedback.trigger('impactLight')}
+          onPressOut={() => HapticFeedback.trigger('impactLight')}
+          style={{ flexGrow: 0.35 }}
+        >
+          <FastImage source={{ uri: recentPictures[3].pictureUrl }} style={{ height: 112, borderRadius: 2 }} />
+        </TouchableScale>
+        <TouchableScale
+          activeScale={0.95}
+          friction={10}
+          onPress={() => navigateToPictureList(4)}
+          onPressIn={() => HapticFeedback.trigger('impactLight')}
+          onPressOut={() => HapticFeedback.trigger('impactLight')}
+          style={{ flexGrow: 0.35 }}
+        >
+          <FastImage source={{ uri: recentPictures[4].pictureUrl }} style={{ height: 112, marginLeft: 12, borderRadius: 2 }} />
+        </TouchableScale>
+        <TouchableScale
+          activeScale={0.95}
+          friction={10}
+          onPress={() => navigateToPictureList(5)}
+          onPressIn={() => HapticFeedback.trigger('impactLight')}
+          onPressOut={() => HapticFeedback.trigger('impactLight')}
+          style={{ flexGrow: 0.35 }}
+        >
+          <FastImage source={{ uri: recentPictures[5].pictureUrl }} style={{ height: 112, marginLeft: 12, borderRadius: 2 }} />
+        </TouchableScale>
+        {/* <TouchableNativeFeedback onPress={() => navigation.navigate('RecentPictures')}>
           <Box
             style={styles.morePicturesBox}
             flex={1}
@@ -76,7 +125,7 @@ function RecentPicturesWidget() {
               לכל התמונות
             </Text>
           </Box>
-        </TouchableNativeFeedback>
+        </TouchableNativeFeedback> */}
       </Box>
     </Box>
   );

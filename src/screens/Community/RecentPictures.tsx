@@ -4,10 +4,11 @@ import { useStore } from '../../stores';
 
 import { PictureList } from '../../components';
 import { PicturePost } from '@types/collections';
+import { RecentPicturesProps } from '@types/navigation';
 
 import { updateArrayByObjectId } from '@utils/array-utils';
 
-function RecentPictures() {
+function RecentPictures({ route }: RecentPicturesProps) {
   const { mediaStore } = useStore();
   const [recentPictures, setRecentPictures] = useState<PicturePost[]>([]);
 
@@ -25,7 +26,9 @@ function RecentPictures() {
     }
   }, [mediaStore.recentPictures]);
 
-  return <PictureList pictures={recentPictures} updatePostLikeCount={updatePostLikeCount} />;
+  return (
+    <PictureList pictures={recentPictures} updatePostLikeCount={updatePostLikeCount} initialIndex={route?.params?.initialIndex} />
+  );
 }
 
 export default observer(RecentPictures);
