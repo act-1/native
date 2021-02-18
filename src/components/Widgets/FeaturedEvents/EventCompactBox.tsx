@@ -28,6 +28,11 @@ function EventCompactBox({
   compactThumbnail,
   onPress,
 }: EventBoxProps) {
+  let upcomingDate = formatUpcomingDate(startDate);
+  if (upcomingDate !== 'היום') {
+    upcomingDate.replace('יום', '');
+  }
+
   return (
     <TouchableScale
       activeScale={0.96}
@@ -42,17 +47,18 @@ function EventCompactBox({
         source={{ uri: compactThumbnail || thumbnail }}
       >
         <Box
-          backgroundColor="mainForeground"
-          marginBottom="m"
-          width={75}
-          borderRadius={4}
           alignSelf="center"
           alignItems="center"
           justifyContent="center"
-          elevation={3}
+          marginBottom="m"
+          width={80}
+          height={20}
+          style={{ backgroundColor: 'rgba(255, 255, 255, 0.935)' }}
+          borderRadius={4}
+          elevation={4}
         >
-          <Text variant="boxTitle" color="mainBackground" textAlign="center">
-            {formatUpcomingDate(startDate).replace('יום', '')}
+          <Text variant="boxTitle" fontSize={14} color="mainBackground" textAlign="center">
+            {upcomingDate}
           </Text>
         </Box>
       </FastImage>

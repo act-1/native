@@ -6,7 +6,6 @@ import { Post, PicturePost } from '@types/collections';
 import Storage, { uploadPicture } from './storage';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import { ILocation } from '@types/location';
-import { createTimestamp } from '@utils/date-utils';
 
 const GeoFirestore = geofirestore.initializeApp(firestore());
 const postsCollection = GeoFirestore.collection('posts');
@@ -159,11 +158,12 @@ export function archivePost(postId: string) {
   });
 }
 type GetRecentPicturesProps = {
-  limit: number;
+  limit?: number;
   startAfter?: FirebaseFirestoreTypes.DocumentData;
+  afterDate?: FirebaseFirestoreTypes.Timestamp;
 };
 
-export async function getRecentPictures({ limit = 10, startAfter }: GetRecentPicturesProps) {
+export async function getRecentPictures({ limit = 10, startAfter, afterDate }: GetRecentPicturesProps) {
   try {
     let query = firestore()
       .collection('posts')
@@ -181,6 +181,17 @@ export async function getRecentPictures({ limit = 10, startAfter }: GetRecentPic
         .where('archived', '==', false)
         .orderBy('createdAt', 'desc')
         .startAfter(startAfter)
+        .limit(limit);
+    }
+
+    // Get new picture, created after the specified date
+    if (afterDate) {
+      query = firestore()
+        .collection('posts')
+        .where('type', '==', 'picture')
+        .where('archived', '==', false)
+        .where('createdAt', '>', afterDate)
+        .orderBy('createdAt', 'desc')
         .limit(limit);
     }
 

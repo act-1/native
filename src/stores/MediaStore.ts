@@ -55,7 +55,31 @@ class MediaStore {
         this.recentPicturesLoading = false;
       });
     } catch (err) {
+      runInAction(() => {
+        this.recentPicturesLoading = false;
+      });
       console.error(err);
+    }
+  }
+
+  async getNewRecentPictures() {
+    this.recentPicturesLoading = true;
+    console.log('hola!');
+    try {
+      const firstPictureDate = this.recentPictures[0].data().createdAt;
+
+      const newPictures = await FeedService.getRecentPictures({ afterDate: firstPictureDate });
+      console.log('Length: ', newPictures.length);
+
+      runInAction(() => {
+        this.recentPictures = [...newPictures, ...this.recentPictures];
+        this.recentPicturesLoading = false;
+      });
+    } catch (err) {
+      console.error(err);
+      runInAction(() => {
+        this.recentPicturesLoading = false;
+      });
     }
   }
 

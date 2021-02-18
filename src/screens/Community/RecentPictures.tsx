@@ -37,6 +37,7 @@ function RecentPictures({ route }: RecentPicturesProps) {
       fetchMorePictures={fetchMorePictures}
       initialIndex={route?.params?.initialIndex}
       fetchingPictures={mediaStore.recentPicturesLoading}
+      onRefresh={() => mediaStore.getNewRecentPictures()}
     />
   );
 }
