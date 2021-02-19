@@ -2,7 +2,7 @@ import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firest
 import { firebase } from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 import * as geofirestore from 'geofirestore';
-import { IEvent } from '@types/event';
+import { Event } from '@types/collections';
 
 // Create a GeoFirestore reference
 const GeoFirestore = geofirestore.initializeApp(firestore());
@@ -29,7 +29,7 @@ const getEventStatus = (startDate: Date, endDate: Date): EventStatus => {
 };
 
 // Get events between 6 days in the past to the upcoming 8 days.
-export async function getEventList(): Promise<IEvent[]> {
+export async function getEventList(): Promise<Event[]> {
   const weekBefore = new Date();
   weekBefore.setDate(weekBefore.getDate() - 6);
 
@@ -40,25 +40,23 @@ export async function getEventList(): Promise<IEvent[]> {
 
   const documents = querySnapshot.docs.map((doc): FirebaseFirestoreTypes.DocumentData => ({ ...doc.data(), id: doc.id }));
 
-  const events = documents.map(
-    (doc): IEvent => ({
-      id: doc.id,
-      title: doc.title,
-      shortTitle: doc.shortTitle,
-      locationId: doc.locationId,
-      locationName: doc.locationName,
-      city: doc.city,
-      thumbnail: doc.thumbnail,
-      compactThumbnail: doc.compactThumbnail,
-      content: doc.content,
-      organizers: doc.organizers,
-      attendingCount: doc.attendingCount,
-      coordinates: doc.coordinates,
-      startDate: doc.startDate.toDate(),
-      endDate: doc.endDate.toDate(),
-      status: getEventStatus(doc.startDate.toDate(), doc.endDate.toDate()),
-    })
-  );
+  const events = documents.map((doc) => ({
+    id: doc.id,
+    title: doc.title,
+    shortTitle: doc.shortTitle,
+    locationId: doc.locationId,
+    locationName: doc.locationName,
+    city: doc.city,
+    thumbnail: doc.thumbnail,
+    compactThumbnail: doc.compactThumbnail,
+    content: doc.content,
+    organizers: doc.organizers,
+    attendingCount: doc.attendingCount,
+    coordinates: doc.coordinates,
+    startDate: doc.startDate.toDate(),
+    endDate: doc.endDate.toDate(),
+    status: getEventStatus(doc.startDate.toDate(), doc.endDate.toDate()),
+  })) as Event[];
 
   return events;
 }

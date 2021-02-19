@@ -7,10 +7,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import FeaturedProtestBox from './FeaturedProtestBox';
 
-import { IEvent } from '@types/event';
+import { Event } from '@types/collections';
 
 type EventsWidgetProps = {
-  protests: IEvent[];
+  protests: Event[];
   style?: ViewStyle;
 };
 

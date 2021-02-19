@@ -1,7 +1,7 @@
 import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { GeoQuerySnapshot } from 'geofirestore-core';
 import * as geofirestore from 'geofirestore';
-import { IEvent } from '@types/event';
+import { Event } from '@types/collections';
 import { ILocation } from '@types/location';
 
 // Create a GeoFirestore reference
@@ -69,7 +69,7 @@ export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: Nearby
  * @param position The position to fetch locations around.
 
  */
-export async function fetchNearbyEventsAndLocations({ position }: NearbyLocationsParams): Promise<(IEvent | ILocation)[]> {
+export async function fetchNearbyEventsAndLocations({ position }: NearbyLocationsParams): Promise<(Event | ILocation)[]> {
   try {
     const [locationsSnapshot, eventsSnapshot] = await Promise.all([
       fetchNearbyLocations({ position }),
@@ -81,12 +81,12 @@ export async function fetchNearbyEventsAndLocations({ position }: NearbyLocation
     const now = new Date();
 
     const eventsData = eventsSnapshot.docs
-      .map((doc: any): IEvent => ({ ...doc.data(), startDate: doc.data().startDate.toDate(), type: 'event' }))
+      .map((doc: any): Event => ({ ...doc.data(), startDate: doc.data().startDate.toDate(), type: 'event' }))
       .filter((event: any) => {
         const twoHoursBeforeEvent = new Date(new Date(event.startDate).setHours(event.startDate.getHours() - 2)); // So events will show up 2 hours from their start;
         return now > twoHoursBeforeEvent;
       });
-    const eventLocationIds = eventsData.map((event: IEvent) => event.locationId);
+    const eventLocationIds = eventsData.map((event: Event) => event.locationId);
 
     // Filter locations that has an ongoing event
     const filteredLocation = locationsData.filter((location) => !eventLocationIds.includes(location.id));

@@ -3,17 +3,16 @@ import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firest
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import EventsAPI from '../services/events';
 import { updateArrayByObjectId } from '@utils/array-utils';
-import { createAnonymousUser } from '../services/user';
-import { IEvent } from '@types/event';
+import { Event, UpcomingEvent, LiveEvent, PastEvent } from '@types/collections';
 import rootStore from './RootStore';
 
 class EventStore {
   rootStore: null | rootStore = null;
   eventsLoaded = false;
-  events: IEvent[] | [] = [];
-  upcomingEvents: IEvent[] | [] = [];
-  liveEvents: IEvent[] | [] = [];
-  pastEvents: IEvent[] | [] = [];
+  events: Event[] | [] = [];
+  upcomingEvents: UpcomingEvent[] | [] = [];
+  liveEvents: LiveEvent[] | [] = [];
+  pastEvents: PastEvent[] | [] = [];
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -26,9 +25,9 @@ class EventStore {
 
       runInAction(() => {
         this.events = events;
-        this.upcomingEvents = events.filter((event) => event.status === 'upcoming');
-        this.liveEvents = events.filter((event) => event.status === 'live');
-        this.pastEvents = events.filter((event) => event.status === 'past');
+        this.upcomingEvents = events.filter((event) => event.status === 'upcoming') as UpcomingEvent[];
+        this.liveEvents = events.filter((event) => event.status === 'live') as LiveEvent[];
+        this.pastEvents = events.filter((event) => event.status === 'past') as PastEvent[];
         this.eventsLoaded = true;
       });
       return events;

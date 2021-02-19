@@ -5,7 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-import { IEvent } from '@types/event';
+import { Event } from '@types/collections';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView } from '../../components';
 
@@ -20,7 +20,7 @@ import { format } from 'date-fns';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
-  const [event, setEvent] = useState<IEvent>();
+  const [event, setEvent] = useState<Event>();
   const [isAttending, setAttending] = useState(false);
 
   let eventTime, eventDate, upcomingDate, shortDate;
@@ -53,7 +53,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
   useEffect(() => {
     if (route.params?.eventId && eventStore.events.length > 0) {
-      const eventData = eventStore.events.find((e: IEvent) => e.id === route.params.eventId);
+      const eventData = eventStore.events.find((e: Event) => e.id === route.params.eventId);
       if (eventData) setEvent(eventData);
       if (userStore.userEventIds.includes(eventData.id)) {
         setAttending(true);
