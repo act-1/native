@@ -119,6 +119,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
               <HTML
                 html={event.content}
+                textSelectable={true}
                 tagsStyles={{
                   p: { textAlign: 'left', marginBottom: 12, fontSize: 15, fontFamily: 'AtlasDL3.1AAA-Regular', color: '#fff' },
                   div: { textAlign: 'left', fontFamily: 'AtlasDL3.1AAA-Regular', fontSize: 15 },
