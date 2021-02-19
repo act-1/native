@@ -1,12 +1,11 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { Text } from '../../components';
+import { Box, Text } from '../../components';
 import { RecentPicturesWidget, FeaturedProtests } from '@components/Widgets';
 import CommunityStats from './CommunityStats';
 
 import { useStore } from '../../stores';
 import { observer } from 'mobx-react-lite';
-import events from '@services/events';
 
 const Community = () => {
   const { eventStore } = useStore();
@@ -18,7 +17,9 @@ const Community = () => {
         תמונות אחרונות
       </Text>
 
-      <RecentPicturesWidget />
+      <Box height={360} paddingHorizontal="m" marginBottom="l">
+        <RecentPicturesWidget />
+      </Box>
 
       {eventStore.pastEvents.length > 0 && (
         <>

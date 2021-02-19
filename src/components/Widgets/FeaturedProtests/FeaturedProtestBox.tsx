@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';
 import { LiveEvent, PastEvent } from '@types/collections';
+import FadeInOutView from '../../FadeInOutView';
 
 type LiveLocationBoxProps = {
   protest: LiveEvent | PastEvent;
@@ -52,9 +53,11 @@ function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
               style={styles.attendingProfilePic}
             />
             {status === 'live' && (
-              <Text variant="boxTitle" color="important" marginLeft="xs" fontSize={14}>
-                301 עכשיו בהפגנה
-              </Text>
+              <FadeInOutView>
+                <Text variant="boxTitle" color="important" marginLeft="xs" fontSize={14}>
+                  301 עכשיו בהפגנה
+                </Text>
+              </FadeInOutView>
             )}
 
             {status === 'past' && (

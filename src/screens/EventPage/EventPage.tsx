@@ -79,7 +79,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Text>
             </Box>
 
-            <Box marginBottom="m">
+            <Box marginBottom="l">
               {event.attendingCount >= 0 && (
                 <EventPageCounter
                   eventStatus={event.status}

@@ -66,4 +66,10 @@ export const buttonColors: ColorsDict = {
     pressedColor: '#4571B5',
     textColor: '#fff',
   },
+  turquoise: {
+    initialColor: '#50c9cd',
+    pressedColor: '#7ED0D6',
+    textColor: '#fff',
+    iconColor: '#fafafa',
+  },
 };

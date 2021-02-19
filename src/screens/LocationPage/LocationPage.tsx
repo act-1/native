@@ -86,7 +86,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
           </Text>
         </Box>
 
-        <LocationCounter locationId={location.id} />
+        <LocationCounter locationId={location.id} style={{ marginBottom: 12 }} />
         <LocationActions location={location} />
 
         <Box paddingLeft="xm" marginBottom="s">

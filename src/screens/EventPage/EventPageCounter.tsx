@@ -16,6 +16,21 @@ function EventPageCounter({ eventStatus, attendingCount, locationId, style }: Ev
     return <LocationCounter locationId={locationId} />;
   }
 
+  if (eventStatus === 'past') {
+    return (
+      <Box
+        justifyContent="center"
+        alignItems="center"
+        backgroundColor="mainBackground"
+        borderColor="lightBorderColor"
+        style={[styles.counterBox, style]}
+      >
+        <Text style={styles.countTextStyle}>3111</Text>
+        <Text variant="text">יצאו להפגין</Text>
+      </Box>
+    );
+  }
+
   const formattedNumber = attendingCount.toLocaleString();
 
   return (
