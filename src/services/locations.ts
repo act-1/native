@@ -53,13 +53,10 @@ export async function fetchNearbyLocations({ position, radius = 2 }: NearbyLocat
 export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: NearbyLocationsParams): Promise<GeoQuerySnapshot> {
   try {
     const [lat, lng] = position;
-    const query = eventsCollection
-      .near({
-        center: new firebase.firestore.GeoPoint(lat, lng),
-        radius,
-      })
-      .where('status', '!=', 'past');
-
+    const query = eventsCollection.near({
+      center: new firebase.firestore.GeoPoint(lat, lng),
+      radius,
+    });
     return query.limit(3).get();
   } catch (err) {
     throw err;

@@ -15,6 +15,7 @@ type EventsWidgetProps = {
 };
 
 function FeaturedProtests({ protests, style }: EventsWidgetProps) {
+  const navigation = useNavigation();
   return (
     <Box style={style} flex={1} width="100%">
       <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{ marginBottom: 24 }}>
@@ -25,6 +26,7 @@ function FeaturedProtests({ protests, style }: EventsWidgetProps) {
             city={protest.city}
             locationName={protest.locationName}
             attendingCount={3021}
+            onPress={() => navigation.navigate('EventPage', { eventId: protest.id })}
           />
         ))}
       </ScrollView>
