@@ -58,7 +58,7 @@ export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: Nearby
         center: new firebase.firestore.GeoPoint(lat, lng),
         radius,
       })
-      .where('pastEvent', '==', false);
+      .where('status', '!=', 'past');
 
     return query.limit(3).get();
   } catch (err) {

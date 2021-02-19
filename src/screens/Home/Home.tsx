@@ -1,10 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { observer } from 'mobx-react-lite';
-import { Box, Text } from '../../components';
 import { StatusBar, StyleSheet, ScrollView, Animated } from 'react-native';
+import { Box, Text } from '../../components';
 import { Stats, FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
 
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
+
 function Home() {
+  const { eventStore } = useStore();
+
   const fadeInOut = useRef(new Animated.Value(1)).current;
 
   const sequence = Animated.sequence([
@@ -36,13 +40,17 @@ function Home() {
 
       <FeaturedPictures style={{ marginBottom: 12 }} />
 
-      <Animated.View style={{ opacity: fadeInOut }}>
-        <Text variant="largeTitle" color="important" paddingHorizontal="m" marginTop="m" marginBottom="xm">
-          עכשיו מפגינים
-        </Text>
-      </Animated.View>
+      {eventStore.liveEvents.length > 0 && (
+        <>
+          <Animated.View style={{ opacity: fadeInOut }}>
+            <Text variant="largeTitle" color="important" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+              עכשיו מפגינים
+            </Text>
+          </Animated.View>
 
-      <FeaturedProtests />
+          <FeaturedProtests protests={eventStore.liveEvents} />
+        </>
+      )}
 
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         הפגנות קרובות

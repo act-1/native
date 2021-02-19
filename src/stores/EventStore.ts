@@ -11,6 +11,9 @@ class EventStore {
   rootStore: null | rootStore = null;
   eventsLoaded = false;
   events: IEvent[] | [] = [];
+  upcomingEvents: IEvent[] | [] = [];
+  liveEvents: IEvent[] | [] = [];
+  pastEvents: IEvent[] | [] = [];
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -20,8 +23,12 @@ class EventStore {
   async getEvents() {
     try {
       const events = await EventsAPI.getEventList();
+
       runInAction(() => {
         this.events = events;
+        this.upcomingEvents = events.filter((event) => event.status === 'upcoming');
+        this.liveEvents = events.filter((event) => event.status === 'live');
+        this.pastEvents = events.filter((event) => event.status === 'past');
         this.eventsLoaded = true;
       });
       return events;

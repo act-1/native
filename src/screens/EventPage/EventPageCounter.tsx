@@ -5,14 +5,14 @@ import Ticker from '@components/Ticker';
 import LocationCounter from '@screens/LocationPage/components/LocationCounter';
 
 type EventPageCounterProps = {
-  eventMode: EventStatus;
+  eventStatus: EventStatus;
   attendingCount: number;
   locationId: string;
   style?: ViewStyle;
 };
 
-function EventPageCounter({ eventMode, attendingCount, locationId, style }: EventPageCounterProps) {
-  if (eventMode === 'live') {
+function EventPageCounter({ eventStatus, attendingCount, locationId, style }: EventPageCounterProps) {
+  if (eventStatus === 'live') {
     return <LocationCounter locationId={locationId} />;
   }
 

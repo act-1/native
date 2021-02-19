@@ -20,7 +20,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
     if (eventStore.eventsLoaded) {
       return (
         <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
-          {eventStore.events.slice(0, 5).map((event: IEvent, index: number) => (
+          {eventStore.upcomingEvents.slice(0, 5).map((event: IEvent, index: number) => (
             <EventCompactBox {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
           ))}
         </ScrollView>
@@ -30,7 +30,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventStore.events]);
+  }, [eventStore.upcomingEvents]);
 
   const onEventPress = (eventId: string, index: number) => {
     navigation.navigate('EventPage', { eventId });

@@ -10,11 +10,33 @@ const GeoFirestore = geofirestore.initializeApp(firestore());
 // Create a GeoCollection reference
 const geocollection = GeoFirestore.collection('events');
 
-export async function getEventList(): Promise<IEvent[]> {
+const getEventStatus = (startDate: Date, endDate: Date): EventStatus => {
   const now = new Date();
-  now.setHours(now.getHours() - 6); // So the event won't disappear while it's ongoing
 
-  const querySnapshot = await geocollection.where('startDate', '>', now).get();
+  // Set events to live 30 minutes before start
+  const nowModified = new Date();
+  nowModified.setMinutes(nowModified.getMinutes() + 30);
+
+  if (now > endDate) {
+    return 'past';
+  }
+
+  if (nowModified > startDate && now < endDate) {
+    return 'live';
+  }
+
+  return 'upcoming';
+};
+
+// Get events between 6 days in the past to the upcoming 8 days.
+export async function getEventList(): Promise<IEvent[]> {
+  const weekBefore = new Date();
+  weekBefore.setDate(weekBefore.getDate() - 6);
+
+  const weekAfter = new Date();
+  weekAfter.setDate(weekAfter.getDate() + 8);
+
+  const querySnapshot = await geocollection.where('startDate', '>', weekBefore).where('startDate', '<', weekAfter).get();
 
   const documents = querySnapshot.docs.map((doc): FirebaseFirestoreTypes.DocumentData => ({ ...doc.data(), id: doc.id }));
 
@@ -34,7 +56,7 @@ export async function getEventList(): Promise<IEvent[]> {
       coordinates: doc.coordinates,
       startDate: doc.startDate.toDate(),
       endDate: doc.endDate.toDate(),
-      pastEvent: doc.pastEvent,
+      status: getEventStatus(doc.startDate.toDate(), doc.endDate.toDate()),
     })
   );
 

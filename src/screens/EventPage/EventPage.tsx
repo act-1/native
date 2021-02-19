@@ -18,7 +18,7 @@ import mapStyle from '@utils/mapStyle.json';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { format } from 'date-fns';
 
-const eventMode = 's';
+const eventStatus = 's';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
@@ -83,11 +83,11 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
             <Box marginBottom="m">
               {event.attendingCount >= 0 && (
-                <EventPageCounter eventMode={eventMode} attendingCount={event.attendingCount} locationId={event.locationId} />
+                <EventPageCounter eventStatus={eventStatus} attendingCount={event.attendingCount} locationId={event.locationId} />
               )}
             </Box>
 
-            <EventPageActions eventMode={eventMode} isAttending={isAttending} attendEvent={attendEvent} />
+            <EventPageActions eventStatus={eventStatus} isAttending={isAttending} attendEvent={attendEvent} />
 
             <Box padding="m" marginBottom="m" backgroundColor="greyBackground">
               <Text variant="largeTitle" marginBottom="m">

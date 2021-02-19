@@ -16,5 +16,5 @@ export type IEvent = {
   attendingCount: number;
   coordinates: { _latitude: number; _longitude: number };
   type?: 'event';
-  pastEvent: boolean;
+  status: EventStatus;
 };

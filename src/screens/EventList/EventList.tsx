@@ -43,9 +43,9 @@ function EventList({ navigation }: EventListScreenProps) {
   };
 
   useEffect(() => {
-    const list = formatEventsForSectionList(eventStore.events);
+    const list = formatEventsForSectionList(eventStore.upcomingEvents);
     setEventList([...list]);
-  }, [eventStore.events]);
+  }, [eventStore.upcomingEvents]);
 
   return (
     <SafeAreaView>
