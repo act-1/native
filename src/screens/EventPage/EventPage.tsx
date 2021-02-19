@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, Image } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import crashlytics from '@react-native-firebase/crashlytics';
 import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
@@ -133,7 +133,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
                 {event.organizers.map((org) => (
                   <Box flexDirection="row" alignItems="center" marginBottom="m" key={org.id}>
-                    <Image
+                    <FastImage
                       source={{ uri: org.profilePicture }}
                       style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
                     />
