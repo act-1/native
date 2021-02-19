@@ -22,13 +22,13 @@ const Community = () => {
       </Box>
 
       {eventStore.pastEvents.length > 0 && (
-        <>
+        <Box marginBottom="xl">
           <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="xm">
             הפגנות בשבוע האחרון
           </Text>
 
           <FeaturedProtests protests={eventStore.pastEvents} />
-        </>
+        </Box>
       )}
     </ScrollView>
   );
