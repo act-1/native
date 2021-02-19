@@ -16,6 +16,8 @@ function EventPageCounter({ eventStatus, attendingCount, locationId, style }: Ev
     return <LocationCounter locationId={locationId} />;
   }
 
+  const formattedNumber = attendingCount.toLocaleString();
+
   if (eventStatus === 'past') {
     return (
       <Box
@@ -25,13 +27,11 @@ function EventPageCounter({ eventStatus, attendingCount, locationId, style }: Ev
         borderColor="lightBorderColor"
         style={[styles.counterBox, style]}
       >
-        <Text style={styles.countTextStyle}>3111</Text>
+        <Text style={styles.countTextStyle}>{formattedNumber}</Text>
         <Text variant="text">יצאו להפגין</Text>
       </Box>
     );
   }
-
-  const formattedNumber = attendingCount.toLocaleString();
 
   return (
     <Box

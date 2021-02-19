@@ -18,7 +18,7 @@ function FeaturedProtests({ protests, style }: EventsWidgetProps) {
   const navigation = useNavigation();
   return (
     <Box style={style} flex={1} width="100%">
-      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} contentContainerStyle={styles.featuredProtests}>
         {protests.map((protest) => (
           <FeaturedProtestBox
             key={protest.id}
@@ -35,7 +35,7 @@ function FeaturedProtests({ protests, style }: EventsWidgetProps) {
 export default FeaturedProtests;
 
 const styles = StyleSheet.create({
-  featuredEvents: {
+  featuredProtests: {
     minWidth: '100%',
   },
 });
