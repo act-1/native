@@ -4,12 +4,10 @@ import { Box, Text } from '../..';
 import FastImage from 'react-native-fast-image';
 import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';
+import { LiveEvent, PastEvent } from '@types/collections';
 
 type LiveLocationBoxProps = {
-  locationName: string;
-  city: string;
-  attendingCount: number;
-  thumbnail: string;
+  protest: LiveEvent | PastEvent;
   onPress: () => void;
 };
 
@@ -19,7 +17,8 @@ function getRandomNumber() {
 
 const boxWidth = 280; // Substract 12 margins
 
-function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onPress }: LiveLocationBoxProps) {
+function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
+  const { status, title, city, locationName, thumbnail } = protest;
   return (
     <TouchableScale
       activeScale={0.96}
@@ -29,21 +28,11 @@ function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onP
       onPressOut={() => HapticFeedback.trigger('impactMedium')}
       style={{ width: boxWidth, marginHorizontal: 12 }}
     >
-      <FastImage
-        style={{
-          width: boxWidth,
-          height: 146,
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-          marginBottom: 6,
-          borderRadius: 4,
-        }}
-        source={{ uri: thumbnail }}
-      />
+      <FastImage style={styles.eventThumbnail} source={{ uri: thumbnail }} />
 
       <Box alignItems="flex-start" flex={1}>
         <Text variant="boxTitle" fontSize={16} marginBottom="xs">
-          טקס פרישה לדורון ידיד
+          {title}
         </Text>
         <Text variant="boxSubtitle" fontSize={14} marginBottom="xs">
           {locationName}, {city}
@@ -62,14 +51,17 @@ function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onP
               source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
               style={styles.attendingProfilePic}
             />
-            <FastImage
-              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
-              style={styles.attendingProfilePic}
-            />
-            <FastImage
-              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
-              style={styles.attendingProfilePic}
-            />
+            {status === 'live' && (
+              <Text variant="boxTitle" color="important" marginLeft="xs" fontSize={14}>
+                301 עכשיו בהפגנה
+              </Text>
+            )}
+
+            {status === 'past' && (
+              <Text variant="boxTitle" color="important" marginLeft="xs" fontSize={14}>
+                301 יצאו להפגין
+              </Text>
+            )}
           </Box>
         </Box>
       </Box>
@@ -80,13 +72,13 @@ function FeaturedProtestBox({ city, locationName, attendingCount, thumbnail, onP
 export default React.memo(FeaturedProtestBox);
 
 const styles = StyleSheet.create({
-  communityStatsWrapper: {
+  eventThumbnail: {
+    width: boxWidth,
+    height: 146,
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginHorizontal: 12,
-    backgroundColor: '#191919',
+    marginBottom: 6,
+    borderRadius: 4,
   },
   attendingProfilePic: {
     height: 32,

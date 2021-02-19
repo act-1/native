@@ -22,9 +22,7 @@ function FeaturedProtests({ protests, style }: EventsWidgetProps) {
         {protests.map((protest) => (
           <FeaturedProtestBox
             key={protest.id}
-            thumbnail={protest.thumbnail}
-            city={protest.city}
-            locationName={protest.locationName}
+            protest={protest}
             attendingCount={3021}
             onPress={() => navigation.navigate('EventPage', { eventId: protest.id })}
           />
