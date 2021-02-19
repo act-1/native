@@ -26,7 +26,7 @@ function Home() {
             עכשיו מפגינים
           </Text>
 
-          <FeaturedProtests protests={eventStore.liveEvents} />
+          <FeaturedProtests protests={eventStore.liveEvents} style={{ marginBottom: 12 }} />
         </>
       )}
 

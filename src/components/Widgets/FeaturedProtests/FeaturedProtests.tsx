@@ -18,7 +18,7 @@ function FeaturedProtests({ protests, style }: EventsWidgetProps) {
   const navigation = useNavigation();
   return (
     <Box style={style} flex={1} width="100%">
-      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{ marginBottom: 24 }}>
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
         {protests.map((protest) => (
           <FeaturedProtestBox
             key={protest.id}
