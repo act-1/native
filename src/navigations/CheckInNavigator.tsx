@@ -11,7 +11,17 @@ const CheckInStack = createStackNavigator();
 
 function CheckInNavigator({ navigation }) {
   return (
-    <CheckInStack.Navigator>
+    <CheckInStack.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          fontSize: 22,
+          fontFamily: 'AtlasDL3.1AAA-Medium',
+          color: '#EC534B',
+          marginBottom: Platform.OS === 'ios' ? 11 : 2,
+        },
+        headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
+      }}
+    >
       {/* <CheckInStack.Screen
         name="SelectLocation"
         component={SelectLocation}
@@ -25,13 +35,6 @@ function CheckInNavigator({ navigation }) {
             </Pressable>
           ),
           headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontSize: 22,
-            fontFamily: 'AtlasDL3.1AAA-Medium',
-            color: '#EC534B',
-            marginBottom: Platform.OS === 'ios' ? 11 : 2,
-          },
-          headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
           headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
         }}
       />
@@ -41,18 +44,17 @@ function CheckInNavigator({ navigation }) {
         component={ProtestChat}
         options={{
           headerShown: true,
-          headerTitle: '',
-          headerTransparent: true,
+          headerTitle: 'בלפור',
           headerLeft: null,
           headerRightContainerStyle: { marginRight: 12 },
-          headerRight: () => (
+          headerLeft: () => (
             <Box flexDirection="row">
               <CircularButton
                 onPress={() => navigation.goBack()}
                 iconName="x"
                 color="grey"
                 size="small"
-                style={{ opacity: 0.8, marginLeft: 8 }}
+                style={{ opacity: 0.8, marginLeft: 12, marginBottom: 8 }}
               />
             </Box>
           ),
