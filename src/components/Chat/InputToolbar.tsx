@@ -20,6 +20,7 @@ function InputToolbar() {
   return (
     <Box
       justifyContent="flex-end"
+      marginTop="s"
       paddingHorizontal="m"
       backgroundColor="seperator"
       style={{ paddingTop: 12.5, paddingBottom: insets.bottom + 12.5, marginBottom: keyboardShown ? 65 : 0 }}
@@ -40,9 +41,8 @@ export default InputToolbar;
 const styles = StyleSheet.create({
   textInput: {
     width: '80%',
-    minHeight: Platform.select({ ios: 10, android: 30 }),
-    paddingTop: Platform.select({ ios: 11.5, android: 5.5 }),
-    paddingBottom: Platform.select({ ios: 10, android: 4 }),
+    paddingTop: Platform.select({ ios: 8.5, android: 5.5 }),
+    paddingBottom: Platform.select({ ios: 7, android: 4 }),
     paddingLeft: 18,
     paddingRight: 12,
 

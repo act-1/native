@@ -6,6 +6,13 @@ import { useStore } from '../../stores';
 
 import InputToolbar from './InputToolbar';
 
+/**
+ * Notes:
+ *  - There's a strange behaviour with flex on `KeyboardAvoidingView`:
+ *    Whenever if we set it directly (like it is now), it works fine on Android when the keyboard is open - but it's not an actual prop on the component.
+ *    When we use it as a `style` prop, Android not displaying the InputToolbar.
+ */
+
 function Chat({ messages }) {
   const { feedStore } = useStore();
 
