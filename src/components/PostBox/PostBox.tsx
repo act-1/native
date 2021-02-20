@@ -118,26 +118,26 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
   };
 
   return (
-    <ContextMenuView
-      onPressMenuItem={({ nativeEvent }: { nativeEvent: { actionKey: string } }) => {
-        if (nativeEvent.actionKey === 'copy' && post.type === 'text') {
-          copyToClipboard(post.textContent);
-        }
-        if (nativeEvent.actionKey === 'delete') {
-          archivePost(post.id);
-        }
-      }}
-      menuConfig={{
-        menuTitle: '',
-        menuItems,
-      }}
-    >
-      <Box alignItems="flex-start" marginBottom="s">
-        <Box flexDirection="row" paddingHorizontal="xm">
-          {/* <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} /> */}
-          <Box marginTop="m" style={{ marginLeft: 0 }}>
+    <Box alignItems="flex-start" marginBottom="s">
+      <Box flexDirection="row" paddingHorizontal="xm">
+        {/* <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} /> */}
+        <Box marginTop="m" style={{ marginLeft: 0 }}>
+          <ContextMenuView
+            onPressMenuItem={({ nativeEvent }: { nativeEvent: { actionKey: string } }) => {
+              if (nativeEvent.actionKey === 'copy' && post.type === 'text') {
+                copyToClipboard(post.textContent);
+              }
+              if (nativeEvent.actionKey === 'delete') {
+                archivePost(post.id);
+              }
+            }}
+            menuConfig={{
+              menuTitle: '',
+              menuItems,
+            }}
+          >
             <TouchableNativeFeedback onLongPress={openPostActionSheet}>
-              <PostBoxBubble>
+              <PostBoxBubble direction={userStore.user?.uid === post.authorId ? 'right' : 'left'}>
                 {post.type === 'picture' && (
                   <TouchableOpacity onPress={() => onPicturePress(post.pictureUrl)} activeOpacity={0.7}>
                     <FastImage
@@ -171,17 +171,17 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
                 </Box>
               </PostBoxBubble>
             </TouchableNativeFeedback>
+          </ContextMenuView>
 
-            {/* <LikeButton
+          {/* <LikeButton
               onPress={likePress}
               liked={feedStore.userPostLikes.includes(post.id)}
               likeCount={post.likeCount}
               style={{ alignSelf: 'flex-start', paddingTop: 6 }}
             /> */}
-          </Box>
         </Box>
       </Box>
-    </ContextMenuView>
+    </Box>
   );
 }
 

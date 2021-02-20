@@ -1,11 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, Keyboard, StyleSheet, Platform } from 'react-native';
+import { TextInput, Keyboard, StyleSheet, Platform, TextInputContentSizeChangeEventData } from 'react-native';
 import { Box } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Send from './Send';
 
-function InputToolbar() {
+type ToolbarProps = {
+  onSend: (message: string) => void;
+};
+
+function InputToolbar({ onSend }: ToolbarProps) {
+  const [text, setText] = useState('');
+
   const [keyboardShown, setKeyboardShown] = useState(false);
+  const [inputHeight, setInputHeight] = useState(0);
+
   const insets = useSafeAreaInsets();
+  const textInputRadius = React.useMemo(() => {
+    if (inputHeight > 35) {
+      return 20;
+    }
+    return 50;
+  }, [inputHeight]);
+
+  const onSendPress = () => {
+    onSend(text);
+  };
 
   useEffect(() => {
     Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
@@ -17,21 +36,36 @@ function InputToolbar() {
     };
   }, []);
 
+  // Change input border radius according the input height (text lines)
+  const onContentSizeChange = ({ nativeEvent }: { nativeEvent: TextInputContentSizeChangeEventData }) => {
+    console.log(nativeEvent.contentSize);
+
+    setInputHeight(nativeEvent.contentSize.height);
+  };
+
   return (
     <Box
-      justifyContent="flex-end"
-      marginTop="s"
+      flexDirection="row"
       paddingHorizontal="m"
       backgroundColor="seperator"
-      style={{ paddingTop: 10, paddingBottom: insets.bottom + 10, marginBottom: keyboardShown ? 64 : 0 }}
+      style={{
+        alignItems: 'flex-end',
+        paddingTop: 10,
+        paddingBottom: insets.bottom + 10,
+        marginBottom: keyboardShown ? 64 : 0,
+        elevation: 3,
+      }}
     >
       <TextInput
         multiline={true}
         selectionColor={Platform.select({ ios: '#f0f2f5', android: undefined })}
         enablesReturnKeyAutomatically
         keyboardAppearance="dark"
-        style={styles.textInput}
+        onChangeText={(newText) => setText(newText)}
+        onContentSizeChange={onContentSizeChange}
+        style={[styles.textInput, { borderRadius: textInputRadius }]}
       />
+      <Send onSend={onSendPress} />
     </Box>
   );
 }
@@ -40,17 +74,23 @@ export default InputToolbar;
 
 const styles = StyleSheet.create({
   textInput: {
-    width: '80%',
-    paddingTop: Platform.select({ ios: 8.5, android: 5.5 }),
-    paddingBottom: Platform.select({ ios: 7, android: 4 }),
+    flex: 1,
+
+    paddingTop: Platform.select({ ios: 6.25, android: 3.25 }),
+    paddingBottom: Platform.select({ ios: 5.5, android: 2 }),
     paddingLeft: 18,
     paddingRight: 12,
 
+    marginRight: 8,
+
     fontSize: 18,
     color: '#fff',
-
-    borderRadius: 50,
-    backgroundColor: '#3b3b3b',
     textAlign: 'right',
+
+    borderWidth: 1,
+    borderColor: '#444444',
+    backgroundColor: '#3b3b3b',
+
+    elevation: 1,
   },
 });

@@ -13,13 +13,18 @@ import InputToolbar from './InputToolbar';
  *    When we use it as a `style` prop, Android not displaying the InputToolbar.
  */
 
-function Chat({ messages }) {
+type ChatProps = {
+  onSend: (message: string) => void;
+  messages: Array;
+};
+
+function Chat({ messages, onSend }: ChatProps) {
   const { feedStore } = useStore();
 
   return (
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <FlatList
-        contentContainerStyle={{ flex: 1 }}
+        contentContainerStyle={{ flex: 1, marginTop: 10 }}
         data={messages}
         inverted={true}
         keyExtractor={(item) => item.id}
@@ -27,7 +32,7 @@ function Chat({ messages }) {
         initialNumToRender={2}
         showsVerticalScrollIndicator={false}
       />
-      <InputToolbar />
+      <InputToolbar onSend={onSend} />
     </KeyboardAvoidingView>
   );
 }

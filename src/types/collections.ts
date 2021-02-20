@@ -77,3 +77,21 @@ export type PastEvent = EventBase & {
 };
 
 export type Event = UpcomingEvent | LiveEvent | PastEvent;
+
+/**
+ * Chat
+ */
+
+type ChatMessageBase = {
+  id: string;
+  text: string;
+  createdAt: Date;
+  authorId: string;
+  image?: string;
+  video?: string;
+  audio?: string;
+  system?: boolean;
+  sent?: boolean;
+  received?: boolean;
+  pending?: boolean;
+};
