@@ -57,7 +57,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
         menuAttributes: ['destructive'], // <- make menu action "destructive"
         icon: {
           iconType: 'SYSTEM',
-          iconValue: 'trash.circle.fill',
+          iconValue: 'trash.fill',
           androidIcon: 'trash-2',
         },
       });
@@ -154,9 +154,9 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
                 )}
 
                 <Box paddingRight="xxl" marginBottom="s">
-                  {post && post.textContent?.length! > 0 && (
+                  {post && post.text?.length! > 0 && (
                     <Text color="mainForeground" fontSize={17}>
-                      {post.textContent}
+                      {post.text}
                     </Text>
                   )}
                 </Box>
@@ -166,7 +166,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
                     {post.authorName}
                   </Text>
                   <Text variant="boxSubtitle" fontSize={14}>
-                    {timeago.format(post.createdAt?.toDate(), 'he')}
+                    {timeago.format(post.createdAt, 'he')}
                   </Text>
                 </Box>
               </PostBoxBubble>

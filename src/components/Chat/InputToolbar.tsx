@@ -24,6 +24,9 @@ function InputToolbar({ onSend }: ToolbarProps) {
 
   const onSendPress = () => {
     onSend(text);
+
+    setText('');
+    Keyboard.dismiss();
   };
 
   useEffect(() => {
@@ -61,6 +64,9 @@ function InputToolbar({ onSend }: ToolbarProps) {
         selectionColor={Platform.select({ ios: '#f0f2f5', android: undefined })}
         enablesReturnKeyAutomatically
         keyboardAppearance="dark"
+        value={text}
+        placeholder="הודעה חדשה"
+        placeholderTextColor="grey"
         onChangeText={(newText) => setText(newText)}
         onContentSizeChange={onContentSizeChange}
         style={[styles.textInput, { borderRadius: textInputRadius }]}
