@@ -7,7 +7,7 @@ import { buttonColors } from '../ButtonColors';
 type CircularButtonProps = {
   iconName: string;
   iconSize?: number;
-  color?: 'blue' | 'darkBlue' | 'green' | 'red' | 'yellow' | 'grey' | 'porcelain' | 'white' | 'black';
+  color?: 'blue' | 'darkBlue' | 'green' | 'red' | 'orange' | 'grey' | 'porcelain' | 'white' | 'black' | 'turquoise';
   onPress?: () => void;
   text?: string;
   size?: 'small' | 'large';

@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, StatusBar, Image } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import crashlytics from '@react-native-firebase/crashlytics';
 import MapView, { Marker } from 'react-native-maps';
 import HTML from 'react-native-render-html';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-import { IEvent } from '@types/event';
+import { Event } from '@types/collections';
 import { EventPageScreenProps } from '@types/navigation';
-import { Box, Text, StickyHeaderScrollView, CircularButton } from '../../components';
+import { Box, Text, StickyHeaderScrollView } from '../../components';
+
 import EventPageCounter from './EventPageCounter';
+import EventPageActions from './EventPageActions';
 import EventPageDetail from './EventPageDetail';
+
 import { formatShortDate, formatUpcomingDate } from '@utils/date-utils';
 import mapStyle from '@utils/mapStyle.json';
 import HapticFeedback from 'react-native-haptic-feedback';
@@ -17,7 +20,7 @@ import { format } from 'date-fns';
 
 function EventPage({ navigation, route }: EventPageScreenProps) {
   const { userStore, eventStore } = useStore();
-  const [event, setEvent] = useState<IEvent>();
+  const [event, setEvent] = useState<Event>();
   const [isAttending, setAttending] = useState(false);
 
   let eventTime, eventDate, upcomingDate, shortDate;
@@ -50,17 +53,16 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
   useEffect(() => {
     if (route.params?.eventId && eventStore.events.length > 0) {
-      const eventData = eventStore.events.find((e: IEvent) => e.id === route.params.eventId);
+      const eventData = eventStore.events.find((e: Event) => e.id === route.params.eventId);
       if (eventData) setEvent(eventData);
       if (userStore.userEventIds.includes(eventData.id)) {
         setAttending(true);
       }
     }
-  }, [eventStore.events, route.params, userStore.userEventIds]);
+  }, [route.params, eventStore.events]);
 
   return (
     <Box flex={1}>
-      <StatusBar barStyle="light-content" />
       <StickyHeaderScrollView
         goBack={() => navigation.goBack()}
         headerTitle={event?.title || ''}
@@ -77,20 +79,17 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Text>
             </Box>
 
-            <Box marginBottom="m">
-              {event.attendingCount && <EventPageCounter number={event.attendingCount} text="אישרו הגעה" />}
+            <Box marginBottom="l">
+              {event.attendingCount >= 0 && (
+                <EventPageCounter
+                  eventStatus={event.status}
+                  attendingCount={event.attendingCount}
+                  locationId={event.locationId}
+                />
+              )}
             </Box>
 
-            <Box
-              flexDirection="row"
-              justifyContent="space-evenly"
-              backgroundColor="mainBackground"
-              paddingVertical="xm"
-              marginBottom="m"
-            >
-              <CircularButton iconName="check" color={isAttending ? 'green' : 'grey'} text="אישור הגעה" onPress={attendEvent} />
-              <CircularButton iconName="share" color="blue" text="הזמנת חברים" />
-            </Box>
+            <EventPageActions eventStatus={event.status} isAttending={isAttending} attendEvent={attendEvent} />
 
             <Box padding="m" marginBottom="m" backgroundColor="greyBackground">
               <Text variant="largeTitle" marginBottom="m">
@@ -120,6 +119,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
               <HTML
                 html={event.content}
+                textSelectable={true}
                 tagsStyles={{
                   p: { textAlign: 'left', marginBottom: 12, fontSize: 15, fontFamily: 'AtlasDL3.1AAA-Regular', color: '#fff' },
                   div: { textAlign: 'left', fontFamily: 'AtlasDL3.1AAA-Regular', fontSize: 15 },
@@ -134,7 +134,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
                 {event.organizers.map((org) => (
                   <Box flexDirection="row" alignItems="center" marginBottom="m" key={org.id}>
-                    <Image
+                    <FastImage
                       source={{ uri: org.profilePicture }}
                       style={{ width: 35, height: 35, borderRadius: 25, marginEnd: 8 }}
                     />

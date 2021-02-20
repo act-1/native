@@ -81,7 +81,7 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
         data={mediaStore.featuredPictures}
         hasParallaxImages={true}
         autoplay={true}
-        autoplayInterval={5200}
+        autoplayInterval={4500}
         loop={true}
         renderItem={({ item, dataIndex }, parallaxProps) => (
           <FeaturedPictureBox {...item} parallaxProps={parallaxProps} onPress={() => onPicturePress(dataIndex)} />

@@ -5,7 +5,7 @@ import analytics from '@react-native-firebase/analytics';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../../../stores';
 import { Box } from '../..';
-import { IEvent } from '@types/event';
+import { Event } from '@types/collections';
 import EventCompactBox from './EventCompactBox';
 import FeaturedEventsContentLoader from './FeaturedEventsContentLoader';
 
@@ -20,7 +20,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
     if (eventStore.eventsLoaded) {
       return (
         <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
-          {eventStore.events.slice(0, 5).map((event: IEvent, index: number) => (
+          {eventStore.upcomingEvents.slice(0, 5).map((event: Event, index: number) => (
             <EventCompactBox {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
           ))}
         </ScrollView>
@@ -30,7 +30,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventStore.events]);
+  }, [eventStore.upcomingEvents]);
 
   const onEventPress = (eventId: string, index: number) => {
     navigation.navigate('EventPage', { eventId });

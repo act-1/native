@@ -36,8 +36,8 @@ export const buttonColors: ColorsDict = {
     textColor: '#5A2C06',
   },
   orange: {
-    initialColor: '#FFC281',
-    pressedColor: '#FFCB2D',
+    initialColor: '#FCA200',
+    pressedColor: '#FFAE1A',
     textColor: '#5A2C06',
   },
   grey: {
@@ -65,5 +65,11 @@ export const buttonColors: ColorsDict = {
     initialColor: '#3164b1',
     pressedColor: '#4571B5',
     textColor: '#fff',
+  },
+  turquoise: {
+    initialColor: '#50c9cd',
+    pressedColor: '#7ED0D6',
+    textColor: '#fff',
+    iconColor: '#fafafa',
   },
 };

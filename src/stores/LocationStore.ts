@@ -3,11 +3,11 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import rootStore from './RootStore';
 import { fetchNearbyEventsAndLocations } from '@services/locations';
 import { ILocation } from '@types/location';
-import { IEvent } from '@types/event';
+import { Event } from '@types/collections';
 
 class LocationStore {
   rootStore: null | rootStore = null;
-  nearbyLocations: (ILocation | IEvent)[] = [];
+  nearbyLocations: (ILocation | Event)[] = [];
   fetchingLocations = false;
 
   constructor(rootStore: rootStore) {

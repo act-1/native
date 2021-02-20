@@ -1,49 +1,41 @@
 import React from 'react';
 import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
-import { observer } from 'mobx-react-lite';
-// import analytics from '@react-native-firebase/analytics';
-import { useNavigation } from '@react-navigation/native';
-import { useStore } from '../../../stores';
 import { Box } from '../..';
+// import analytics from '@react-native-firebase/analytics';
+
+import { useNavigation } from '@react-navigation/native';
+
 import FeaturedProtestBox from './FeaturedProtestBox';
 
+import { Event } from '@types/collections';
+
 type EventsWidgetProps = {
+  protests: Event[];
   style?: ViewStyle;
 };
 
-function FeaturedProtests({ style }: EventsWidgetProps) {
-  const { eventStore } = useStore();
-
+function FeaturedProtests({ protests, style }: EventsWidgetProps) {
+  const navigation = useNavigation();
   return (
     <Box style={style} flex={1} width="100%">
-      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{ marginBottom: 24 }}>
-        <FeaturedProtestBox
-          thumbnail="https://www.activestills.org/media-lib/main_image44700_medium.jpg?rnd=1562778758"
-          city="ירושלים"
-          locationName="כיכר פריז"
-          attendingCount={3021}
-        />
-        <FeaturedProtestBox
-          thumbnail="https://www.activestills.org/media-lib/main_image44946_medium.jpg?rnd=1755488128"
-          city="תל אביב"
-          locationName="כיכר רבין"
-          attendingCount={1839}
-        />
-        <FeaturedProtestBox
-          thumbnail="https://www.activestills.org/media-lib/main_image44946_medium.jpg?rnd=1755488128"
-          city="הרצליה"
-          locationName="רחבת הסינמטק"
-          attendingCount={189}
-        />
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} contentContainerStyle={styles.featuredProtests}>
+        {protests.map((protest) => (
+          <FeaturedProtestBox
+            key={protest.id}
+            protest={protest}
+            attendingCount={3021}
+            onPress={() => navigation.navigate('EventPage', { eventId: protest.id })}
+          />
+        ))}
       </ScrollView>
     </Box>
   );
 }
 
-export default observer(FeaturedProtests);
+export default FeaturedProtests;
 
 const styles = StyleSheet.create({
-  featuredEvents: {
+  featuredProtests: {
     minWidth: '100%',
   },
 });

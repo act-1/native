@@ -3,12 +3,12 @@ import { StatusBar, SectionList, SafeAreaView, SectionListData, RefreshControl }
 import { observer } from 'mobx-react-lite';
 import analytics from '@react-native-firebase/analytics';
 import { EventListScreenProps } from '@types/navigation';
-import { IEvent } from '@types/event';
+import { Event } from '@types/collections';
 import { Box, Text, EventBox } from '../../components';
 import { formatEventsForSectionList, EventsSectionListItem } from './event-list-utils';
 import { useStore } from '../../stores';
 
-function renderEventSectionHeader({ title, subtitle }: SectionListData<IEvent, EventsSectionListItem>): ReactElement {
+function renderEventSectionHeader({ title, subtitle }: SectionListData<Event, EventsSectionListItem>): ReactElement {
   return (
     <Box
       flexDirection="row"
@@ -43,9 +43,9 @@ function EventList({ navigation }: EventListScreenProps) {
   };
 
   useEffect(() => {
-    const list = formatEventsForSectionList(eventStore.events);
+    const list = formatEventsForSectionList(eventStore.upcomingEvents);
     setEventList([...list]);
-  }, [eventStore.events]);
+  }, [eventStore.upcomingEvents]);
 
   return (
     <SafeAreaView>

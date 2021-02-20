@@ -10,13 +10,13 @@ function RecentPicturesWidgetContentLoader({ loadedPictures }: { loadedPictures:
   return (
     <ContentLoader width={deviceWidth} height={360} backgroundColor="#222222" foregroundColor="#333333" rtl>
       {!loadedPictures[0] && <Rect x={12} y="0" width={'61.5%'} height={236} ry={2} />}
-      {!loadedPictures[1] && <Rect x={deviceWidth - deviceWidth / 3 + 2} y="0" width={deviceWidth / 3.255} height={112} ry={2} />}
+      {!loadedPictures[1] && <Rect x={deviceWidth - deviceWidth / 3 + 1} y="0" width={deviceWidth / 3.255} height={112} ry={2} />}
       {!loadedPictures[2] && (
-        <Rect x={deviceWidth - deviceWidth / 3 + 2} y="122" width={deviceWidth / 3.255} height={114} ry={2} />
+        <Rect x={deviceWidth - deviceWidth / 3 + 1} y="122" width={deviceWidth / 3.255} height={114} ry={2} />
       )}
       {!loadedPictures[3] && <Rect x={12} y={248} width={deviceWidth / 3.35} height={112} ry={2} />}
-      {!loadedPictures[4] && <Rect x={deviceWidth / 3.27 + 17.75} y="248" width={deviceWidth / 3.4} height={112} ry={2} />}
-      {!loadedPictures[5] && <Rect x={deviceWidth / 1.59 + 17.75} y="248" width={deviceWidth / 3.35} height={112} ry={2} />}
+      {!loadedPictures[4] && <Rect x={deviceWidth / 3.27 + 18.9} y="248" width={deviceWidth / 3.38} height={112} ry={2} />}
+      {!loadedPictures[5] && <Rect x={deviceWidth / 1.59 + 17.5} y="248" width={deviceWidth / 3.33} height={112} ry={2} />}
     </ContentLoader>
   );
 }

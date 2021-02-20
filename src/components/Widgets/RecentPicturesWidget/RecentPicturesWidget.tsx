@@ -45,15 +45,21 @@ function RecentPicturesWidget() {
   }
 
   const onImageLoad = (imageIndex: number) => {
-    setLoadedPictures((prevState) => {
-      const updatedArray = updateArrayItem(prevState, imageIndex, true);
-      return updatedArray;
-    });
+    // The 1s timeout delay is for a bit smoother UX
+    setTimeout(() => {
+      setLoadedPictures((prevState) => {
+        const updatedArray = updateArrayItem(prevState, imageIndex, true);
+        return updatedArray;
+      });
+    }, 1460);
   };
 
   return (
-    <Box paddingHorizontal="m" marginBottom="l" height={360} width="100%">
-      <Pressable style={{ position: 'absolute', zIndex: 1 }} onPress={() => navigation.navigate('RecentPictures')}>
+    <Box width="100%" height="100%">
+      <Pressable
+        style={{ position: 'absolute', zIndex: 1, marginHorizontal: -12 }}
+        onPress={() => navigation.navigate('RecentPictures')}
+      >
         <ContentLoader loadedPictures={loadedPictures} />
       </Pressable>
       <Box flexDirection="row" marginBottom="m">

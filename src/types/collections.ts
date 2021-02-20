@@ -40,3 +40,40 @@ export type PicturePost = PostBase & {
 };
 
 export type Post = TextPost | PicturePost;
+
+/*
+ * Event Types
+ */
+
+type EventBase = {
+  id: string;
+  title: string;
+  shortTitle?: string;
+  locationId: string;
+  locationName: string;
+  city: string;
+  startDate: Date;
+  endDate: Date;
+  thumbnail: string;
+  compactThumbnail?: string;
+  content: string;
+  organizers: { id: string; profilePicture: string; name: string }[];
+  attendingCount: number;
+  coordinates: { _latitude: number; _longitude: number };
+  status: EventStatus;
+};
+
+export type UpcomingEvent = EventBase & {
+  status: 'upcoming';
+};
+
+export type LiveEvent = EventBase & {
+  status: 'live';
+};
+
+export type PastEvent = EventBase & {
+  status: 'past';
+  protestersCount: number;
+};
+
+export type Event = UpcomingEvent | LiveEvent | PastEvent;

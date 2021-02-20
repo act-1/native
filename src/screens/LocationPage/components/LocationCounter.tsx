@@ -7,6 +7,7 @@ import Carousel from 'react-native-snap-carousel';
 import { chunkArray } from '@utils/array-utils';
 import { Box, Text, Ticker } from '../../../components';
 import { useStore } from '../../../stores';
+import Icon from 'react-native-vector-icons/Feather';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -44,9 +45,7 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
     const checkInCount = RealtimeDatabase.database.ref(`/locationCounter/${locationId}`);
 
     checkInsQuery.once('value', (snapshot) => {
-      if (snapshot.val()) {
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     });
 
     checkInsQuery.on('child_added', (snapshot) => {
@@ -94,13 +93,18 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
     );
   }
 
-  // TODO: ISSUE?? FIX??
-  if (counter === 0 || counter === null) {
+  if (!isLoading && (counter === 0 || counter === null)) {
     return (
-      <Box justifyContent="center" alignItems="center" height={110} style={style}>
-        <Text variant="text" textAlign="center" marginBottom="xm" paddingHorizontal="m">
-          אף אחד עדיין לא הצטרף לרשימת המפגינים.
+      <Box justifyContent="center" alignItems="center" height={110} style={style} backgroundColor="greyBackground">
+        <Text variant="boxTitle" textAlign="center" color="attentionBackground" marginBottom="xs" paddingHorizontal="xm">
+          עכשיו בהפגנה?
         </Text>
+        <Text variant="boxTitle" textAlign="center" color="attentionBackground" marginBottom="m" paddingHorizontal="xm">
+          עשו צ׳ק אין!
+        </Text>
+        <Animated.View style={{ opacity: fadeInOut }}>
+          <Icon name="chevrons-down" size={28} color="#FFC281" />
+        </Animated.View>
       </Box>
     );
   }
@@ -120,7 +124,7 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
   ));
 
   return (
-    <View style={[style, { width: '100%', paddingVertical: 12, marginBottom: 12, backgroundColor: '#111111' }]}>
+    <View style={[style, { width: '100%', paddingVertical: 12, backgroundColor: '#111111' }]}>
       <Animated.View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 8, opacity: fadeInOut }}>
         <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>{counter}</Ticker>
         <Text variant="text" fontFamily="AtlasDL3.1AAA-Bold" color="primaryColor" marginLeft="xs">

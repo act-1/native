@@ -103,17 +103,3 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
 });
-
-// <Box flexDirection="row" alignItems="center">
-//           <FastImage source={{ uri: 'https://randomuser.me/api/portraits/women/87.jpg' }} style={styles.pictureAuthorPicture} />
-//           <Text variant="boxTitle" fontSize={15} maxFontSizeMultiplier={1.1}>
-//             גאיה לוי
-//           </Text>
-//         </Box>
-
-// pictureAuthorPicture: {
-//   width: 28,
-//   height: 28,
-//   marginRight: 10,
-//   borderRadius: 25,
-// },

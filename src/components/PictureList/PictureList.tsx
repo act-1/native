@@ -27,7 +27,7 @@ function PictureList({
     if (initialIndex && !initialLoad) {
       setTimeout(() => {
         flatListRef.current?.scrollToIndex({ index: initialIndex });
-      }, 420);
+      }, 260);
 
       setInitialLoad(true);
     }

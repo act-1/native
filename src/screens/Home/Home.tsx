@@ -1,13 +1,14 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
-import functions from '@react-native-firebase/functions';
+import React, { useEffect, useRef } from 'react';
+import { StatusBar, StyleSheet, ScrollView, Animated } from 'react-native';
 import { Box, Text } from '../../components';
-import { StatusBar, StyleSheet, ScrollView, Button } from 'react-native';
 import { Stats, FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Feather';
+
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
 
 function Home() {
+  const { eventStore } = useStore();
+
   return (
     <ScrollView style={styles.homeWrapper} showsVerticalScrollIndicator={false}>
       <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
@@ -19,11 +20,15 @@ function Home() {
 
       <FeaturedPictures style={{ marginBottom: 12 }} />
 
-      {/* <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
-        עכשיו מפגינים
-      </Text>
+      {eventStore.liveEvents.length > 0 && (
+        <>
+          <Text variant="largeTitle" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+            עכשיו מפגינים
+          </Text>
 
-      <FeaturedProtests /> */}
+          <FeaturedProtests protests={eventStore.liveEvents} style={{ marginBottom: 12 }} />
+        </>
+      )}
 
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         הפגנות קרובות

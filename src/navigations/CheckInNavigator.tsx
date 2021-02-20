@@ -55,7 +55,6 @@ function CheckInNavigator({ navigation }) {
               />
             </Box>
           ),
-          headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
         }}
       />
       <CheckInStack.Screen
