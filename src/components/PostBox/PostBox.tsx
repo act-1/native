@@ -99,7 +99,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
       icons,
       cancelButtonIndex: 3,
       textStyle: { marginLeft: -20, marginBottom: 4, color: '#ededed' },
-      destructiveButtonIndex: options.length - 1,
+      destructiveButtonIndex: options.length - 1 === 0 ? null : options.length - 1,
       containerStyle: { backgroundColor: '#2a2a29' },
       showSeparators: true,
       separatorStyle: { backgroundColor: '#3b3b3b' },
@@ -135,7 +135,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
       <Box alignItems="flex-start" marginBottom="s">
         <Box flexDirection="row" paddingHorizontal="xm">
           {/* <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} /> */}
-          <Box marginTop="m" style={{ marginLeft: 10 }}>
+          <Box marginTop="m" style={{ marginLeft: 0 }}>
             <TouchableNativeFeedback onLongPress={openPostActionSheet}>
               <PostBoxBubble>
                 {post.type === 'picture' && (
@@ -155,7 +155,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
 
                 <Box paddingRight="xxl" marginBottom="s">
                   {post && post.textContent?.length! > 0 && (
-                    <Text variant="text" fontFamily="AtlasDL3.1AAA-Medium">
+                    <Text color="mainForeground" fontSize={17}>
                       {post.textContent}
                     </Text>
                   )}

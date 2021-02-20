@@ -23,7 +23,7 @@ function InputToolbar() {
       marginTop="s"
       paddingHorizontal="m"
       backgroundColor="seperator"
-      style={{ paddingTop: 12.5, paddingBottom: insets.bottom + 12.5, marginBottom: keyboardShown ? 65 : 0 }}
+      style={{ paddingTop: 10, paddingBottom: insets.bottom + 10, marginBottom: keyboardShown ? 64 : 0 }}
     >
       <TextInput
         multiline={true}
