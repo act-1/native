@@ -6,6 +6,7 @@ import { SelectLocation, LocationPage } from '@screens/LocationPage';
 import { ProtestChat } from '@screens/ProtestChat';
 import { CheckInForm } from '@screens/CheckIn';
 import NewPost from '@screens/NewPost';
+import HapticFeedback from 'react-native-haptic-feedback';
 
 const CheckInStack = createStackNavigator();
 
@@ -50,7 +51,10 @@ function CheckInNavigator({ navigation }) {
           headerLeft: () => (
             <Box flexDirection="row">
               <CircularButton
-                onPress={() => navigation.goBack()}
+                onPress={() => {
+                  HapticFeedback.trigger('impactLight');
+                  navigation.goBack();
+                }}
                 iconName="x"
                 color="grey"
                 size="small"
