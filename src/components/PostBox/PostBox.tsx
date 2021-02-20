@@ -134,7 +134,7 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
     >
       <Box alignItems="flex-start" marginBottom="s">
         <Box flexDirection="row" paddingHorizontal="xm">
-          <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} />
+          {/* <FastImage source={{ uri: post.authorPicture }} style={styles.authorImage} /> */}
           <Box marginTop="m" style={{ marginLeft: 10 }}>
             <TouchableNativeFeedback onLongPress={openPostActionSheet}>
               <PostBoxBubble>
@@ -172,12 +172,12 @@ function PostBox({ post, onPicturePress, updatePostLikeCount, archivePost }: Pos
               </PostBoxBubble>
             </TouchableNativeFeedback>
 
-            <LikeButton
+            {/* <LikeButton
               onPress={likePress}
               liked={feedStore.userPostLikes.includes(post.id)}
               likeCount={post.likeCount}
               style={{ alignSelf: 'flex-start', paddingTop: 6 }}
-            />
+            /> */}
           </Box>
         </Box>
       </Box>

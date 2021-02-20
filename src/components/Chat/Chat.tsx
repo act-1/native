@@ -1,0 +1,28 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { FlatList, KeyboardAvoidingView, StyleSheet, Platform } from 'react-native';
+import { Box, PostBox } from '../../components';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
+
+import InputToolbar from './InputToolbar';
+
+function Chat({ messages }) {
+  const { feedStore } = useStore();
+
+  return (
+    <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <FlatList
+        contentContainerStyle={{ flex: 1 }}
+        data={messages}
+        inverted={true}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <PostBox post={item} />}
+        initialNumToRender={2}
+        showsVerticalScrollIndicator={false}
+      />
+      <InputToolbar />
+    </KeyboardAvoidingView>
+  );
+}
+
+export default observer(Chat);
