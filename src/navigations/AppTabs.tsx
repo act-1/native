@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Dimensions } from 'react-native';
+import { Image, StyleSheet, Dimensions, Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
@@ -83,12 +83,12 @@ const AppTabs = ({ navigation }) => {
 
 export default observer(AppTabs);
 
-let actionTabButtonSize = 67;
-let actionIconWidth = 38;
-let actionIconHeight = 35;
+let actionTabButtonSize = Platform.select({ ios: 67, android: 70 });
+let actionIconWidth = Platform.select({ ios: 38, android: 39 });
+let actionIconHeight = Platform.select({ ios: 35, android: 37 });
 
 if (deviceWidth > 400) {
-  actionTabButtonSize = 71.5;
+  actionTabButtonSize = Platform.select({ ios: 71.5, android: 71.5 });
   actionIconWidth = 40;
   actionIconHeight = 37.5;
 }
