@@ -11,7 +11,12 @@ function ChatList({ chatMessages }) {
       data={locationPosts}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <PostBox post={item} onPicturePress={selectPicture} updatePostLikeCount={updatePostLikeCount} archivePost={archivePost} />
+        <PostBox
+          message={item}
+          onPicturePress={selectPicture}
+          updatePostLikeCount={updatePostLikeCount}
+          archivePost={archivePost}
+        />
       )}
       initialNumToRender={2}
       showsVerticalScrollIndicator={false}

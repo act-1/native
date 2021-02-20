@@ -95,3 +95,5 @@ type ChatMessageBase = {
   received?: boolean;
   pending?: boolean;
 };
+
+export type ChatMessage = ChatMessageBase;

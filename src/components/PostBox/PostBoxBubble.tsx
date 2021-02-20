@@ -1,8 +1,9 @@
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 import { Box } from '../../components';
 import Svg, { Path } from 'react-native-svg';
 import { scale } from 'react-native-size-matters';
+import { Polygon } from 'react-native-maps';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -12,13 +13,15 @@ if (deviceWidth > 400) {
 }
 
 export default function PostBoxBubble({ children, direction }: { children: React.ReactNode; direction: 'right' | 'left' }) {
-  console.log(direction);
   return (
     <Box style={[styles.messageContainer, direction === 'right' ? styles.rightMessage : styles.leftMessage]}>
       <Box alignItems="flex-start" backgroundColor="seperator" style={styles.messageBubble}>
         <Box style={styles.arrowContainer}>
           <Svg
-            style={{ left: direction === 'left' ? 110 : -6 }}
+            style={{
+              left:
+                direction === 'left' ? Platform.select({ ios: 120, android: 155 }) : Platform.select({ ios: -6, android: -4 }),
+            }}
             width={15.5}
             height={17.5}
             viewBox="32.484 17.5 15.515 17.5"
@@ -51,6 +54,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginLeft: 2,
+
     borderRadius: 20,
     elevation: 5,
   },

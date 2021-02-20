@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FlatList, KeyboardAvoidingView, StyleSheet, Platform } from 'react-native';
+import { FlatList, KeyboardAvoidingView, Keyboard, Platform } from 'react-native';
 import { Box, PostBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -24,12 +24,13 @@ function Chat({ messages, onSend }: ChatProps) {
   return (
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <FlatList
-        contentContainerStyle={{ flex: 1, marginTop: 10 }}
+        contentContainerStyle={{ marginTop: 10 }}
         data={messages}
         inverted={true}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <PostBox post={item} />}
+        renderItem={({ item }) => <PostBox message={item} />}
         initialNumToRender={2}
+        maintainVisibleContentPosition={{ minIndexForVisible: 7 }}
         showsVerticalScrollIndicator={false}
       />
       <InputToolbar onSend={onSend} />

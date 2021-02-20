@@ -13,6 +13,8 @@ class ChatStore {
   rootStore: null | rootStore = null;
   currentRoomName: string = 'my-test-01';
   listenerQuery: FirebaseDatabaseTypes.Query | undefined = undefined;
+  queryListenerStatus: 'ON' | 'OFF' = 'OFF';
+
   messages: ChatMessage[] = [];
 
   constructor(rootStore: rootStore) {
@@ -24,7 +26,12 @@ class ChatStore {
     const query = getQueryBase(this.currentRoomName).endAt(Date.now());
 
     query.once('value', (snapshot) => {
-      console.log(snapshot.val());
+      const messages = Object.values(snapshot.val());
+      const sortedMessages = messages.sort((a, b) => b.createdAt - a.createdAt);
+      console.log(messages);
+      runInAction(() => {
+        this.messages = [...this.messages, ...sortedMessages];
+      });
     });
   }
 
@@ -46,6 +53,7 @@ class ChatStore {
     );
 
     runInAction(() => {
+      this.queryListenerStatus = 'ON';
       this.listenerQuery = query;
     });
   }
@@ -54,6 +62,7 @@ class ChatStore {
     this.listenerQuery?.off();
 
     runInAction(() => {
+      this.queryListenerStatus = 'OFF';
       this.listenerQuery = undefined;
     });
   }

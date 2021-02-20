@@ -12,7 +12,11 @@ function ProtestChat({ navigation, route }: LocationScreenProps) {
   };
 
   useEffect(() => {
-    chatStore.getMessages();
+    console.log(chatStore.messages.length);
+    if (chatStore.messages.length === 0) {
+      chatStore.getMessages();
+    }
+
     chatStore.turnOnMessagesListener();
 
     return () => {

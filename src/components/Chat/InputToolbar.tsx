@@ -71,7 +71,7 @@ function InputToolbar({ onSend }: ToolbarProps) {
         onContentSizeChange={onContentSizeChange}
         style={[styles.textInput, { borderRadius: textInputRadius }]}
       />
-      <Send onSend={onSendPress} />
+      <Send onSend={onSendPress} disabled={text.length === 0} />
     </Box>
   );
 }

@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import { RealtimeDatabase } from '@services/databaseWrapper';
 import database from '@react-native-firebase/database';
+import { nanoid } from 'nanoid/non-secure';
 
 type SendMessageProps = {
   roomName: string;
@@ -10,7 +11,10 @@ type SendMessageProps = {
 async function sendMessage({ roomName, text }: SendMessageProps) {
   try {
     const { uid: authorId, displayName: authorName, photoURL: authorPicture } = auth().currentUser!;
-    const message = await RealtimeDatabase.database.ref(`/chat/rooms/${roomName}`).child('messages').push({
+    const key = nanoid(10);
+
+    const message = await RealtimeDatabase.database.ref(`/chat/rooms/${roomName}`).child(`messages/${key}`).set({
+      id: key,
       authorId,
       authorName: 'גיא',
       authorPicture,
