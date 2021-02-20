@@ -97,7 +97,7 @@ function AppNavigator() {
   const { userStore } = useStore();
 
   return (
-    <RootStack.Navigator screenOptions={{ stackPresentation: 'modal' }}>
+    <RootStack.Navigator screenOptions={{ stackPresentation: 'fullScreenModal' }}>
       {userStore.userData?.signupCompleted ? (
         <>
           <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
