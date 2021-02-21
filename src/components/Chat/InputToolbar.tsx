@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { TextInput, Keyboard, StyleSheet, Platform, TextInputContentSizeChangeEventData } from 'react-native';
 import { Box } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import Camera from './Camera';
 import Send from './Send';
 
 type ToolbarProps = {
@@ -52,7 +54,7 @@ function InputToolbar({ onSend }: ToolbarProps) {
       paddingHorizontal="m"
       backgroundColor="seperator"
       style={{
-        alignItems: 'flex-end',
+        alignItems: 'center',
         paddingTop: 10,
         paddingBottom: insets.bottom + 10,
         marginBottom: keyboardShown ? 64 : 0,
@@ -71,7 +73,10 @@ function InputToolbar({ onSend }: ToolbarProps) {
         onContentSizeChange={onContentSizeChange}
         style={[styles.textInput, { borderRadius: textInputRadius }]}
       />
-      <Send onSend={onSendPress} disabled={text.length === 0} />
+
+      <Box flexDirection="row">
+        {text.length === 0 ? <Camera onPress={() => null} /> : <Send onSend={onSendPress} disabled={text.length === 0} />}
+      </Box>
     </Box>
   );
 }
