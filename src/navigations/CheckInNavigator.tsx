@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, Pressable, StyleSheet } from 'react-native';
-import { Box, CircularButton, ChatImageUpload } from '@components';
+import { Box, CircularButton, CapturePicture } from '@components';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { SelectLocation, LocationPage } from '@screens/LocationPage';
 import { ProtestChat } from '@screens/ProtestChat';
@@ -66,9 +66,8 @@ function CheckInNavigator({ navigation }) {
       />
       <CheckInStack.Screen
         name="ChatImageUpload"
-        component={ChatImageUpload}
+        component={CapturePicture}
         options={{
-          ...TransitionPresets.ModalSlideFromBottomIOS,
           headerShown: false,
         }}
       />

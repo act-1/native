@@ -15,7 +15,7 @@ export type ProfileScreenProps = StackScreenProps<RootStackParamList, 'Profile'>
 export type ActionScreenProps = StackScreenProps<RootStackParamList, 'ActionScreen'>;
 export type NewPostProps = StackScreenProps<RootStackParamList, 'NewPost'>;
 export type RecentPicturesProps = StackScreenProps<RootStackParamList, 'RecentPictures'>;
-export type ChatImageUploadProps = StackScreenProps<RootStackParamList, 'ChatImageUpload'>;
+export type CapturePictureProps = StackScreenProps<RootStackParamList, 'CapturePicture'>;
 
 export type RootStackParamList = {
   AppTabs: undefined;
@@ -31,7 +31,7 @@ export type RootStackParamList = {
   SignUpForm: undefined;
   ActionScreen: undefined;
   NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: ILocation };
-  ChatImageUpload: { image: ImagePickerResponse };
+  CapturePicture: { image: ImagePickerResponse };
   SelectLocation: undefined;
   Explore: undefined;
   RecentPictures: { initialIndex?: number };
