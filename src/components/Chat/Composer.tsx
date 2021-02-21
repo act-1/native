@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Platform, TextInput, Keyboard, TextInputContentSizeChangeEventData } from 'react-native';
+import { StyleSheet, Platform, TextInput, TextStyle, TextInputContentSizeChangeEventData } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Box } from '../../components';
 
-function Composer({ actionComponent, onTextChange, textInputStyle }) {
+type ComposerProps = {
+  actionComponent?: React.ReactNode;
+  onTextChange?: (text: string) => void;
+  textInputStyle?: TextStyle;
+};
+
+function Composer({ actionComponent, onTextChange, textInputStyle }: ComposerProps) {
   const [text, setText] = useState('');
 
   const [inputHeight, setInputHeight] = useState(0);
