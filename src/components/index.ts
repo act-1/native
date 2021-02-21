@@ -13,3 +13,4 @@ export { default as Ticker } from './Ticker';
 export { default as UploadBanner } from './UploadBanner';
 export { default as ImageViewer } from './ImageViewer';
 export { default as LikeButton } from './LikeButton';
+export { default as Chat } from './Chat';

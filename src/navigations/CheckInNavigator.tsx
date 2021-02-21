@@ -3,15 +3,27 @@ import { Platform, Pressable, StyleSheet } from 'react-native';
 import { Box, Text, CircularButton } from '@components';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SelectLocation, LocationPage } from '@screens/LocationPage';
+import { ProtestChat } from '@screens/ProtestChat';
 import { CheckInForm } from '@screens/CheckIn';
 import NewPost from '@screens/NewPost';
+import HapticFeedback from 'react-native-haptic-feedback';
 
 const CheckInStack = createStackNavigator();
 
 function CheckInNavigator({ navigation }) {
   return (
-    <CheckInStack.Navigator>
-      <CheckInStack.Screen
+    <CheckInStack.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          fontSize: 22,
+          fontFamily: 'AtlasDL3.1AAA-Medium',
+          color: '#EC534B',
+          marginBottom: Platform.OS === 'ios' ? 11 : 2,
+        },
+        headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
+      }}
+    >
+      {/* <CheckInStack.Screen
         name="SelectLocation"
         component={SelectLocation}
         options={{
@@ -24,34 +36,29 @@ function CheckInNavigator({ navigation }) {
             </Pressable>
           ),
           headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontSize: 22,
-            fontFamily: 'AtlasDL3.1AAA-Medium',
-            color: '#EC534B',
-            marginBottom: Platform.OS === 'ios' ? 11 : 2,
-          },
-          headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
           headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
         }}
       />
-      <CheckInStack.Screen name="CheckInForm" component={CheckInForm} options={{ headerShown: false }} />
+      <CheckInStack.Screen name="CheckInForm" component={CheckInForm} options={{ headerShown: false }} /> */}
       <CheckInStack.Screen
         name="LocationPage"
-        component={LocationPage}
+        component={ProtestChat}
         options={{
           headerShown: true,
-          headerTitle: '',
-          headerTransparent: true,
+          headerTitle: 'בלפור',
           headerLeft: null,
           headerRightContainerStyle: { marginRight: 12 },
-          headerRight: () => (
+          headerLeft: () => (
             <Box flexDirection="row">
               <CircularButton
-                onPress={() => navigation.goBack()}
+                onPress={() => {
+                  HapticFeedback.trigger('impactLight');
+                  navigation.goBack();
+                }}
                 iconName="x"
                 color="grey"
                 size="small"
-                style={{ opacity: 0.8, marginLeft: 8 }}
+                style={{ opacity: 0.8, marginLeft: 12, marginBottom: 8 }}
               />
             </Box>
           ),

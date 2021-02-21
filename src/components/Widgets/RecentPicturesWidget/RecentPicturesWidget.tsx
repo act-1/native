@@ -72,7 +72,7 @@ function RecentPicturesWidget() {
           style={{ flex: 0.65, marginRight: 12 }}
         >
           <FastImage
-            source={{ uri: recentPictures[0].pictureUrl }}
+            source={{ uri: recentPictures[0].pictureUrl, priority: 'high' }}
             style={{ height: 236, borderRadius: 2 }}
             onLoad={() => onImageLoad(0)}
           />

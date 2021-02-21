@@ -13,6 +13,7 @@ type CircularButtonProps = {
   size?: 'small' | 'large';
   loading?: boolean;
   style?: ViewStyle;
+  disabled?: boolean;
 };
 
 function getButtonDimenions(size: string): ViewStyle {
@@ -29,16 +30,26 @@ function getButtonDimenions(size: string): ViewStyle {
   };
 }
 
-function CircularButton({ iconName, iconSize = 25, color, text, onPress, size = 'large', loading, style }: CircularButtonProps) {
+function CircularButton({
+  iconName,
+  iconSize = 25,
+  color,
+  text,
+  onPress,
+  size = 'large',
+  loading,
+  disabled,
+  style,
+}: CircularButtonProps) {
   const [pressed, setPressed] = useState(false);
-  const { initialColor, pressedColor, iconColor } = buttonColors[color];
+  const { initialColor, pressedColor, iconColor } = buttonColors[disabled ? 'grey' : color];
   const buttonDimensions = getButtonDimenions(size);
 
   return (
     <Box justifyContent="center" alignItems="center" testID="button-container">
       <Pressable
-        onPress={onPress}
-        onPressIn={() => setPressed(true)}
+        onPress={disabled ? null : onPress}
+        onPressIn={disabled ? null : () => setPressed(true)}
         onPressOut={() => setPressed(false)}
         style={{
           backgroundColor: pressed ? pressedColor : initialColor,
@@ -46,7 +57,6 @@ function CircularButton({ iconName, iconSize = 25, color, text, onPress, size = 
           ...styles.button,
           ...style,
         }}
-        testID="button-pressable"
       >
         {loading ? (
           <ActivityIndicator color={iconColor ? iconColor : 'white'} />
@@ -55,12 +65,7 @@ function CircularButton({ iconName, iconSize = 25, color, text, onPress, size = 
         )}
       </Pressable>
       {text && (
-        <Text
-          style={{ color: pressed ? pressedColor : initialColor }}
-          marginTop="s"
-          variant="circularButtonText"
-          testID="button-text"
-        >
+        <Text style={{ color: pressed ? pressedColor : initialColor }} marginTop="s" variant="circularButtonText">
           {text}
         </Text>
       )}

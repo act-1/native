@@ -5,6 +5,7 @@ import locationStore from './LocationStore';
 import feedStore from './FeedStore';
 import eventStore from './EventStore';
 import mediaStore from './MediaStore';
+import chatStore from './ChatStore';
 
 class RootStore {
   userStore: userStore;
@@ -12,6 +13,7 @@ class RootStore {
   eventStore: eventStore;
   feedStore: feedStore;
   mediaStore: mediaStore;
+  chatStore: mediaStore;
 
   constructor() {
     makeAutoObservable(this);
@@ -20,6 +22,7 @@ class RootStore {
     this.eventStore = new eventStore(this);
     this.feedStore = new feedStore(this);
     this.mediaStore = new mediaStore(this);
+    this.chatStore = new chatStore(this);
   }
 
   // Initalization of the app during splash screen
