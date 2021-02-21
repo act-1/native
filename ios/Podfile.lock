@@ -709,9 +709,9 @@ PODS:
     - React
   - react-native-geolocation-service (5.1.1):
     - React
-  - react-native-get-random-values (1.5.1):
+  - react-native-get-random-values (1.6.0):
     - React-Core
-  - react-native-image-picker (3.1.4):
+  - react-native-image-picker (3.2.1):
     - React-Core
   - react-native-image-resizer (1.4.3):
     - React-Core
@@ -848,17 +848,17 @@ PODS:
     - Firebase/Storage (~> 7.5.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (1.9.0):
+  - RNGestureHandler (1.10.1):
     - React-Core
   - RNGoogleSignin (5.0.0):
     - GoogleSignIn (~> 5.0.0)
     - React-Core
-  - RNImageCropPicker (0.35.3):
+  - RNImageCropPicker (0.36.0):
     - React-Core
     - React-RCTImage
-    - RNImageCropPicker/QBImagePickerController (= 0.35.3)
+    - RNImageCropPicker/QBImagePickerController (= 0.36.0)
     - TOCropViewController
-  - RNImageCropPicker/QBImagePickerController (0.35.3):
+  - RNImageCropPicker/QBImagePickerController (0.36.0):
     - React-Core
     - React-RCTImage
     - TOCropViewController
@@ -1243,8 +1243,8 @@ SPEC CHECKSUMS:
   react-native-config: c98128a72bc2c3a1ca72caec0b021f0fa944aa29
   react-native-fbsdk: 8e92c7a334fd8d9c2b5d8b8fcd7ae2c314161099
   react-native-geolocation-service: f33626f1ae12381ca2ae60f98b2f5edd676bf95a
-  react-native-get-random-values: 41f0c91ac0da870e47b307e07752e9e54bc2dc7e
-  react-native-image-picker: 28d8d1f5a643119876b8b2c7d4d1dcfb2b232dd4
+  react-native-get-random-values: f0fc24a5887a3341589515a86282a574407b59e4
+  react-native-image-picker: 64d12e81f3d9dad0af107fe6536b295d51932ec0
   react-native-image-resizer: 5dfbf934fe5788c11ed06ebbcdb6e6fb6beec20c
   react-native-in-app-message: 7a54e2fd7a490e5c33857bbbb260f855205433db
   react-native-ios-context-menu: 1ccf4d6aa1c0e7dc596613eb9a36f8c0c23ca56f
@@ -1281,9 +1281,9 @@ SPEC CHECKSUMS:
   RNFBMessaging: cc62fb3f75f771cf1b1a852a3e15df27343e3a94
   RNFBPerf: 30566e578e57be437a51424fac440b03e23f4048
   RNFBStorage: 71e9120f5ea2aac82072ef25b3605d4b2111597c
-  RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
+  RNGestureHandler: 5e58135436aacc1c5d29b75547d3d2b9430d052c
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
-  RNImageCropPicker: 08ba3a2e2f4f8833d606f01906c371e382c4dea9
+  RNImageCropPicker: e641bf83ac47324994cac139bde74635ec52c17c
   RNPermissions: 99dd8d4a30ff13509b949ca63cd1f69edc461775
   RNReactNativeHapticFeedback: 653a8c126a0f5e88ce15ffe280b3ff37e1fbb285
   RNScreens: b6c9607e6fe47c1b6e2f1910d2acd46dd7ecea3a
