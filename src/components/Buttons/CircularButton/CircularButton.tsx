@@ -14,6 +14,7 @@ type CircularButtonProps = {
   loading?: boolean;
   style?: ViewStyle;
   disabled?: boolean;
+  transparent?: boolean;
 };
 
 function getButtonDimenions(size: string): ViewStyle {
@@ -39,10 +40,18 @@ function CircularButton({
   size = 'large',
   loading,
   disabled,
+  transparent = false,
   style,
 }: CircularButtonProps) {
   const [pressed, setPressed] = useState(false);
-  const { initialColor, pressedColor, iconColor } = buttonColors[disabled ? 'grey' : color];
+  let { initialColor, pressedColor, iconColor } = buttonColors[disabled ? 'grey' : color];
+
+  if (transparent) {
+    iconColor = initialColor;
+    initialColor = 'transparent';
+    pressedColor = 'transparent';
+  }
+
   const buttonDimensions = getButtonDimenions(size);
 
   return (
