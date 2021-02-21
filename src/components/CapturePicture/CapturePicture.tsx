@@ -19,6 +19,7 @@ function CapturePicture({ route }: CapturePictureProps) {
 
   const closeButtonPress = () => {
     if (currentPicture) {
+      Keyboard.dismiss();
       setCurrentPicture(undefined);
     } else {
       navigation.goBack();
@@ -50,10 +51,11 @@ function CapturePicture({ route }: CapturePictureProps) {
   }, []);
 
   return (
-    <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding5' : 'height'}>
       <Box position="absolute" top={insets.top} left={5} zIndex={10}>
         <CircularButton iconName={currentPicture ? 'x' : 'arrow-right'} color="white" transparent onPress={closeButtonPress} />
       </Box>
+
       {currentPicture ? (
         <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
           <Image source={{ uri: currentPicture.uri }} style={styles.imageStyle} />
@@ -64,7 +66,12 @@ function CapturePicture({ route }: CapturePictureProps) {
 
       <Box position="absolute" bottom={50} alignItems="center" width="100%">
         {currentPicture ? (
-          <Box style={[styles.composerContainer, { bottom: keyboardShown ? 115 + insets.bottom : -50 }]}>
+          <Box
+            style={[
+              styles.composerContainer,
+              { bottom: keyboardShown ? 115 + insets.bottom : -50, marginBottom: keyboardShown ? 64 : 0 },
+            ]}
+          >
             <Composer
               textInputStyle={{ backgroundColor: 'transparent', borderColor: '#696969' }}
               actionComponent={<CircularButton size="small" iconName="arrow-left" color="blue" onPress={onSendPress} />}

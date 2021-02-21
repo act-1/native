@@ -6,7 +6,6 @@ import { Box } from '../../components';
 function Composer({ actionComponent, onTextChange, textInputStyle }) {
   const [text, setText] = useState('');
 
-  const [keyboardShown, setKeyboardShown] = useState(false);
   const [inputHeight, setInputHeight] = useState(0);
 
   const insets = useSafeAreaInsets();
@@ -16,16 +15,6 @@ function Composer({ actionComponent, onTextChange, textInputStyle }) {
     }
     return 50;
   }, [inputHeight]);
-
-  useEffect(() => {
-    Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
-    Keyboard.addListener('keyboardWillHide', () => setKeyboardShown(false));
-
-    return () => {
-      Keyboard.removeAllListeners('keyboardWillShow');
-      Keyboard.removeAllListeners('keyboardWillHide');
-    };
-  }, []);
 
   // Change input border radius according the input height (text lines)
   const onContentSizeChange = ({ nativeEvent }: { nativeEvent: TextInputContentSizeChangeEventData }) => {
@@ -42,7 +31,6 @@ function Composer({ actionComponent, onTextChange, textInputStyle }) {
         alignItems: 'center',
         paddingTop: 10,
         paddingBottom: insets.bottom + 10,
-        marginBottom: keyboardShown ? 64 : 0,
         elevation: 3,
       }}
     >

@@ -14,6 +14,7 @@ type ToolbarProps = {
 function InputToolbar({ onSend }: ToolbarProps) {
   const navigation = useNavigation();
   const [text, setText] = useState('');
+  const [keyboardShown, setKeyboardShown] = useState(false);
 
   const onTextChange = (newText: string) => {
     setText(newText);
@@ -30,8 +31,18 @@ function InputToolbar({ onSend }: ToolbarProps) {
     navigation.navigate('ChatImageUpload');
   };
 
+  useEffect(() => {
+    Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
+    Keyboard.addListener('keyboardWillHide', () => setKeyboardShown(false));
+
+    return () => {
+      Keyboard.removeAllListeners('keyboardWillShow');
+      Keyboard.removeAllListeners('keyboardWillHide');
+    };
+  }, []);
+
   return (
-    <Box backgroundColor="seperator">
+    <Box backgroundColor="seperator" style={{ marginBottom: keyboardShown ? 64 : 0 }}>
       <Composer
         onTextChange={onTextChange}
         actionComponent={
