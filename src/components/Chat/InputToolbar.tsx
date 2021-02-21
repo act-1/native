@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextInput, Keyboard, StyleSheet, Platform, TextInputContentSizeChangeEventData } from 'react-native';
 import { Box } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
+import { useNavigation } from '@react-navigation/native';
 import Camera from './Camera';
 import Send from './Send';
 
@@ -11,6 +11,7 @@ type ToolbarProps = {
 };
 
 function InputToolbar({ onSend }: ToolbarProps) {
+  const navigation = useNavigation();
   const [text, setText] = useState('');
 
   const [keyboardShown, setKeyboardShown] = useState(false);
@@ -48,6 +49,10 @@ function InputToolbar({ onSend }: ToolbarProps) {
     setInputHeight(nativeEvent.contentSize.height);
   };
 
+  const openCamera = () => {
+    navigation.navigate('ChatImageUpload');
+  };
+
   return (
     <Box
       flexDirection="row"
@@ -75,7 +80,7 @@ function InputToolbar({ onSend }: ToolbarProps) {
       />
 
       <Box flexDirection="row">
-        {text.length === 0 ? <Camera onPress={() => null} /> : <Send onSend={onSendPress} disabled={text.length === 0} />}
+        {text.length === 0 ? <Camera onPress={openCamera} /> : <Send onSend={onSendPress} disabled={text.length === 0} />}
       </Box>
     </Box>
   );

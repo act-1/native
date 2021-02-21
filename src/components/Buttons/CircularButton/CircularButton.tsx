@@ -62,6 +62,7 @@ function CircularButton({
         onPressOut={() => setPressed(false)}
         style={{
           backgroundColor: pressed ? pressedColor : initialColor,
+          opacity: pressed ? 0.875 : 1,
           ...buttonDimensions,
           ...styles.button,
           ...style,

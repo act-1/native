@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, CircularButton } from '../../components';
-import Icon from 'react-native-vector-icons/Feather';
 
 type CameraProps = {
   onPress: () => void;

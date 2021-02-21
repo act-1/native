@@ -14,3 +14,4 @@ export { default as UploadBanner } from './UploadBanner';
 export { default as ImageViewer } from './ImageViewer';
 export { default as LikeButton } from './LikeButton';
 export { default as Chat } from './Chat';
+export { default as ChatImageUpload } from './Chat/ChatImageUpload';
