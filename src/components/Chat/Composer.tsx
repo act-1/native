@@ -11,7 +11,6 @@ type ComposerProps = {
 
 function Composer({ actionComponent, onTextChange, textInputStyle }: ComposerProps) {
   const [text, setText] = useState('');
-
   const [inputHeight, setInputHeight] = useState(0);
 
   const insets = useSafeAreaInsets();

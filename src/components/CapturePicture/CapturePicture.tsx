@@ -51,7 +51,7 @@ function CapturePicture({ route }: CapturePictureProps) {
   }, []);
 
   return (
-    <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding5' : 'height'}>
+    <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Box position="absolute" top={insets.top} left={5} zIndex={10}>
         <CircularButton iconName={currentPicture ? 'x' : 'arrow-right'} color="white" transparent onPress={closeButtonPress} />
       </Box>
