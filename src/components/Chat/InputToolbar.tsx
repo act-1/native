@@ -32,12 +32,12 @@ function InputToolbar({ onSend }: ToolbarProps) {
   };
 
   useEffect(() => {
-    Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
-    Keyboard.addListener('keyboardWillHide', () => setKeyboardShown(false));
+    const keyboardShowListener = Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
+    const keyboardHideListener = Keyboard.addListener('keyboardWillHide', () => setKeyboardShown(false));
 
     return () => {
-      Keyboard.removeAllListeners('keyboardWillShow');
-      Keyboard.removeAllListeners('keyboardWillHide');
+      Keyboard.removeListener('keyboardWillShow', keyboardShowListener);
+      Keyboard.removeListener('keyboardWillHide', keyboardHideListener);
     };
   }, []);
 
