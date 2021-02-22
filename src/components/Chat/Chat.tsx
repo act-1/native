@@ -41,7 +41,7 @@ function Chat({ messages, onSend }: ChatProps) {
 
       <FlatList
         ref={flatListRef}
-        contentContainerStyle={{ marginTop: 10 }}
+        contentContainerStyle={{ marginTop: 10, paddingBottom: 15 }}
         data={messages}
         inverted={true}
         keyExtractor={(item) => item.id}
