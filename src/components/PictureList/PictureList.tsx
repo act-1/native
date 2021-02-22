@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { FlatList, RefreshControl, ActivityIndicator } from 'react-native';
+import { FlatList, Platform, RefreshControl, ActivityIndicator } from 'react-native';
 import { PicturePost } from '@types/collections';
 import PictureListItem from './PictureListItem';
 
@@ -37,6 +37,7 @@ function PictureList({
     <FlatList
       ref={flatListRef}
       data={pictures}
+      contentContainerStyle={{ marginTop: Platform.select({ ios: 105, android: 8 }) }}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <PictureListItem post={item} updatePostLikeCount={updatePostLikeCount} />}

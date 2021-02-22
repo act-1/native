@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 
@@ -31,14 +32,18 @@ function RecentPictures({ route }: RecentPicturesProps) {
   }, [mediaStore.recentPictures]);
 
   return (
-    <PictureList
-      pictures={recentPictures}
-      updatePostLikeCount={updatePostLikeCount}
-      fetchMorePictures={fetchMorePictures}
-      initialIndex={route?.params?.initialIndex}
-      fetchingPictures={mediaStore.recentPicturesLoading}
-      onRefresh={() => mediaStore.getNewRecentPictures()}
-    />
+    <>
+      <StatusBar backgroundColor="#161c22" />
+
+      <PictureList
+        pictures={recentPictures}
+        updatePostLikeCount={updatePostLikeCount}
+        fetchMorePictures={fetchMorePictures}
+        initialIndex={route?.params?.initialIndex}
+        fetchingPictures={mediaStore.recentPicturesLoading}
+        onRefresh={() => mediaStore.getNewRecentPictures()}
+      />
+    </>
   );
 }
 

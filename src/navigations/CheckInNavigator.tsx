@@ -1,14 +1,24 @@
 import React from 'react';
-import { Platform, Pressable, StyleSheet } from 'react-native';
-import { Box, CircularButton, CapturePicture } from '@components';
+import { View, Platform, Pressable, StyleSheet } from 'react-native';
+import { Box, Text, CircularButton, CapturePicture } from '@components';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { SelectLocation, LocationPage } from '@screens/LocationPage';
 import { ProtestChat } from '@screens/ProtestChat';
 import { CheckInForm } from '@screens/CheckIn';
 import NewPost from '@screens/NewPost';
 import HapticFeedback from 'react-native-haptic-feedback';
+import { BlurView } from '@react-native-community/blur';
 
 const CheckInStack = createStackNavigator();
+
+// Blurred view has lacking performance on android.
+let headerBackground = () => <View style={[StyleSheet.absoluteFillObject, { backgroundColor: '#1e262d', elevation: 4 }]} />;
+
+if (Platform.OS === 'ios') {
+  headerBackground = () => (
+    <BlurView blurType="thickMaterial" reducedTransparencyFallbackColor="#1e262d" style={StyleSheet.absoluteFill} />
+  );
+}
 
 function CheckInNavigator({ navigation }) {
   return (
@@ -58,10 +68,12 @@ function CheckInNavigator({ navigation }) {
                 iconName="x"
                 color="grey"
                 size="small"
-                style={{ opacity: 0.8, marginLeft: 12, marginBottom: 8 }}
+                style={{ opacity: 0.8, marginLeft: 12, marginBottom: 6 }}
               />
             </Box>
           ),
+          headerTransparent: Platform.select({ ios: true, android: false }),
+          headerBackground,
         }}
       />
       <CheckInStack.Screen

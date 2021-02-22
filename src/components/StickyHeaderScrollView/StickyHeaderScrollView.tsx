@@ -97,7 +97,7 @@ function StickyHeaderScrollView({ children, goBack, headerTitle, thumbnail }: St
       >
         {goBack && (
           <Box style={{ position: 'absolute', left: 14 }}>
-            <CircularButton onPress={() => goBack()} iconName="arrow-right" color="white" size="small" />
+            <CircularButton onPress={() => goBack()} iconName="arrow-right" color="white" size="small" transparent />
           </Box>
         )}
         <Animated.View style={{ opacity: topBarTitleOpacity }}>

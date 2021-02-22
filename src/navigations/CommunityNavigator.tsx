@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { View, Platform, StyleSheet } from 'react-native';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 
 import Community from '@screens/Community';
@@ -8,6 +8,17 @@ import RecentPictures from '@screens/Community/RecentPictures';
 import { Box } from '../components';
 import auth from '@react-native-firebase/auth';
 import FastImage from 'react-native-fast-image';
+
+import { BlurView } from '@react-native-community/blur';
+
+// Blurred view has lacking performance on android.
+let headerBackground = () => <View style={[StyleSheet.absoluteFillObject, { backgroundColor: '#1e262d', elevation: 4 }]} />;
+
+if (Platform.OS === 'ios') {
+  headerBackground = () => (
+    <BlurView blurType="thickMaterialDark" reducedTransparencyFallbackColor="#1e262d" style={StyleSheet.absoluteFillObject} />
+  );
+}
 
 const CommunityStack = createStackNavigator();
 
@@ -52,6 +63,8 @@ function CommunityNavigator() {
           title: 'תמונות אחרונות',
           headerBackTitleVisible: false,
           headerTitleAlign: 'center',
+          headerTransparent: Platform.select({ ios: true, android: false }),
+          headerBackground,
         }}
         component={RecentPictures}
       />
