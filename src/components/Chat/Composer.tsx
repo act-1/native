@@ -4,12 +4,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Box } from '../../components';
 
 type ComposerProps = {
-  actionComponent?: React.ReactNode;
-  onTextChange?: (text: string) => void;
+  ActionComponent: ({ text }: { text: string }) => JSX.Element;
   textInputStyle?: TextStyle;
 };
 
-function Composer({ actionComponent, onTextChange, textInputStyle }: ComposerProps) {
+function Composer({ ActionComponent, textInputStyle }: ComposerProps) {
   const [text, setText] = useState('');
   const [inputHeight, setInputHeight] = useState(0);
 
@@ -23,8 +22,6 @@ function Composer({ actionComponent, onTextChange, textInputStyle }: ComposerPro
 
   // Change input border radius according the input height (text lines)
   const onContentSizeChange = ({ nativeEvent }: { nativeEvent: TextInputContentSizeChangeEventData }) => {
-    console.log(nativeEvent.contentSize);
-
     setInputHeight(nativeEvent.contentSize.height);
   };
 
@@ -50,14 +47,11 @@ function Composer({ actionComponent, onTextChange, textInputStyle }: ComposerPro
         placeholderTextColor="grey"
         onChangeText={(newText) => {
           setText(newText);
-          if (onTextChange) {
-            onTextChange(newText);
-          }
         }}
         onContentSizeChange={onContentSizeChange}
         style={[styles.textInput, { borderRadius: textInputRadius }, textInputStyle]}
       />
-      {actionComponent}
+      <ActionComponent text={text} />
     </Box>
   );
 }

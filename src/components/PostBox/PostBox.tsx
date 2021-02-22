@@ -39,7 +39,7 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
 
   const menuItems = React.useMemo(() => {
     const items = [];
-    console.log(message);
+
     if (message.text === '') {
       items.push({
         actionKey: 'copy',
@@ -110,7 +110,7 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
     const callback = (buttonIndex: number) => {
       if (buttonIndex > menuItems.length) return; // When pressing outside the action sheet, the buttonIndex is `options.length + 1` - outside the bounds of the menu items
       if (menuItems[buttonIndex].actionKey === 'copy' && message.type === 'text') {
-        copyToClipboard(message.textContent);
+        copyToClipboard(message.text);
       } else if (menuItems[buttonIndex].actionKey === 'delete') {
         archivePost(message.id);
       }
@@ -147,8 +147,8 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
                       style={[
                         styles.postPicture,
                         {
-                          height: message.pictureHeight / (message.pictureWidth / scale(205)),
-                          marginBottom: message.textContent ? 6 : 0,
+                          height: message.pictureHeight / (message.pictureWidth / scale(130)),
+                          marginBottom: message.text ? 6 : 0,
                         },
                       ]}
                     />
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   postPicture: {
-    width: scale(265),
+    width: scale(150),
     marginHorizontal: -12,
     marginTop: -15,
     zIndex: 1,

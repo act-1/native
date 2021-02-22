@@ -20,20 +20,22 @@ type ChatProps = {
 
 function Chat({ messages, onSend }: ChatProps) {
   const { feedStore } = useStore();
+  const flatListRef = useRef<FlatList>(null);
 
   return (
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <FlatList
+        ref={flatListRef}
         contentContainerStyle={{ marginTop: 10 }}
         data={messages}
         inverted={true}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <PostBox message={item} />}
         initialNumToRender={2}
-        maintainVisibleContentPosition={{ minIndexForVisible: 7 }}
+        maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}
       />
-      <InputToolbar onSend={onSend} />
+      <InputToolbar onSend={onSend} scrollToFirstMessage={() => flatListRef.current?.scrollToIndex({ index: 0 })} />
     </KeyboardAvoidingView>
   );
 }

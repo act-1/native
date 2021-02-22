@@ -7,6 +7,7 @@ buildscript {
         compileSdkVersion = 29
         targetSdkVersion = 29
         googlePlayServicesVersion = "17.0.0"
+        googlePlayServicesVisionVersion = "19.0.0"
     }
     repositories {
         google()
@@ -25,6 +26,7 @@ buildscript {
 allprojects {
     repositories {
         google()
+        jcenter()
         mavenLocal()
         mavenCentral()
         maven {
@@ -36,7 +38,6 @@ allprojects {
             url("$rootDir/../node_modules/jsc-android/dist")
         }
 
-        jcenter()
         maven { url 'https://maven.google.com' }
         maven { url 'https://www.jitpack.io' }
     }

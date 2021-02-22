@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Keyboard, StyleSheet } from 'react-native';
 import { Box } from '../../components';
+import { useStore } from '../../stores';
 import { useNavigation } from '@react-navigation/native';
+import { TakePictureResponse } from 'react-native-camera';
 
 import Composer from './Composer';
 import Camera from './Camera';
@@ -9,26 +11,27 @@ import Send from './Send';
 
 type ToolbarProps = {
   onSend: (message: string) => void;
+  scrollToFirstMessage: () => void;
 };
 
-function InputToolbar({ onSend }: ToolbarProps) {
+function InputToolbar({ onSend, scrollToFirstMessage }: ToolbarProps) {
+  const { chatStore } = useStore();
   const navigation = useNavigation();
-  const [text, setText] = useState('');
   const [keyboardShown, setKeyboardShown] = useState(false);
 
-  const onTextChange = (newText: string) => {
-    setText(newText);
+  const onMessageSend = (text: string) => {
+    Keyboard.dismiss();
+    chatStore.sendMessage({ text }).then(() => {
+      scrollToFirstMessage();
+    });
   };
 
-  const onSendPress = () => {
-    onSend(text);
-
-    setText('');
-    Keyboard.dismiss();
+  const onImageUpload = ({ image, text }: { image: TakePictureResponse; text?: string }) => {
+    chatStore.sendPictureMessage({ image, text, inGallery: true });
   };
 
   const openCamera = () => {
-    navigation.navigate('ChatImageUpload');
+    navigation.navigate('ChatImageUpload', { onImageUpload });
   };
 
   useEffect(() => {
@@ -44,12 +47,15 @@ function InputToolbar({ onSend }: ToolbarProps) {
   return (
     <Box backgroundColor="seperator" style={{ marginBottom: keyboardShown ? 64 : 0 }}>
       <Composer
-        onTextChange={onTextChange}
-        actionComponent={
+        ActionComponent={({ text }: { text: string }) => (
           <Box flexDirection="row">
-            {text.length === 0 ? <Camera onPress={openCamera} /> : <Send onSend={onSendPress} disabled={text.length === 0} />}
+            {text.length === 0 ? (
+              <Camera onPress={openCamera} />
+            ) : (
+              <Send onSend={() => onMessageSend(text)} disabled={text.length === 0} />
+            )}
           </Box>
-        }
+        )}
       />
     </Box>
   );

@@ -1,6 +1,8 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { ImagePickerResponse } from 'react-native-image-picker';
+import { TakePictureResponse } from 'react-native-camera';
+
 import { ILocation } from './location';
 
 export type TabBarProps = BottomTabScreenProps<TabBarParamList>;
@@ -31,7 +33,7 @@ export type RootStackParamList = {
   SignUpForm: undefined;
   ActionScreen: undefined;
   NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: ILocation };
-  CapturePicture: { image: ImagePickerResponse };
+  CapturePicture: { onImageUpload: ({ image, text }: { image: TakePictureResponse; text?: string }) => void };
   SelectLocation: undefined;
   Explore: undefined;
   RecentPictures: { initialIndex?: number };

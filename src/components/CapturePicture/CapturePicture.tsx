@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, Keyboard, Platform, KeyboardAvoidingView, Pressable } from 'react-native';
 import { CapturePictureProps } from '@types/navigation';
-import { useNavigation } from '@react-navigation/native';
 import { Box, CircularButton } from '..';
 import TouchableScale from 'react-native-touchable-scale';
 import { RNCamera, TakePictureResponse } from 'react-native-camera';
@@ -9,8 +8,7 @@ import Composer from '../Chat/Composer';
 import DeviceInfo from 'react-native-device-info';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-function CapturePicture({ route }: CapturePictureProps) {
-  const navigation = useNavigation();
+function CapturePicture({ navigation, route }: CapturePictureProps) {
   const insets = useSafeAreaInsets();
 
   const [keyboardShown, setKeyboardShown] = useState(false);
@@ -36,8 +34,13 @@ function CapturePicture({ route }: CapturePictureProps) {
     }
   };
 
-  const onSendPress = () => {
-    alert(1);
+  const onSendPress = (text?: string) => {
+    console.log('TEXT', text);
+    const { onImageUpload } = route.params;
+    if (currentPicture && onImageUpload) {
+      route.params.onImageUpload({ image: currentPicture, text });
+      navigation.goBack();
+    }
   };
 
   useEffect(() => {
@@ -49,6 +52,10 @@ function CapturePicture({ route }: CapturePictureProps) {
       Keyboard.removeListener('keyboardWillHide', keyboardHideListener);
     };
   }, []);
+
+  const ActionComponent = ({ text }: { text: string }) => (
+    <CircularButton size="small" iconName="arrow-left" color="blue" onPress={() => onSendPress(text)} />
+  );
 
   return (
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -74,7 +81,7 @@ function CapturePicture({ route }: CapturePictureProps) {
           >
             <Composer
               textInputStyle={{ backgroundColor: 'transparent', borderColor: '#696969' }}
-              actionComponent={<CircularButton size="small" iconName="arrow-left" color="blue" onPress={onSendPress} />}
+              ActionComponent={ActionComponent}
             />
           </Box>
         ) : (
