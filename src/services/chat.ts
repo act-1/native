@@ -73,8 +73,6 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
       pictureHeight = height;
     }
 
-    console.log(pictureUrl, pictureWidth, pictureHeight);
-
     // Once uploaded, add the message and attach the picture url
     const message = await RealtimeDatabase.database.ref(`/chat/rooms/${roomName}`).child(`messages/${key}`).set({
       id: key,

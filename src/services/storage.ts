@@ -100,6 +100,7 @@ export async function uploadPicture(image: TakePictureResponse) {
         width: resizedWidth,
         height: resizedHeight,
         url,
+        createdAt: firestore.FieldValue.serverTimestamp(),
       });
 
       return { id: picture.id, url, width: resizedWidth, height: resizedHeight };

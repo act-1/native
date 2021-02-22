@@ -7,6 +7,7 @@ import { RNCamera, TakePictureResponse } from 'react-native-camera';
 import Composer from '../Chat/Composer';
 import DeviceInfo from 'react-native-device-info';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import HapticFeedback from 'react-native-haptic-feedback';
 
 function CapturePicture({ navigation, route }: CapturePictureProps) {
   const insets = useSafeAreaInsets();
@@ -27,7 +28,6 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
   const takePicture = async () => {
     try {
       const image = await cameraRef.current?.takePictureAsync({ quality: 1 });
-      console.log(image);
       setCurrentPicture(image);
     } catch (err) {
       console.error(err);
@@ -35,7 +35,6 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
   };
 
   const onSendPress = (text?: string) => {
-    console.log('TEXT', text);
     const { onImageUpload } = route.params;
     if (currentPicture && onImageUpload) {
       route.params.onImageUpload({ image: currentPicture, text });
@@ -85,7 +84,13 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
             />
           </Box>
         ) : (
-          <TouchableScale activeScale={1.1} onPress={takePicture}>
+          <TouchableScale
+            activeScale={1.1}
+            friction={10}
+            onPress={takePicture}
+            onPressIn={() => HapticFeedback.trigger('impactLight')}
+            onPressOut={() => HapticFeedback.trigger('impactMedium')}
+          >
             <Box style={styles.captureButton}></Box>
           </TouchableScale>
         )}
