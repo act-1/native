@@ -7825,10 +7825,10 @@ react-native-animatable@^1.3.3:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-blurhash@^1.0.29:
-  version "1.0.29"
-  resolved "https://registry.yarnpkg.com/react-native-blurhash/-/react-native-blurhash-1.0.29.tgz#75d0e6b656a7a57704c302af0832e5f210542723"
-  integrity sha512-ECAXPANYyZpmKMyD3ZsCo/Wj/cUYa6YO0jG+VKbWswOh+FCLXHP8kw2cdjzANTu43DqntLlhXRyPRUWRAsgFsA==
+react-native-blurhash@1.0.30:
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/react-native-blurhash/-/react-native-blurhash-1.0.30.tgz#476168ea56d8d4d323837fee4842136dcc7a6f30"
+  integrity sha512-Kv5GzTVYcWTJZTzkpaTZ7G25rj++iBCjuL+e/+nJiw9KRF/ATlzU9Ue6Y3Zm+fApSPFav7lq+un0etb9X5vcNQ==
 
 react-native-bootsplash@^3.1.2:
   version "3.1.2"
