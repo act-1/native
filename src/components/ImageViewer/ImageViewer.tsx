@@ -35,7 +35,7 @@ function ImageViewer({ imageUrl, isVisible, setViewerVisiblity }: ImageViewerPro
         onCancel={() => setViewerVisiblity(false)}
       />
       <Box position="absolute" top={insets.top + 20} left={15}>
-        <CircularButton onPress={() => setViewerVisiblity(false)} iconName="x" color="white" size="large" />
+        <CircularButton onPress={() => setViewerVisiblity(false)} iconName="x" size="large" color="white" transparent />
       </Box>
     </Modal>
   );

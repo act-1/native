@@ -3,6 +3,7 @@ import { FlatList, KeyboardAvoidingView, Keyboard, Platform } from 'react-native
 import { Box, PostBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
+import { ImageViewer } from '..';
 
 import InputToolbar from './InputToolbar';
 
@@ -22,15 +23,29 @@ function Chat({ messages, onSend }: ChatProps) {
   const { feedStore } = useStore();
   const flatListRef = useRef<FlatList>(null);
 
+  const [imageViewerVisiblity, setViewerVisibility] = useState(false);
+  const [currentPictureUrl, setPictureUrl] = useState('');
+
+  const selectPicture = (imageUrl: string) => {
+    setPictureUrl(imageUrl);
+    setViewerVisibility(true);
+  };
+
   return (
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ImageViewer
+        isVisible={imageViewerVisiblity}
+        setViewerVisiblity={(isVisible) => setViewerVisibility(isVisible)}
+        imageUrl={currentPictureUrl}
+      />
+
       <FlatList
         ref={flatListRef}
         contentContainerStyle={{ marginTop: 10 }}
         data={messages}
         inverted={true}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <PostBox message={item} />}
+        renderItem={({ item }) => <PostBox message={item} onPicturePress={selectPicture} />}
         initialNumToRender={2}
         maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}

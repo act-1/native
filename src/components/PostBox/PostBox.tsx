@@ -147,7 +147,10 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
                       style={[
                         styles.postPicture,
                         {
-                          height: message.pictureHeight / (message.pictureWidth / scale(130)),
+                          height:
+                            message.pictureHeight /
+                            (message.pictureWidth / (message.pictureWidth > message.pictureHeight ? scale(245) : scale(130))),
+                          width: message.pictureWidth > message.pictureHeight ? scale(245) : scale(130),
                           marginBottom: message.text ? 6 : 0,
                         },
                       ]}
@@ -202,7 +205,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   postPicture: {
-    width: scale(150),
     marginHorizontal: -12,
     marginTop: -15,
     zIndex: 1,
