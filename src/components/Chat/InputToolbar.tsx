@@ -10,11 +10,10 @@ import Camera from './Camera';
 import Send from './Send';
 
 type ToolbarProps = {
-  onSend: (message: string) => void;
   scrollToFirstMessage: () => void;
 };
 
-function InputToolbar({ onSend, scrollToFirstMessage }: ToolbarProps) {
+function InputToolbar({ scrollToFirstMessage }: ToolbarProps) {
   const { chatStore } = useStore();
   const navigation = useNavigation();
   const [keyboardShown, setKeyboardShown] = useState(false);
@@ -47,12 +46,18 @@ function InputToolbar({ onSend, scrollToFirstMessage }: ToolbarProps) {
   return (
     <Box backgroundColor="seperator" style={{ marginBottom: keyboardShown ? 64 : 0 }}>
       <Composer
-        ActionComponent={({ text }: { text: string }) => (
+        ActionComponent={({ text, resetText }: { text: string; resetText: () => void }) => (
           <Box flexDirection="row">
             {text.length === 0 ? (
               <Camera onPress={openCamera} />
             ) : (
-              <Send onSend={() => onMessageSend(text)} disabled={text.length === 0} />
+              <Send
+                onSend={() => {
+                  onMessageSend(text);
+                  resetText();
+                }}
+                disabled={text.length === 0}
+              />
             )}
           </Box>
         )}

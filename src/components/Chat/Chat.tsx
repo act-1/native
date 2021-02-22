@@ -15,7 +15,6 @@ import InputToolbar from './InputToolbar';
  */
 
 type ChatProps = {
-  onSend: (message: string) => void;
   messages: Array;
 };
 
@@ -50,7 +49,7 @@ function Chat({ messages, onSend }: ChatProps) {
         maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}
       />
-      <InputToolbar onSend={onSend} scrollToFirstMessage={() => flatListRef.current?.scrollToIndex({ index: 0 })} />
+      <InputToolbar scrollToFirstMessage={() => flatListRef.current?.scrollToIndex({ index: 0 })} />
     </KeyboardAvoidingView>
   );
 }

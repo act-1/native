@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Box } from '../../components';
 
 type ComposerProps = {
-  ActionComponent: ({ text }: { text: string }) => JSX.Element;
+  ActionComponent: ({ text, resetText }: { text: string; resetText: () => void }) => JSX.Element;
   textInputStyle?: TextStyle;
 };
 
@@ -51,7 +51,7 @@ function Composer({ ActionComponent, textInputStyle }: ComposerProps) {
         onContentSizeChange={onContentSizeChange}
         style={[styles.textInput, { borderRadius: textInputRadius }, textInputStyle]}
       />
-      <ActionComponent text={text} />
+      <ActionComponent text={text} resetText={() => setText('')} />
     </Box>
   );
 }
