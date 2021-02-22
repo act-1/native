@@ -23,6 +23,7 @@ async function sendMessage({ roomName, text }: SendMessageProps) {
       authorPicture,
       createdAt: database.ServerValue.TIMESTAMP,
       text,
+      type: 'text',
     });
 
     return message;
