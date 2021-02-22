@@ -108,7 +108,7 @@ export async function newImagePost({ image, textContent, location }: NewImagePos
         pictureWidth: uploadedImage.width,
         pictureHeight: uploadedImage.height,
         pictureUrl: uploadedImage.url,
-        storagePath: uploadedImage.storagePath,
+        pictureId: uploadedImage.id,
         archived: false,
         featured: false,
         homeScreen: false,

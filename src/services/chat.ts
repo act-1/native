@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import { RealtimeDatabase } from '@services/databaseWrapper';
 import { newImagePost } from '@services/feed';
+import { uploadPicture } from '@services/storage';
 import database from '@react-native-firebase/database';
 import { nanoid } from 'nanoid/non-secure';
 import { PicturePost } from '@types/collections';
@@ -54,8 +55,25 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
 
   try {
     // TODO: Add location
-    const post = await newImagePost({ image, textContent: text, inGallery });
-    let { pictureUrl, pictureWidth, pictureHeight } = post?.data() as PicturePost;
+    let pictureUrl, pictureWidth, pictureHeight;
+
+    // If the picture goes to the library - create a new image post.
+    // Otherwise, just upload it regularly.
+    if (inGallery) {
+      const post = await newImagePost({ image, textContent: text });
+      const postData = post?.data() as PicturePost;
+
+      pictureUrl = postData.pictureUrl;
+      pictureWidth = postData.pictureWidth;
+      pictureHeight = postData.pictureHeight;
+    } else {
+      const { height, width, url } = await uploadPicture(image);
+      pictureUrl = url;
+      pictureWidth = width;
+      pictureHeight = height;
+    }
+
+    console.log(pictureUrl, pictureWidth, pictureHeight);
 
     // Once uploaded, add the message and attach the picture url
     const message = await RealtimeDatabase.database.ref(`/chat/rooms/${roomName}`).child(`messages/${key}`).set({
@@ -64,8 +82,8 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
       authorName: 'גיא',
       authorPicture,
       pictureUrl,
-      pictureHeight,
       pictureWidth,
+      pictureHeight,
       text,
       type: 'picture',
       createdAt: database.ServerValue.TIMESTAMP,

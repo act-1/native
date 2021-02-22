@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import storage, { FirebaseStorageTypes } from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
 import perf from '@react-native-firebase/perf';
 import { updateUserPicture } from './user';
 import { nanoid } from 'nanoid/non-secure';
@@ -59,6 +60,8 @@ export async function uploadProfilePictureFromURL(iamgeURL: string) {
 
 export async function uploadPicture(image: TakePictureResponse) {
   try {
+    const { uid: uploaderId } = auth().currentUser!;
+
     const { uri, width, height } = image;
 
     if (width && height && uri) {
@@ -90,7 +93,16 @@ export async function uploadPicture(image: TakePictureResponse) {
       uploadTrace.stop();
 
       const url = await reference.getDownloadURL();
-      return { url, storagePath: reference.fullPath, width: resizedWidth, height: resizedHeight };
+
+      const picture = await firestore().collection('pictures').add({
+        uploaderId,
+        storagePath: reference.fullPath,
+        width: resizedWidth,
+        height: resizedHeight,
+        url,
+      });
+
+      return { id: picture.id, url, width: resizedWidth, height: resizedHeight };
     } else {
       throw new Error('Missing image properties.');
     }
