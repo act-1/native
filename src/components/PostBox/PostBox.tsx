@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Platform, Pressable, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
@@ -10,7 +10,7 @@ import { scale } from 'react-native-size-matters';
 import PostBoxBubble from './PostBoxBubble';
 import { ContextMenuView } from 'react-native-ios-context-menu';
 
-import { TouchableNativeFeedback, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import Icon from 'react-native-vector-icons/Feather';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -34,12 +34,12 @@ const textFontSize = Platform.select({ ios: 17.5, android: 16 });
 
 function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: PostBoxProps) {
   const { userStore, feedStore } = useStore();
-
+  const [actionSheetOpen, setActionSheetState] = useState(false);
   const { showActionSheetWithOptions } = useActionSheet();
 
   const menuItems = React.useMemo(() => {
     const items = [];
-    console.log(message);
+
     if (message.text === '') {
       items.push({
         actionKey: 'copy',
@@ -87,6 +87,7 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
 
   // Relevant only for android devices
   const openPostActionSheet = () => {
+    setActionSheetState(true);
     const options = menuItems.map((item) => item.actionTitle);
     const icons = menuItems.map((item) => (
       <Icon
@@ -108,9 +109,10 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
     };
 
     const callback = (buttonIndex: number) => {
+      setActionSheetState(false);
       if (buttonIndex > menuItems.length) return; // When pressing outside the action sheet, the buttonIndex is `options.length + 1` - outside the bounds of the menu items
       if (menuItems[buttonIndex].actionKey === 'copy' && message.type === 'text') {
-        copyToClipboard(message.textContent);
+        copyToClipboard(message.text);
       } else if (menuItems[buttonIndex].actionKey === 'delete') {
         archivePost(message.id);
       }
@@ -141,14 +143,20 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
             <TouchableNativeFeedback onLongPress={openPostActionSheet}>
               <PostBoxBubble direction={userStore.user?.uid === message.authorId ? 'right' : 'left'}>
                 {message.type === 'picture' && (
-                  <TouchableOpacity onPress={() => onPicturePress(message.pictureUrl)} activeOpacity={0.7}>
+                  <TouchableOpacity
+                    onPress={() => (actionSheetOpen ? null : onPicturePress(message.pictureUrl))}
+                    activeOpacity={0.7}
+                  >
                     <FastImage
                       source={{ uri: message.pictureUrl }}
                       style={[
                         styles.postPicture,
                         {
-                          height: message.pictureHeight / (message.pictureWidth / scale(205)),
-                          marginBottom: message.textContent ? 6 : 0,
+                          width: message.pictureWidth > message.pictureHeight ? scale(245) : scale(135),
+                          height:
+                            message.pictureHeight /
+                            (message.pictureWidth / (message.pictureWidth > message.pictureHeight ? scale(245) : scale(130))),
+                          marginBottom: message.text ? 6 : 0,
                         },
                       ]}
                     />
@@ -202,11 +210,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   postPicture: {
-    width: scale(265),
-    marginHorizontal: -12,
-    marginTop: -15,
-    zIndex: 1,
-    borderTopRightRadius: 25,
-    borderTopLeftRadius: 25,
+    marginHorizontal: -11.5,
+    marginTop: -8,
+    zIndex: 10,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
   },
 });

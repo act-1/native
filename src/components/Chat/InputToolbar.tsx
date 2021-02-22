@@ -1,102 +1,71 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, Keyboard, StyleSheet, Platform, TextInputContentSizeChangeEventData } from 'react-native';
+import { Keyboard, StyleSheet } from 'react-native';
 import { Box } from '../../components';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useStore } from '../../stores';
+import { useNavigation } from '@react-navigation/native';
+import { TakePictureResponse } from 'react-native-camera';
+
+import Composer from './Composer';
+import Camera from './Camera';
 import Send from './Send';
 
 type ToolbarProps = {
-  onSend: (message: string) => void;
+  scrollToFirstMessage: () => void;
 };
 
-function InputToolbar({ onSend }: ToolbarProps) {
-  const [text, setText] = useState('');
-
+function InputToolbar({ scrollToFirstMessage }: ToolbarProps) {
+  const { chatStore } = useStore();
+  const navigation = useNavigation();
   const [keyboardShown, setKeyboardShown] = useState(false);
-  const [inputHeight, setInputHeight] = useState(0);
 
-  const insets = useSafeAreaInsets();
-  const textInputRadius = React.useMemo(() => {
-    if (inputHeight > 35) {
-      return 20;
-    }
-    return 50;
-  }, [inputHeight]);
-
-  const onSendPress = () => {
-    onSend(text);
-
-    setText('');
+  const onMessageSend = (text: string) => {
     Keyboard.dismiss();
+    chatStore.sendMessage({ text }).then(() => {
+      scrollToFirstMessage();
+    });
+  };
+
+  const onImageUpload = ({ image, text }: { image: TakePictureResponse; text?: string }) => {
+    chatStore.sendPictureMessage({ image, text, inGallery: true });
+  };
+
+  const openCamera = () => {
+    navigation.navigate('ChatImageUpload', { onImageUpload });
   };
 
   useEffect(() => {
-    Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
-    Keyboard.addListener('keyboardWillHide', () => setKeyboardShown(false));
+    const keyboardShowListener = Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
+    const keyboardHideListener = Keyboard.addListener('keyboardWillHide', () => setKeyboardShown(false));
 
     return () => {
-      Keyboard.removeAllListeners('keyboardWillShow');
-      Keyboard.removeAllListeners('keyboardWillHide');
+      Keyboard.removeListener('keyboardWillShow', keyboardShowListener);
+      Keyboard.removeListener('keyboardWillHide', keyboardHideListener);
     };
   }, []);
 
-  // Change input border radius according the input height (text lines)
-  const onContentSizeChange = ({ nativeEvent }: { nativeEvent: TextInputContentSizeChangeEventData }) => {
-    console.log(nativeEvent.contentSize);
-
-    setInputHeight(nativeEvent.contentSize.height);
-  };
-
   return (
-    <Box
-      flexDirection="row"
-      paddingHorizontal="m"
-      backgroundColor="seperator"
-      style={{
-        alignItems: 'flex-end',
-        paddingTop: 10,
-        paddingBottom: insets.bottom + 10,
-        marginBottom: keyboardShown ? 64 : 0,
-        elevation: 3,
-      }}
-    >
-      <TextInput
-        multiline={true}
-        selectionColor={Platform.select({ ios: '#f0f2f5', android: undefined })}
-        enablesReturnKeyAutomatically
-        keyboardAppearance="dark"
-        value={text}
-        placeholder="הודעה חדשה"
-        placeholderTextColor="grey"
-        onChangeText={(newText) => setText(newText)}
-        onContentSizeChange={onContentSizeChange}
-        style={[styles.textInput, { borderRadius: textInputRadius }]}
+    <Box backgroundColor="seperator" style={{ marginBottom: keyboardShown ? 64 : 0 }}>
+      <Composer
+        ActionComponent={({ text, resetText }: { text: string; resetText: () => void }) => (
+          <Box flexDirection="row">
+            {text.length === 0 ? (
+              <Camera onPress={openCamera} />
+            ) : (
+              <Send
+                onSend={() => {
+                  onMessageSend(text);
+                  resetText();
+                }}
+                disabled={text.length === 0}
+              />
+            )}
+          </Box>
+        )}
       />
-      <Send onSend={onSendPress} disabled={text.length === 0} />
     </Box>
   );
 }
 
 export default InputToolbar;
 
-const styles = StyleSheet.create({
-  textInput: {
-    flex: 1,
-
-    paddingTop: Platform.select({ ios: 6.25, android: 3.25 }),
-    paddingBottom: Platform.select({ ios: 5.5, android: 2 }),
-    paddingLeft: 18,
-    paddingRight: 12,
-
-    marginRight: 8,
-
-    fontSize: 18,
-    color: '#fff',
-    textAlign: 'right',
-
-    borderWidth: 1,
-    borderColor: '#444444',
-    backgroundColor: '#3b3b3b',
-
-    elevation: 1,
-  },
-});
+const styles = StyleSheet.create({});

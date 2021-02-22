@@ -72,7 +72,7 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
           )}
         />
         <Box position="absolute" top={insets.top + 20} left={15}>
-          <CircularButton onPress={() => setDisplayGallery(false)} iconName="x" color="white" size="large" />
+          <CircularButton onPress={() => setDisplayGallery(false)} iconName="x" color="white" size="large" transparent />
         </Box>
       </Modal>
 

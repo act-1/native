@@ -3,6 +3,7 @@ import { FlatList, KeyboardAvoidingView, Keyboard, Platform } from 'react-native
 import { Box, PostBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
+import { ImageViewer } from '..';
 
 import InputToolbar from './InputToolbar';
 
@@ -14,26 +15,41 @@ import InputToolbar from './InputToolbar';
  */
 
 type ChatProps = {
-  onSend: (message: string) => void;
   messages: Array;
 };
 
 function Chat({ messages, onSend }: ChatProps) {
   const { feedStore } = useStore();
+  const flatListRef = useRef<FlatList>(null);
+
+  const [imageViewerVisiblity, setViewerVisibility] = useState(false);
+  const [currentPictureUrl, setPictureUrl] = useState('');
+
+  const selectPicture = (imageUrl: string) => {
+    setPictureUrl(imageUrl);
+    setViewerVisibility(true);
+  };
 
   return (
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ImageViewer
+        isVisible={imageViewerVisiblity}
+        setViewerVisiblity={(isVisible) => setViewerVisibility(isVisible)}
+        imageUrl={currentPictureUrl}
+      />
+
       <FlatList
-        contentContainerStyle={{ marginTop: 10 }}
+        ref={flatListRef}
+        contentContainerStyle={{ marginTop: 10, paddingBottom: 15 }}
         data={messages}
         inverted={true}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <PostBox message={item} />}
+        renderItem={({ item }) => <PostBox message={item} onPicturePress={selectPicture} />}
         initialNumToRender={2}
-        maintainVisibleContentPosition={{ minIndexForVisible: 7 }}
+        maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}
       />
-      <InputToolbar onSend={onSend} />
+      <InputToolbar scrollToFirstMessage={() => flatListRef.current?.scrollToIndex({ index: 0 })} />
     </KeyboardAvoidingView>
   );
 }

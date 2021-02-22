@@ -87,13 +87,23 @@ type ChatMessageBase = {
   text: string;
   createdAt: Date;
   authorId: string;
-  image?: string;
-  video?: string;
-  audio?: string;
+  authorName: string;
+  authorPicture: string;
   system?: boolean;
   sent?: boolean;
   received?: boolean;
   pending?: boolean;
 };
 
-export type ChatMessage = ChatMessageBase;
+export type ChatTextMessage = ChatMessageBase & {
+  type: 'text';
+};
+
+export type ChatImageMessage = ChatMessageBase & {
+  type: 'picture';
+  pictureUrl: string;
+  pictureWidth: number;
+  pictureHeight: number;
+};
+
+export type ChatMessage = ChatTextMessage | ChatImageMessage;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, CircularButton } from '../../components';
+import { CircularButton } from '../../components';
 
 type SendProps = {
   onSend: () => void;
@@ -7,11 +7,7 @@ type SendProps = {
 };
 
 function Send({ onSend, disabled }: SendProps) {
-  return (
-    <Box>
-      <CircularButton size="small" iconName="arrow-left" color="blue" onPress={onSend} disabled={disabled} />
-    </Box>
-  );
+  return <CircularButton size="small" iconName="arrow-left" color="blue" onPress={onSend} disabled={disabled} />;
 }
 
 export default Send;

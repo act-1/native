@@ -7,12 +7,7 @@ import { useStore } from '../../stores';
 function ProtestChat({ navigation, route }: LocationScreenProps) {
   const { chatStore } = useStore();
 
-  const onMessageSend = (text: string) => {
-    chatStore.sendMessage({ text });
-  };
-
   useEffect(() => {
-    console.log(chatStore.messages.length);
     if (chatStore.messages.length === 0) {
       chatStore.getMessages();
     }
@@ -27,7 +22,7 @@ function ProtestChat({ navigation, route }: LocationScreenProps) {
   return (
     <>
       <StatusBar backgroundColor="#161c22" />
-      <Chat messages={chatStore.messages} onSend={onMessageSend} />
+      <Chat messages={chatStore.messages} />
     </>
   );
 }

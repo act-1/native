@@ -20,7 +20,7 @@ export default function PostBoxBubble({ children, direction }: { children: React
           <Svg
             style={{
               left:
-                direction === 'left' ? Platform.select({ ios: 120, android: 155 }) : Platform.select({ ios: -6, android: -4 }),
+                direction === 'left' ? Platform.select({ ios: 105, android: 155 }) : Platform.select({ ios: -6, android: -4 }),
             }}
             width={15.5}
             height={17.5}

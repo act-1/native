@@ -1,9 +1,10 @@
 import auth from '@react-native-firebase/auth';
 import storage, { FirebaseStorageTypes } from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
 import perf from '@react-native-firebase/perf';
 import { updateUserPicture } from './user';
 import { nanoid } from 'nanoid/non-secure';
-import { ImagePickerResponse } from 'react-native-image-picker';
+import { TakePictureResponse } from 'react-native-camera';
 import ImageResizer from 'react-native-image-resizer';
 
 export async function uploadProfilePicture(imagePath: string) {
@@ -57,11 +58,13 @@ export async function uploadProfilePictureFromURL(iamgeURL: string) {
 //   }
 // }
 
-export async function uploadPicture(image: ImagePickerResponse) {
+export async function uploadPicture(image: TakePictureResponse) {
   try {
-    const { uri, width, height, fileSize } = image;
+    const { uid: uploaderId } = auth().currentUser!;
 
-    if (width && height && uri && fileSize) {
+    const { uri, width, height } = image;
+
+    if (width && height && uri) {
       // Whther to set the resize ratio based on the width (landscape image) or the height (portrait)
       const resizeDimension = width > height ? width : height;
       let resizeRatio = 1;
@@ -79,15 +82,7 @@ export async function uploadPicture(image: ImagePickerResponse) {
       const resizedWidth = width / resizeRatio;
       const resizedHeight = height / resizeRatio;
 
-      const resizeTrace = await perf().startTrace('resizeImage');
-      resizeTrace.putMetric('width', width);
-      resizeTrace.putMetric('width', width);
-      resizeTrace.putMetric('resizedWidth', resizedWidth);
-      resizeTrace.putMetric('resizedHeight', resizedHeight);
-      resizeTrace.putMetric('file_size', fileSize);
-
       const resizedImage = await ImageResizer.createResizedImage(uri, resizedWidth, resizedHeight, 'JPEG', 75);
-      resizeTrace.stop();
 
       const uploadTrace = await perf().startTrace('imageUpload');
       uploadTrace.putMetric('image_size', resizedImage.size);
@@ -98,7 +93,17 @@ export async function uploadPicture(image: ImagePickerResponse) {
       uploadTrace.stop();
 
       const url = await reference.getDownloadURL();
-      return { url, storagePath: reference.fullPath, width: resizedWidth, height: resizedHeight };
+
+      const picture = await firestore().collection('pictures').add({
+        uploaderId,
+        storagePath: reference.fullPath,
+        width: resizedWidth,
+        height: resizedHeight,
+        url,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      });
+
+      return { id: picture.id, url, width: resizedWidth, height: resizedHeight };
     } else {
       throw new Error('Missing image properties.');
     }

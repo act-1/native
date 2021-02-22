@@ -143,6 +143,7 @@ android {
         versionCode 1
         versionName "0.01"
         multiDexEnabled true
+        missingDimensionStrategy 'react-native-camera', 'general'
 
         Properties properties = new Properties()
         if (rootProject.file("local.properties").exists()) {

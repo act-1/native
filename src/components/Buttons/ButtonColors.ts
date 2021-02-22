@@ -51,7 +51,7 @@ export const buttonColors: ColorsDict = {
     textColor: '#2d3436',
   },
   white: {
-    initialColor: 'transparent',
+    initialColor: '#fff',
     pressedColor: '#18191a59',
     iconColor: '#fff',
   },

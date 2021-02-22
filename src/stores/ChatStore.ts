@@ -1,7 +1,9 @@
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { ChatMessage } from '@types/collections';
+import { TakePictureResponse } from 'react-native-camera';
 import { RealtimeDatabase } from '@services/databaseWrapper';
+import { nanoid } from 'nanoid/non-secure';
 import ChatService from '@services/chat';
 import rootStore from './RootStore';
 
@@ -71,6 +73,20 @@ class ChatStore {
     try {
       const roomName = this.currentRoomName;
       const message = await ChatService.sendMessage({ roomName, text });
+      console.log(message);
+      return message;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+
+  async sendPictureMessage({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery: boolean }) {
+    try {
+      const roomName = this.currentRoomName;
+      const messageKey = nanoid(10);
+
+      const message = await ChatService.sendPictureMessage({ roomName, image, text, inGallery, key: messageKey });
       console.log(message);
     } catch (err) {
       console.error(err);
