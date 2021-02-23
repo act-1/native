@@ -6,8 +6,8 @@ import Community from '@screens/Community';
 import RecentPictures from '@screens/Community/RecentPictures';
 
 import { Box } from '../components';
-import auth from '@react-native-firebase/auth';
-import FastImage from 'react-native-fast-image';
+
+import HeaderProfilePicture from '@components/HeaderProfilePicture';
 
 import { BlurView } from '@react-native-community/blur';
 
@@ -23,8 +23,6 @@ if (Platform.OS === 'ios') {
 const CommunityStack = createStackNavigator();
 
 function CommunityNavigator({ navigation }) {
-  const { photoURL: profilePicture } = auth().currentUser!;
-
   return (
     <CommunityStack.Navigator
       screenOptions={({ navigation }) => ({
@@ -46,16 +44,7 @@ function CommunityNavigator({ navigation }) {
           title: 'קהילה',
           headerTitleAlign: 'center',
           headerBackTitle: 'קהילה',
-          headerLeft: () => (
-            <Pressable onPress={() => navigation.navigate('Secondary', { screen: 'ProfileModal' })}>
-              <Box marginLeft="xm" marginBottom="xxs">
-                <FastImage
-                  source={{ uri: profilePicture }}
-                  style={{ width: 27, height: 27, borderRadius: 25, borderColor: '#e9e9e9' }}
-                />
-              </Box>
-            </Pressable>
-          ),
+          headerLeft: () => <HeaderProfilePicture navigation={navigation} />,
         }}
         component={Community}
       />

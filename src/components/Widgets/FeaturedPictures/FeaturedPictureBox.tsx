@@ -4,7 +4,6 @@ import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { Box, Text } from '../..';
 import { Blurhash } from 'react-native-blurhash';
 import { ParallaxImage } from 'react-native-snap-carousel';
-import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';
 import useImagePlaceholder from './useImagePlaceholder';
 
@@ -34,15 +33,7 @@ function FeaturedPictureBox({ blurhash, pictureUrl, locationName, createdAt, par
   const blurhashStyle = useMemo(() => [styles.item, { opacity: placeholderOpacity }], [placeholderOpacity]);
 
   return (
-    <TouchableScale
-      activeScale={0.96}
-      friction={20}
-      onPress={() => {
-        HapticFeedback.trigger('impactLight');
-        onPress();
-      }}
-      style={styles.item}
-    >
+    <TouchableScale activeScale={0.96} friction={20} onPress={() => onPress()} style={styles.item}>
       <ParallaxImage
         source={{ uri: pictureUrl }}
         containerStyle={styles.imageContainer}

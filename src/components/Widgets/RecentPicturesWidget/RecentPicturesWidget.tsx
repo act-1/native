@@ -11,7 +11,6 @@ import { PicturePost } from '@types/collections';
 import { useNavigation } from '@react-navigation/native';
 import TouchableScale from 'react-native-touchable-scale';
 
-import HapticFeedback from 'react-native-haptic-feedback';
 import { updateArrayItem } from '@utils/array-utils';
 import { Pressable } from 'react-native';
 
@@ -66,8 +65,6 @@ function RecentPicturesWidget() {
         <TouchableScale
           activeScale={0.95}
           friction={10}
-          onPressIn={() => HapticFeedback.trigger('impactLight')}
-          onPressOut={() => HapticFeedback.trigger('impactLight')}
           onPress={() => navigation.navigate('RecentPictures')}
           style={{ flex: 0.65, marginRight: 12 }}
         >
@@ -78,26 +75,14 @@ function RecentPicturesWidget() {
           />
         </TouchableScale>
         <Box flex={0.32} style={{ marginRight: -12 }}>
-          <TouchableScale
-            activeScale={0.95}
-            friction={10}
-            onPress={() => navigateToPictureList(1)}
-            onPressIn={() => HapticFeedback.trigger('impactLight')}
-            onPressOut={() => HapticFeedback.trigger('impactLight')}
-          >
+          <TouchableScale activeScale={0.95} friction={10} onPress={() => navigateToPictureList(1)}>
             <FastImage
               source={{ uri: recentPictures[1].pictureUrl }}
               style={{ height: 112, marginBottom: 12, borderRadius: 2 }}
               onLoad={() => onImageLoad(1)}
             />
           </TouchableScale>
-          <TouchableScale
-            activeScale={0.95}
-            friction={10}
-            onPress={() => navigateToPictureList(2)}
-            onPressIn={() => HapticFeedback.trigger('impactLight')}
-            onPressOut={() => HapticFeedback.trigger('impactLight')}
-          >
+          <TouchableScale activeScale={0.95} friction={10} onPress={() => navigateToPictureList(2)}>
             <FastImage
               source={{ uri: recentPictures[2].pictureUrl }}
               style={{ height: 112, borderRadius: 2 }}
@@ -107,42 +92,21 @@ function RecentPicturesWidget() {
         </Box>
       </Box>
       <Box flexDirection="row" flex={1} justifyContent="space-between">
-        <TouchableScale
-          activeScale={0.95}
-          friction={10}
-          onPress={() => navigateToPictureList(3)}
-          onPressIn={() => HapticFeedback.trigger('impactLight')}
-          onPressOut={() => HapticFeedback.trigger('impactLight')}
-          style={{ flexGrow: 0.35 }}
-        >
+        <TouchableScale activeScale={0.95} friction={10} onPress={() => navigateToPictureList(3)} style={{ flexGrow: 0.35 }}>
           <FastImage
             source={{ uri: recentPictures[3].pictureUrl }}
             style={{ height: 112, borderRadius: 2 }}
             onLoad={() => onImageLoad(3)}
           />
         </TouchableScale>
-        <TouchableScale
-          activeScale={0.95}
-          friction={10}
-          onPress={() => navigateToPictureList(4)}
-          onPressIn={() => HapticFeedback.trigger('impactLight')}
-          onPressOut={() => HapticFeedback.trigger('impactLight')}
-          style={{ flexGrow: 0.35 }}
-        >
+        <TouchableScale activeScale={0.95} friction={10} onPress={() => navigateToPictureList(4)} style={{ flexGrow: 0.35 }}>
           <FastImage
             source={{ uri: recentPictures[4].pictureUrl }}
             style={{ height: 112, marginLeft: 12, borderRadius: 2 }}
             onLoad={() => onImageLoad(4)}
           />
         </TouchableScale>
-        <TouchableScale
-          activeScale={0.95}
-          friction={10}
-          onPress={() => navigateToPictureList(5)}
-          onPressIn={() => HapticFeedback.trigger('impactLight')}
-          onPressOut={() => HapticFeedback.trigger('impactLight')}
-          style={{ flexGrow: 0.35 }}
-        >
+        <TouchableScale activeScale={0.95} friction={10} onPress={() => navigateToPictureList(5)} style={{ flexGrow: 0.35 }}>
           <FastImage
             source={{ uri: recentPictures[5].pictureUrl }}
             style={{ height: 112, marginLeft: 12, borderRadius: 2 }}

@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Box, Text } from '../..';
 import FastImage from 'react-native-fast-image';
-import HapticFeedback from 'react-native-haptic-feedback';
 import TouchableScale from 'react-native-touchable-scale';
 import { LiveEvent, PastEvent } from '@types/collections';
 import FadeInOutView from '../../FadeInOutView';
@@ -21,14 +20,7 @@ const boxWidth = 280; // Substract 12 margins
 function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
   const { status, title, city, locationName, thumbnail } = protest;
   return (
-    <TouchableScale
-      activeScale={0.96}
-      friction={20}
-      onPress={onPress}
-      onPressIn={() => HapticFeedback.trigger('impactLight')}
-      onPressOut={() => HapticFeedback.trigger('impactMedium')}
-      style={{ width: boxWidth, marginHorizontal: 12 }}
-    >
+    <TouchableScale activeScale={0.96} friction={20} onPress={onPress} style={{ width: boxWidth, marginHorizontal: 12 }}>
       <FastImage style={styles.eventThumbnail} source={{ uri: thumbnail }} />
 
       <Box alignItems="flex-start" flex={1}>
