@@ -9,7 +9,7 @@ import Composer from './Composer';
 import Camera from './Camera';
 import Send from './Send';
 
-function InputToolbar() {
+function InputToolbar({ scrollToFirstMessage }) {
   const { chatStore } = useStore();
   const navigation = useNavigation();
   const [keyboardShown, setKeyboardShown] = useState(false);

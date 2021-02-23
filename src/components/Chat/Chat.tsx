@@ -57,7 +57,7 @@ function Chat({ messages, onSend }: ChatProps) {
         maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}
       />
-      <InputToolbar scrollToFirstMessage={() => null} />
+      <InputToolbar />
     </KeyboardAvoidingView>
   );
 }
