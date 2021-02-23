@@ -9,13 +9,13 @@ import { TakePictureResponse } from 'react-native-camera';
 
 type SendMessageProps = {
   roomName: string;
+  key: string;
   text: string;
 };
 
-async function sendMessage({ roomName, text }: SendMessageProps) {
+async function sendMessage({ roomName, key, text }: SendMessageProps) {
   try {
     const { uid: authorId, displayName: authorName, photoURL: authorPicture } = auth().currentUser!;
-    const key = nanoid(10);
 
     const message = await RealtimeDatabase.database.ref(`/chat/rooms/${roomName}`).child(`messages/${key}`).set({
       id: key,
@@ -25,6 +25,7 @@ async function sendMessage({ roomName, text }: SendMessageProps) {
       createdAt: database.ServerValue.TIMESTAMP,
       text,
       type: 'text',
+      status: 'sent',
     });
 
     return message;
@@ -84,6 +85,7 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
       pictureHeight,
       text,
       type: 'picture',
+      status: 'sent',
       createdAt: database.ServerValue.TIMESTAMP,
     });
 

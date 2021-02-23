@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FlatList, KeyboardAvoidingView, Keyboard, Platform } from 'react-native';
-import { Box, PostBox } from '../../components';
+import { FlatList, KeyboardAvoidingView, Platform } from 'react-native';
+import { PostBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { ImageViewer } from '..';
@@ -19,7 +19,7 @@ type ChatProps = {
 };
 
 function Chat({ messages, onSend }: ChatProps) {
-  const { feedStore } = useStore();
+  const { userStore } = useStore();
   const flatListRef = useRef<FlatList>(null);
 
   const [imageViewerVisiblity, setViewerVisibility] = useState(false);
@@ -29,6 +29,15 @@ function Chat({ messages, onSend }: ChatProps) {
     setPictureUrl(imageUrl);
     setViewerVisibility(true);
   };
+
+  useEffect(() => {
+    if (messages.length > 0 && messages[0].authorId === userStore.user?.uid) {
+      // Delay scroll to prevent cases where FlatList updates list after scroll
+      setTimeout(() => {
+        flatListRef.current?.scrollToIndex({ index: 0 });
+      }, 50);
+    }
+  }, [messages]);
 
   return (
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -49,7 +58,7 @@ function Chat({ messages, onSend }: ChatProps) {
         maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}
       />
-      <InputToolbar scrollToFirstMessage={() => flatListRef.current?.scrollToIndex({ index: 0 })} />
+      <InputToolbar />
     </KeyboardAvoidingView>
   );
 }

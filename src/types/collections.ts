@@ -92,7 +92,7 @@ type ChatMessageBase = {
   system?: boolean;
   sent?: boolean;
   received?: boolean;
-  pending?: boolean;
+  status?: 'pending' | 'sent';
 };
 
 export type ChatTextMessage = ChatMessageBase & {

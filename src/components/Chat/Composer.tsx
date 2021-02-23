@@ -6,9 +6,10 @@ import { Box } from '../../components';
 type ComposerProps = {
   ActionComponent: ({ text, resetText }: { text: string; resetText: () => void }) => JSX.Element;
   textInputStyle?: TextStyle;
+  keyboardShown?: boolean;
 };
 
-function Composer({ ActionComponent, textInputStyle }: ComposerProps) {
+function Composer({ ActionComponent, textInputStyle, keyboardShown }: ComposerProps) {
   const [text, setText] = useState('');
   const [inputHeight, setInputHeight] = useState(0);
 
@@ -32,7 +33,7 @@ function Composer({ ActionComponent, textInputStyle }: ComposerProps) {
       style={{
         alignItems: 'center',
         paddingTop: 10,
-        paddingBottom: insets.bottom + 10,
+        paddingBottom: keyboardShown ? 12 : insets.bottom + 12,
         elevation: 3,
       }}
     >
