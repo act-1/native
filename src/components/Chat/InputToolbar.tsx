@@ -9,7 +9,7 @@ import Composer from './Composer';
 import Camera from './Camera';
 import Send from './Send';
 
-function InputToolbar({ scrollToFirstMessage }) {
+function InputToolbar() {
   const { chatStore } = useStore();
   const navigation = useNavigation();
   const [keyboardShown, setKeyboardShown] = useState(false);
@@ -38,8 +38,9 @@ function InputToolbar({ scrollToFirstMessage }) {
   }, []);
 
   return (
-    <Box backgroundColor="seperator" style={{ marginBottom: keyboardShown ? 64 : 0 }}>
+    <Box backgroundColor="seperator">
       <Composer
+        keyboardShown={keyboardShown}
         ActionComponent={({ text, resetText }: { text: string; resetText: () => void }) => (
           <Box flexDirection="row">
             {text.length === 0 ? (
