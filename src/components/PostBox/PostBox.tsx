@@ -14,9 +14,11 @@ import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import Icon from 'react-native-vector-icons/Feather';
 import Clipboard from '@react-native-clipboard/clipboard';
+import SendingIcon from '../SendingIcon';
 
 import * as timeago from 'timeago.js';
 import he from 'timeago.js/lib/lang/he';
+
 timeago.register('he', he);
 
 type PostBoxProps = {
@@ -175,9 +177,13 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
                   <Text color="lightText" fontFamily="AtlasDL3.1AAA-Medium" fontSize={14} style={{ marginRight: 6 }}>
                     {message.authorName}
                   </Text>
-                  <Text variant="boxSubtitle" textAlign="right" fontSize={14}>
-                    {timeago.format(message.createdAt, 'he')}
-                  </Text>
+                  {message.status === 'pending' ? (
+                    <SendingIcon />
+                  ) : (
+                    <Text variant="boxSubtitle" textAlign="right" fontSize={14}>
+                      {timeago.format(message.createdAt, 'he')}
+                    </Text>
+                  )}
                 </Box>
               </PostBoxBubble>
             </TouchableNativeFeedback>
