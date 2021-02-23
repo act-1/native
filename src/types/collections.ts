@@ -85,7 +85,7 @@ export type Event = UpcomingEvent | LiveEvent | PastEvent;
 type ChatMessageBase = {
   id: string;
   text: string;
-  createdAt: number;
+  createdAt: Date;
   authorId: string;
   authorName: string;
   authorPicture: string;

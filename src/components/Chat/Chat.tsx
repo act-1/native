@@ -31,7 +31,7 @@ function Chat({ messages, onSend }: ChatProps) {
   };
 
   useEffect(() => {
-    if (messages[0]?.authorId === userStore.user?.uid) {
+    if (messages.length > 0 && messages[0].authorId === userStore.user?.uid) {
       flatListRef.current?.scrollToIndex({ index: 0 });
     }
   }, [messages]);

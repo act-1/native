@@ -35,12 +35,14 @@ class ChatStore {
     const query = getQueryBase(this.currentRoomName).endAt(Date.now());
 
     query.once('value', (snapshot) => {
-      const messages = Object.values(snapshot.val());
-      const sortedMessages = messages.sort((a, b) => b.createdAt - a.createdAt);
+      if (snapshot.val() !== null) {
+        const messages = Object.values(snapshot.val());
+        const sortedMessages = messages.sort((a, b) => b.createdAt - a.createdAt);
 
-      runInAction(() => {
-        this.messages = [...this.messages, ...sortedMessages];
-      });
+        runInAction(() => {
+          this.messages = [...this.messages, ...sortedMessages];
+        });
+      }
     });
   }
 
@@ -94,7 +96,7 @@ class ChatStore {
       authorName,
       authorPicture,
       text,
-      createdAt: getUnixTime(new Date()),
+      createdAt: new Date(),
       type,
       status: 'pending',
     };
