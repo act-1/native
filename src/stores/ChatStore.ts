@@ -106,7 +106,9 @@ class ChatStore {
       message = { ...message, pictureUrl: uri, pictureWidth: width, pictureHeight: height };
     }
 
-    this.messages = [message, ...this.messages];
+    runInAction(() => {
+      this.messages = [message, ...this.messages];
+    });
   }
 
   async sendMessage({ text }: { text: string }) {

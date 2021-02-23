@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FlatList, KeyboardAvoidingView, Keyboard, Platform } from 'react-native';
-import { Box, PostBox } from '../../components';
+import { FlatList, KeyboardAvoidingView, Platform } from 'react-native';
+import { PostBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { ImageViewer } from '..';
@@ -32,7 +32,9 @@ function Chat({ messages, onSend }: ChatProps) {
 
   useEffect(() => {
     if (messages.length > 0 && messages[0].authorId === userStore.user?.uid) {
-      flatListRef.current?.scrollToIndex({ index: 0 });
+      setTimeout(() => {
+        flatListRef.current?.scrollToIndex({ index: 0 });
+      }, 50);
     }
   }, [messages]);
 
@@ -55,7 +57,7 @@ function Chat({ messages, onSend }: ChatProps) {
         maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}
       />
-      <InputToolbar />
+      <InputToolbar scrollToFirstMessage={() => null} />
     </KeyboardAvoidingView>
   );
 }
