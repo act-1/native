@@ -73,7 +73,7 @@ export default function ActionScreen({ navigation }: ActionScreenProps) {
       />
       <ActionButton
         backgroundImage={require('@assets/pictures/check-in-action.png')}
-        icon={require('@assets/icons/camera.png')}
+        icon={require('@assets/icons/camera-color.png')}
         title="העלאת תמונה"
         description="המהפכה לא תשודר בטלוויזיה"
         onPress={displayUploadOptions}

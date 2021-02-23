@@ -6,13 +6,13 @@ import { RoundedButton } from '@components/Buttons';
 const features = [
   {
     key: 'checkIn',
-    icon: require('@assets/icons/strike.png'),
+    icon: require('@assets/icons/strike-color.png'),
     title: 'צ׳ק אין',
     description: 'עשו צ׳ק אין להפגנה וצפו מי עוד מפגין ברחבי הארץ',
   },
   {
     key: 'pictures',
-    icon: require('@assets/icons/camera.png'),
+    icon: require('@assets/icons/camera-color.png'),
     title: 'תמונות',
     description: 'העלו צילומים וצפו בתמונות מהאירועים האחרונים',
   },

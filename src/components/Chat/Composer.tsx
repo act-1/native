@@ -33,7 +33,7 @@ function Composer({ ActionComponent, textInputStyle, keyboardShown }: ComposerPr
       style={{
         alignItems: 'center',
         paddingTop: 10,
-        paddingBottom: keyboardShown ? 12 : insets.bottom + 12,
+        paddingBottom: keyboardShown ? 52 : insets.bottom + 12,
         elevation: 3,
       }}
     >

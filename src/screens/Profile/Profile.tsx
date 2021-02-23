@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import { FlatList, Button, Image, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Box, Text } from '../../components';
 import { observer } from 'mobx-react-lite';
@@ -13,12 +12,36 @@ function Profile({ navigation }: ProfileScreenProps) {
   return (
     <Box paddingTop="m" justifyContent="center" alignItems="center">
       <FastImage source={{ uri: userStore.userData?.profilePicture }} style={styles.profilePicture} />
-      <Button
+
+      <Box
+        flexDirection="row"
+        width="100%"
+        justifyContent="center"
+        alignItems="center"
+        paddingVertical="xm"
+        backgroundColor="greyBackground"
+        marginBottom="m"
+      >
+        <Box alignItems="center" marginEnd="xxl" opacity={0.6}>
+          <Image source={require('@assets/icons/strike.png')} style={{ width: 38, height: 38, tintColor: '#737373' }} />
+          <Text variant="boxTitle" color="subText" fontSize={14}>
+            8 הפגנות
+          </Text>
+        </Box>
+        <Box alignItems="center" opacity={0.6}>
+          <Image source={require('@assets/icons/camera.png')} style={{ width: 38, height: 38, tintColor: '#737373' }} />
+          <Text variant="boxTitle" color="subText" fontSize={14}>
+            12 תמונות
+          </Text>
+        </Box>
+      </Box>
+
+      {/* <Button
         title="התנתקות"
         onPress={() => {
           userStore.signOut();
         }}
-      />
+      /> */}
     </Box>
   );
 }
@@ -29,11 +52,9 @@ const styles = StyleSheet.create({
   profilePicture: {
     width: 90,
     height: 90,
-    marginBottom: 6,
+    marginBottom: 12,
+    borderWidth: 4,
+    borderColor: '#393939',
     borderRadius: 50,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 1,
-    shadowRadius: 5,
   },
 });

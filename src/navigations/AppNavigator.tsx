@@ -16,15 +16,18 @@ import Icon from 'react-native-vector-icons/Feather';
 
 enableScreens();
 
-const MainStack = createStackNavigator<RootStackParamList>();
+const MainStack = createNativeStackNavigator<RootStackParamList>();
+const SecondaryStack = createNativeStackNavigator();
+const AppStack = createStackNavigator<RootStackParamList>();
+
 const RootStack = createNativeStackNavigator();
 
 import AppTabs from './AppTabs';
-import ActionNavigator from './ActionNavigator';
+import ProfileNavigator from './ProfileNavigator';
 
-function MainStackScreen() {
+function AppStackScreen() {
   return (
-    <MainStack.Navigator
+    <AppStack.Navigator
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
@@ -41,9 +44,9 @@ function MainStackScreen() {
       }}
       mode="card"
     >
-      <MainStack.Screen name="AppTabs" component={AppTabs} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
-      <MainStack.Screen name="LocationPage" component={LocationPage} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
-      <MainStack.Screen
+      <AppStack.Screen name="AppTabs" component={AppTabs} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
+      <AppStack.Screen name="LocationPage" component={LocationPage} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
+      <AppStack.Screen
         name="EventPage"
         component={EventPage}
         options={({ navigation }) => ({
@@ -70,7 +73,7 @@ function MainStackScreen() {
           ),
         })}
       />
-      <MainStack.Screen
+      <AppStack.Screen
         name="NewPost"
         component={NewPost}
         options={{
@@ -88,8 +91,24 @@ function MainStackScreen() {
           headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
         }}
       />
-      {/* <RootStack.Screen name="SignUpNavigator" component={SignUpNavigator} /> */}
+    </AppStack.Navigator>
+  );
+}
+
+function MainNavigator() {
+  return (
+    <MainStack.Navigator name="MainNavigator" screenOptions={{ stackPresentation: 'fullScreenModal' }}>
+      <RootStack.Screen name="App" component={AppStackScreen} options={{ headerShown: false }} />
+      <RootStack.Screen name="ActionModal" component={CheckInNavigator} options={{ headerShown: false }} />
     </MainStack.Navigator>
+  );
+}
+
+function SecondaryNavigator() {
+  return (
+    <SecondaryStack.Navigator name="SecondaryNavigator" screenOptions={{ stackPresentation: 'modal' }}>
+      <SecondaryStack.Screen name="ProfileModal" component={ProfileNavigator} options={{ headerShown: false }} />
+    </SecondaryStack.Navigator>
   );
 }
 
@@ -97,12 +116,11 @@ function AppNavigator() {
   const { userStore } = useStore();
 
   return (
-    <RootStack.Navigator screenOptions={{ stackPresentation: 'fullScreenModal' }}>
+    <RootStack.Navigator screenOptions={{ stackPresentation: 'modal' }}>
       {userStore.userData?.signupCompleted ? (
         <>
-          <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-          <RootStack.Screen name="ActionModal" component={CheckInNavigator} options={{ headerShown: false }} />
-          <RootStack.Screen name="SignUpModal" component={SignUpNavigator} options={{ headerShown: false }} />
+          <RootStack.Screen name="Main" component={MainNavigator} options={{ headerShown: false }} />
+          <RootStack.Screen name="Secondary" component={SecondaryNavigator} options={{ headerShown: false }} />
         </>
       ) : (
         <>

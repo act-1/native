@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Platform, StyleSheet } from 'react-native';
+import { View, Pressable, Platform, StyleSheet } from 'react-native';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 
 import Community from '@screens/Community';
@@ -22,7 +22,7 @@ if (Platform.OS === 'ios') {
 
 const CommunityStack = createStackNavigator();
 
-function CommunityNavigator() {
+function CommunityNavigator({ navigation }) {
   const { photoURL: profilePicture } = auth().currentUser!;
 
   return (
@@ -47,12 +47,14 @@ function CommunityNavigator() {
           headerTitleAlign: 'center',
           headerBackTitle: 'קהילה',
           headerLeft: () => (
-            <Box marginLeft="xm" marginBottom="xxs">
-              <FastImage
-                source={{ uri: profilePicture }}
-                style={{ width: 27, height: 27, borderRadius: 25, borderColor: '#e9e9e9' }}
-              />
-            </Box>
+            <Pressable onPress={() => navigation.navigate('Secondary', { screen: 'ProfileModal' })}>
+              <Box marginLeft="xm" marginBottom="xxs">
+                <FastImage
+                  source={{ uri: profilePicture }}
+                  style={{ width: 27, height: 27, borderRadius: 25, borderColor: '#e9e9e9' }}
+                />
+              </Box>
+            </Pressable>
           ),
         }}
         component={Community}

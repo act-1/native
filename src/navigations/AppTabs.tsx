@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { HomeNavigator, ActionNavigator, CommunityNavigator } from './';
+import { HomeNavigator, ActionNavigator, CommunityNavigator, EventsNavigator, ProfileNavigator } from './';
 import TouchableScale from 'react-native-touchable-scale';
 import HapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/Feather';
@@ -20,7 +20,7 @@ const icons: any = {
     iconName: 'users',
   },
   Events: {
-    iconName: 'inbox',
+    iconName: 'calendar',
   },
   Profile: {
     iconName: 'user',
@@ -49,6 +49,7 @@ const AppTabs = ({ navigation }) => {
       }}
     >
       <Tab.Screen name="Home" component={HomeNavigator} />
+
       <Tab.Screen
         name="Action"
         component={ActionNavigator}
@@ -77,6 +78,9 @@ const AppTabs = ({ navigation }) => {
         }}
       />
       <Tab.Screen name="Community" component={CommunityNavigator} />
+
+      {/* <Tab.Screen name="Events" component={EventsNavigator} />
+      <Tab.Screen name="Profile" component={ProfileNavigator} /> */}
     </Tab.Navigator>
   );
 };

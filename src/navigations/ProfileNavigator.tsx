@@ -4,10 +4,10 @@ import { useStore } from '../stores';
 import { Profile } from '../screens';
 
 import { RootStackParamList } from '../types/navigation';
-// import { createStackNavigator } from 'react-native-screens/stack';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
+// import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
-const ProfileStack = createNativeStackNavigator<RootStackParamList>();
+const ProfileStack = createStackNavigator<RootStackParamList>();
 
 function ProfileNavigator() {
   const { userStore } = useStore();
@@ -15,10 +15,12 @@ function ProfileNavigator() {
   const userName = userStore.userData?.displayName;
 
   return (
-    <ProfileStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#0a0a0a' } }}>
+    <ProfileStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 } }}>
       <ProfileStack.Screen
         name="Profile"
         options={{
+          headerTitleAlign: 'center',
+          headerStatusBarHeight: 6,
           headerTitle: userName,
           headerTitleStyle: { fontSize: 22, fontFamily: 'AtlasDL3.1AAA-Medium', color: '#EC534B' },
         }}

@@ -12,7 +12,7 @@ const Community = () => {
 
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-      <CommunityStats />
+      {/* <CommunityStats /> */}
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         תמונות אחרונות
       </Text>
