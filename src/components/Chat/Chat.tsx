@@ -32,6 +32,7 @@ function Chat({ messages, onSend }: ChatProps) {
 
   useEffect(() => {
     if (messages.length > 0 && messages[0].authorId === userStore.user?.uid) {
+      // Delay scroll to prevent cases where FlatList updates list after scroll
       setTimeout(() => {
         flatListRef.current?.scrollToIndex({ index: 0 });
       }, 50);
