@@ -16,7 +16,7 @@ let headerBackground = () => <View style={[StyleSheet.absoluteFillObject, { back
 
 if (Platform.OS === 'ios') {
   headerBackground = () => (
-    <BlurView blurType="thickMaterialDark" reducedTransparencyFallbackColor="#1e262d" style={StyleSheet.absoluteFillObject} />
+    <BlurView blurType="thickMaterial" reducedTransparencyFallbackColor="#1e262d" style={StyleSheet.absoluteFillObject} />
   );
 }
 
