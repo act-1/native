@@ -85,14 +85,14 @@ export type Event = UpcomingEvent | LiveEvent | PastEvent;
 type ChatMessageBase = {
   id: string;
   text: string;
-  createdAt: Date;
+  createdAt: number;
   authorId: string;
   authorName: string;
   authorPicture: string;
   system?: boolean;
   sent?: boolean;
   received?: boolean;
-  pending?: boolean;
+  status?: 'pending' | 'sent';
 };
 
 export type ChatTextMessage = ChatMessageBase & {
