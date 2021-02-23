@@ -52,7 +52,7 @@ type SendPictureMessageProps = {
  */
 async function sendPictureMessage(messageData: SendPictureMessageProps) {
   const { uid: authorId, displayName: authorName, photoURL: authorPicture } = auth().currentUser!;
-  const { roomName, key, image, text, inGallery = true } = messageData;
+  const { roomName, key, image, text, inGallery } = messageData;
 
   try {
     // TODO: Add location

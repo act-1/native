@@ -19,8 +19,8 @@ function InputToolbar() {
     chatStore.sendMessage({ text });
   };
 
-  const onImageUpload = ({ image, text }: { image: TakePictureResponse; text?: string }) => {
-    chatStore.sendPictureMessage({ image, text, inGallery: true });
+  const onImageUpload = ({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery: boolean }) => {
+    chatStore.sendPictureMessage({ image, text, inGallery });
   };
 
   const openCamera = () => {

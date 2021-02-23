@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, Keyboard, Platform, KeyboardAvoidingView, Pressable } from 'react-native';
-import { CapturePictureProps } from '@types/navigation';
-import { Box, CircularButton } from '..';
-import TouchableScale from 'react-native-touchable-scale';
-import { RNCamera, TakePictureResponse } from 'react-native-camera';
+
+import { StyleSheet, Switch, Image, Keyboard, Platform, KeyboardAvoidingView, Pressable } from 'react-native';
+import { Box, Text, CircularButton } from '..';
 import Composer from '../Chat/Composer';
-import DeviceInfo from 'react-native-device-info';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import TouchableScale from 'react-native-touchable-scale';
 import HapticFeedback from 'react-native-haptic-feedback';
+import { RNCamera, TakePictureResponse } from 'react-native-camera';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CapturePictureProps } from '@types/navigation';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function CapturePicture({ navigation, route }: CapturePictureProps) {
   const insets = useSafeAreaInsets();
@@ -15,6 +17,7 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
   const [keyboardShown, setKeyboardShown] = useState(false);
   const cameraRef = React.useRef<RNCamera>(null);
   const [currentPicture, setCurrentPicture] = useState<TakePictureResponse | undefined>(undefined);
+  const [isGallery, setIsGallery] = useState(true);
 
   const closeButtonPress = () => {
     if (currentPicture) {
@@ -36,11 +39,21 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
 
   const onSendPress = (text?: string) => {
     const { onImageUpload } = route.params;
+    AsyncStorage.setItem('isGallerySetting', `${isGallery}`);
+
     if (currentPicture && onImageUpload) {
       route.params.onImageUpload({ image: currentPicture, text });
       navigation.goBack();
     }
   };
+
+  useEffect(() => {
+    AsyncStorage.getItem('isGallerySetting').then((value) => {
+      if (value === 'true' || value === 'false') {
+        setIsGallery(JSON.parse(value));
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const keyboardShowListener = Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
@@ -78,6 +91,12 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
               { bottom: keyboardShown ? 115 + insets.bottom : -50, marginBottom: keyboardShown ? 64 : 0 },
             ]}
           >
+            <Box flexDirection="row" justifyContent="space-between" alignItems="center" marginHorizontal="m" marginVertical="m">
+              <Text variant="boxTitle" marginLeft="m">
+                הוספה לעמוד הקהילה
+              </Text>
+              <Switch ios_backgroundColor="#39383c" onValueChange={setIsGallery} value={isGallery} />
+            </Box>
             <Composer
               textInputStyle={{ backgroundColor: 'transparent', borderColor: '#696969' }}
               ActionComponent={ActionComponent}
@@ -98,8 +117,6 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
     </KeyboardAvoidingView>
   );
 }
-
-const hasNotch = DeviceInfo.hasNotch();
 
 export default CapturePicture;
 const styles = StyleSheet.create({

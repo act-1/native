@@ -15,7 +15,7 @@ function ProtestChat({ navigation, route }: LocationScreenProps) {
     chatStore.turnOnMessagesListener();
 
     return () => {
-      chatStore.turnOffMessageListener();
+      // chatStore.turnOffMessageListener();
     };
   }, [chatStore]);
 
