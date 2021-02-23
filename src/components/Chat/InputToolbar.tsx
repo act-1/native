@@ -9,20 +9,14 @@ import Composer from './Composer';
 import Camera from './Camera';
 import Send from './Send';
 
-type ToolbarProps = {
-  scrollToFirstMessage: () => void;
-};
-
-function InputToolbar({ scrollToFirstMessage }: ToolbarProps) {
+function InputToolbar() {
   const { chatStore } = useStore();
   const navigation = useNavigation();
   const [keyboardShown, setKeyboardShown] = useState(false);
 
   const onMessageSend = (text: string) => {
     Keyboard.dismiss();
-    chatStore.sendMessage({ text }).then(() => {
-      scrollToFirstMessage();
-    });
+    chatStore.sendMessage({ text });
   };
 
   const onImageUpload = ({ image, text }: { image: TakePictureResponse; text?: string }) => {

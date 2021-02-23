@@ -19,7 +19,7 @@ type ChatProps = {
 };
 
 function Chat({ messages, onSend }: ChatProps) {
-  const { feedStore } = useStore();
+  const { userStore } = useStore();
   const flatListRef = useRef<FlatList>(null);
 
   const [imageViewerVisiblity, setViewerVisibility] = useState(false);
@@ -29,6 +29,12 @@ function Chat({ messages, onSend }: ChatProps) {
     setPictureUrl(imageUrl);
     setViewerVisibility(true);
   };
+
+  useEffect(() => {
+    if (messages[0]?.authorId === userStore.user?.uid) {
+      flatListRef.current?.scrollToIndex({ index: 0 });
+    }
+  }, [messages]);
 
   return (
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -49,7 +55,7 @@ function Chat({ messages, onSend }: ChatProps) {
         maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}
       />
-      <InputToolbar scrollToFirstMessage={() => flatListRef.current?.scrollToIndex({ index: 0 })} />
+      <InputToolbar />
     </KeyboardAvoidingView>
   );
 }
