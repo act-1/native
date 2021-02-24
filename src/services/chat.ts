@@ -55,7 +55,7 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
 
   try {
     // TODO: Add location
-    let pictureUrl, pictureWidth, pictureHeight;
+    let pictureId, pictureUrl, pictureWidth, pictureHeight;
 
     // If the picture goes to the library - create a new image post.
     // Otherwise, just upload it regularly.
@@ -63,11 +63,13 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
       const post = await newImagePost({ image, textContent: text });
       const postData = post?.data() as PicturePost;
 
+      pictureId = postData.pictureId;
       pictureUrl = postData.pictureUrl;
       pictureWidth = postData.pictureWidth;
       pictureHeight = postData.pictureHeight;
     } else {
-      const { height, width, url } = await uploadPicture(image);
+      const { id, height, width, url } = await uploadPicture(image);
+      pictureId = id;
       pictureUrl = url;
       pictureWidth = width;
       pictureHeight = height;
@@ -79,6 +81,7 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
       authorId,
       authorName: 'גיא',
       authorPicture,
+      pictureId,
       pictureUrl,
       pictureWidth,
       pictureHeight,
@@ -99,6 +102,10 @@ type DeleteMessageProps = {
   messageKey: string;
 };
 
+/**
+ * Sets the deleted property on the message to true.
+ * The rest of the deletion occurs on `onMessageDeletion` cloud function.
+ */
 async function deleteMessage({ roomName, messageKey }: DeleteMessageProps) {
   const messageRef = RealtimeDatabase.database.ref(`/chat/rooms/${roomName}/messages/${messageKey}`);
 

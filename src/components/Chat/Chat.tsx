@@ -35,8 +35,8 @@ function Chat({ messages, onSend }: ChatProps) {
 
   const deleteMessage = (messageKey: string) => {
     Alert.alert(
-      'למחוק את ההודעה?',
-      'שימו לב: ההודעה תמחק לצמיתות',
+      'מחיקת הודעה',
+      'ההודעה תמחק לצמיתות',
       [
         {
           text: 'מחיקה',

@@ -32,6 +32,7 @@ type TextPost = PostBase & {
 
 export type PicturePost = PostBase & {
   type: 'picture';
+  pictureId: string;
   pictureWidth: number;
   pictureHeight: number;
   pictureUrl: string;
