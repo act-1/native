@@ -6,7 +6,6 @@ import { SelectLocation, LocationPage } from '@screens/LocationPage';
 import { ProtestChat } from '@screens/ProtestChat';
 import { CheckInForm } from '@screens/CheckIn';
 import NewPost from '@screens/NewPost';
-import HapticFeedback from 'react-native-haptic-feedback';
 import { BlurView } from '@react-native-community/blur';
 
 const CheckInStack = createStackNavigator();
@@ -57,6 +56,8 @@ function CheckInNavigator({ navigation }) {
           headerShown: true,
           headerTitle: 'בלפור',
           headerLeft: null,
+          headerTitleAlign: 'center',
+
           headerRightContainerStyle: { marginRight: 12 },
           headerLeft: () => (
             <Box flexDirection="row">

@@ -143,7 +143,11 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, deleteMessage }
             style={{ marginRight: 42.5 }}
           >
             <TouchableNativeFeedback onLongPress={openPostActionSheet}>
-              <PostBoxBubble direction={userStore.user?.uid === message.authorId ? 'right' : 'left'} deleted={message.deleted}>
+              <PostBoxBubble
+                direction={userStore.user?.uid === message.authorId ? 'right' : 'left'}
+                deleted={message.deleted}
+                featured={message.featured}
+              >
                 {message.type === 'picture' && !message.deleted && (
                   <TouchableOpacity
                     onPress={() => (actionSheetOpen ? null : onPicturePress(message.pictureUrl))}

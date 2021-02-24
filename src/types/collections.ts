@@ -94,6 +94,7 @@ type ChatMessageBase = {
   sent?: boolean;
   received?: boolean;
   deleted?: boolean;
+  featured?: boolean;
   status?: 'pending' | 'sent';
 };
 

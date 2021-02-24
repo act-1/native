@@ -4,6 +4,7 @@ import { PostBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { ImageViewer } from '..';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import InputToolbar from './InputToolbar';
 
@@ -20,6 +21,7 @@ type ChatProps = {
 
 function Chat({ messages, onSend }: ChatProps) {
   const { userStore, chatStore } = useStore();
+  const insets = useSafeAreaInsets();
   const flatListRef = useRef<FlatList>(null);
 
   // We use local state so we can compare it to the messages prop and act accordingly.
@@ -55,7 +57,7 @@ function Chat({ messages, onSend }: ChatProps) {
 
   useEffect(() => {
     // If messages are updated, with no new messages - just refresh the list.
-    if (messages.length > 0 && messages.length) {
+    if (messages.length > 0 && messages.length === listMessages.length) {
       setListMessages(messages);
     }
 
@@ -79,7 +81,7 @@ function Chat({ messages, onSend }: ChatProps) {
 
       <FlatList
         ref={flatListRef}
-        contentContainerStyle={{ marginTop: 10, paddingBottom: 15 }}
+        contentContainerStyle={{ marginTop: 10, paddingBottom: Platform.select({ ios: 60 + insets.top, android: 0 }) }}
         data={listMessages}
         inverted={true}
         keyExtractor={(item) => item.id}

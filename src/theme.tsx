@@ -140,6 +140,11 @@ const theme = createTheme({
     formLabel: {
       fontSize: 16,
     },
+    navigationHeaderTitle: {
+      fontSize: 22,
+      fontFamily: 'AtlasDL3.1AAA-Medium',
+      color: 'primaryColor',
+    },
   },
 });
 
