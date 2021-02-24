@@ -33,6 +33,8 @@ function Chat({ messages, onSend }: ChatProps) {
     setViewerVisibility(true);
   };
 
+  const deletePost = (messageId) => {};
+
   useEffect(() => {
     // If messages are updated, with no new messages - just refresh the list.
     if (messages.length > 0 && messages.length) {

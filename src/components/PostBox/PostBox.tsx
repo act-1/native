@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Platform, Pressable, TouchableOpacity } from 'react-native';
+import { StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
-import { Box, Text, LikeButton } from '../../components';
+import { Box, Text } from '../../components';
 import { ChatMessage } from '@types/collections';
 import { likePost, unlikePost } from '@services/feed';
 import { scale } from 'react-native-size-matters';
@@ -25,7 +25,7 @@ type PostBoxProps = {
   message: ChatMessage;
   onPicturePress: (url: string) => void;
   updatePostLikeCount: (postId: string, likeCount: number) => void;
-  archivePost: (postId: string) => void;
+  deletePost: (postId: string) => void;
 };
 
 const copyToClipboard = (text: string) => {
@@ -34,7 +34,7 @@ const copyToClipboard = (text: string) => {
 
 const textFontSize = Platform.select({ ios: 17.5, android: 16 });
 
-function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: PostBoxProps) {
+function PostBox({ message, onPicturePress, updatePostLikeCount, deletePost }: PostBoxProps) {
   const { userStore, feedStore } = useStore();
   const [actionSheetOpen, setActionSheetState] = useState(false);
   const { showActionSheetWithOptions } = useActionSheet();
@@ -116,7 +116,7 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
       if (menuItems[buttonIndex].actionKey === 'copy' && message.type === 'text') {
         copyToClipboard(message.text);
       } else if (menuItems[buttonIndex].actionKey === 'delete') {
-        archivePost(message.id);
+        deletePost(message.id);
       }
     };
 
@@ -124,7 +124,7 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
   };
 
   return (
-    <Box alignItems="flex-start" marginBottom="s">
+    <Box alignItems="flex-start" marginBottom="s" style={{ opacity: message.deleted ? 0.6 : 1 }}>
       <Box flexDirection="row" paddingHorizontal="xm">
         <Box marginTop="m" style={{ marginLeft: 0 }}>
           <ContextMenuView
@@ -133,7 +133,7 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
                 copyToClipboard(message.text);
               }
               if (nativeEvent.actionKey === 'delete') {
-                archivePost(message.id);
+                deletePost(message.id);
               }
             }}
             menuConfig={{
@@ -167,7 +167,9 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, archivePost }: 
 
                 <Box paddingRight="xxl" marginBottom="xs">
                   {message.deleted ? (
-                    <Text variant="text">ההודעה נמחקה.</Text>
+                    <Text color="mainForeground" fontSize={textFontSize} textAlign="left" fontStyle="italic">
+                      ההודעה נמחקה.
+                    </Text>
                   ) : (
                     message.text?.length! > 0 && (
                       <Text color="mainForeground" fontSize={textFontSize} textAlign="left">
