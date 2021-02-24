@@ -1,12 +1,9 @@
 import React from 'react';
-import { View, Pressable, Platform, StyleSheet } from 'react-native';
+import { View, Platform, StyleSheet } from 'react-native';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 
 import Community from '@screens/Community';
 import RecentPictures from '@screens/Community/RecentPictures';
-
-import { Box } from '../components';
-
 import HeaderProfilePicture from '@components/HeaderProfilePicture';
 
 import { BlurView } from '@react-native-community/blur';
