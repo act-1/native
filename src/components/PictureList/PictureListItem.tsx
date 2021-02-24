@@ -62,8 +62,8 @@ function PictureListItem({ post, updatePostLikeCount }: PictureListItemProps) {
           />
         </Box>
       </Pinchable>
-      <Box paddingRight="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="s">
-        <LikeButton onPress={likePress} liked={feedStore.userPostLikes.includes(post.id)} likeCount={post.likeCount} />
+      <Box paddingHorizontal="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="s">
+        {/* <LikeButton onPress={likePress} liked={feedStore.userPostLikes.includes(post.id)} likeCount={post.likeCount} /> */}
         <Text variant="boxSubtitle" fontSize={14} textAlign="left">
           {post.createdAt && timeago.format(post.createdAt.toDate(), 'he')}
         </Text>
