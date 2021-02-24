@@ -72,9 +72,18 @@ class ChatStore {
       }
     );
 
-    runInAction(() => {
-      this.queryListenerStatus = 'ON';
-      this.listenerQuery = query;
+    const newQuery = getQueryBase(this.currentRoomName);
+
+    newQuery.on('child_changed', (snapshot) => {
+      const updatedMessage = snapshot.val() as ChatMessage;
+      console.log(updatedMessage);
+      // Check if a pending message exists
+      if (updatedMessage.deleted) {
+        const updatedMessages = updateArrayByObjectId(this.messages, updatedMessage.id, updatedMessage);
+        runInAction(() => {
+          this.messages = updatedMessages;
+        });
+      }
     });
   }
 

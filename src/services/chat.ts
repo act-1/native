@@ -118,10 +118,8 @@ async function deleteMessage({ roomName, messageKey, type }: DeleteMessageProps)
         deleted: true,
       });
 
-      // TODO: Delete picture from storage.
+      // TODO: Delete picture from storage - cloud function
     }
-
-    // CREATE ACTION LOGGER for deleted message
   } catch (err) {
     throw err;
   }
@@ -130,4 +128,5 @@ async function deleteMessage({ roomName, messageKey, type }: DeleteMessageProps)
 export default {
   sendMessage,
   sendPictureMessage,
+  deleteMessage,
 };
