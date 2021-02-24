@@ -87,6 +87,7 @@ function Chat({ messages, onSend }: ChatProps) {
         initialNumToRender={2}
         maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}
+        keyboardDismissMode="on-drag"
       />
       <InputToolbar />
     </KeyboardAvoidingView>
