@@ -12,10 +12,16 @@ if (deviceWidth > 400) {
   baseBoxWith = 275;
 }
 
-export default function PostBoxBubble({ children, direction }: { children: React.ReactNode; direction: 'right' | 'left' }) {
+type PostBoxBubbleProps = {
+  children: React.ReactNode;
+  direction: 'right' | 'left';
+  deleted: boolean;
+};
+
+export default function PostBoxBubble({ children, direction, deleted }: PostBoxBubbleProps) {
   return (
     <Box style={[styles.messageContainer, direction === 'right' ? styles.rightMessage : styles.leftMessage]}>
-      <Box alignItems="flex-start" backgroundColor="seperator" style={styles.messageBubble}>
+      <Box alignItems="flex-start" backgroundColor="seperator" style={[styles.messageBubble, deleted && styles.deletedMessage]}>
         <Box style={styles.arrowContainer}>
           <Svg
             style={{
@@ -33,7 +39,7 @@ export default function PostBoxBubble({ children, direction }: { children: React
                   ? 'M38.484,17.5c0,8.75,1,13.5-6,17.5C51.484,35,52.484,17.5,38.484,17.5z'
                   : 'M48,35c-7-4-6-8.75-6-17.5C28,17.5,29,35,48,35z'
               }
-              fill={'#222222'}
+              fill={deleted ? 'transparent' : '#222222'}
               x="0"
               y="0"
             />
@@ -49,6 +55,7 @@ const styles = StyleSheet.create({
   messageContainer: { flexDirection: 'row' },
   leftMessage: { width: '100%', justifyContent: 'flex-end' },
   rightMessage: {},
+  deletedMessage: { borderColor: '#222222', borderWidth: 1, backgroundColor: 'transparent' },
   messageBubble: {
     maxWidth: scale(baseBoxWith),
     paddingVertical: 8,

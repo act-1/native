@@ -62,7 +62,6 @@ function CheckInNavigator({ navigation }) {
             <Box flexDirection="row">
               <CircularButton
                 onPress={() => {
-                  HapticFeedback.trigger('impactLight');
                   navigation.goBack();
                 }}
                 iconName="x"

@@ -72,9 +72,18 @@ class ChatStore {
       }
     );
 
-    runInAction(() => {
-      this.queryListenerStatus = 'ON';
-      this.listenerQuery = query;
+    const newQuery = getQueryBase(this.currentRoomName);
+
+    newQuery.on('child_changed', (snapshot) => {
+      const updatedMessage = snapshot.val() as ChatMessage;
+      console.log(updatedMessage);
+      // Check if a pending message exists
+      if (updatedMessage.deleted) {
+        const updatedMessages = updateArrayByObjectId(this.messages, updatedMessage.id, updatedMessage);
+        runInAction(() => {
+          this.messages = updatedMessages;
+        });
+      }
     });
   }
 
@@ -142,6 +151,16 @@ class ChatStore {
       return message;
     } catch (err) {
       console.error(err);
+      throw err;
+    }
+  }
+
+  async deleteMessage(messageKey: string) {
+    try {
+      const roomName = this.currentRoomName;
+      await ChatService.deleteMessage({ roomName, messageKey });
+    } catch (err) {
+      console.log(err);
       throw err;
     }
   }

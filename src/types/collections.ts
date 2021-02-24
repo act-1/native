@@ -32,6 +32,7 @@ type TextPost = PostBase & {
 
 export type PicturePost = PostBase & {
   type: 'picture';
+  pictureId: string;
   pictureWidth: number;
   pictureHeight: number;
   pictureUrl: string;
@@ -92,6 +93,7 @@ type ChatMessageBase = {
   system?: boolean;
   sent?: boolean;
   received?: boolean;
+  deleted?: boolean;
   status?: 'pending' | 'sent';
 };
 

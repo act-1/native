@@ -1,9 +1,7 @@
 import React from 'react';
 import { StyleSheet, Pressable } from 'react-native';
-import { Box } from '../components';
 import auth from '@react-native-firebase/auth';
 import FastImage from 'react-native-fast-image';
-import HapticFeedback from 'react-native-haptic-feedback';
 
 function HeaderProfilePicture({ navigation }) {
   const { currentUser } = auth();
@@ -15,7 +13,6 @@ function HeaderProfilePicture({ navigation }) {
 
   const profilePicturePress = () => {
     navigation.navigate('Secondary', { screen: 'ProfileModal' });
-    HapticFeedback.trigger('impactLight');
   };
 
   return (

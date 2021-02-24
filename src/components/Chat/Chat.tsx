@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FlatList, KeyboardAvoidingView, Platform } from 'react-native';
+import { FlatList, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { PostBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -19,8 +19,11 @@ type ChatProps = {
 };
 
 function Chat({ messages, onSend }: ChatProps) {
-  const { userStore } = useStore();
+  const { userStore, chatStore } = useStore();
   const flatListRef = useRef<FlatList>(null);
+
+  // We use local state so we can compare it to the messages prop and act accordingly.
+  const [listMessages, setListMessages] = useState([]);
 
   const [imageViewerVisiblity, setViewerVisibility] = useState(false);
   const [currentPictureUrl, setPictureUrl] = useState('');
@@ -30,9 +33,36 @@ function Chat({ messages, onSend }: ChatProps) {
     setViewerVisibility(true);
   };
 
+  const deleteMessage = (messageKey: string) => {
+    Alert.alert(
+      'מחיקת הודעה',
+      'ההודעה תמחק לצמיתות',
+      [
+        {
+          text: 'מחיקה',
+          onPress: () => chatStore.deleteMessage(messageKey),
+          style: 'destructive',
+        },
+        {
+          text: 'ביטול',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
   useEffect(() => {
-    if (messages.length > 0 && messages[0].authorId === userStore.user?.uid) {
+    // If messages are updated, with no new messages - just refresh the list.
+    if (messages.length > 0 && messages.length) {
+      setListMessages(messages);
+    }
+
+    // If new messages have been added by the user, refresh the list and scroll to the new message.
+    else if (messages.length > 0 && messages[0].authorId === userStore.user?.uid) {
       // Delay scroll to prevent cases where FlatList updates list after scroll
+      setListMessages(messages);
       setTimeout(() => {
         flatListRef.current?.scrollToIndex({ index: 0 });
       }, 50);
@@ -50,10 +80,10 @@ function Chat({ messages, onSend }: ChatProps) {
       <FlatList
         ref={flatListRef}
         contentContainerStyle={{ marginTop: 10, paddingBottom: 15 }}
-        data={messages}
+        data={listMessages}
         inverted={true}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <PostBox message={item} onPicturePress={selectPicture} />}
+        renderItem={({ item }) => <PostBox message={item} onPicturePress={selectPicture} deleteMessage={deleteMessage} />}
         initialNumToRender={2}
         maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}
