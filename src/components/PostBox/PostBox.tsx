@@ -25,7 +25,7 @@ type PostBoxProps = {
   message: ChatMessage;
   onPicturePress: (url: string) => void;
   updatePostLikeCount: (postId: string, likeCount: number) => void;
-  deletePost: (postId: string) => void;
+  deleteMessage: (messageId: string) => void;
 };
 
 const copyToClipboard = (text: string) => {
@@ -34,7 +34,7 @@ const copyToClipboard = (text: string) => {
 
 const textFontSize = Platform.select({ ios: 17.5, android: 16 });
 
-function PostBox({ message, onPicturePress, updatePostLikeCount, deletePost }: PostBoxProps) {
+function PostBox({ message, onPicturePress, updatePostLikeCount, deleteMessage }: PostBoxProps) {
   const { userStore, feedStore } = useStore();
   const [actionSheetOpen, setActionSheetState] = useState(false);
   const { showActionSheetWithOptions } = useActionSheet();
@@ -116,7 +116,7 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, deletePost }: P
       if (menuItems[buttonIndex].actionKey === 'copy' && message.type === 'text') {
         copyToClipboard(message.text);
       } else if (menuItems[buttonIndex].actionKey === 'delete') {
-        deletePost(message.id);
+        deleteMessage(message.id);
       }
     };
 
@@ -133,7 +133,7 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, deletePost }: P
                 copyToClipboard(message.text);
               }
               if (nativeEvent.actionKey === 'delete') {
-                deletePost(message.id);
+                deleteMessage(message.id);
               }
             }}
             menuConfig={{
@@ -144,7 +144,7 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, deletePost }: P
           >
             <TouchableNativeFeedback onLongPress={openPostActionSheet}>
               <PostBoxBubble direction={userStore.user?.uid === message.authorId ? 'right' : 'left'} deleted={message.deleted}>
-                {message.type === 'picture' && (
+                {message.type === 'picture' && !message.deleted && (
                   <TouchableOpacity
                     onPress={() => (actionSheetOpen ? null : onPicturePress(message.pictureUrl))}
                     activeOpacity={0.7}

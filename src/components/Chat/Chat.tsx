@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FlatList, KeyboardAvoidingView, Platform } from 'react-native';
+import { FlatList, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { PostBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -19,7 +19,7 @@ type ChatProps = {
 };
 
 function Chat({ messages, onSend }: ChatProps) {
-  const { userStore } = useStore();
+  const { userStore, chatStore } = useStore();
   const flatListRef = useRef<FlatList>(null);
 
   // We use local state so we can compare it to the messages prop and act accordingly.
@@ -33,7 +33,25 @@ function Chat({ messages, onSend }: ChatProps) {
     setViewerVisibility(true);
   };
 
-  const deletePost = (messageId) => {};
+  const deleteMessage = (messageKey: string) => {
+    Alert.alert(
+      'למחוק את ההודעה?',
+      'שימו לב: ההודעה תמחק לצמיתות',
+      [
+        {
+          text: 'מחיקה',
+          onPress: () => chatStore.deleteMessage(messageKey),
+          style: 'destructive',
+        },
+        {
+          text: 'ביטול',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   useEffect(() => {
     // If messages are updated, with no new messages - just refresh the list.
@@ -65,7 +83,7 @@ function Chat({ messages, onSend }: ChatProps) {
         data={listMessages}
         inverted={true}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <PostBox message={item} onPicturePress={selectPicture} />}
+        renderItem={({ item }) => <PostBox message={item} onPicturePress={selectPicture} deleteMessage={deleteMessage} />}
         initialNumToRender={2}
         maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
         showsVerticalScrollIndicator={false}

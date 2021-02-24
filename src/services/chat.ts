@@ -97,29 +97,13 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
 type DeleteMessageProps = {
   roomName: string;
   messageKey: string;
-  type: 'text' | 'picture';
 };
 
-async function deleteMessage({ roomName, messageKey, type }: DeleteMessageProps) {
+async function deleteMessage({ roomName, messageKey }: DeleteMessageProps) {
   const messageRef = RealtimeDatabase.database.ref(`/chat/rooms/${roomName}/messages/${messageKey}`);
 
   try {
-    if (type === 'text') {
-      await messageRef.update({
-        text: '',
-        deleted: true,
-      });
-    }
-
-    if (type === 'picture') {
-      await messageRef.update({
-        text: '',
-        pictureUrl: '',
-        deleted: true,
-      });
-
-      // TODO: Delete picture from storage - cloud function
-    }
+    await messageRef.update({ deleted: true });
   } catch (err) {
     throw err;
   }

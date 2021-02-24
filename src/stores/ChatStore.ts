@@ -154,6 +154,16 @@ class ChatStore {
       throw err;
     }
   }
+
+  async deleteMessage(messageKey: string) {
+    try {
+      const roomName = this.currentRoomName;
+      await ChatService.deleteMessage({ roomName, messageKey });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 }
 
 export default ChatStore;
