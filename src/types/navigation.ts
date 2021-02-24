@@ -33,7 +33,9 @@ export type RootStackParamList = {
   SignUpForm: undefined;
   ActionScreen: undefined;
   NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: ILocation };
-  CapturePicture: { onImageUpload: ({ image, text }: { image: TakePictureResponse; text?: string }) => void };
+  CapturePicture: {
+    onImageUpload: ({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery: boolean }) => void;
+  };
   SelectLocation: undefined;
   Explore: undefined;
   RecentPictures: { initialIndex?: number };

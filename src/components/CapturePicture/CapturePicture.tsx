@@ -17,7 +17,7 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
   const [keyboardShown, setKeyboardShown] = useState(false);
   const cameraRef = React.useRef<RNCamera>(null);
   const [currentPicture, setCurrentPicture] = useState<TakePictureResponse | undefined>(undefined);
-  const [isGallery, setIsGallery] = useState(true);
+  const [inGallery, setInGallery] = useState(true);
 
   const closeButtonPress = () => {
     if (currentPicture) {
@@ -39,18 +39,18 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
 
   const onSendPress = (text?: string) => {
     const { onImageUpload } = route.params;
-    AsyncStorage.setItem('isGallerySetting', `${isGallery}`);
+    AsyncStorage.setItem('inGallerySetting', `${inGallery}`);
 
     if (currentPicture && onImageUpload) {
-      route.params.onImageUpload({ image: currentPicture, text });
+      route.params.onImageUpload({ image: currentPicture, text, inGallery });
       navigation.goBack();
     }
   };
 
   useEffect(() => {
-    AsyncStorage.getItem('isGallerySetting').then((value) => {
+    AsyncStorage.getItem('inGallerySetting').then((value) => {
       if (value === 'true' || value === 'false') {
-        setIsGallery(JSON.parse(value));
+        setInGallery(JSON.parse(value));
       }
     });
   }, []);
@@ -95,7 +95,7 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
               <Text variant="boxTitle" marginLeft="m">
                 הוספה לעמוד הקהילה
               </Text>
-              <Switch ios_backgroundColor="#39383c" onValueChange={setIsGallery} value={isGallery} />
+              <Switch ios_backgroundColor="#39383c" onValueChange={setInGallery} value={inGallery} />
             </Box>
             <Composer
               textInputStyle={{ backgroundColor: 'transparent', borderColor: '#696969' }}
