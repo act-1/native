@@ -3,7 +3,6 @@ import { RealtimeDatabase } from '@services/databaseWrapper';
 import { newImagePost } from '@services/feed';
 import { uploadPicture } from '@services/storage';
 import database from '@react-native-firebase/database';
-import { nanoid } from 'nanoid/non-secure';
 import { PicturePost } from '@types/collections';
 import { TakePictureResponse } from 'react-native-camera';
 
@@ -90,6 +89,39 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
     });
 
     return message;
+  } catch (err) {
+    throw err;
+  }
+}
+
+type DeleteMessageProps = {
+  roomName: string;
+  messageKey: string;
+  type: 'text' | 'picture';
+};
+
+async function deleteMessage({ roomName, messageKey, type }: DeleteMessageProps) {
+  const messageRef = RealtimeDatabase.database.ref(`/chat/rooms/${roomName}/messages/${messageKey}`);
+
+  try {
+    if (type === 'text') {
+      await messageRef.update({
+        text: '',
+        deleted: true,
+      });
+    }
+
+    if (type === 'picture') {
+      await messageRef.update({
+        text: '',
+        pictureUrl: '',
+        deleted: true,
+      });
+
+      // TODO: Delete picture from storage.
+    }
+
+    // CREATE ACTION LOGGER for deleted message
   } catch (err) {
     throw err;
   }
