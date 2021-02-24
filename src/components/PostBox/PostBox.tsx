@@ -42,7 +42,7 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, deleteMessage }
   const menuItems = React.useMemo(() => {
     const items = [];
 
-    if (message.text === '') {
+    if (message.text.length > 0) {
       items.push({
         actionKey: 'copy',
         actionTitle: 'העתקה',
