@@ -33,14 +33,16 @@ function Providers({ nextPage, scrollToPage, currentIndex }: BoardingScreenProps
           throw new Error('Supplied provider is incorrect.');
       }
 
-      if (result?.isNewUser || userStore.userData?.signupCompleted === false) {
+      // Queue the user photo for upload.
+      // Once the user document is created on firestore, it will be uploaded in the effect method below.
+      if (result?.isNewUser) {
         if (result.photoURL) {
           setHighResPhoto(result.photoURL);
         }
       }
 
       // For cases when the userData is already available (user has been authenticated but not finished signup)
-      if (userStore.userData?.signUpCompleted === false) {
+      if (result?.isNewUser === false && userStore.userData?.signupCompleted === false) {
         setIsLoading(false);
         nextPage();
       }
@@ -72,24 +74,7 @@ function Providers({ nextPage, scrollToPage, currentIndex }: BoardingScreenProps
       }
     }
 
-    if (currentIndex! <= 3) {
-      if (userStore.userData?.signupCompleted === false && highResPhoto === '') {
-        setIsLoading(false);
-        scrollToPage(4);
-      }
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userStore.userData]);
-
-  useEffect(() => {
-    // If the user quit the app before submitting the sign up form, redirect them to the form on app open.
-    if (userStore.user && !userStore.userData?.signupCompleted) {
-      // Timeout to avoid background messing up animation.
-      setTimeout(() => {
-        scrollToPage(4);
-      }, 250);
-    }
   }, [userStore.userData]);
 
   return (

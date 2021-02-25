@@ -37,13 +37,14 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
   useEffect(() => {
     if (currentIndex === 4) {
       displayNameInput!.current!.focus();
+      // This helps edit profile picture to rerender - otherwise it won't show the profile picture initially, if the user is authed but not finished the signup.
+      setProvince('');
     }
   }, [currentIndex]);
 
   const onSubmit = async () => {
     try {
       setLoading(true);
-      await store.initApp();
       await updateUserProvince(province);
       await updateUserDisplayName(displayName);
       analytics().logEvent('sign_up_form_submitted');
@@ -74,6 +75,7 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
           placeholderTextColor="#8d8d8d"
           onChangeText={(text) => setDisplayName(text)}
           returnKeyType={isAndroid ? undefined : 'next'}
+          maxLength={38}
           onSubmitEditing={() => {
             pickerRef.current?.togglePicker();
           }}
@@ -124,7 +126,7 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
           text="סיום הרשמה"
           color="blue"
           onPress={onSubmit}
-          disabled={displayName.length < 2 || province.length === 0}
+          disabled={displayName.length < 2 || province?.length === 0}
           loading={isLoading}
         />
       </Box>

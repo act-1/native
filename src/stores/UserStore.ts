@@ -135,7 +135,7 @@ class UserStore {
       const FCMToken = await messaging().getToken();
 
       const userFCMToken = await getUserFCMToken(userId, FCMToken);
-      console.log(userFCMToken.exists);
+
       if (userFCMToken.exists) {
         // In the future we might want to update the active state.
         return userFCMToken;

@@ -11,7 +11,7 @@ export async function uploadProfilePicture(imagePath: string) {
   try {
     // Workaround for non existing firebase storage emulator.
     // if (__DEV__) {
-    //   return true;
+    //   return 'https://avatars.githubusercontent.com/u/75989338?s=200';
     // }
 
     const filePath = `/profilePictures/${auth().currentUser!.uid}/${nanoid(10)}.jpg`;
@@ -28,9 +28,11 @@ export async function uploadProfilePicture(imagePath: string) {
 export async function uploadProfilePictureFromURL(imageUrl: string) {
   try {
     // Workaround for non existing firebase storage emulator.
-    if (__DEV__) {
-      return imageUrl;
-    }
+    // if (__DEV__) {
+    //   const filePath = '';
+    //   await updateUserPicture(imageUrl, filePath);
+    //   return imageUrl;
+    // }
 
     const filePath = `/profilePictures/${auth().currentUser!.uid}/${nanoid(10)}.jpg`;
     const reference = storage().ref(filePath);
