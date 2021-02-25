@@ -25,17 +25,17 @@ export async function uploadProfilePicture(imagePath: string) {
   }
 }
 
-export async function uploadProfilePictureFromURL(iamgeURL: string) {
+export async function uploadProfilePictureFromURL(imageUrl: string) {
   try {
     // Workaround for non existing firebase storage emulator.
-    // if (__DEV__) {
-    //   return true;
-    // }
+    if (__DEV__) {
+      return imageUrl;
+    }
 
     const filePath = `/profilePictures/${auth().currentUser!.uid}/${nanoid(10)}.jpg`;
     const reference = storage().ref(filePath);
 
-    const imageResult = await fetch(iamgeURL);
+    const imageResult = await fetch(imageUrl);
     const imageBlob = await imageResult.blob();
     await reference.put(imageBlob);
     const pictureUrl = await reference.getDownloadURL();
