@@ -8,6 +8,7 @@ import { useStore } from '../../stores';
 import { Event } from '@types/collections';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView } from '../../components';
+import ScrollablePictures from '@components/Widgets/ScrollablePictures';
 
 import EventPageCounter from './EventPageCounter';
 import EventPageActions from './EventPageActions';
@@ -90,6 +91,8 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
             </Box>
 
             <EventPageActions eventStatus={event.status} isAttending={isAttending} attendEvent={attendEvent} />
+
+            {event.status === 'live' && <ScrollablePictures />}
 
             <Box padding="m" marginBottom="m" backgroundColor="greyBackground">
               <Text variant="largeTitle" marginBottom="m">
