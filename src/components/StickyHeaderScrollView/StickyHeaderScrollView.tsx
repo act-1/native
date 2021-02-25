@@ -1,7 +1,8 @@
 import React, { useRef, ReactNode } from 'react';
-import { StyleSheet, Animated, RefreshControl } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { StyleSheet, Animated, Pressable } from 'react-native';
 import { Box, Text, CircularButton } from '../';
+import { logEvent } from '@services/analytics';
+import FastImage from 'react-native-fast-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AnimatedImage = Animated.createAnimatedComponent(FastImage);
@@ -14,15 +15,6 @@ type StickyHeaderScrollViewProps = {
 };
 
 function StickyHeaderScrollView({ children, goBack, headerTitle, thumbnail }: StickyHeaderScrollViewProps) {
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
   const insets = useSafeAreaInsets();
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -73,17 +65,18 @@ function StickyHeaderScrollView({ children, goBack, headerTitle, thumbnail }: St
         contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
-        // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} enabled={true} />}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
       >
         {children}
       </Animated.ScrollView>
 
       <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }], height: HEADER_MAX_HEIGHT }]}>
-        <AnimatedImage
-          style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
-          source={{ uri: thumbnail }}
-        />
+        <Pressable onPress={() => logEvent('event_thumb_pressed')}>
+          <AnimatedImage
+            style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
+            source={{ uri: thumbnail }}
+          />
+        </Pressable>
       </Animated.View>
 
       <Animated.View

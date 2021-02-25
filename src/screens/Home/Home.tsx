@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { StatusBar, StyleSheet, ScrollView, Animated } from 'react-native';
-import { Box, Text } from '../../components';
+import React from 'react';
+import { StatusBar, StyleSheet, ScrollView } from 'react-native';
+import { Text } from '../../components';
 import { Stats, FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
 
 import { observer } from 'mobx-react-lite';

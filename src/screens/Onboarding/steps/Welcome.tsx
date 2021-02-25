@@ -2,8 +2,14 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
+import { logEvent } from '@services/analytics';
 
 function Welcome({ nextPage, style }: BoardingScreenProps) {
+  const startButtonPress = () => {
+    logEvent('start_button_press');
+    nextPage();
+  };
+
   return (
     <View style={[styles.welcomeWrapper, style]}>
       <Text variant="hugeTitle" fontSize={68} fontWeight="900" color="headerTitle">
@@ -15,7 +21,7 @@ function Welcome({ nextPage, style }: BoardingScreenProps) {
       <Text variant="hugeTitle" color="lightText" marginBottom="xm">
         ככה זה מתחיל.
       </Text>
-      <RoundedButton text="בואו נתחיל" color="yellow" onPress={nextPage} />
+      <RoundedButton text="בואו נתחיל" color="yellow" onPress={startButtonPress} />
     </View>
   );
 }

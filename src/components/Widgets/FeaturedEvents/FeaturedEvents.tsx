@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react-lite';
-import analytics from '@react-native-firebase/analytics';
+import { logEvent } from '@services/analytics';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../../../stores';
 import { Box } from '../..';
@@ -34,7 +34,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
 
   const onEventPress = (eventId: string, index: number) => {
     navigation.navigate('EventPage', { eventId });
-    analytics().logEvent('events_widget_event_press', { event_id: eventId, featured_event_index: index + 1 });
+    logEvent('featured_events_press', { event_id: eventId, featured_event_index: index + 1 });
   };
 
   return (
