@@ -5,7 +5,7 @@ import PictureListItem from './PictureListItem';
 
 type PictureListProps = {
   pictures: PicturePost[];
-  updatePostLikeCount?: (postId: string, likeCount: number) => void;
+  updatePostLikeCount: (postId: string, likeCount: number) => void;
   fetchMorePictures: () => void;
   fetchingPictures: boolean;
   onRefresh: () => void;
@@ -40,7 +40,7 @@ function PictureList({
       contentContainerStyle={{ marginTop: Platform.select({ ios: 105, android: 8 }) }}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <PictureListItem post={item} />}
+      renderItem={({ item }) => <PictureListItem post={item} updatePostLikeCount={updatePostLikeCount} />}
       initialNumToRender={6}
       onScrollToIndexFailed={() => {}}
       refreshing={fetchingPictures}

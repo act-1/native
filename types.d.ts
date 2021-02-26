@@ -53,8 +53,6 @@ type GraphAPIResult = {
   };
 };
 
-type PictureSource = 'general' | 'event' | 'location';
-
 type EventPicturesProps = {
   eventId: string;
   filter: 'featured' | 'recent';

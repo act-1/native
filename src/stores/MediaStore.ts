@@ -15,8 +15,6 @@ class MediaStore {
   recentPicturesLoading = false;
   recentPicturesEnd = false;
 
-  eventPictures: { [key: string]: [] } = [];
-
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
@@ -38,19 +36,11 @@ class MediaStore {
     }
   }
 
-  async getRecentPictures({
-    limit,
-    startAfter,
-    eventId,
-    source,
-  }: {
-    limit: number;
-    startAfter?: FirebaseFirestoreTypes.DocumentData;
-  }) {
+  async getRecentPictures({ limit, startAfter }: { limit: number; startAfter?: FirebaseFirestoreTypes.DocumentData }) {
     this.recentPicturesLoading = true;
 
     try {
-      const fetchedPictures = await FeedService.getRecentPictures({ limit, startAfter, eventId, source });
+      const fetchedPictures = await FeedService.getRecentPictures({ limit, startAfter });
 
       if (fetchedPictures.length === 0) {
         runInAction(() => {
@@ -64,8 +54,6 @@ class MediaStore {
         this.recentPictures = [...this.recentPictures, ...fetchedPictures];
         this.recentPicturesLoading = false;
       });
-
-      return fetchedPictures;
     } catch (err) {
       runInAction(() => {
         this.recentPicturesLoading = false;
@@ -76,7 +64,7 @@ class MediaStore {
 
   async getNewRecentPictures() {
     this.recentPicturesLoading = true;
-
+    console.log('hola!');
     try {
       const firstPictureDate = this.recentPictures[0].data().createdAt;
 

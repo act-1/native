@@ -15,28 +15,28 @@ const deviceWidth = Dimensions.get('window').width;
 
 type PictureListItemProps = {
   post: PicturePost;
-  updatePostLikeCount?: (postId: string, likeCount: number) => void;
+  updatePostLikeCount: (postId: string, likeCount: number) => void;
 };
 
 function PictureListItem({ post, updatePostLikeCount }: PictureListItemProps) {
-  // const { feedStore } = useStore();
+  const { feedStore } = useStore();
 
-  // const likePress = async () => {
-  //   const liked = feedStore.userPostLikes.includes(post.id);
-  //   try {
-  //     const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
+  const likePress = async () => {
+    const liked = feedStore.userPostLikes.includes(post.id);
+    try {
+      const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
 
-  //     updatePostLikeCount(post.id, newLikeCount);
-  //     feedStore.updatePostLike(post.id, !liked);
+      updatePostLikeCount(post.id, newLikeCount);
+      feedStore.updatePostLike(post.id, !liked);
 
-  //     const updateFunction = liked ? unlikePost : likePost;
+      const updateFunction = liked ? unlikePost : likePost;
 
-  //     await updateFunction(post.id);
-  //   } catch (err) {
-  //     feedStore.updatePostLike(post.id, !liked);
-  //     console.error(err); // TODO: Record to crashlytics.
-  //   }
-  // };
+      await updateFunction(post.id);
+    } catch (err) {
+      feedStore.updatePostLike(post.id, !liked);
+      console.error(err); // TODO: Record to crashlytics.
+    }
+  };
 
   return (
     <Box>

@@ -33,10 +33,6 @@ function AppStackScreen() {
       <AppStack.Screen name="AppTabs" component={AppTabs} />
       <AppStack.Screen name="LocationPage" component={LocationPage} />
       <AppStack.Screen name="EventPage" component={EventPage} />
-      {/* <AppStack.Screen
-        name="EventPictures"
-        options={{ title: 'תמונות מההפגנה', headerBackTitleVisible: false, headerTitleAlign: 'center' }}
-      /> */}
     </AppStack.Navigator>
   );
 }
