@@ -28,21 +28,26 @@ import ProfileNavigator from './ProfileNavigator';
 function AppStackScreen() {
   return (
     <AppStack.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         headerShown: false,
         gestureEnabled: true,
         ...TransitionPresets.SlideFromRightIOS,
-        headerBackImage: () => (
+        headerLeft: () => (
           <Icon
             name={'arrow-right'}
             size={28}
             color={'#fff'}
-            style={{ marginLeft: Platform.OS === 'ios' ? 8 : -4, marginBottom: Platform.OS === 'ios' ? 8 : 0 }}
-            onPress={() => navigation.navigate('ActionScreen')} /** The goBack method doesn't work as expected on android **/
+            style={{
+              marginLeft: 15,
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 1,
+              shadowRadius: 2,
+            }}
+            onPress={() => navigation.goBack()}
           />
         ),
-      }}
-      mode="card"
+      })}
     >
       <AppStack.Screen name="AppTabs" component={AppTabs} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
       <AppStack.Screen name="LocationPage" component={LocationPage} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
@@ -56,24 +61,10 @@ function AppStackScreen() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerLeft: () => (
-            <Icon
-              name={'arrow-right'}
-              size={28}
-              color={'#fff'}
-              style={{
-                marginLeft: 15,
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 1 },
-                shadowOpacity: 1,
-                shadowRadius: 2,
-              }}
-              onPress={() => navigation.goBack()}
-            />
-          ),
         })}
       />
-      <AppStack.Screen
+
+      {/* <AppStack.Screen
         name="NewPost"
         component={NewPost}
         options={{
@@ -90,7 +81,7 @@ function AppStackScreen() {
           },
           headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
         }}
-      />
+      /> */}
     </AppStack.Navigator>
   );
 }
