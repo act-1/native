@@ -218,9 +218,26 @@ export async function getFeaturedPictures(): Promise<PicturePost[]> {
   }
 }
 
+export async function getEventPictures({ eventId, filter }: EventPicturesProps) {
+  try {
+    console.log(eventId);
+    const query = firestore().collection('posts').where('eventId', '==', eventId).where('type', '==', 'picture');
+
+    if (filter === 'featured') query.where('featured', '==', true);
+
+    query.orderBy('createdAt', 'desc');
+
+    const picturesSnapshot = await query.get();
+    return picturesSnapshot.docs;
+  } catch (err) {
+    throw err;
+  }
+}
+
 export default {
   newImagePost,
   getRecentPictures,
   getFeaturedPictures,
+  getEventPictures,
   archivePost,
 };

@@ -52,3 +52,8 @@ type GraphAPIResult = {
     };
   };
 };
+
+type EventPicturesProps = {
+  eventId: string;
+  filter: 'featured' | 'recent';
+};
