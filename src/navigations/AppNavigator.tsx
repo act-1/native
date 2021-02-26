@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Platform } from 'react-native';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
 import { enableScreens } from 'react-native-screens';
@@ -7,12 +6,8 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { EventPage, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
-import SignUpNavigator from './SignUpNavigator';
-import NewPost from '@screens/NewPost';
 import CheckInNavigator from './CheckInNavigator';
 import { LocationPage } from '@screens/LocationPage';
-
-import Icon from 'react-native-vector-icons/Feather';
 
 enableScreens();
 
@@ -28,67 +23,23 @@ import ProfileNavigator from './ProfileNavigator';
 function AppStackScreen() {
   return (
     <AppStack.Navigator
-      screenOptions={({ navigation }) => ({
+      screenOptions={{
         headerShown: false,
         gestureEnabled: true,
         ...TransitionPresets.SlideFromRightIOS,
-        headerLeft: () => (
-          <Icon
-            name={'arrow-right'}
-            size={28}
-            color={'#fff'}
-            style={{
-              marginLeft: 15,
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 1 },
-              shadowOpacity: 1,
-              shadowRadius: 2,
-            }}
-            onPress={() => navigation.goBack()}
-          />
-        ),
-      })}
+        headerStyle: { backgroundColor: '#1e262d' },
+      }}
     >
-      <AppStack.Screen name="AppTabs" component={AppTabs} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
-      <AppStack.Screen name="LocationPage" component={LocationPage} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
-      <AppStack.Screen
-        name="EventPage"
-        component={EventPage}
-        options={({ navigation }) => ({
-          gestureEnabled: true,
-          headerShown: false,
-          headerBackTitle: ' ',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        })}
-      />
-
-      {/* <AppStack.Screen
-        name="NewPost"
-        component={NewPost}
-        options={{
-          headerShown: true,
-          headerTitle: '',
-          headerRightContainerStyle: { marginRight: 12 },
-          headerBackTitleVisible: false,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontSize: 20,
-            fontFamily: 'AtlasDL3.1AAA-Medium',
-            color: '#EC534B',
-            marginBottom: 8,
-          },
-          headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
-        }}
-      /> */}
+      <AppStack.Screen name="AppTabs" component={AppTabs} />
+      <AppStack.Screen name="LocationPage" component={LocationPage} />
+      <AppStack.Screen name="EventPage" component={EventPage} />
     </AppStack.Navigator>
   );
 }
 
 function MainNavigator() {
   return (
-    <MainStack.Navigator name="MainNavigator" screenOptions={{ stackPresentation: 'fullScreenModal' }}>
+    <MainStack.Navigator screenOptions={{ stackPresentation: 'fullScreenModal' }}>
       <RootStack.Screen name="App" component={AppStackScreen} options={{ headerShown: false }} />
       <RootStack.Screen name="ActionModal" component={CheckInNavigator} options={{ headerShown: false }} />
     </MainStack.Navigator>
