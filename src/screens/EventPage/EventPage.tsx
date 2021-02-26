@@ -13,7 +13,7 @@ import ScrollablePictures from '@components/Widgets/ScrollablePictures';
 import EventPageCounter from './EventPageCounter';
 import EventPageActions from './EventPageActions';
 import EventPageDetail from './EventPageDetail';
-import EventPictures from './EventPictures';
+import EventPagePictures from './EventPagePictures';
 
 import { formatShortDate, formatUpcomingDate } from '@utils/date-utils';
 import mapStyle from '@utils/mapStyle.json';
@@ -93,7 +93,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
             <EventPageActions eventStatus={event.status} isAttending={isAttending} attendEvent={attendEvent} />
 
-            {event.status === 'live' && <EventPictures eventId={event.id} filter="recent" />}
+            {event.status === 'live' && <EventPagePictures event={event} filter="recent" />}
 
             <Box padding="m" marginBottom="m" backgroundColor="greyBackground">
               <Text variant="largeTitle" marginBottom="m">

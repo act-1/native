@@ -3,7 +3,8 @@ import { ActivityIndicator, StyleSheet } from 'react-native';
 import { Box, Text } from '../../components';
 import ScrollablePictures from '@components/Widgets/ScrollablePictures';
 import { getEventPictures } from '@services/feed';
-import { PicturePost } from '@types/collections';
+import { Event, PicturePost } from '@types/collections';
+import { useNavigation } from '@react-navigation/native';
 
 const noPicturesText = (
   <Text variant="largeTitle" textAlign="center">
@@ -11,8 +12,8 @@ const noPicturesText = (
   </Text>
 );
 
-type EventPicturesProps = {
-  eventId: string;
+type EventPagePicturesProps = {
+  event: Event;
   filter: 'featured' | 'recent';
 };
 
@@ -20,32 +21,45 @@ type EventPicturesProps = {
  * Fetch and display event pictures, according to the provided `filter`.
  */
 
-function EventPictures({ eventId }: EventPicturesProps) {
+function EventPagePictures({ event }: EventPagePicturesProps) {
+  const navigation = useNavigation();
+
+  const [eventPicturesDocs, setEventPicturesDocs] = useState<PicturePost[]>([]);
   const [eventPictures, setEventPictures] = useState<PicturePost[]>([]);
   const [fetchingPictures, setFetchingPictures] = useState(false);
+
+  const onPicturePress = (index: number) => {
+    navigation.navigate('EventPictureList', {
+      eventId: event.id,
+      eventTitle: event.shortTitle || event.title,
+      initialPictures: eventPicturesDocs,
+      initialIndex: index,
+    });
+  };
 
   const renderComponent = useMemo(() => {
     if (fetchingPictures) return <ActivityIndicator color="grey" />;
     if (eventPictures.length === 0) return noPicturesText;
-    return <ScrollablePictures pictures={eventPictures} />;
+    return <ScrollablePictures pictures={eventPictures} onPicturePress={onPicturePress} />;
   }, [eventPictures, fetchingPictures]);
 
   useEffect(() => {
     setFetchingPictures(true);
 
-    getEventPictures({ eventId, filter: 'recent' })
+    getEventPictures({ eventId: event.id, filter: 'recent' })
       .then((pictureDocs) => {
         const pictures = pictureDocs.map((picture) => picture.data() as PicturePost);
         setEventPictures(pictures);
+        setEventPicturesDocs(pictureDocs);
       })
       .catch((err) => console.error(err))
       .finally(() => setFetchingPictures(false));
-  }, [eventId]);
+  }, [event.id]);
 
   return <Box style={styles.eventPicturesWrapper}>{renderComponent}</Box>;
 }
 
-export default EventPictures;
+export default EventPagePictures;
 
 const styles = StyleSheet.create({
   eventPicturesWrapper: { justifyContent: 'center', minHeight: 230 },

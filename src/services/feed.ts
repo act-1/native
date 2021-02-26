@@ -218,14 +218,51 @@ export async function getFeaturedPictures(): Promise<PicturePost[]> {
   }
 }
 
-export async function getEventPictures({ eventId, filter }: EventPicturesProps) {
+type EventPicturesProps = {
+  eventId: string;
+  limit?: number;
+  startAfter?: FirebaseFirestoreTypes.DocumentData;
+  afterDate?: FirebaseFirestoreTypes.Timestamp;
+};
+
+export async function getEventPictures({ eventId, startAfter, afterDate, limit }: EventPicturesProps) {
   try {
-    console.log(eventId);
-    const query = firestore().collection('posts').where('eventId', '==', eventId).where('type', '==', 'picture');
+    let query = firestore()
+      .collection('posts')
+      .where('eventId', '==', eventId)
+      .where('type', '==', 'picture')
+      .orderBy('createdAt', 'desc');
 
-    if (filter === 'featured') query.where('featured', '==', true);
+    // There's a strange behavior with the startAfter and limit conditions if we build the
+    // query incrementally, so we create a new one.
+    if (startAfter) {
+      query = firestore()
+        .collection('posts')
+        .where('type', '==', 'picture')
+        .where('archived', '==', false)
+        .where('eventId', '==', eventId)
+        .orderBy('createdAt', 'desc')
+        .startAfter(startAfter);
 
-    query.orderBy('createdAt', 'desc');
+      if (limit) {
+        query.limit(limit);
+      }
+    }
+
+    // Get new picture, created after the specified date
+    if (afterDate) {
+      query = firestore()
+        .collection('posts')
+        .where('type', '==', 'picture')
+        .where('archived', '==', false)
+        .where('eventId', '==', eventId)
+        .where('createdAt', '>', afterDate)
+        .orderBy('createdAt', 'desc');
+
+      if (limit) {
+        query.limit(limit);
+      }
+    }
 
     const picturesSnapshot = await query.get();
     return picturesSnapshot.docs;

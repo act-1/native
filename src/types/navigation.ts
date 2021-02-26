@@ -2,7 +2,8 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import { TakePictureResponse } from 'react-native-camera';
-
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import { PicturePost } from './collections';
 import { ILocation } from './location';
 
 export type TabBarProps = BottomTabScreenProps<TabBarParamList>;
@@ -11,6 +12,7 @@ export type SelectLocationScreenProps = BottomTabScreenProps<RootStackParamList,
 export type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
 export type EventPageScreenProps = StackScreenProps<RootStackParamList, 'EventPage'>;
 export type EventListScreenProps = StackScreenProps<RootStackParamList, 'EventList'>;
+export type EventPicturesScreenProps = StackScreenProps<RootStackParamList, 'EventPictureList'>;
 export type CheckInFormScreenProps = StackScreenProps<RootStackParamList, 'CheckInForm'>;
 export type LocationScreenProps = StackScreenProps<RootStackParamList, 'LocationPage'>;
 export type ProfileScreenProps = StackScreenProps<RootStackParamList, 'Profile'>;
@@ -26,6 +28,12 @@ export type RootStackParamList = {
   EventsNavigator: undefined;
   EventList: undefined;
   EventPage: { eventId: string };
+  EventPictureList: {
+    eventId: string;
+    eventTitle: string;
+    initialPictures?: FirebaseFirestoreTypes.DocumentSnapshot[];
+    initialIndex?: number;
+  };
   CheckInSelectLocation: undefined;
   CheckInForm: { checkInData: CheckInParams };
   LocationPage: { locationId: string };

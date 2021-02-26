@@ -64,12 +64,10 @@ class MediaStore {
 
   async getNewRecentPictures() {
     this.recentPicturesLoading = true;
-    console.log('hola!');
     try {
       const firstPictureDate = this.recentPictures[0].data().createdAt;
 
       const newPictures = await FeedService.getRecentPictures({ afterDate: firstPictureDate });
-      console.log('Length: ', newPictures.length);
 
       runInAction(() => {
         this.recentPictures = [...newPictures, ...this.recentPictures];

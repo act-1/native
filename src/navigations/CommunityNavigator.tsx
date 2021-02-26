@@ -6,17 +6,6 @@ import Community from '@screens/Community';
 import RecentPictures from '@screens/Community/RecentPictures';
 import HeaderProfilePicture from '@components/HeaderProfilePicture';
 
-import { BlurView } from '@react-native-community/blur';
-
-// Blurred view has lacking performance on android.
-let headerBackground = () => <View style={[StyleSheet.absoluteFillObject, { backgroundColor: '#1e262d', elevation: 4 }]} />;
-
-if (Platform.OS === 'ios') {
-  headerBackground = () => (
-    <BlurView blurType="thickMaterial" reducedTransparencyFallbackColor="#1e262d" style={StyleSheet.absoluteFillObject} />
-  );
-}
-
 const CommunityStack = createStackNavigator();
 
 function CommunityNavigator({ navigation }) {
@@ -51,8 +40,6 @@ function CommunityNavigator({ navigation }) {
           title: 'תמונות אחרונות',
           headerBackTitleVisible: false,
           headerTitleAlign: 'center',
-          headerTransparent: Platform.select({ ios: true, android: false }),
-          headerBackground,
         }}
         component={RecentPictures}
       />
