@@ -44,7 +44,7 @@ function AppStackScreen() {
           headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
           headerBackTitleVisible: false,
           headerTitleStyle: {
-            fontSize: 22,
+            fontSize: 20,
             fontFamily: 'AtlasDL3.1AAA-Bold',
             fontWeight: Platform.select({ ios: '700', android: null }),
             color: '#EC534B',

@@ -33,6 +33,7 @@ export type RootStackParamList = {
     eventTitle: string;
     initialPictures?: FirebaseFirestoreTypes.DocumentSnapshot[];
     initialIndex?: number;
+    onPictureListRefresh?: (pictureDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot[], pictureData: PicturePost[]) => void;
   };
   CheckInSelectLocation: undefined;
   CheckInForm: { checkInData: CheckInParams };

@@ -46,9 +46,16 @@ function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
       setFetchingPictures(true);
       const firstPictureDate = eventPictures[0].createdAt;
       const newPictures = await getEventPictures({ eventId, afterDate: firstPictureDate, limit: 8 });
+      setEventPictureDocs([...newPictures, ...eventPictureDocs]);
 
-      const pictures = newPictures.map((picture) => picture.data() as PicturePost);
-      setEventPictures([...pictures, ...eventPictures]);
+      if (newPictures.length > 0) {
+        const pictures = newPictures.map((picture) => picture.data() as PicturePost);
+        setEventPictures([...pictures, ...eventPictures]);
+
+        if (route.params.onPictureListRefresh) {
+          route.params.onPictureListRefresh(newPictures, pictures);
+        }
+      }
     } catch (err) {
       console.error(err);
     } finally {

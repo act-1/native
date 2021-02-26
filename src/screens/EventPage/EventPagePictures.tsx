@@ -3,7 +3,10 @@ import { ActivityIndicator, StyleSheet } from 'react-native';
 import { Box, Text } from '../../components';
 import ScrollablePictures from '@components/Widgets/ScrollablePictures';
 import { getEventPictures } from '@services/feed';
+
 import { Event, PicturePost } from '@types/collections';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+
 import { useNavigation } from '@react-navigation/native';
 
 const noPicturesText = (
@@ -24,8 +27,8 @@ type EventPagePicturesProps = {
 function EventPagePictures({ event }: EventPagePicturesProps) {
   const navigation = useNavigation();
 
-  const [eventPicturesDocs, setEventPicturesDocs] = useState<PicturePost[]>([]);
   const [eventPictures, setEventPictures] = useState<PicturePost[]>([]);
+  const [eventPicturesDocs, setEventPicturesDocs] = useState<FirebaseFirestoreTypes.QueryDocumentSnapshot[]>([]);
   const [fetchingPictures, setFetchingPictures] = useState(false);
 
   const onPicturePress = (index: number) => {
@@ -34,6 +37,7 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
       eventTitle: event.shortTitle || event.title,
       initialPictures: eventPicturesDocs,
       initialIndex: index,
+      onPictureListRefresh,
     });
   };
 
@@ -42,6 +46,11 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
     if (eventPictures.length === 0) return noPicturesText;
     return <ScrollablePictures pictures={eventPictures} onPicturePress={onPicturePress} />;
   }, [eventPictures, fetchingPictures]);
+
+  const onPictureListRefresh = (pictureDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot[], pictureData: PicturePost[]) => {
+    setEventPicturesDocs([...pictureDocs, ...eventPicturesDocs]);
+    setEventPictures([...pictureData, ...eventPictures]);
+  };
 
   useEffect(() => {
     setFetchingPictures(true);

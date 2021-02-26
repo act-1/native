@@ -37,7 +37,7 @@ function PictureList({
     <FlatList
       ref={flatListRef}
       data={pictures}
-      // contentContainerStyle={{ marginTop: Platform.select({ ios: 105, android: 8 }) }}
+      contentContainerStyle={{ marginTop: 8 }}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <PictureListItem post={item} updatePostLikeCount={updatePostLikeCount} />}
