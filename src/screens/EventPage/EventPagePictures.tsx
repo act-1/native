@@ -47,6 +47,7 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
     return <ScrollablePictures pictures={eventPictures} onPicturePress={onPicturePress} />;
   }, [eventPictures, fetchingPictures]);
 
+  // Refresh local state if refersh occurs on EventPictureList
   const onPictureListRefresh = (pictureDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot[], pictureData: PicturePost[]) => {
     setEventPicturesDocs([...pictureDocs, ...eventPicturesDocs]);
     setEventPictures([...pictureData, ...eventPictures]);
@@ -55,7 +56,7 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
   useEffect(() => {
     setFetchingPictures(true);
 
-    getEventPictures({ eventId: event.id, filter: 'recent' })
+    getEventPictures({ eventId: event.id, limit: 8 })
       .then((pictureDocs) => {
         const pictures = pictureDocs.map((picture) => picture.data() as PicturePost);
         setEventPictures(pictures);

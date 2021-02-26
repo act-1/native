@@ -41,7 +41,7 @@ function PictureList({
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <PictureListItem post={item} updatePostLikeCount={updatePostLikeCount} />}
-      initialNumToRender={6}
+      initialNumToRender={8}
       onScrollToIndexFailed={() => {}}
       refreshing={fetchingPictures}
       onRefresh={onRefresh}
