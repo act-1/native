@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
+
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
+
 import { Box, Text } from '../../components';
 import ScrollablePictures from '@components/Widgets/ScrollablePictures';
 import { getEventPictures } from '@services/feed';
@@ -21,6 +25,8 @@ type EventPicturesProps = {
  */
 
 function EventPictures({ eventId }: EventPicturesProps) {
+  const { mediaStore } = useStore();
+
   const [eventPictures, setEventPictures] = useState<PicturePost[]>([]);
   const [fetchingPictures, setFetchingPictures] = useState(false);
 
@@ -33,7 +39,8 @@ function EventPictures({ eventId }: EventPicturesProps) {
   useEffect(() => {
     setFetchingPictures(true);
 
-    getEventPictures({ eventId, filter: 'recent' })
+    mediaStore
+      .getRecentPictures({ eventId, source: 'event', limit: 8 })
       .then((pictureDocs) => {
         const pictures = pictureDocs.map((picture) => picture.data() as PicturePost);
         setEventPictures(pictures);
@@ -45,7 +52,7 @@ function EventPictures({ eventId }: EventPicturesProps) {
   return <Box style={styles.eventPicturesWrapper}>{renderComponent}</Box>;
 }
 
-export default EventPictures;
+export default observer(EventPictures);
 
 const styles = StyleSheet.create({
   eventPicturesWrapper: { justifyContent: 'center', minHeight: 230 },

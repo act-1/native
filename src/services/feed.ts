@@ -157,24 +157,39 @@ export function archivePost(postId: string) {
     archivedAt: firestore.FieldValue.serverTimestamp(),
   });
 }
-type GetRecentPicturesProps = {
+type GetRecentPicturesBaseProps = {
   limit?: number;
   startAfter?: FirebaseFirestoreTypes.DocumentData;
   afterDate?: FirebaseFirestoreTypes.Timestamp;
 };
 
-export async function getRecentPictures({ limit = 10, startAfter, afterDate }: GetRecentPicturesProps) {
-  try {
-    let query = firestore()
-      .collection('posts')
-      .where('type', '==', 'picture')
-      .where('archived', '==', false)
-      .orderBy('createdAt', 'desc')
-      .limit(limit);
+type GeneralRecentPicturesProps = GetRecentPicturesBaseProps & {
+  source: 'general';
+};
 
-    // There's a strange behavior with the startAfter and limit conditions if we build the
-    // query incrementally, so we create a new one.
+type EventRecentPicturesProps = GetRecentPicturesBaseProps & {
+  source: 'event';
+  eventId: string;
+};
+
+type GetRecentPicturesProps = GeneralRecentPicturesProps | EventRecentPicturesProps;
+
+export async function getRecentPictures(queryData: GetRecentPicturesProps) {
+  try {
+    const { source = 'general', limit = 10, startAfter, afterDate } = queryData;
+
+    let query = firestore().collection('posts').where('type', '==', 'picture').where('archived', '==', false);
+
+    if (source === 'event') {
+      // alert(queryData.eventId);
+      // query.where('eventId', '==', queryData.eventId);
+    }
+
+    query.orderBy('createdAt', 'desc').limit(limit);
+
     if (startAfter) {
+      // There's a strange behavior with the startAfter and limit conditions if we build the
+      // query incrementally, so we create a new one.
       query = firestore()
         .collection('posts')
         .where('type', '==', 'picture')
@@ -218,26 +233,9 @@ export async function getFeaturedPictures(): Promise<PicturePost[]> {
   }
 }
 
-export async function getEventPictures({ eventId, filter }: EventPicturesProps) {
-  try {
-    console.log(eventId);
-    const query = firestore().collection('posts').where('eventId', '==', eventId).where('type', '==', 'picture');
-
-    if (filter === 'featured') query.where('featured', '==', true);
-
-    query.orderBy('createdAt', 'desc');
-
-    const picturesSnapshot = await query.get();
-    return picturesSnapshot.docs;
-  } catch (err) {
-    throw err;
-  }
-}
-
 export default {
   newImagePost,
   getRecentPictures,
   getFeaturedPictures,
-  getEventPictures,
   archivePost,
 };
