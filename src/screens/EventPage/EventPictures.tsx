@@ -5,6 +5,12 @@ import ScrollablePictures from '@components/Widgets/ScrollablePictures';
 import { getEventPictures } from '@services/feed';
 import { PicturePost } from '@types/collections';
 
+const noPicturesText = (
+  <Text variant="largeTitle" textAlign="center">
+    לא הועלו תמונות
+  </Text>
+);
+
 type EventPicturesProps = {
   eventId: string;
   filter: 'featured' | 'recent';
@@ -20,7 +26,7 @@ function EventPictures({ eventId }: EventPicturesProps) {
 
   const renderComponent = useMemo(() => {
     if (fetchingPictures) return <ActivityIndicator color="grey" />;
-    if (eventPictures.length === 0) return <Text variant="largeTitle">לא הועלו תמונות</Text>;
+    if (eventPictures.length === 0) return noPicturesText;
     return <ScrollablePictures pictures={eventPictures} />;
   }, [eventPictures, fetchingPictures]);
 
@@ -42,5 +48,5 @@ function EventPictures({ eventId }: EventPicturesProps) {
 export default EventPictures;
 
 const styles = StyleSheet.create({
-  eventPicturesWrapper: { justifyContent: 'center', alignItems: 'center', minHeight: 230 },
+  eventPicturesWrapper: { justifyContent: 'center', minHeight: 230 },
 });
