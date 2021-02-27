@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Platform, Pressable, StyleSheet } from 'react-native';
 import ProtestDashboard from '@screens/ProtestDashboard';
-import { ProtestChat } from '@screens/ProtestChat';
+import ProtestChat from '@screens/ProtestChat';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { Box, CircularButton, CapturePicture } from '@components';
 import { BlurView } from '@react-native-community/blur';
@@ -19,18 +19,21 @@ const ProtestDashboardStack = createStackNavigator();
 
 function ProtestDashboardNavigator({ navigation }) {
   return (
-    <ProtestDashboardStack.Navigator>
-      <ProtestDashboardStack.Screen name="ProtestDashboard" component={ProtestDashboard} />
+    <ProtestDashboardStack.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          fontSize: 22,
+          fontFamily: 'AtlasDL3.1AAA-Medium',
+          color: '#EC534B',
+          marginBottom: Platform.OS === 'ios' ? 11 : 2,
+        },
+        headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
+      }}
+    >
       <ProtestDashboardStack.Screen
-        name="ProtestChat"
-        component={ProtestChat}
+        name="Dashboard"
+        component={ProtestDashboard}
         options={{
-          headerShown: true,
-          headerTitle: 'בלפור',
-          headerLeft: null,
-          headerTitleAlign: 'center',
-
-          headerRightContainerStyle: { marginRight: 12 },
           headerLeft: () => (
             <Box flexDirection="row">
               <CircularButton
@@ -44,6 +47,19 @@ function ProtestDashboardNavigator({ navigation }) {
               />
             </Box>
           ),
+        }}
+      />
+      <ProtestDashboardStack.Screen
+        name="ProtestChat"
+        component={ProtestChat}
+        options={{
+          headerShown: true,
+          headerTitle: 'בלפור',
+          headerLeft: null,
+          headerTitleAlign: 'center',
+
+          headerRightContainerStyle: { marginRight: 12 },
+
           headerTransparent: Platform.select({ ios: true, android: false }),
           headerBackground,
         }}

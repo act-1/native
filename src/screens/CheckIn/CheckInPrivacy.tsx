@@ -20,12 +20,10 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
     setPrivacySetting(value);
   };
 
-  const { locationId, locationName, locationCity, locationProvince, coordinates } = route.params.checkInData;
-
   const submitCheckIn = () => {
     navigation.dangerouslyGetParent()?.goBack();
     setTimeout(() => {
-      navigation.navigate('ProtestDashboard', { screen: 'ProtestChat', params: { locationId } });
+      navigation.navigate('ProtestDashboard', { screen: 'Dashboard', params: { checkIn: route.params.checkInData } });
     }, 100);
 
     userStore
@@ -41,7 +39,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   return (
     <Box flex={1} paddingTop="l">
       <Text variant="text" textAlign="center" marginBottom="l">
-        בחרו את הגדרת הפרטיות עבור הצ'ק אין:
+        בחרו גדרת הפרטיות עבור הצ'ק אין:
       </Text>
 
       <PrivacyOption
@@ -84,7 +82,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
         </Box>
       </Box>
 
-      <Text variant="text" textAlign="center" color="link" opacity={0.75}>
+      <Text variant="text" textAlign="center" color="link" opacity={0.6}>
         עוד על פרטיות ב- ACT1
       </Text>
     </Box>

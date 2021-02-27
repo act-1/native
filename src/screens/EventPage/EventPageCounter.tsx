@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
-import { Box, Text } from '../../components';
+import { Box, Text, LocationCounter } from '../../components';
 import Ticker from '@components/Ticker';
-import LocationCounter from '@screens/LocationPage/components/LocationCounter';
 
 type EventPageCounterProps = {
   eventStatus: EventStatus;

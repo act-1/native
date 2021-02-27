@@ -19,6 +19,7 @@ export type ProfileScreenProps = StackScreenProps<RootStackParamList, 'Profile'>
 export type ActionScreenProps = StackScreenProps<RootStackParamList, 'ActionScreen'>;
 export type NewPostProps = StackScreenProps<RootStackParamList, 'NewPost'>;
 export type RecentPicturesProps = StackScreenProps<RootStackParamList, 'RecentPictures'>;
+export type ProtestDashboardProps = StackScreenProps<RootStackParamList, 'ProtestDashboard'>;
 export type ProtestChatProps = StackScreenProps<RootStackParamList, 'ProtestChat'>;
 export type CapturePictureProps = StackScreenProps<RootStackParamList, 'CapturePicture'>;
 
@@ -48,6 +49,7 @@ export type RootStackParamList = {
   };
   SelectLocation: undefined;
   Explore: undefined;
+  ProtestDashboard: { checkIn: CheckInParams };
   ProtestChat: undefined;
   RecentPictures: { initialIndex?: number };
 };

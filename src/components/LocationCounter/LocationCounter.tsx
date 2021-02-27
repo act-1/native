@@ -5,8 +5,8 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-snap-carousel';
 import { chunkArray } from '@utils/array-utils';
-import { Box, Text, Ticker } from '../../../components';
-import { useStore } from '../../../stores';
+import { Box, Text, Ticker } from '../';
+import { useStore } from '../../stores';
 import Icon from 'react-native-vector-icons/Feather';
 
 const deviceWidth = Dimensions.get('window').width;
