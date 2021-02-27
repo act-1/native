@@ -63,11 +63,11 @@ const AppTabs = ({ navigation }) => {
                 onPressOut={() => HapticFeedback.trigger('impactMedium')}
                 onPress={() => {
                   if (userStore.hasActiveCheckIn) {
-                    navigation.navigate('Secondary', { screen: 'CheckInModal' });
-                    // navigation.navigate('ProtestDashboard', {
-                    //   screen: 'Dashboard',
-                    //   params: { checkIn: userStore.lastCheckIn },
-                    // });
+                    // navigation.navigate('Secondary', { screen: 'CheckInModal' });
+                    navigation.navigate('ProtestDashboard', {
+                      screen: 'Dashboard',
+                      params: { checkIn: userStore.lastCheckIn },
+                    });
                   } else {
                     navigation.navigate('Secondary', { screen: 'CheckInModal' });
                   }
