@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Dimensions, StyleSheet } from 'react-native';
+import { Alert } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -10,8 +10,6 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { createTextPost } from '@services/feed';
 import { CheckInFormScreenProps } from '@types/navigation';
-
-const { width: deviceWidth } = Dimensions.get('screen');
 
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { userStore } = useStore();
@@ -77,7 +75,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
         selected={privacySetting === 'ANONYMOUS'}
         onPress={() => setPrivacySetting('ANONYMOUS')}
       />
-      <Box marginTop="xl" marginHorizontal="xl" marginBottom="l">
+      <Box marginTop="xl" marginHorizontal="xxl" marginBottom="l">
         <Box marginBottom="m">
           <RoundedButton onPress={submitCheckIn} color="blue" text="צ׳ק אין" style={{ width: '100%' }} />
         </Box>

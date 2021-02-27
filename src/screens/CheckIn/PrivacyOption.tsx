@@ -1,5 +1,5 @@
-import React from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Pressable, Animated, StyleSheet } from 'react-native';
 import { Box, Text } from '../../components';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -12,9 +12,30 @@ type PrivacyOptionProps = {
 };
 
 function PrivacyOption({ optionIcon, optionTitle, descriptionList, selected, onPress }: PrivacyOptionProps) {
+  const fade = useRef(new Animated.Value(selected ? 1 : 0.5)).current;
+
+  useEffect(() => {
+    // Animate fade on option selection
+    if (selected === true) {
+      Animated.timing(fade, {
+        toValue: 1,
+        duration: 150,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(fade, {
+        toValue: 0.5,
+        duration: 150,
+        useNativeDriver: true,
+      }).start();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
+
   return (
     <Pressable onPress={onPress}>
-      <Box flexDirection="row" paddingHorizontal="l" marginBottom="l" style={{ opacity: selected ? 1 : 0.6 }}>
+      <Animated.View style={[styles.privacyOptionWrapper, { opacity: fade }]}>
         <Box style={styles.privacyOptionImage} marginRight="m">
           <Icon name={optionIcon} color="white" size={42.5} />
         </Box>
@@ -36,7 +57,7 @@ function PrivacyOption({ optionIcon, optionTitle, descriptionList, selected, onP
             ))}
           </Box>
         </Box>
-      </Box>
+      </Animated.View>
     </Pressable>
   );
 }
@@ -44,6 +65,11 @@ function PrivacyOption({ optionIcon, optionTitle, descriptionList, selected, onP
 export default PrivacyOption;
 
 const styles = StyleSheet.create({
+  privacyOptionWrapper: {
+    flexDirection: 'row',
+    paddingHorizontal: 24,
+    marginBottom: 24,
+  },
   privacyOptionImage: {
     alignItems: 'center',
     justifyContent: 'center',
