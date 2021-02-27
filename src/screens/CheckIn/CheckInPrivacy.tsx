@@ -1,41 +1,32 @@
 import React, { useState } from 'react';
-import { Alert } from 'react-native';
-import { StackActions } from '@react-navigation/native';
-import analytics from '@react-native-firebase/analytics';
-import crashlytics from '@react-native-firebase/crashlytics';
-import { Box, Text } from '../../components';
-import PrivacyOption from './PrivacyOption';
-import { RoundedButton } from '@components/Buttons';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-import { createTextPost } from '@services/feed';
+import { Box, Text, RoundedButton } from '../../components';
+import PrivacyOption from './PrivacyOption';
 import { CheckInFormScreenProps } from '@types/navigation';
+import crashlytics from '@react-native-firebase/crashlytics';
+import { logEvent } from '@services/analytics';
 
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { userStore } = useStore();
   const [privacySetting, setPrivacySetting] = useState<PrivacyOptions>('PUBLIC');
 
+  const onPrivacySelection = (value: PrivacyOptions) => {
+    logEvent('privacy_option_selected', { privacy: value });
+    setPrivacySetting(value);
+  };
+
   const { locationId, locationName, locationCity, locationProvince, coordinates } = route.params.checkInData;
 
   const submitCheckIn = () => {
-    navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
+    // navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
     userStore
-      .checkIn({ ...route.params.checkInData, privacySetting, textContent })
+      .checkIn({ ...route.params.checkInData, privacySetting })
       .then(() => {
-        // If the user added text, create a new text post
-        if (textContent) {
-          const locationData = { locationId, locationName, locationCity, locationProvince, coordinates };
-          createTextPost({ textContent, locationData });
-        }
-        analytics().logEvent('check_in_success');
+        logEvent('check_in_success');
       })
       .catch((err: any) => {
-        crashlytics().log('Check in denied; already exists.');
-        if (userStore.lastCheckIn) crashlytics().setAttribute('lastCheckInId', userStore.lastCheckIn.id);
         crashlytics().recordError(err);
-        if (err.code === 'already-exists') {
-          Alert.alert("נראה שיש לך כבר צ'ק אין פעיל 🤭");
-        }
       });
   };
 
@@ -53,7 +44,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
           { check: true, text: 'נשמר ביומן ההפגנות הפרטי שלך' },
         ]}
         selected={privacySetting === 'PUBLIC'}
-        onPress={() => setPrivacySetting('PUBLIC')}
+        onPress={() => onPrivacySelection('PUBLIC')}
       />
       <PrivacyOption
         optionIcon="lock"
@@ -63,7 +54,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
           { check: false, text: 'תמונתך לא תוצג ברשימת המפגינים' },
           { check: true, text: 'נשמר ביומן ההפגנות הפרטי שלך' },
         ]}
-        onPress={() => setPrivacySetting('PRIVATE')}
+        onPress={() => onPrivacySelection('PRIVATE')}
       />
       <PrivacyOption
         optionIcon="eye-off"
@@ -73,7 +64,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
           { check: false, text: 'לא יישמר ביומן ההפגנות שלך' },
         ]}
         selected={privacySetting === 'ANONYMOUS'}
-        onPress={() => setPrivacySetting('ANONYMOUS')}
+        onPress={() => onPrivacySelection('ANONYMOUS')}
       />
       <Box marginTop="xl" marginHorizontal="xxl" marginBottom="l">
         <Box marginBottom="m">
@@ -85,7 +76,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
       </Box>
 
       <Text variant="text" textAlign="center" opacity={0.8}>
-        למדו עוד על פרטיות ב- ACT1
+        עוד על פרטיות ב- ACT1
       </Text>
     </Box>
   );
