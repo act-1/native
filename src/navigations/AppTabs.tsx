@@ -64,7 +64,7 @@ const AppTabs = ({ navigation }) => {
                 onPress={() => {
                   if (userStore.hasActiveCheckIn) {
                     const locationId = userStore.lastCheckIn.locationId;
-                    navigation.navigate('ActionModal', { screen: 'LocationPage', params: { locationId } });
+                    navigation.navigate('ProtestDashboard', { screen: 'ProtestChat', params: { locationId } });
                   } else {
                     navigation.navigate('Secondary', { screen: 'CheckInModal' });
                   }

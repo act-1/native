@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { Box, Text, RoundedButton } from '../../components';
+import { StackActions } from '@react-navigation/native';
 import PrivacyOption from './PrivacyOption';
 import { CheckInFormScreenProps } from '@types/navigation';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -22,7 +23,11 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { locationId, locationName, locationCity, locationProvince, coordinates } = route.params.checkInData;
 
   const submitCheckIn = () => {
-    // navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
+    navigation.dangerouslyGetParent()?.goBack();
+    setTimeout(() => {
+      navigation.navigate('ProtestDashboard', { screen: 'ProtestChat', params: { locationId } });
+    }, 100);
+
     userStore
       .checkIn({ ...route.params.checkInData, privacySetting })
       .then(() => {

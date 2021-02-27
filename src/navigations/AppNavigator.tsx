@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { EventPage, EventPictureList, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
 import CheckInNavigator from './CheckInNavigator';
+import ProtestDashboardNavigator from './ProtestDashboardNavigator';
 import { LocationPage } from '@screens/LocationPage';
 
 enableScreens();
@@ -59,7 +60,7 @@ function MainNavigator() {
   return (
     <MainStack.Navigator screenOptions={{ stackPresentation: 'fullScreenModal' }}>
       <RootStack.Screen name="App" component={AppStackScreen} options={{ headerShown: false }} />
-      {/* <RootStack.Screen name="ActionModal" component={CheckInNavigator} options={{ headerShown: false }} /> */}
+      <RootStack.Screen name="ProtestDashboard" component={ProtestDashboardNavigator} options={{ headerShown: false }} />
     </MainStack.Navigator>
   );
 }
