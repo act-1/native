@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { Platform, AppState, AppStateStatus, Linking, ActivityIndicator } from 'react-native';
+import { Image, Platform, AppState, AppStateStatus, Linking, ActivityIndicator } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { openSettings } from 'react-native-permissions';
-import { Box, Text } from '../../components';
-import { RoundedButton } from '../../components/Buttons';
+import { Box, Text } from '../../../components';
+import { RoundedButton } from '../../../components/Buttons';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../stores';
+import { useStore } from '../../../stores';
 
 /**
  * This component handles all the strange and mysteries of the location permission.

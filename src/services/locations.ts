@@ -3,6 +3,7 @@ import { GeoQuerySnapshot } from 'geofirestore-core';
 import * as geofirestore from 'geofirestore';
 import { Event } from '@types/collections';
 import { ILocation } from '@types/location';
+import events from './events';
 
 // Create a GeoFirestore reference
 const GeoFirestore = geofirestore.initializeApp(firestore());
@@ -53,6 +54,7 @@ export async function fetchNearbyLocations({ position, radius = 2 }: NearbyLocat
 export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: NearbyLocationsParams): Promise<GeoQuerySnapshot> {
   try {
     const [lat, lng] = position;
+    console.log(lat, lng);
     const query = eventsCollection.near({
       center: new firebase.firestore.GeoPoint(lat, lng),
       radius,
@@ -75,6 +77,8 @@ export async function fetchNearbyEventsAndLocations({ position }: NearbyLocation
       fetchNearbyLocations({ position }),
       fetchNearbyUpcomingEvents({ position }),
     ]);
+
+    console.log(eventsSnapshot.docs.length);
     const locationsData = locationsSnapshot.docs.map((doc: any): ILocation => ({ ...doc.data(), type: 'location' }));
 
     // Since geofirestore doesn't allow us to filter by date, we need to do this by ourselves.

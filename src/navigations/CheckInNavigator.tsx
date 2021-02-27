@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Platform, Pressable, StyleSheet } from 'react-native';
 import { Box, Text, CircularButton, CapturePicture } from '@components';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import { SelectLocation, LocationPage } from '@screens/LocationPage';
 import { ProtestChat } from '@screens/ProtestChat';
-import { CheckInForm } from '@screens/CheckIn';
+import { CheckInPrivacy, SelectLocation } from '@screens/CheckIn';
 import NewPost from '@screens/NewPost';
 import { BlurView } from '@react-native-community/blur';
 
@@ -29,26 +28,40 @@ function CheckInNavigator({ navigation }) {
           color: '#EC534B',
           marginBottom: Platform.OS === 'ios' ? 11 : 2,
         },
+        headerStatusBarHeight: Platform.select({ ios: 10, android: 0 }),
         headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
       }}
     >
-      {/* <CheckInStack.Screen
+      <CheckInStack.Screen
         name="SelectLocation"
         component={SelectLocation}
         options={{
-          title: 'צ׳ק אין',
-          headerRight: () => (
-            <Pressable onPress={() => navigation.goBack()} style={styles.dismissButton}>
-              <Text color="lightText" fontSize={16}>
-                ביטול
-              </Text>
-            </Pressable>
+          headerTransparent: true,
+          headerTitle: '',
+          headerLeft: () => (
+            <Box flexDirection="row">
+              <CircularButton
+                onPress={() => {
+                  navigation.goBack();
+                }}
+                iconName="x"
+                color="white"
+                size="small"
+                transparent
+                style={{ opacity: 0.85, marginLeft: 12, marginBottom: 6 }}
+              />
+            </Box>
           ),
           headerTitleAlign: 'center',
-          headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
         }}
       />
-      <CheckInStack.Screen name="CheckInForm" component={CheckInForm} options={{ headerShown: false }} /> */}
+      <CheckInStack.Screen
+        name="CheckInPrivacy"
+        component={CheckInPrivacy}
+        options={{ title: "צ'ק אין", headerBackTitleVisible: false, headerTintColor: '#8a8a8b' }}
+      />
+
+      {/* <CheckInStack.Screen name="CheckInForm" component={CheckInForm} options={{ headerShown: false }} /> */}
       <CheckInStack.Screen
         name="LocationPage"
         component={ProtestChat}
