@@ -59,15 +59,16 @@ function MainNavigator() {
   return (
     <MainStack.Navigator screenOptions={{ stackPresentation: 'fullScreenModal' }}>
       <RootStack.Screen name="App" component={AppStackScreen} options={{ headerShown: false }} />
-      <RootStack.Screen name="ActionModal" component={CheckInNavigator} options={{ headerShown: false }} />
+      {/* <RootStack.Screen name="ActionModal" component={CheckInNavigator} options={{ headerShown: false }} /> */}
     </MainStack.Navigator>
   );
 }
 
 function SecondaryNavigator() {
   return (
-    <SecondaryStack.Navigator name="SecondaryNavigator" screenOptions={{ stackPresentation: 'modal' }}>
+    <SecondaryStack.Navigator screenOptions={{ stackPresentation: 'modal' }}>
       <SecondaryStack.Screen name="ProfileModal" component={ProfileNavigator} options={{ headerShown: false }} />
+      <SecondaryStack.Screen name="CheckInModal" component={CheckInNavigator} options={{ headerShown: false }} />
     </SecondaryStack.Navigator>
   );
 }

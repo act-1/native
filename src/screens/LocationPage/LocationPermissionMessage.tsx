@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Platform, AppState, AppStateStatus, Linking, ActivityIndicator } from 'react-native';
+import { Image, Platform, AppState, AppStateStatus, Linking, ActivityIndicator } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { openSettings } from 'react-native-permissions';

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { ScrollView } from 'react-native';
+import { Image, ScrollView } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { SelectLocationScreenProps } from '@types/navigation';
-import { Box, LocationBox, EventBox } from '../../components';
+import { Box, Text, LocationBox, EventBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import LocationPermissionMessage from './LocationPermissionMessage';
@@ -50,6 +50,17 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
   return (
     <ScrollView style={{ flex: 1, width: '100%' }}>
+      <Image source={require('@assets/pictures/check-in-hero.png')} style={{ height: 475 }} />
+
+      <Box justifyContent="center" alignItems="center" style={{ marginTop: -200 }} marginBottom="m">
+        <Text variant="extraLargeTitle" color="primaryColor">
+          יצאתן.ם להפגין?
+        </Text>
+        <Text variant="extraLargeTitle" color="primaryColor">
+          עשו צ׳ק אין!
+        </Text>
+      </Box>
+
       <Box alignItems="center" justifyContent="center">
         {locationStore.nearbyLocations.length === 0 ? (
           <Box alignItems="center" marginTop="xm">

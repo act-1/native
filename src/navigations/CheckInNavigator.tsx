@@ -32,23 +32,31 @@ function CheckInNavigator({ navigation }) {
         headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
       }}
     >
-      {/* <CheckInStack.Screen
+      <CheckInStack.Screen
         name="SelectLocation"
         component={SelectLocation}
         options={{
-          title: 'צ׳ק אין',
-          headerRight: () => (
-            <Pressable onPress={() => navigation.goBack()} style={styles.dismissButton}>
-              <Text color="lightText" fontSize={16}>
-                ביטול
-              </Text>
-            </Pressable>
+          headerTransparent: true,
+          headerTitle: '',
+          headerStatusBarHeight: 10,
+          headerLeft: () => (
+            <Box flexDirection="row">
+              <CircularButton
+                onPress={() => {
+                  navigation.goBack();
+                }}
+                iconName="x"
+                color="white"
+                size="small"
+                transparent
+                style={{ opacity: 0.85, marginLeft: 12, marginBottom: 6 }}
+              />
+            </Box>
           ),
           headerTitleAlign: 'center',
-          headerStatusBarHeight: Platform.OS === 'ios' ? 12 : 0, // Modal height issues on iOS
         }}
       />
-      <CheckInStack.Screen name="CheckInForm" component={CheckInForm} options={{ headerShown: false }} /> */}
+      <CheckInStack.Screen name="CheckInForm" component={CheckInForm} options={{ headerShown: false }} />
       <CheckInStack.Screen
         name="LocationPage"
         component={ProtestChat}
