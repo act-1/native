@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Platform } from 'react-native';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@stores/index';
+import { Platform } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-import { EventPage, Onboarding } from '../screens';
+import { EventPage, EventPictureList, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
-import SignUpNavigator from './SignUpNavigator';
-import NewPost from '@screens/NewPost';
 import CheckInNavigator from './CheckInNavigator';
 import { LocationPage } from '@screens/LocationPage';
-
-import Icon from 'react-native-vector-icons/Feather';
 
 enableScreens();
 
@@ -32,63 +28,27 @@ function AppStackScreen() {
         headerShown: false,
         gestureEnabled: true,
         ...TransitionPresets.SlideFromRightIOS,
-        headerBackImage: () => (
-          <Icon
-            name={'arrow-right'}
-            size={28}
-            color={'#fff'}
-            style={{ marginLeft: Platform.OS === 'ios' ? 8 : -4, marginBottom: Platform.OS === 'ios' ? 8 : 0 }}
-            onPress={() => navigation.navigate('ActionScreen')} /** The goBack method doesn't work as expected on android **/
-          />
-        ),
+        headerStyle: { backgroundColor: '#1e262d' },
+        headerTintColor: '#8a8a8b',
       }}
-      mode="card"
     >
-      <AppStack.Screen name="AppTabs" component={AppTabs} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
-      <AppStack.Screen name="LocationPage" component={LocationPage} options={{ headerStyle: { backgroundColor: '#1e262d' } }} />
+      <AppStack.Screen name="AppTabs" component={AppTabs} />
+      <AppStack.Screen name="LocationPage" component={LocationPage} />
+      <AppStack.Screen name="EventPage" component={EventPage} />
       <AppStack.Screen
-        name="EventPage"
-        component={EventPage}
-        options={({ navigation }) => ({
-          gestureEnabled: true,
-          headerShown: false,
-          headerBackTitle: ' ',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerLeft: () => (
-            <Icon
-              name={'arrow-right'}
-              size={28}
-              color={'#fff'}
-              style={{
-                marginLeft: 15,
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 1 },
-                shadowOpacity: 1,
-                shadowRadius: 2,
-              }}
-              onPress={() => navigation.goBack()}
-            />
-          ),
-        })}
-      />
-      <AppStack.Screen
-        name="NewPost"
-        component={NewPost}
+        name="EventPictureList"
+        component={EventPictureList}
         options={{
+          title: 'תמונות מההפגנה',
           headerShown: true,
-          headerTitle: '',
-          headerRightContainerStyle: { marginRight: 12 },
+          headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
           headerBackTitleVisible: false,
-          headerTitleAlign: 'center',
           headerTitleStyle: {
             fontSize: 20,
-            fontFamily: 'AtlasDL3.1AAA-Medium',
+            fontFamily: 'AtlasDL3.1AAA-Bold',
+            fontWeight: Platform.select({ ios: '700', android: null }),
             color: '#EC534B',
-            marginBottom: 8,
           },
-          headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
         }}
       />
     </AppStack.Navigator>
@@ -97,7 +57,7 @@ function AppStackScreen() {
 
 function MainNavigator() {
   return (
-    <MainStack.Navigator name="MainNavigator" screenOptions={{ stackPresentation: 'fullScreenModal' }}>
+    <MainStack.Navigator screenOptions={{ stackPresentation: 'fullScreenModal' }}>
       <RootStack.Screen name="App" component={AppStackScreen} options={{ headerShown: false }} />
       <RootStack.Screen name="ActionModal" component={CheckInNavigator} options={{ headerShown: false }} />
     </MainStack.Navigator>

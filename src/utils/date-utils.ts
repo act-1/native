@@ -1,6 +1,9 @@
 import firestore from '@react-native-firebase/firestore';
 import { format, isToday, isTomorrow } from 'date-fns';
 const heLocale = require('date-fns/locale/he');
+import * as timeago from 'timeago.js';
+import he from 'timeago.js/lib/lang/he';
+timeago.register('he', he);
 
 /**
  * Parse a localized date string to a date object.
@@ -52,4 +55,8 @@ export function formatShortDate(date: Date): string {
  */
 export function createTimestamp(seconds: number, nanoseconds: number) {
   return new firestore.Timestamp(seconds, nanoseconds);
+}
+
+export function timeAgo(date: timeago.TDate) {
+  return timeago.format(date, 'he');
 }
