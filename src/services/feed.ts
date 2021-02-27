@@ -2,7 +2,7 @@ import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-fireb
 import * as geofirestore from 'geofirestore';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
-import { Post, PicturePost } from '@types/collections';
+import { Post, PicturePost, Event } from '@types/collections';
 import Storage, { uploadPicture } from './storage';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import { ILocation } from '@types/location';
@@ -92,16 +92,16 @@ type NewImagePostProps = {
   image: ImagePickerResponse;
   text?: string;
   location?: ILocation;
-  eventId?: string;
+  event?: Event;
 };
 
-export async function newImagePost({ image, text, location, eventId }: NewImagePostProps) {
+export async function newImagePost({ image, text, location, event }: NewImagePostProps) {
   try {
     const currentUser = auth().currentUser;
     if (currentUser) {
       const uploadedImage = await Storage.uploadPicture(image);
 
-      const postData = {
+      let postData = {
         type: 'picture',
         authorId: currentUser.uid,
         authorName: currentUser.displayName,
@@ -116,6 +116,13 @@ export async function newImagePost({ image, text, location, eventId }: NewImageP
         likeCount: 0,
         text,
       };
+
+      if (event) {
+        postData = {
+          ...postData,
+          ...event,
+        };
+      }
 
       let postRef = null;
 

@@ -3,8 +3,9 @@ import { RealtimeDatabase } from '@services/databaseWrapper';
 import { newImagePost } from '@services/feed';
 import { uploadPicture } from '@services/storage';
 import database from '@react-native-firebase/database';
-import { PicturePost } from '@types/collections';
+import { Event, PicturePost } from '@types/collections';
 import { TakePictureResponse } from 'react-native-camera';
+import { ILocation } from '@types/location';
 
 type SendMessageProps = {
   roomName: string;
@@ -37,8 +38,10 @@ type SendPictureMessageProps = {
   roomName: string;
   key: string;
   image: TakePictureResponse;
-  inGallery: boolean;
   text?: string;
+  inGallery: boolean;
+  location: ILocation;
+  event: Event;
 };
 
 /**
@@ -51,7 +54,7 @@ type SendPictureMessageProps = {
  */
 async function sendPictureMessage(messageData: SendPictureMessageProps) {
   const { uid: authorId, displayName: authorName, photoURL: authorPicture } = auth().currentUser!;
-  const { roomName, key, image, text, inGallery } = messageData;
+  const { roomName, key, image, text, inGallery, location, event } = messageData;
 
   try {
     // TODO: Add location
@@ -60,7 +63,7 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
     // If the picture goes to the library - create a new image post.
     // Otherwise, just upload it regularly.
     if (inGallery) {
-      const post = await newImagePost({ image, text });
+      const post = await newImagePost({ image, text, location, event });
       const postData = post?.data() as PicturePost;
 
       pictureId = postData.pictureId;

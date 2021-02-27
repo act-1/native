@@ -4,7 +4,7 @@ type EventStatus = 'upcoming' | 'live' | 'past';
 
 type PrivacyOptions = 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
 
-type CheckInParams = {
+type CheckIn = {
   id: string;
   userId?: string;
   displayName?: string;
@@ -15,12 +15,11 @@ type CheckInParams = {
   locationProvince: string;
   coordinates: { _latitude: number; _longitude: number } | any; // Any as a temp workaround for GeoPoint values
   eventId?: string | null;
-  eventTitle?: string | null;
+  eventName?: string | null;
   eventEndDate?: Date;
   expireAt: Date;
   createdAt: Date;
   isActive: boolean;
-  textContent: string | null;
   privacySetting: PrivacyOptions;
 };
 

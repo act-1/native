@@ -80,7 +80,7 @@ class FeedStore {
         this.uploadStatus = 'in_progress';
       });
 
-      const document = await newImagePost({ image, textContent, location });
+      const document = await newImagePost({ image, text, location, eventId });
       // Upload to firestore
 
       runInAction(() => {

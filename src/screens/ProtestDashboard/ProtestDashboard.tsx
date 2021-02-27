@@ -7,7 +7,7 @@ import { logEvent } from '@services/analytics';
 import ProtestActionButton from './ProtestActionButton';
 
 function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
-  const { feedStore } = useStore();
+  const { feedStore, checkInStore } = useStore();
 
   React.useLayoutEffect(() => {
     if (route.params?.checkIn?.locationName) {
@@ -18,17 +18,9 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
   }, [route]);
 
   const onImageUpload = ({ image, text }: { image: TakePictureResponse; text?: string }) => {
-    const {
-      locationId: id,
-      locationCity: city,
-      locationName: name,
-      locationProvince: province,
-      coordinates,
-    } = route.params.checkIn;
+    const { currentLocation: location, currentEvent: event } = checkInStore;
 
-    const location = { id, city, name, province, coordinates };
-
-    feedStore.uploadImage({ image, textContent: text, location });
+    feedStore.uploadImage({ image, textContent: text, event, location });
   };
 
   return (
@@ -43,7 +35,7 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
         <ProtestActionButton
           title="צילום תמונה"
           icon={require('@assets/icons/camera-fluent.png')}
-          onPress={() => navigation.navigate('ChatImageUpload')}
+          onPress={() => navigation.navigate('ChatImageUpload', { onImageUpload })}
         />
       </Box>
       <Box flexDirection="row" justifyContent="space-evenly">

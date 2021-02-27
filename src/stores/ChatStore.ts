@@ -6,11 +6,12 @@ import auth from '@react-native-firebase/auth';
 
 import ChatService from '@services/chat';
 import { RealtimeDatabase } from '@services/databaseWrapper';
-import { ChatMessage } from '@types/collections';
+import { ChatMessage, Event } from '@types/collections';
 
 import { TakePictureResponse } from 'react-native-camera';
 import { nanoid } from 'nanoid/non-secure';
 import { updateArrayByObjectId } from '@utils/array-utils';
+import { ILocation } from '@types/location';
 
 function getQueryBase(roomName: string) {
   return RealtimeDatabase.database.ref('chat/rooms').child(roomName).child('messages').orderByChild('createdAt').limitToLast(25);
@@ -133,19 +134,16 @@ class ChatStore {
     }
   }
 
-  async sendPictureMessage({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery: boolean }) {
+  async sendPictureMessage({ image, text, inGallery, location, event }: SendPictureMessageProps) {
     try {
       const roomName = this.currentRoomName;
       const messageKey = nanoid(10);
 
-      this.addPendingMessage({
-        messageKey,
-        text,
-        type: 'picture',
-        image,
-      });
+      this.addPendingMessage({ messageKey, text, type: 'picture', image });
 
-      const message = await ChatService.sendPictureMessage({ roomName, image, text, inGallery, key: messageKey });
+      const messageData = { roomName, image, text, inGallery, location, event, key: messageKey };
+
+      const message = await ChatService.sendPictureMessage(messageData);
       return message;
     } catch (err) {
       console.error(err);
@@ -165,3 +163,11 @@ class ChatStore {
 }
 
 export default ChatStore;
+
+type SendPictureMessageProps = {
+  image: TakePictureResponse;
+  text?: string;
+  inGallery: boolean;
+  location?: ILocation;
+  event?: Event;
+};
