@@ -5,6 +5,8 @@ import { Box, Text, RoundedButton } from '../../components';
 import PrivacyOption from './PrivacyOption';
 import { CheckInFormScreenProps } from '@types/navigation';
 import crashlytics from '@react-native-firebase/crashlytics';
+import HapticFeedback from 'react-native-haptic-feedback';
+
 import { logEvent } from '@services/analytics';
 
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
@@ -13,6 +15,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
 
   const onPrivacySelection = (value: PrivacyOptions) => {
     logEvent('privacy_option_selected', { privacy: value });
+    HapticFeedback.trigger('impactLight');
     setPrivacySetting(value);
   };
 
@@ -66,7 +69,8 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
         selected={privacySetting === 'ANONYMOUS'}
         onPress={() => onPrivacySelection('ANONYMOUS')}
       />
-      <Box marginTop="xl" marginHorizontal="xxl" marginBottom="l">
+
+      <Box marginTop="l" marginHorizontal="xxl" marginBottom="l">
         <Box marginBottom="m">
           <RoundedButton onPress={submitCheckIn} color="blue" text="צ׳ק אין" style={{ width: '100%' }} />
         </Box>
@@ -75,7 +79,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
         </Box>
       </Box>
 
-      <Text variant="text" textAlign="center" opacity={0.8}>
+      <Text variant="text" textAlign="center" color="link" opacity={0.75}>
         עוד על פרטיות ב- ACT1
       </Text>
     </Box>
