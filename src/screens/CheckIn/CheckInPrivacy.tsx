@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Pressable, Dimensions, Platform, StyleSheet } from 'react-native';
+import { Alert, Pressable, Dimensions, Image, StyleSheet } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -71,8 +71,8 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
         optionIcon="eye-off"
         optionTitle="אנונימי"
         descriptionList={[
-          { check: true, text: 'תמונתך תוצג ברשימת המפגינים' },
-          { check: true, text: 'נשמר ביומן ההפגנות הפרטי שלך' },
+          { check: false, text: 'תמונתך לא תוצג ברשימת המפגינים' },
+          { check: false, text: 'לא יישמר ביומן ההפגנות שלך' },
         ]}
         selected={privacySetting === 'ANONYMOUS'}
         onPress={() => setPrivacySetting('ANONYMOUS')}
@@ -116,8 +116,13 @@ const PrivacyOption = ({ optionIcon, optionTitle, descriptionList, selected, onP
           </Text>
           <Box>
             {descriptionList.map((item, index) => (
-              <Box flexDirection="row" alignItems="center" key={index}>
-                <Icon name={item.check ? 'check' : 'x'} color="green" size={16} style={{ marginRight: 4 }} />
+              <Box flexDirection="row" alignItems="center" marginBottom="xxs" key={index}>
+                <Icon
+                  name={item.check ? 'check' : 'x'}
+                  color={selected ? (item.check ? 'green' : 'tomato') : '#767678'}
+                  size={16}
+                  style={{ marginRight: 4 }}
+                />
                 <Text variant="text">{item.text}</Text>
               </Box>
             ))}
