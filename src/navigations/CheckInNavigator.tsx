@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Platform, Pressable, StyleSheet } from 'react-native';
 import { Box, Text, CircularButton, CapturePicture } from '@components';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import { SelectLocation, LocationPage } from '@screens/LocationPage';
 import { ProtestChat } from '@screens/ProtestChat';
-import { CheckInForm } from '@screens/CheckIn';
+import { CheckInPrivacy, SelectLocation } from '@screens/CheckIn';
 import NewPost from '@screens/NewPost';
 import { BlurView } from '@react-native-community/blur';
 
@@ -29,6 +28,7 @@ function CheckInNavigator({ navigation }) {
           color: '#EC534B',
           marginBottom: Platform.OS === 'ios' ? 11 : 2,
         },
+        headerStatusBarHeight: 10,
         headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
       }}
     >
@@ -38,7 +38,6 @@ function CheckInNavigator({ navigation }) {
         options={{
           headerTransparent: true,
           headerTitle: '',
-          headerStatusBarHeight: 10,
           headerLeft: () => (
             <Box flexDirection="row">
               <CircularButton
@@ -56,7 +55,13 @@ function CheckInNavigator({ navigation }) {
           headerTitleAlign: 'center',
         }}
       />
-      <CheckInStack.Screen name="CheckInForm" component={CheckInForm} options={{ headerShown: false }} />
+      <CheckInStack.Screen
+        name="CheckInPrivacy"
+        component={CheckInPrivacy}
+        options={{ title: "צ'ק אין", headerBackTitleVisible: false, headerTintColor: '#8a8a8b' }}
+      />
+
+      {/* <CheckInStack.Screen name="CheckInForm" component={CheckInForm} options={{ headerShown: false }} /> */}
       <CheckInStack.Screen
         name="LocationPage"
         component={ProtestChat}

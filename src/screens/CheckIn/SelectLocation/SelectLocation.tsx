@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Image, ScrollView } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import { SelectLocationScreenProps } from '@types/navigation';
-import { Box, Text, LocationBox, EventBox } from '../../components';
+import { Box, Text, LocationBox, EventBox } from '../../../components';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../stores';
+import { useStore } from '../../../stores';
 import LocationPermissionMessage from './LocationPermissionMessage';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
@@ -35,7 +35,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       analytics().logEvent('check_in_select_location');
     }
 
-    navigation.navigate('CheckInForm', {
+    navigation.navigate('CheckInPrivacy', {
       checkInData: { ...checkInData, locationId, locationName, locationCity, locationProvince, eventId, eventName },
     });
   };
