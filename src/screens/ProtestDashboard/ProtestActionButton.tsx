@@ -1,16 +1,18 @@
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, ImageURISource } from 'react-native';
 import { Box, Text } from '../../components';
 
 type ProtestActionButtonProps = {
   title: string;
+  icon: ImageURISource;
+  onPress: () => void;
 };
 
-function ProtestActionButton({ title }: ProtestActionButtonProps) {
+function ProtestActionButton({ title, icon, onPress }: ProtestActionButtonProps) {
   return (
     <Box alignItems="center">
-      <TouchableOpacity style={styles.protestActionIcon} activeOpacity={0.8}>
-        <Image source={require('@assets/icons/chat-icon.png')} />
+      <TouchableOpacity style={styles.protestActionIconWrapper} activeOpacity={0.8} onPress={onPress}>
+        <Image source={icon} style={styles.protestActionIcon} />
       </TouchableOpacity>
       <Text variant="boxTitle">{title}</Text>
     </Box>
@@ -20,7 +22,7 @@ function ProtestActionButton({ title }: ProtestActionButtonProps) {
 export default ProtestActionButton;
 
 const styles = StyleSheet.create({
-  protestActionIcon: {
+  protestActionIconWrapper: {
     width: 105,
     height: 105,
     justifyContent: 'center',
@@ -28,5 +30,9 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderRadius: 50,
     backgroundColor: '#111111',
+  },
+  protestActionIcon: {
+    width: 50,
+    height: 50,
   },
 });

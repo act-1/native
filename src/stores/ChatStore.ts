@@ -1,4 +1,4 @@
-import { keys, makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import rootStore from './RootStore';
 
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
@@ -10,9 +10,7 @@ import { ChatMessage } from '@types/collections';
 
 import { TakePictureResponse } from 'react-native-camera';
 import { nanoid } from 'nanoid/non-secure';
-import { getUnixTime } from 'date-fns';
 import { updateArrayByObjectId } from '@utils/array-utils';
-import { PictureList } from '@components/';
 
 function getQueryBase(roomName: string) {
   return RealtimeDatabase.database.ref('chat/rooms').child(roomName).child('messages').orderByChild('createdAt').limitToLast(25);

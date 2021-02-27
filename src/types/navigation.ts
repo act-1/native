@@ -45,7 +45,8 @@ export type RootStackParamList = {
   ActionScreen: undefined;
   NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: ILocation };
   CapturePicture: {
-    onImageUpload: ({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery: boolean }) => void;
+    onImageUpload: ({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery?: boolean }) => void;
+    showGallerySwitch?: boolean;
   };
   SelectLocation: undefined;
   Explore: undefined;

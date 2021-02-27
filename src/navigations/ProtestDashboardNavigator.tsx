@@ -4,6 +4,7 @@ import ProtestDashboard from '@screens/ProtestDashboard';
 import ProtestChat from '@screens/ProtestChat';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { Box, CircularButton, CapturePicture } from '@components';
+import EventPictureList from '@screens/EventPage/EventPictureList';
 import { BlurView } from '@react-native-community/blur';
 
 // Blurred view has lacking performance on android.
@@ -27,7 +28,8 @@ function ProtestDashboardNavigator({ navigation }) {
           color: '#EC534B',
           marginBottom: Platform.OS === 'ios' ? 11 : 2,
         },
-        headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
+        headerTintColor: '#8a8a8b',
+        headerStyle: { backgroundColor: '#171b1f', shadowOpacity: 0 },
       }}
     >
       <ProtestDashboardStack.Screen
@@ -50,16 +52,23 @@ function ProtestDashboardNavigator({ navigation }) {
         }}
       />
       <ProtestDashboardStack.Screen
+        name="EventPictures"
+        component={EventPictureList}
+        options={{
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerBackTitleVisible: false,
+          headerRightContainerStyle: { marginRight: 12 },
+        }}
+      />
+      <ProtestDashboardStack.Screen
         name="ProtestChat"
         component={ProtestChat}
         options={{
           headerShown: true,
-          headerTitle: 'בלפור',
-          headerLeft: null,
+          headerTitle: 'צ׳אט',
+          headerBackTitleVisible: false,
           headerTitleAlign: 'center',
-
-          headerRightContainerStyle: { marginRight: 12 },
-
           headerTransparent: Platform.select({ ios: true, android: false }),
           headerBackground,
         }}

@@ -90,11 +90,12 @@ export async function createTextPost({ textContent, locationData }: CreateTextPo
 
 type NewImagePostProps = {
   image: ImagePickerResponse;
-  textContent?: string;
+  text?: string;
   location?: ILocation;
+  eventId?: string;
 };
 
-export async function newImagePost({ image, textContent, location }: NewImagePostProps) {
+export async function newImagePost({ image, text, location, eventId }: NewImagePostProps) {
   try {
     const currentUser = auth().currentUser;
     if (currentUser) {
@@ -113,7 +114,7 @@ export async function newImagePost({ image, textContent, location }: NewImagePos
         featured: false,
         homeScreen: false,
         likeCount: 0,
-        textContent,
+        text,
       };
 
       let postRef = null;

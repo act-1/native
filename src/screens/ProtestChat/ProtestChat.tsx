@@ -26,8 +26,9 @@ function ProtestChat({ navigation, route }: ProtestChatProps) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerStyle: { height: 60 + insets.top, elevation: 4 },
-      headerTitle: ProtestChatTitle,
+      // headerStyle: { height: 60 + insets.top, elevation: 4 },
+      // headerTitle: ProtestChatTitle,
+      headerTitle: 'בלה',
     });
   }, [navigation]);
 

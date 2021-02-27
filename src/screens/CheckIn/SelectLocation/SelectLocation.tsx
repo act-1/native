@@ -18,12 +18,12 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
     let locationId = '';
 
     let eventId: null | string = null;
-    let eventName: null | string = null;
+    let eventTitle: null | string = null;
 
     // Since the location can be either an event or location objects, we have to mormalize the data.
     if (checkInData.endDate) {
       eventId = checkInData.id;
-      eventName = checkInData.title;
+      eventTitle = checkInData.title;
       locationId = checkInData.locationId;
       locationName = checkInData.locationName;
 
@@ -36,7 +36,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
     }
 
     navigation.navigate('CheckInPrivacy', {
-      checkInData: { ...checkInData, locationId, locationName, locationCity, locationProvince, eventId, eventName },
+      checkInData: { ...checkInData, locationId, locationName, locationCity, locationProvince, eventId, eventTitle },
     });
   };
 

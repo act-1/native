@@ -24,7 +24,7 @@ function InputToolbar() {
   };
 
   const openCamera = () => {
-    navigation.navigate('ChatImageUpload', { onImageUpload });
+    navigation.navigate('ChatImageUpload', { onImageUpload, showGallerySwitch: true });
   };
 
   useEffect(() => {

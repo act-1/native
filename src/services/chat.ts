@@ -60,7 +60,7 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
     // If the picture goes to the library - create a new image post.
     // Otherwise, just upload it regularly.
     if (inGallery) {
-      const post = await newImagePost({ image, textContent: text });
+      const post = await newImagePost({ image, text });
       const postData = post?.data() as PicturePost;
 
       pictureId = postData.pictureId;

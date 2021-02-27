@@ -66,12 +66,14 @@ class FeedStore {
    */
   async uploadImage({
     image,
-    textContent,
+    text,
     location,
+    eventId,
   }: {
     image: ImagePickerResponse;
-    textContent?: string;
+    text?: string;
     location?: ILocation;
+    eventId?: string;
   }) {
     try {
       runInAction(() => {
