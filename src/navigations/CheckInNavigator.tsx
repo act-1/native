@@ -28,7 +28,7 @@ function CheckInNavigator({ navigation }) {
           color: '#EC534B',
           marginBottom: Platform.OS === 'ios' ? 11 : 2,
         },
-        headerStatusBarHeight: 10,
+        headerStatusBarHeight: Platform.select({ ios: 10, android: 0 }),
         headerStyle: { backgroundColor: '#1e262d', shadowOpacity: 0 },
       }}
     >
