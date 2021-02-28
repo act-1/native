@@ -10,12 +10,14 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
   const { feedStore, checkInStore } = useStore();
 
   React.useLayoutEffect(() => {
-    if (route.params?.checkIn?.locationName) {
+    if (checkInStore.lastCheckIn) {
       navigation.setOptions({
-        headerTitle: route.params.checkIn.locationName,
+        headerTitle: checkInStore.lastCheckIn.locationName,
       });
     }
-  }, [route]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkInStore.lastCheckIn]);
 
   const onImageUpload = ({ image, text }: { image: TakePictureResponse; text?: string }) => {
     const { currentLocation: location, currentEvent: event } = checkInStore;

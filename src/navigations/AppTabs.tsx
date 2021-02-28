@@ -30,7 +30,7 @@ const icons: any = {
 const Tab = createBottomTabNavigator();
 
 const AppTabs = ({ navigation }) => {
-  const { userStore } = useStore();
+  const { checkInStore } = useStore();
   const insets = useSafeAreaInsets();
 
   return (
@@ -62,7 +62,7 @@ const AppTabs = ({ navigation }) => {
                 onPressIn={() => HapticFeedback.trigger('impactLight')}
                 onPressOut={() => HapticFeedback.trigger('impactMedium')}
                 onPress={() => {
-                  if (userStore.hasActiveCheckIn) {
+                  if (checkInStore.hasActiveCheckIn) {
                     // navigation.navigate('Secondary', { screen: 'CheckInModal' });
                     navigation.navigate('ProtestDashboard', {
                       screen: 'Dashboard',

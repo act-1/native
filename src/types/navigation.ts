@@ -51,7 +51,7 @@ export type RootStackParamList = {
   SelectLocation: undefined;
   Explore: undefined;
   CheckInPrivacy: undefined;
-  ProtestDashboard: { checkIn: CheckInParams };
+  ProtestDashboard: undefined;
   ProtestChat: undefined;
   RecentPictures: { initialIndex?: number };
 };

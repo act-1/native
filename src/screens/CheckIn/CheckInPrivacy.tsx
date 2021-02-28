@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { Box, Text, RoundedButton } from '../../components';
-import { StackActions } from '@react-navigation/native';
 import PrivacyOption from './PrivacyOption';
 import { CheckInFormScreenProps } from '@types/navigation';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -10,8 +9,8 @@ import HapticFeedback from 'react-native-haptic-feedback';
 
 import { logEvent } from '@services/analytics';
 
-function CheckInPrivacy({ navigation, route }: CheckInFormScreenProps) {
-  const { userStore, checkInStore } = useStore();
+function CheckInPrivacy({ navigation }: CheckInFormScreenProps) {
+  const { checkInStore } = useStore();
   const { privacySetting, setPrivacySetting } = checkInStore;
 
   const onPrivacySelection = (value: PrivacyOption) => {
@@ -20,21 +19,20 @@ function CheckInPrivacy({ navigation, route }: CheckInFormScreenProps) {
     setPrivacySetting(value);
   };
 
-  const submitCheckIn = () => {
+  const submitCheckIn = async () => {
     navigation.dangerouslyGetParent()?.goBack();
+    checkInStore.setLastCheckIn(checkInStore.pendingCheckIn);
 
     setTimeout(() => {
-      navigation.navigate('ProtestDashboard', { screen: 'Dashboard', params: { checkIn: route.params.checkInData } });
+      navigation.navigate('ProtestDashboard');
     }, 100);
 
-    userStore
-      .checkIn({ privacySetting })
-      .then(() => {
-        logEvent('check_in_success');
-      })
-      .catch((err: any) => {
-        crashlytics().recordError(err);
-      });
+    try {
+      await checkInStore.checkIn();
+      logEvent('check_in_success');
+    } catch (err) {
+      crashlytics().recordError(err);
+    }
   };
 
   return (

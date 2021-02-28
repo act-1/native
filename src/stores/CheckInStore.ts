@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, toJS } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -7,10 +7,9 @@ import { Location, Event } from '@types/collections';
 
 class CheckInStore {
   rootStore: null | rootStore = null;
-
   pendingCheckIn: CheckIn | undefined = undefined;
   lastCheckIn: CheckIn | undefined = undefined;
-  privacySetting: PrivacyOption | undefined = undefined;
+  privacySetting: PrivacyOption = 'PUBLIC';
   currentLocation: Location | undefined = undefined;
   currentEvent: Event | undefined = undefined;
 
@@ -20,8 +19,8 @@ class CheckInStore {
   }
 
   get hasActiveCheckIn() {
-    if (this.activeCheckIn) {
-      return new Date() < new Date(this.activeCheckIn.expireAt);
+    if (this.lastCheckIn) {
+      return new Date() < new Date(this.lastCheckIn.expireAt);
     }
     return false;
   }
@@ -30,18 +29,20 @@ class CheckInStore {
     this.pendingCheckIn = checkInInfo;
   };
 
-  setActiveCheckIn = (checkInInfo: CheckIn) => {
-    this.activeCheckIn = checkInInfo;
+  setLastCheckIn = (checkInInfo: CheckIn | undefined) => {
+    this.lastCheckIn = checkInInfo;
   };
 
   setPrivacySetting = (value: PrivacyOption) => {
     this.privacySetting = value;
   };
 
-  async checkIn(checkInData: CheckIn) {
+  async checkIn() {
     try {
-      const { checkIn } = await createCheckIn(checkInData);
-      this.lastCheckIn = checkIn;
+      const { checkIn } = await createCheckIn(this.pendingCheckIn);
+
+      this.setLastCheckIn(checkIn);
+
       await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return checkIn;
     } catch (err) {
@@ -53,7 +54,8 @@ class CheckInStore {
   async deleteLastCheckIn() {
     try {
       await AsyncStorage.removeItem('lastCheckIn');
-      this.lastCheckIn = undefined;
+
+      this.setLastCheckIn(undefined);
     } catch (err) {
       throw err;
     }
