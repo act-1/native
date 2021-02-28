@@ -1,27 +1,26 @@
 import React from 'react';
 import { Image, Pressable, StyleSheet, ViewStyle } from 'react-native';
 import { Box, Text, Ticker } from '../';
+import { Location } from '@types/collections';
 
 type LocationBoxProps = {
-  name: string;
-  locationId: string;
-  address?: string;
+  location: Location;
   style?: ViewStyle;
   counter?: string;
   onPress?: () => void;
 };
 
-function LocationBox({ name, address, locationId, counter, onPress, style }: LocationBoxProps) {
+function LocationBox({ location, counter, onPress, style }: LocationBoxProps) {
   return (
     <Pressable style={({ pressed }) => [{ backgroundColor: pressed ? '#1e262d' : '#0a0d0f' }]} onPress={onPress}>
       <Box flexDirection="row" alignItems="center" paddingVertical="s" paddingHorizontal="m" style={style}>
         <Image style={styles.locationPin} source={require('../../assets/icons/map-pin-rounded.png')} />
         <Box alignItems="flex-start" flex={1}>
           <Text variant="boxTitle" fontSize={16}>
-            {name}
+            {location.name}
           </Text>
           <Text variant="boxSubtitle" color="subText">
-            {address}
+            {location.city}
           </Text>
         </Box>
         <Box>

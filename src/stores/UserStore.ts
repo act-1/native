@@ -200,7 +200,7 @@ class UserStore {
     }
   }
 
-  async checkIn(checkInData: CheckInParams) {
+  async checkIn(checkInData: CheckIn) {
     try {
       const { checkIn } = await createCheckIn(checkInData);
       this.lastCheckIn = checkIn;

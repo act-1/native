@@ -22,6 +22,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
 
   const submitCheckIn = () => {
     navigation.dangerouslyGetParent()?.goBack();
+
     setTimeout(() => {
       navigation.navigate('ProtestDashboard', { screen: 'Dashboard', params: { checkIn: route.params.checkInData } });
     }, 100);

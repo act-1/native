@@ -7,6 +7,7 @@ class CheckInStore {
 
   pendingCheckIn: CheckIn | undefined = undefined;
   activeCheckIn: CheckIn | undefined = undefined;
+  checkInPrivacy: PrivacyOptions | undefined = undefined;
   currentLocation: Location | undefined = undefined;
   currentEvent: Event | undefined = undefined;
 
@@ -28,6 +29,10 @@ class CheckInStore {
 
   setActiveCheckIn = (checkInInfo: CheckIn) => {
     this.activeCheckIn = checkInInfo;
+  };
+
+  setCheckInPrivacy = (value: PrivacyOptions) => {
+    this.checkInPrivacy = value;
   };
 }
 
