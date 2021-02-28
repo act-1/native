@@ -3,6 +3,7 @@ import rootStore from './RootStore';
 
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ChatService from '@services/chat';
 import { RealtimeDatabase } from '@services/databaseWrapper';
@@ -27,10 +28,24 @@ class ChatStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
+    this.loadCachedRoomName();
   }
 
-  setCurrentRoomName(roomName: string | undefined) {
+  async setCurrentRoomName(roomName: string | undefined) {
     this.currentRoomName = roomName;
+
+    if (roomName) {
+      await AsyncStorage.setItem('cachedChatRoomName', roomName);
+    } else {
+      await AsyncStorage.removeItem('cachedChatRoomName');
+    }
+  }
+
+  async loadCachedRoomName() {
+    const roomName = await AsyncStorage.getItem('cachedChatRoomName');
+    if (roomName) {
+      this.currentRoomName = roomName;
+    }
   }
 
   getMessages() {
