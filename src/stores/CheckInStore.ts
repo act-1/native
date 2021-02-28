@@ -33,6 +33,14 @@ class CheckInStore {
     this.lastCheckIn = checkInInfo;
   };
 
+  setCurrentLocation = (location: Location) => {
+    this.currentLocation = location;
+  };
+
+  setCurrentEvent = (event: Event) => {
+    this.currentEvent = event;
+  };
+
   setPrivacySetting = (value: PrivacyOption) => {
     this.privacySetting = value;
   };

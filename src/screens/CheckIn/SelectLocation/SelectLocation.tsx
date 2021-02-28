@@ -6,30 +6,33 @@ import { Box, Text, LocationBox, EventBox } from '../../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../stores';
 import LocationPermissionMessage from './LocationPermissionMessage';
+import { Location, Event, SelectEntry } from '@types/collections';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore, locationStore, checkInStore } = useStore();
   const { userCurrentPosition } = userStore;
 
-  const onLocationPress = async (checkInData: any) => {
+  const onLocationPress = async (entry: SelectEntry) => {
     let locationName = '';
-    const { city, province, coordinates } = checkInData;
+    const { city, province, coordinates } = entry;
 
     let locationId = '';
     let eventId: null | string = null;
     let eventName: null | string = null;
 
     // Since the location can be either an event or location object, we have to mormalize the data.
-    if (checkInData.type === 'location') {
-      locationId = checkInData.id;
-      locationName = checkInData.name;
+    if (entry.type === 'location') {
+      checkInStore.setCurrentLocation(entry);
+      locationId = entry.id;
+      locationName = entry.name;
 
       logEvent('check_in_select_location', { locationId });
     } else {
-      eventId = checkInData.id;
-      eventName = checkInData.title;
-      locationId = checkInData.locationId;
-      locationName = checkInData.locationName;
+      checkInStore.setCurrentEvent(entry);
+      eventId = entry.id;
+      eventName = entry.title;
+      locationId = entry.locationId;
+      locationName = entry.locationName;
 
       logEvent('check_in_select_event', { eventId });
     }
