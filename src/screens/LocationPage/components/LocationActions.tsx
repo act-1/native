@@ -3,10 +3,10 @@ import { Box, CircularButton } from '../../../components';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
-import { ILocation } from '@types/location';
+import { Location } from '@types/collections';
 import Icon from 'react-native-vector-icons/Feather';
 
-function LocationActions({ location }: { location: ILocation }) {
+function LocationActions({ location }: { location: Location }) {
   const navigation = useNavigation();
 
   const { showActionSheetWithOptions } = useActionSheet();

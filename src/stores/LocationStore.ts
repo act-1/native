@@ -2,12 +2,11 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import crashlytics from '@react-native-firebase/crashlytics';
 import rootStore from './RootStore';
 import { fetchNearbyEventsAndLocations } from '@services/locations';
-import { ILocation } from '@types/location';
-import { Event } from '@types/collections';
+import { Location, Event } from '@types/collections';
 
 class LocationStore {
   rootStore: null | rootStore = null;
-  nearbyLocations: (ILocation | Event)[] = [];
+  nearbyLocations: (Location | Event)[] = [];
   fetchingLocations = false;
 
   constructor(rootStore: rootStore) {

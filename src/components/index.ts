@@ -4,6 +4,7 @@ export { default as ProtestFeed } from './ProtestFeed';
 export { default as CircularButton } from './Buttons/CircularButton';
 export { default as RoundedButton } from './Buttons/RoundedButton';
 export { default as EventBox } from './EventBox';
+export { default as LocationCounter } from './LocationCounter';
 export { default as LocationBox } from './LocationBox';
 export { default as PostBox } from './PostBox';
 export { default as StickyHeaderScrollView } from './StickyHeaderScrollView';

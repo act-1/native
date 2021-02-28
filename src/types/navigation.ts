@@ -3,8 +3,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import { TakePictureResponse } from 'react-native-camera';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
-import { PicturePost } from './collections';
-import { ILocation } from './location';
+import { PicturePost, Location } from './collections';
 
 export type TabBarProps = BottomTabScreenProps<TabBarParamList>;
 export type SelectLocationScreenProps = BottomTabScreenProps<RootStackParamList, 'CheckInSelectLocation'>;
@@ -19,6 +18,7 @@ export type ProfileScreenProps = StackScreenProps<RootStackParamList, 'Profile'>
 export type ActionScreenProps = StackScreenProps<RootStackParamList, 'ActionScreen'>;
 export type NewPostProps = StackScreenProps<RootStackParamList, 'NewPost'>;
 export type RecentPicturesProps = StackScreenProps<RootStackParamList, 'RecentPictures'>;
+export type ProtestDashboardProps = StackScreenProps<RootStackParamList, 'ProtestDashboard'>;
 export type ProtestChatProps = StackScreenProps<RootStackParamList, 'ProtestChat'>;
 export type CapturePictureProps = StackScreenProps<RootStackParamList, 'CapturePicture'>;
 
@@ -42,12 +42,15 @@ export type RootStackParamList = {
   SignUpNavigator: undefined;
   SignUpForm: undefined;
   ActionScreen: undefined;
-  NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: ILocation };
+  NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: Location };
   CapturePicture: {
-    onImageUpload: ({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery: boolean }) => void;
+    onImageUpload: ({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery?: boolean }) => void;
+    showGallerySwitch?: boolean;
   };
   SelectLocation: undefined;
   Explore: undefined;
+  CheckInPrivacy: undefined;
+  ProtestDashboard: undefined;
   ProtestChat: undefined;
   RecentPictures: { initialIndex?: number };
 };

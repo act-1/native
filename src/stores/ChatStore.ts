@@ -1,4 +1,4 @@
-import { keys, makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import rootStore from './RootStore';
 
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
@@ -6,13 +6,11 @@ import auth from '@react-native-firebase/auth';
 
 import ChatService from '@services/chat';
 import { RealtimeDatabase } from '@services/databaseWrapper';
-import { ChatMessage } from '@types/collections';
+import { ChatMessage, Event, Location } from '@types/collections';
 
 import { TakePictureResponse } from 'react-native-camera';
 import { nanoid } from 'nanoid/non-secure';
-import { getUnixTime } from 'date-fns';
 import { updateArrayByObjectId } from '@utils/array-utils';
-import { PictureList } from '@components/';
 
 function getQueryBase(roomName: string) {
   return RealtimeDatabase.database.ref('chat/rooms').child(roomName).child('messages').orderByChild('createdAt').limitToLast(25);
@@ -20,7 +18,7 @@ function getQueryBase(roomName: string) {
 
 class ChatStore {
   rootStore: null | rootStore = null;
-  currentRoomName: string = 'my-test-01';
+  currentRoomName: string | undefined = undefined;
   listenerQuery: FirebaseDatabaseTypes.Query | undefined = undefined;
   queryListenerStatus: 'ON' | 'OFF' = 'OFF';
 
@@ -31,8 +29,16 @@ class ChatStore {
     this.rootStore = rootStore;
   }
 
+  setCurrentRoomName(roomName: string | undefined) {
+    this.currentRoomName = roomName;
+  }
+
   getMessages() {
-    const query = getQueryBase(this.currentRoomName).endAt(Date.now());
+    // Before 4 hours
+    const Before4Hours = new Date();
+    Before4Hours.setMinutes(Before4Hours.getMinutes() - 240);
+
+    const query = getQueryBase(this.currentRoomName).startAt(Before4Hours.getDate()).endAt(Date.now());
 
     query.once('value', (snapshot) => {
       if (snapshot.val() !== null) {
@@ -135,19 +141,16 @@ class ChatStore {
     }
   }
 
-  async sendPictureMessage({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery: boolean }) {
+  async sendPictureMessage({ image, text, inGallery, location, event }: SendPictureMessageProps) {
     try {
       const roomName = this.currentRoomName;
       const messageKey = nanoid(10);
 
-      this.addPendingMessage({
-        messageKey,
-        text,
-        type: 'picture',
-        image,
-      });
+      this.addPendingMessage({ messageKey, text, type: 'picture', image });
 
-      const message = await ChatService.sendPictureMessage({ roomName, image, text, inGallery, key: messageKey });
+      const messageData = { roomName, image, text, inGallery, location, event, key: messageKey };
+
+      const message = await ChatService.sendPictureMessage(messageData);
       return message;
     } catch (err) {
       console.error(err);
@@ -167,3 +170,11 @@ class ChatStore {
 }
 
 export default ChatStore;
+
+type SendPictureMessageProps = {
+  image: TakePictureResponse;
+  text?: string;
+  inGallery: boolean;
+  location?: Location;
+  event?: Event;
+};

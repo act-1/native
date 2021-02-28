@@ -1,12 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import auth from '@react-native-firebase/auth';
 import { likePost, unlikePost, newImagePost, getAllPostLikes } from '@services/feed';
-import { Post } from '@types/collections';
+import { Post, Location } from '@types/collections';
 import { removeArrayItem, updateArrayItem } from '@utils/array-utils';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ILocation } from '@types/location';
 
 class FeedStore {
   rootStore: null | rootStore = null;
@@ -66,19 +65,21 @@ class FeedStore {
    */
   async uploadImage({
     image,
-    textContent,
+    text,
     location,
+    eventId,
   }: {
     image: ImagePickerResponse;
-    textContent?: string;
-    location?: ILocation;
+    text?: string;
+    location?: Location;
+    eventId?: string;
   }) {
     try {
       runInAction(() => {
         this.uploadStatus = 'in_progress';
       });
 
-      const document = await newImagePost({ image, textContent, location });
+      const document = await newImagePost({ image, text, location, eventId });
       // Upload to firestore
 
       runInAction(() => {

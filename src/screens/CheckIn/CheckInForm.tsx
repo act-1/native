@@ -16,7 +16,7 @@ const { width: deviceWidth } = Dimensions.get('screen');
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { userStore } = useStore();
   const [textContent, setTextContent] = useState('');
-  const [privacySetting, setPrivacySetting] = useState<PrivacyOptions>('PUBLIC');
+  const [privacySetting, setPrivacySetting] = useState<PrivacyOption>('PUBLIC');
 
   const { locationId, locationName, locationCity, locationProvince, coordinates } = route.params.checkInData;
 

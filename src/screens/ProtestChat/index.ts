@@ -1,1 +1,3 @@
-export { default as ProtestChat } from './ProtestChat';
+import ProtestChat from './ProtestChat';
+
+export default ProtestChat;

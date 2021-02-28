@@ -91,12 +91,14 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
               { bottom: keyboardShown ? 115 + insets.bottom : -50, marginBottom: keyboardShown ? 64 : 0 },
             ]}
           >
-            <Box flexDirection="row" justifyContent="space-between" alignItems="center" marginHorizontal="m" marginVertical="m">
-              <Text variant="boxTitle" marginLeft="m">
-                הוספה לעמוד הקהילה
-              </Text>
-              <Switch ios_backgroundColor="#39383c" onValueChange={setInGallery} value={inGallery} />
-            </Box>
+            {route.params?.showGallerySwitch && (
+              <Box flexDirection="row" justifyContent="space-between" alignItems="center" marginHorizontal="m" marginVertical="m">
+                <Text variant="boxTitle" marginLeft="m">
+                  הוספה לעמוד הקהילה
+                </Text>
+                <Switch ios_backgroundColor="#39383c" onValueChange={setInGallery} value={inGallery} />
+              </Box>
+            )}
             <Composer
               textInputStyle={{ backgroundColor: 'transparent', borderColor: '#696969' }}
               ActionComponent={ActionComponent}

@@ -42,6 +42,18 @@ export type PicturePost = PostBase & {
 
 export type Post = TextPost | PicturePost;
 
+/**
+ * Location Type
+ */
+
+export type Location = {
+  id: string;
+  city: string;
+  name: string;
+  province: Province;
+  coordinates: { _latitude: number; _longitude: number };
+};
+
 /*
  * Event Types
  */
@@ -53,6 +65,7 @@ type EventBase = {
   locationId: string;
   locationName: string;
   city: string;
+  province: Province;
   startDate: Date;
   endDate: Date;
   thumbnail: string;
@@ -78,6 +91,16 @@ export type PastEvent = EventBase & {
 };
 
 export type Event = UpcomingEvent | LiveEvent | PastEvent;
+
+/**
+ * Select Entry
+ * Location / Event types, being used in the check in location selection screen.
+ */
+
+type SelectLocationEntry = Location & { type: 'location' };
+type SelectEventEntry = Event & { type: 'event' };
+
+export type SelectEntry = SelectLocationEntry | SelectEventEntry;
 
 /**
  * Chat

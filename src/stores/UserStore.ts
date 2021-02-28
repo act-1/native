@@ -8,9 +8,7 @@ import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
 import EventsAPI from '@services/events';
 import { getUserFCMToken, createUserFCMToken } from '@services/user';
-import { createCheckIn } from '@services/checkIn';
 import rootStore from './RootStore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 let userDataListenerActive = false;
@@ -20,7 +18,6 @@ class UserStore {
   userEventIds: string[] = [];
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
-  lastCheckIn: CheckInParams | null = null;
   userData: FirebaseFirestoreTypes.DocumentData | null = null;
   initializedUser = false;
 
@@ -37,16 +34,6 @@ class UserStore {
         }
 
         crashlytics().setUserId(user.uid);
-
-        // TODO: Extract to function
-        runInAction(async () => {
-          // await AsyncStorage.clear();
-          const checkIn = await AsyncStorage.getItem('lastCheckIn');
-          if (checkIn) {
-            const lastCheckIn = JSON.parse(checkIn);
-            this.lastCheckIn = lastCheckIn;
-          }
-        });
       }
 
       // If no user is logged in, mark the user initalization process as done.
@@ -60,13 +47,6 @@ class UserStore {
 
   get user() {
     return auth().currentUser;
-  }
-
-  get hasActiveCheckIn() {
-    if (this.lastCheckIn !== null) {
-      return new Date() < new Date(this.lastCheckIn.expireAt);
-    }
-    return false;
   }
 
   userDataListener(userId: string) {
@@ -195,27 +175,6 @@ class UserStore {
         this.userLocationPermission = permission;
       });
       return coordinates;
-    } catch (err) {
-      throw err;
-    }
-  }
-
-  async checkIn(checkInData: CheckInParams) {
-    try {
-      const { checkIn } = await createCheckIn(checkInData);
-      this.lastCheckIn = checkIn;
-      await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
-      return null;
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
-  }
-
-  async deleteLastCheckIn() {
-    try {
-      await AsyncStorage.removeItem('lastCheckIn');
-      this.lastCheckIn = null;
     } catch (err) {
       throw err;
     }

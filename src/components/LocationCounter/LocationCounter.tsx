@@ -5,8 +5,8 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-snap-carousel';
 import { chunkArray } from '@utils/array-utils';
-import { Box, Text, Ticker } from '../../../components';
-import { useStore } from '../../../stores';
+import { Box, Text, Ticker } from '../';
+import { useStore } from '../../stores';
 import Icon from 'react-native-vector-icons/Feather';
 
 const deviceWidth = Dimensions.get('window').width;
@@ -124,7 +124,7 @@ function LocationCounter({ locationId, style }: { locationId: string; style?: Vi
   ));
 
   return (
-    <View style={[style, { width: '100%', paddingVertical: 12, backgroundColor: '#111111' }]}>
+    <View style={[{ width: '100%', paddingVertical: 12, backgroundColor: '#111111' }, style]}>
       <Animated.View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 8, opacity: fadeInOut }}>
         <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>{counter}</Ticker>
         <Text variant="text" fontFamily="AtlasDL3.1AAA-Bold" color="primaryColor" marginLeft="xs">

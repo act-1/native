@@ -1,8 +1,8 @@
 import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { GeoQuerySnapshot } from 'geofirestore-core';
 import * as geofirestore from 'geofirestore';
-import { Event } from '@types/collections';
-import { ILocation } from '@types/location';
+import { Event, Location, SelectEntry } from '@types/collections';
+
 import events from './events';
 
 // Create a GeoFirestore reference
@@ -54,7 +54,7 @@ export async function fetchNearbyLocations({ position, radius = 2 }: NearbyLocat
 export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: NearbyLocationsParams): Promise<GeoQuerySnapshot> {
   try {
     const [lat, lng] = position;
-    console.log(lat, lng);
+
     const query = eventsCollection.near({
       center: new firebase.firestore.GeoPoint(lat, lng),
       radius,
@@ -71,7 +71,7 @@ export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: Nearby
  * @param position The position to fetch locations around.
 
  */
-export async function fetchNearbyEventsAndLocations({ position }: NearbyLocationsParams): Promise<(Event | ILocation)[]> {
+export async function fetchNearbyEventsAndLocations({ position }: NearbyLocationsParams): Promise<SelectEntry[]> {
   try {
     const [locationsSnapshot, eventsSnapshot] = await Promise.all([
       fetchNearbyLocations({ position }),
@@ -79,7 +79,7 @@ export async function fetchNearbyEventsAndLocations({ position }: NearbyLocation
     ]);
 
     console.log(eventsSnapshot.docs.length);
-    const locationsData = locationsSnapshot.docs.map((doc: any): ILocation => ({ ...doc.data(), type: 'location' }));
+    const locationsData = locationsSnapshot.docs.map((doc: any): Location => ({ ...doc.data(), type: 'location' }));
 
     // Since geofirestore doesn't allow us to filter by date, we need to do this by ourselves.
     const now = new Date();
@@ -94,7 +94,7 @@ export async function fetchNearbyEventsAndLocations({ position }: NearbyLocation
 
     // Filter locations that has an ongoing event
     const filteredLocation = locationsData.filter((location) => !eventLocationIds.includes(location.id));
-    const locationsAndEventsData = [...eventsData, ...filteredLocation];
+    const locationsAndEventsData = [...eventsData, ...filteredLocation] as SelectEntry[];
 
     return locationsAndEventsData;
   } catch (err) {

@@ -2,10 +2,9 @@ import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-fireb
 import * as geofirestore from 'geofirestore';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
-import { Post, PicturePost } from '@types/collections';
+import { Post, PicturePost, Event, Location } from '@types/collections';
 import Storage, { uploadPicture } from './storage';
 import { ImagePickerResponse } from 'react-native-image-picker';
-import { ILocation } from '@types/location';
 
 const GeoFirestore = geofirestore.initializeApp(firestore());
 const postsCollection = GeoFirestore.collection('posts');
@@ -90,17 +89,18 @@ export async function createTextPost({ textContent, locationData }: CreateTextPo
 
 type NewImagePostProps = {
   image: ImagePickerResponse;
-  textContent?: string;
-  location?: ILocation;
+  text?: string;
+  location?: Location;
+  event?: Event;
 };
 
-export async function newImagePost({ image, textContent, location }: NewImagePostProps) {
+export async function newImagePost({ image, text, location, event }: NewImagePostProps) {
   try {
     const currentUser = auth().currentUser;
     if (currentUser) {
       const uploadedImage = await Storage.uploadPicture(image);
 
-      const postData = {
+      let postData = {
         type: 'picture',
         authorId: currentUser.uid,
         authorName: currentUser.displayName,
@@ -113,8 +113,15 @@ export async function newImagePost({ image, textContent, location }: NewImagePos
         featured: false,
         homeScreen: false,
         likeCount: 0,
-        textContent,
+        text,
       };
+
+      if (event) {
+        postData = {
+          ...postData,
+          ...event,
+        };
+      }
 
       let postRef = null;
 

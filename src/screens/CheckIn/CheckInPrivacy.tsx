@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { Box, Text, RoundedButton } from '../../components';
@@ -9,34 +9,36 @@ import HapticFeedback from 'react-native-haptic-feedback';
 
 import { logEvent } from '@services/analytics';
 
-function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
-  const { userStore } = useStore();
-  const [privacySetting, setPrivacySetting] = useState<PrivacyOptions>('PUBLIC');
+function CheckInPrivacy({ navigation }: CheckInFormScreenProps) {
+  const { checkInStore } = useStore();
+  const { privacySetting, setPrivacySetting } = checkInStore;
 
-  const onPrivacySelection = (value: PrivacyOptions) => {
+  const onPrivacySelection = (value: PrivacyOption) => {
     logEvent('privacy_option_selected', { privacy: value });
     HapticFeedback.trigger('impactLight');
     setPrivacySetting(value);
   };
 
-  const { locationId, locationName, locationCity, locationProvince, coordinates } = route.params.checkInData;
+  const submitCheckIn = async () => {
+    navigation.dangerouslyGetParent()?.goBack();
+    checkInStore.setLastCheckIn(checkInStore.pendingCheckIn);
 
-  const submitCheckIn = () => {
-    // navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
-    userStore
-      .checkIn({ ...route.params.checkInData, privacySetting })
-      .then(() => {
-        logEvent('check_in_success');
-      })
-      .catch((err: any) => {
-        crashlytics().recordError(err);
-      });
+    setTimeout(() => {
+      navigation.navigate('ProtestDashboard');
+    }, 100);
+
+    try {
+      await checkInStore.checkIn();
+      logEvent('check_in_success');
+    } catch (err) {
+      crashlytics().recordError(err);
+    }
   };
 
   return (
     <Box flex={1} paddingTop="l">
       <Text variant="text" textAlign="center" marginBottom="l">
-        בחרו את הגדרת הפרטיות עבור הצ'ק אין:
+        בחרו גדרת הפרטיות עבור הצ'ק אין:
       </Text>
 
       <PrivacyOption
@@ -79,11 +81,11 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
         </Box>
       </Box>
 
-      <Text variant="text" textAlign="center" color="link" opacity={0.75}>
+      <Text variant="text" textAlign="center" color="link" opacity={0.6}>
         עוד על פרטיות ב- ACT1
       </Text>
     </Box>
   );
 }
 
-export default observer(CheckInForm);
+export default observer(CheckInPrivacy);
