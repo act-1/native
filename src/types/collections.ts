@@ -42,6 +42,31 @@ export type PicturePost = PostBase & {
 
 export type Post = TextPost | PicturePost;
 
+/**
+ * Location Type
+ */
+
+export type Location = {
+  id: string;
+  city: string;
+  name: string;
+  province: [
+    'תל אביב',
+    'השרון',
+    'חיפה והקריות',
+    'הגליל התחתון',
+    'הגליל העליון',
+    'גולן',
+    'המרכז',
+    'השפלה',
+    'חוף אשקלון ועוטף עזה',
+    'הנגב',
+    'אילת והערבה',
+    'ירושלים'
+  ];
+  coordinates: { _latitude: number; _longitude: number };
+};
+
 /*
  * Event Types
  */
