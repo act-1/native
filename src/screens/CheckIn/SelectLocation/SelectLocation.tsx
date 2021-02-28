@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Image, ScrollView } from 'react-native';
-import analytics from '@react-native-firebase/analytics';
+import { logEvent } from '@services/analytics';
 import { SelectLocationScreenProps } from '@types/navigation';
 import { Box, Text, LocationBox, EventBox } from '../../../components';
 import { observer } from 'mobx-react-lite';
@@ -8,36 +8,34 @@ import { useStore } from '../../../stores';
 import LocationPermissionMessage from './LocationPermissionMessage';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
-  const { userStore, locationStore } = useStore();
+  const { userStore, locationStore, checkInStore } = useStore();
   const { userCurrentPosition } = userStore;
 
   const onLocationPress = async (checkInData: any) => {
     let locationName = '';
-    let locationCity = checkInData.city;
-    let locationProvince = checkInData.province;
+    const { city, province, coordinates } = checkInData;
+
     let locationId = '';
-
     let eventId: null | string = null;
-    let eventTitle: null | string = null;
+    let eventName: null | string = null;
 
-    // Since the location can be either an event or location objects, we have to mormalize the data.
-    if (checkInData.endDate) {
-      eventId = checkInData.id;
-      eventTitle = checkInData.title;
-      locationId = checkInData.locationId;
-      locationName = checkInData.locationName;
-
-      analytics().logEvent('check_in_select_event');
-    } else {
+    // Since the location can be either an event or location object, we have to mormalize the data.
+    if (checkInData.type === 'location') {
       locationId = checkInData.id;
       locationName = checkInData.name;
 
-      analytics().logEvent('check_in_select_location');
+      logEvent('check_in_select_location', { locationId });
+    } else {
+      eventId = checkInData.id;
+      eventName = checkInData.title;
+      locationId = checkInData.locationId;
+      locationName = checkInData.locationName;
+
+      logEvent('check_in_select_event', { eventId });
     }
 
-    navigation.navigate('CheckInPrivacy', {
-      checkInData: { ...checkInData, locationId, locationName, locationCity, locationProvince, eventId, eventTitle },
-    });
+    checkInStore.setPendingCheckIn({ locationId, locationName, eventId, eventName, coordinates, city, province });
+    navigation.navigate('CheckInPrivacy');
   };
 
   useEffect(() => {
@@ -68,21 +66,13 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
           </Box>
         ) : (
           <Box width="100%">
-            {locationStore.nearbyLocations.map((location: any) => {
-              if (location.type === 'event') {
-                // The location object in this case is an event
-                const eventData = location;
-                return <EventBox key={eventData.locationId} {...eventData} onPress={() => onLocationPress({ ...eventData })} />;
+            {locationStore.nearbyLocations.map((entry: any) => {
+              if (entry.type === 'event') {
+                const event = entry;
+                return <EventBox key={event.locationId} {...event} onPress={() => onLocationPress(event)} />;
               } else {
-                return (
-                  <LocationBox
-                    key={location.id}
-                    locationId={location.id}
-                    name={location.name}
-                    address={location.city}
-                    onPress={() => onLocationPress({ ...location })}
-                  />
-                );
+                const location = entry;
+                return <LocationBox key={location.id} location={location} onPress={() => onLocationPress(location)} />;
               }
             })}
           </Box>
