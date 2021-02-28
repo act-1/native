@@ -10,7 +10,7 @@ const profilePicturePlaceholderURL =
 const GeoFirestore = geofirestore.initializeApp(firestore());
 const checkInsCollection = GeoFirestore.collection('checkIns');
 
-export async function createCheckIn(checkInData: CheckIn): Promise<{ ok: Boolean; checkIn: CheckInParams }> {
+export async function createCheckIn(checkInData: CheckIn): Promise<{ ok: Boolean; checkIn: CheckIn }> {
   try {
     const { uid: userId, displayName, photoURL } = auth().currentUser!;
 

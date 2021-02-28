@@ -18,7 +18,7 @@ function getQueryBase(roomName: string) {
 
 class ChatStore {
   rootStore: null | rootStore = null;
-  currentRoomName: string = 'my-test-01';
+  currentRoomName: string | undefined = undefined;
   listenerQuery: FirebaseDatabaseTypes.Query | undefined = undefined;
   queryListenerStatus: 'ON' | 'OFF' = 'OFF';
 
@@ -29,8 +29,16 @@ class ChatStore {
     this.rootStore = rootStore;
   }
 
+  setCurrentRoomName(roomName: string | undefined) {
+    this.currentRoomName = roomName;
+  }
+
   getMessages() {
-    const query = getQueryBase(this.currentRoomName).endAt(Date.now());
+    // Before 4 hours
+    const Before4Hours = new Date();
+    Before4Hours.setMinutes(Before4Hours.getMinutes() - 240);
+
+    const query = getQueryBase(this.currentRoomName).startAt(Before4Hours.getDate()).endAt(Date.now());
 
     query.once('value', (snapshot) => {
       if (snapshot.val() !== null) {

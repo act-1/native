@@ -19,7 +19,7 @@ async function sendMessage({ roomName, key, text }: SendMessageProps) {
     const message = await RealtimeDatabase.database.ref(`/chat/rooms/${roomName}`).child(`messages/${key}`).set({
       id: key,
       authorId,
-      authorName: 'גיא',
+      authorName,
       authorPicture,
       createdAt: database.ServerValue.TIMESTAMP,
       text,

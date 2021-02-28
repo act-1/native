@@ -20,6 +20,7 @@ class CheckInStore {
   }
 
   async loadCachedCheckIn() {
+    // await AsyncStorage.clear();
     const checkIn = await AsyncStorage.getItem('lastCheckIn');
     if (checkIn) {
       const lastCheckIn = JSON.parse(checkIn);
@@ -60,6 +61,13 @@ class CheckInStore {
       const { checkIn } = await createCheckIn(checkInData);
 
       this.setLastCheckIn(checkIn);
+
+      if (checkIn.eventId) {
+        this.rootStore?.chatStore.setCurrentRoomName(checkIn.eventId);
+      } else {
+        // Reset chat room name if checking to location.
+        this.rootStore?.chatStore.setCurrentRoomName(undefined);
+      }
 
       await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return checkIn;
