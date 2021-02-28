@@ -6,7 +6,7 @@ import { Box, Text, ProtestFeed } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { LocationScreenProps } from '@types/navigation';
-import { ILocation } from '@types/location';
+import { Location } from '@types/collections';
 import { fetchLocation } from '@services/locations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LocationActions, LocationCounter } from './components';
@@ -17,7 +17,7 @@ import FastImage from 'react-native-fast-image';
 function LocationPage({ navigation, route }: LocationScreenProps) {
   const { feedStore } = useStore();
   const notificationRef = useRef<BannerNotification>(null);
-  const [location, setLocation] = useState<ILocation | null>(null);
+  const [location, setLocation] = useState<Location | null>(null);
 
   // Retrieve location information.
   // First try to hit the cache - then fetch from firestore.
@@ -30,7 +30,7 @@ function LocationPage({ navigation, route }: LocationScreenProps) {
         if (cachedLocation) {
           setLocation(JSON.parse(cachedLocation));
         } else {
-          const locationData: ILocation = await fetchLocation(route.params.locationId);
+          const locationData: Location = await fetchLocation(route.params.locationId);
           await AsyncStorage.setItem(locationId, JSON.stringify(locationData));
           setLocation(locationData);
         }

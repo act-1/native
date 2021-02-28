@@ -6,12 +6,11 @@ import auth from '@react-native-firebase/auth';
 
 import ChatService from '@services/chat';
 import { RealtimeDatabase } from '@services/databaseWrapper';
-import { ChatMessage, Event } from '@types/collections';
+import { ChatMessage, Event, Location } from '@types/collections';
 
 import { TakePictureResponse } from 'react-native-camera';
 import { nanoid } from 'nanoid/non-secure';
 import { updateArrayByObjectId } from '@utils/array-utils';
-import { ILocation } from '@types/location';
 
 function getQueryBase(roomName: string) {
   return RealtimeDatabase.database.ref('chat/rooms').child(roomName).child('messages').orderByChild('createdAt').limitToLast(25);
@@ -168,6 +167,6 @@ type SendPictureMessageProps = {
   image: TakePictureResponse;
   text?: string;
   inGallery: boolean;
-  location?: ILocation;
+  location?: Location;
   event?: Event;
 };

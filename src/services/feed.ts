@@ -2,10 +2,9 @@ import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-fireb
 import * as geofirestore from 'geofirestore';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
-import { Post, PicturePost, Event } from '@types/collections';
+import { Post, PicturePost, Event, Location } from '@types/collections';
 import Storage, { uploadPicture } from './storage';
 import { ImagePickerResponse } from 'react-native-image-picker';
-import { ILocation } from '@types/location';
 
 const GeoFirestore = geofirestore.initializeApp(firestore());
 const postsCollection = GeoFirestore.collection('posts');
@@ -91,7 +90,7 @@ export async function createTextPost({ textContent, locationData }: CreateTextPo
 type NewImagePostProps = {
   image: ImagePickerResponse;
   text?: string;
-  location?: ILocation;
+  location?: Location;
   event?: Event;
 };
 

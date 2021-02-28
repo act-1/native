@@ -3,9 +3,8 @@ import { RealtimeDatabase } from '@services/databaseWrapper';
 import { newImagePost } from '@services/feed';
 import { uploadPicture } from '@services/storage';
 import database from '@react-native-firebase/database';
-import { Event, PicturePost } from '@types/collections';
+import { Event, PicturePost, Location } from '@types/collections';
 import { TakePictureResponse } from 'react-native-camera';
-import { ILocation } from '@types/location';
 
 type SendMessageProps = {
   roomName: string;
@@ -40,7 +39,7 @@ type SendPictureMessageProps = {
   image: TakePictureResponse;
   text?: string;
   inGallery: boolean;
-  location: ILocation;
+  location: Location;
   event: Event;
 };
 

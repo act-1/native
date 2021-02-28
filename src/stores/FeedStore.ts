@@ -1,12 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import auth from '@react-native-firebase/auth';
 import { likePost, unlikePost, newImagePost, getAllPostLikes } from '@services/feed';
-import { Post } from '@types/collections';
+import { Post, Location } from '@types/collections';
 import { removeArrayItem, updateArrayItem } from '@utils/array-utils';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ILocation } from '@types/location';
 
 class FeedStore {
   rootStore: null | rootStore = null;
@@ -72,7 +71,7 @@ class FeedStore {
   }: {
     image: ImagePickerResponse;
     text?: string;
-    location?: ILocation;
+    location?: Location;
     eventId?: string;
   }) {
     try {
