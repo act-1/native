@@ -15,8 +15,8 @@ const privacyIcon = {
 
 type setPrivacyModeProps = {
   profilePicture: string;
-  privacySetting: PrivacyOptions;
-  setPrivacySetting: React.Dispatch<React.SetStateAction<PrivacyOptions>>;
+  privacySetting: PrivacyOption;
+  setPrivacySetting: React.Dispatch<React.SetStateAction<PrivacyOption>>;
   locationName: string;
   locationCity: string;
   goBack: () => void;

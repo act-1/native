@@ -10,11 +10,11 @@ import HapticFeedback from 'react-native-haptic-feedback';
 
 import { logEvent } from '@services/analytics';
 
-function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
-  const { userStore } = useStore();
-  const [privacySetting, setPrivacySetting] = useState<PrivacyOptions>('PUBLIC');
+function CheckInPrivacy({ navigation, route }: CheckInFormScreenProps) {
+  const { userStore, checkInStore } = useStore();
+  const { privacySetting, setPrivacySetting } = checkInStore;
 
-  const onPrivacySelection = (value: PrivacyOptions) => {
+  const onPrivacySelection = (value: PrivacyOption) => {
     logEvent('privacy_option_selected', { privacy: value });
     HapticFeedback.trigger('impactLight');
     setPrivacySetting(value);
@@ -28,7 +28,7 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
     }, 100);
 
     userStore
-      .checkIn({ ...route.params.checkInData, privacySetting })
+      .checkIn({ privacySetting })
       .then(() => {
         logEvent('check_in_success');
       })
@@ -90,4 +90,4 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   );
 }
 
-export default observer(CheckInForm);
+export default observer(CheckInPrivacy);

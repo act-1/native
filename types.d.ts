@@ -2,7 +2,7 @@ type LatLng = [number, number];
 
 type EventStatus = 'upcoming' | 'live' | 'past';
 
-type PrivacyOptions = 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
+type PrivacyOption = 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
 
 type CheckIn = {
   id: string;
@@ -20,7 +20,7 @@ type CheckIn = {
   expireAt: Date;
   createdAt: Date;
   isActive: boolean;
-  privacySetting: PrivacyOptions;
+  privacySetting: PrivacyOption;
 };
 
 type RTDBCheckIn = {
