@@ -16,6 +16,15 @@ class CheckInStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
+    this.loadCachedCheckIn();
+  }
+
+  async loadCachedCheckIn() {
+    const checkIn = await AsyncStorage.getItem('lastCheckIn');
+    if (checkIn) {
+      const lastCheckIn = JSON.parse(checkIn);
+      this.setLastCheckIn(lastCheckIn);
+    }
   }
 
   get hasActiveCheckIn() {
@@ -54,7 +63,7 @@ class CheckInStore {
       await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
       return checkIn;
     } catch (err) {
-      console.error(err);
+      console.error('Check in error: ', err);
       throw err;
     }
   }

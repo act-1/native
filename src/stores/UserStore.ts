@@ -34,16 +34,6 @@ class UserStore {
         }
 
         crashlytics().setUserId(user.uid);
-
-        // TODO: Extract to function
-        // runInAction(async () => {
-        //   // await AsyncStorage.clear();
-        //   const checkIn = await AsyncStorage.getItem('lastCheckIn');
-        //   if (checkIn) {
-        //     const lastCheckIn = JSON.parse(checkIn);
-        //     this.lastCheckIn = lastCheckIn;
-        //   }
-        // });
       }
 
       // If no user is logged in, mark the user initalization process as done.
@@ -58,13 +48,6 @@ class UserStore {
   get user() {
     return auth().currentUser;
   }
-
-  // get hasActiveCheckIn() {
-  //   if (this.lastCheckIn !== null) {
-  //     return new Date() < new Date(this.lastCheckIn.expireAt);
-  //   }
-  //   return false;
-  // }
 
   userDataListener(userId: string) {
     firestore()

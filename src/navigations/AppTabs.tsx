@@ -64,10 +64,7 @@ const AppTabs = ({ navigation }) => {
                 onPress={() => {
                   if (checkInStore.hasActiveCheckIn) {
                     // navigation.navigate('Secondary', { screen: 'CheckInModal' });
-                    navigation.navigate('ProtestDashboard', {
-                      screen: 'Dashboard',
-                      params: { checkIn: userStore.lastCheckIn },
-                    });
+                    navigation.navigate('ProtestDashboard');
                   } else {
                     navigation.navigate('Secondary', { screen: 'CheckInModal' });
                   }
