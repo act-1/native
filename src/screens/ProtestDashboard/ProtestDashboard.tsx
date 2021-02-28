@@ -7,7 +7,7 @@ import { logEvent } from '@services/analytics';
 import ProtestActionButton from './ProtestActionButton';
 
 function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
-  const { feedStore, checkInStore } = useStore();
+  const { feedStore, checkInStore, chatStore } = useStore();
 
   React.useLayoutEffect(() => {
     if (checkInStore.lastCheckIn) {
@@ -29,11 +29,13 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
     <Box flex={1} style={{ backgroundColor: '#171b1f' }}>
       {/* <LocationCounter locationId={checkIn.locationId} style={{ backgroundColor: '#000000' }} /> */}
       <Box flexDirection="row" justifyContent="space-evenly" marginBottom="xl">
-        <ProtestActionButton
-          title="צ׳אט הפגנה"
-          icon={require('@assets/icons/chat-icon.png')}
-          onPress={() => navigation.navigate('ProtestChat')}
-        />
+        {chatStore.currentRoomName !== undefined && (
+          <ProtestActionButton
+            title="צ׳אט הפגנה"
+            icon={require('@assets/icons/chat-icon.png')}
+            onPress={() => navigation.navigate('ProtestChat')}
+          />
+        )}
         <ProtestActionButton
           title="צילום תמונה"
           icon={require('@assets/icons/camera-fluent.png')}
