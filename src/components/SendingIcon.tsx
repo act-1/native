@@ -19,8 +19,6 @@ function SendingIcon() {
     outputRange: ['0deg', '360deg'],
   });
 
-  console.log('hiiii');
-
   return <Animated.Image source={sendingIcon} style={{ transform: [{ rotate: spin }], width: 12, height: 12, marginLeft: 2 }} />;
 }
 

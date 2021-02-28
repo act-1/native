@@ -41,7 +41,6 @@ export async function createCheckIn(checkInData: CheckIn): Promise<{ ok: Boolean
       });
     }
 
-    console.log(checkInInfo);
     // Create check in document
     const checkInRef = checkInsCollection.doc();
     await checkInRef.set({ ...checkInInfo, id: checkInRef.id });
