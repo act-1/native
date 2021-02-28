@@ -155,12 +155,21 @@ class ChatStore {
     }
   }
 
-  async sendPictureMessage({ image, text, inGallery, location, event }: SendPictureMessageProps) {
+  async sendPictureMessage({ image, text, inGallery }: SendPictureMessageProps) {
     try {
       const roomName = this.currentRoomName;
       const messageKey = nanoid(10);
 
       this.addPendingMessage({ messageKey, text, type: 'picture', image });
+
+      // Attach event / location to picture
+      let location,
+        event = null;
+      if (this.rootStore?.checkInStore?.lastCheckIn?.eventId) {
+        event = this.rootStore.checkInStore.currentEvent;
+      } else {
+        location = this.rootStore?.checkInStore?.currentLocation;
+      }
 
       const messageData = { roomName, image, text, inGallery, location, event, key: messageKey };
 
@@ -189,6 +198,4 @@ type SendPictureMessageProps = {
   image: TakePictureResponse;
   text?: string;
   inGallery: boolean;
-  location?: Location;
-  event?: Event;
 };

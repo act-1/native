@@ -70,7 +70,7 @@ function PictureListItem({ post, updatePostLikeCount }: PictureListItemProps) {
       </Box>
       <Box paddingHorizontal="m">
         <Text variant="text" fontSize={16} marginBottom="xm">
-          {post.textContent}
+          {post.text}
         </Text>
       </Box>
     </Box>

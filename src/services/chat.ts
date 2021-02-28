@@ -39,8 +39,8 @@ type SendPictureMessageProps = {
   image: TakePictureResponse;
   text?: string;
   inGallery: boolean;
-  location: Location;
-  event: Event;
+  location?: Location;
+  event?: Event;
 };
 
 /**
@@ -81,7 +81,7 @@ async function sendPictureMessage(messageData: SendPictureMessageProps) {
     const message = await RealtimeDatabase.database.ref(`/chat/rooms/${roomName}`).child(`messages/${key}`).set({
       id: key,
       authorId,
-      authorName: 'גיא',
+      authorName,
       authorPicture,
       pictureId,
       pictureUrl,

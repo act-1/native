@@ -20,9 +20,16 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
   }, [checkInStore.lastCheckIn]);
 
   const onImageUpload = ({ image, text }: { image: TakePictureResponse; text?: string }) => {
-    const { currentLocation: location, currentEvent: event } = checkInStore;
+    let event,
+      location = null;
 
-    feedStore.uploadImage({ image, textContent: text, event, location });
+    if (checkInStore.lastCheckIn.eventId) {
+      event = checkInStore.currentEvent;
+    } else {
+      location = checkInStore.currentLocation;
+    }
+
+    feedStore.uploadImage({ image, text, event, location });
   };
 
   return (

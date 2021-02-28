@@ -27,7 +27,7 @@ type PostBase = {
 
 type TextPost = PostBase & {
   type: 'text';
-  textContent: string;
+  text: string;
 };
 
 export type PicturePost = PostBase & {
@@ -37,7 +37,7 @@ export type PicturePost = PostBase & {
   pictureHeight: number;
   pictureUrl: string;
   featured: boolean;
-  textContent?: string;
+  text?: string;
 };
 
 export type Post = TextPost | PicturePost;

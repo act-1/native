@@ -55,7 +55,7 @@ export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: Nearby
   try {
     const [lat, lng] = position;
 
-    const query = eventsCollection.near({
+    const query = eventsCollection.where('status', '==', 'upcoming').near({
       center: new firebase.firestore.GeoPoint(lat, lng),
       radius,
     });

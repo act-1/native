@@ -15,7 +15,6 @@ const { width: deviceWidth } = Dimensions.get('screen');
 
 function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const { userStore } = useStore();
-  const [textContent, setTextContent] = useState('');
   const [privacySetting, setPrivacySetting] = useState<PrivacyOption>('PUBLIC');
 
   const { locationId, locationName, locationCity, locationProvince, coordinates } = route.params.checkInData;
@@ -23,13 +22,9 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
   const submitCheckIn = () => {
     navigation.dispatch(StackActions.replace('LocationPage', { locationId }));
     userStore
-      .checkIn({ ...route.params.checkInData, privacySetting, textContent })
+      .checkIn({ ...route.params.checkInData, privacySetting })
       .then(() => {
         // If the user added text, create a new text post
-        if (textContent) {
-          const locationData = { locationId, locationName, locationCity, locationProvince, coordinates };
-          createTextPost({ textContent, locationData });
-        }
         analytics().logEvent('check_in_success');
       })
       .catch((err: any) => {
@@ -65,7 +60,6 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
             maxLength={142}
             keyboardType="twitter"
             onChangeText={(value) => setTextContent(value)}
-            value={textContent}
           />
         </Box>
 

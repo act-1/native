@@ -51,7 +51,7 @@ export async function updateCheckInCount(): Promise<{ updated: boolean; action: 
 }
 
 type CreateTextPostProps = {
-  textContent: string;
+  text: string;
   locationData: {
     locationId: string;
     locationName: string;
@@ -61,7 +61,7 @@ type CreateTextPostProps = {
   };
 };
 
-export async function createTextPost({ textContent, locationData }: CreateTextPostProps) {
+export async function createTextPost({ text, locationData }: CreateTextPostProps) {
   try {
     const currentUser = auth().currentUser;
     if (currentUser) {
@@ -72,7 +72,7 @@ export async function createTextPost({ textContent, locationData }: CreateTextPo
         authorId: currentUser.uid,
         authorName: currentUser.displayName,
         authorPicture: currentUser.photoURL,
-        textContent,
+        text,
         ...locationData,
         likeCount: 0,
         type: 'text',

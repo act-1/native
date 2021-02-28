@@ -67,19 +67,19 @@ class FeedStore {
     image,
     text,
     location,
-    eventId,
+    event,
   }: {
     image: ImagePickerResponse;
     text?: string;
     location?: Location;
-    eventId?: string;
+    event?: Event;
   }) {
     try {
       runInAction(() => {
         this.uploadStatus = 'in_progress';
       });
 
-      const document = await newImagePost({ image, text, location, eventId });
+      const document = await newImagePost({ image, text, location, event });
       // Upload to firestore
 
       runInAction(() => {

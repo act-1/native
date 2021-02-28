@@ -22,9 +22,17 @@ class CheckInStore {
   async loadCachedCheckIn() {
     // await AsyncStorage.clear();
     const checkIn = await AsyncStorage.getItem('lastCheckIn');
+
+    // Loads the location
+    const checkInLocation = await AsyncStorage.getItem('checkInLocation');
+    const checkInEvent = await AsyncStorage.getItem('checkInEvent');
+
     if (checkIn) {
       const lastCheckIn = JSON.parse(checkIn);
       this.setLastCheckIn(lastCheckIn);
+
+      if (checkInLocation) this.setCurrentLocation(JSON.parse(checkInLocation));
+      if (checkInEvent) this.setCurrentEvent(JSON.parse(checkInEvent));
     }
   }
 
@@ -43,13 +51,15 @@ class CheckInStore {
     this.lastCheckIn = checkInInfo;
   };
 
-  setCurrentLocation = (location: Location) => {
+  async setCurrentLocation(location: Location) {
     this.currentLocation = location;
-  };
+    await AsyncStorage.setItem('checkInLocation', JSON.stringify(location));
+  }
 
-  setCurrentEvent = (event: Event) => {
+  async setCurrentEvent(event: Event) {
     this.currentEvent = event;
-  };
+    await AsyncStorage.setItem('eventCheckIn', JSON.stringify(event));
+  }
 
   setPrivacySetting = (value: PrivacyOption) => {
     this.privacySetting = value;
