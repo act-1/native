@@ -5,14 +5,14 @@ type EventStatus = 'upcoming' | 'live' | 'past';
 type PrivacyOption = 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
 
 type CheckIn = {
-  id: string;
+  id?: string;
   userId?: string;
   displayName?: string;
   profilePicture?: string;
   locationId: string;
   locationName: string;
-  locationCity: string;
-  locationProvince: string;
+  city: string;
+  province: string;
   coordinates: { _latitude: number; _longitude: number } | any; // Any as a temp workaround for GeoPoint values
   eventId?: string | null;
   eventName?: string | null;

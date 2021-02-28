@@ -10,20 +10,9 @@ const profilePicturePlaceholderURL =
 const GeoFirestore = geofirestore.initializeApp(firestore());
 const checkInsCollection = GeoFirestore.collection('checkIns');
 
-export async function createCheckIn(checkInData: Checkin): Promise<{ ok: Boolean; checkIn: CheckInParams }> {
+export async function createCheckIn(checkInData: CheckIn): Promise<{ ok: Boolean; checkIn: CheckInParams }> {
   try {
     const { uid: userId, displayName, photoURL } = auth().currentUser!;
-    const {
-      eventEndDate,
-      eventId,
-      textContent,
-      locationId,
-      locationName,
-      locationCity,
-      locationProvince,
-      coordinates,
-      privacySetting,
-    } = checkInData;
 
     // 2 hours from now - the default check in expiration time.
     let expireAt = new Date();
@@ -31,25 +20,20 @@ export async function createCheckIn(checkInData: Checkin): Promise<{ ok: Boolean
 
     // Check if the user checks in to an event.
     // If they do - set the expiration time to the event end time.
-    if (eventEndDate) {
-      expireAt = eventEndDate;
+    if (checkInData.eventEndDate) {
+      expireAt = checkInData.eventEndDate;
     }
 
     let checkInInfo = {
-      locationId,
-      locationName,
-      locationCity,
-      locationProvince,
+      ...checkInData,
       expireAt,
-      privacySetting,
-      coordinates: new firebase.firestore.GeoPoint(coordinates._latitude, coordinates._longitude),
-      eventId: eventId || null,
-      textContent: textContent || null,
+      coordinates: new firebase.firestore.GeoPoint(checkInData.coordinates._latitude, checkInData.coordinates._longitude),
+      eventId: checkInData.eventId || null,
       createdAt: firestore.FieldValue.serverTimestamp(),
       isActive: true,
     };
 
-    if (privacySetting === 'PUBLIC' || privacySetting === 'PRIVATE') {
+    if (checkInData.privacySetting === 'PUBLIC' || checkInData.privacySetting === 'PRIVATE') {
       checkInInfo = Object.assign(checkInInfo, {
         userId,
         profilePicture: photoURL || profilePicturePlaceholderURL,
@@ -57,6 +41,7 @@ export async function createCheckIn(checkInData: Checkin): Promise<{ ok: Boolean
       });
     }
 
+    console.log(checkInInfo);
     // Create check in document
     const checkInRef = checkInsCollection.doc();
     await checkInRef.set({ ...checkInInfo, id: checkInRef.id });
