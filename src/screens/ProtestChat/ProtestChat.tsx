@@ -34,7 +34,7 @@ function ProtestChat({ navigation, route }: ProtestChatProps) {
 
   useEffect(() => {
     if (chatStore.messages.length === 0) {
-      chatStore.getMessages();
+      chatStore.getMessages(Date.now());
     }
 
     chatStore.turnOnMessagesListener();
@@ -44,10 +44,18 @@ function ProtestChat({ navigation, route }: ProtestChatProps) {
     };
   }, [chatStore]);
 
+  const fetchMoreMessages = () => {
+    const { messages } = chatStore;
+    if (messages.length !== 0) {
+      const lastMessageTimestamp = messages[messages.length - 1].createdAt - 1; // Reducing 1 so it won't get the message
+      chatStore.getMessages(lastMessageTimestamp);
+    }
+  };
+
   return (
     <>
       <StatusBar backgroundColor="#161c22" />
-      <Chat messages={chatStore.messages} />
+      <Chat messages={chatStore.messages} fetchMoreMessages={fetchMoreMessages} />
     </>
   );
 }

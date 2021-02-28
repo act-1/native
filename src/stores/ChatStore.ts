@@ -14,7 +14,7 @@ import { nanoid } from 'nanoid/non-secure';
 import { updateArrayByObjectId } from '@utils/array-utils';
 
 function getQueryBase(roomName: string) {
-  return RealtimeDatabase.database.ref('chat/rooms').child(roomName).child('messages').orderByChild('createdAt').limitToLast(25);
+  return RealtimeDatabase.database.ref('chat/rooms').child(roomName).child('messages').orderByChild('createdAt');
 }
 
 class ChatStore {
@@ -48,12 +48,11 @@ class ChatStore {
     }
   }
 
-  getMessages() {
-    // Before 4 hours
-    const Before4Hours = new Date();
-    Before4Hours.setMinutes(Before4Hours.getMinutes() - 240);
-
-    const query = getQueryBase(this.currentRoomName).startAt(Before4Hours.getDate()).endAt(Date.now());
+  /**
+   * Fetch messages starting from the specified endAt.
+   */
+  getMessages(endAt: number) {
+    const query = getQueryBase(this.currentRoomName!).endAt(endAt).limitToLast(15);
 
     query.once('value', (snapshot) => {
       if (snapshot.val() !== null) {

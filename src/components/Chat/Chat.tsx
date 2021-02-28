@@ -4,6 +4,7 @@ import { PostBox } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { ImageViewer } from '..';
+import { ChatMessage } from '@types/collections';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import InputToolbar from './InputToolbar';
@@ -16,16 +17,17 @@ import InputToolbar from './InputToolbar';
  */
 
 type ChatProps = {
-  messages: Array;
+  messages: ChatMessage[];
+  fetchMoreMessages: () => void;
 };
 
-function Chat({ messages, onSend }: ChatProps) {
+function Chat({ messages, fetchMoreMessages }: ChatProps) {
   const { userStore, chatStore } = useStore();
   const insets = useSafeAreaInsets();
   const flatListRef = useRef<FlatList>(null);
 
   // We use local state so we can compare it to the messages prop and act accordingly.
-  const [listMessages, setListMessages] = useState([]);
+  const [listMessages, setListMessages] = useState<ChatMessage[]>([]);
 
   const [imageViewerVisiblity, setViewerVisibility] = useState(false);
   const [currentPictureUrl, setPictureUrl] = useState('');
@@ -85,6 +87,7 @@ function Chat({ messages, onSend }: ChatProps) {
         data={listMessages}
         inverted={true}
         keyExtractor={(item) => item.id}
+        onEndReached={fetchMoreMessages}
         renderItem={({ item }) => <PostBox message={item} onPicturePress={selectPicture} deleteMessage={deleteMessage} />}
         initialNumToRender={2}
         maintainVisibleContentPosition={{ minIndexForVisible: 0 }}

@@ -78,7 +78,6 @@ export async function fetchNearbyEventsAndLocations({ position }: NearbyLocation
       fetchNearbyUpcomingEvents({ position }),
     ]);
 
-    console.log(eventsSnapshot.docs.length);
     const locationsData = locationsSnapshot.docs.map((doc: any): Location => ({ ...doc.data(), type: 'location' }));
 
     // Since geofirestore doesn't allow us to filter by date, we need to do this by ourselves.
