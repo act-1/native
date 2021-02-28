@@ -72,7 +72,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
             {locationStore.nearbyLocations.map((entry: any) => {
               if (entry.type === 'event') {
                 const event = entry;
-                return <EventBox key={event.locationId} {...event} onPress={() => onLocationPress(event)} />;
+                return <EventBox key={event.id} {...event} onPress={() => onLocationPress(event)} />;
               } else {
                 const location = entry;
                 return <LocationBox key={location.id} location={location} onPress={() => onLocationPress(location)} />;
