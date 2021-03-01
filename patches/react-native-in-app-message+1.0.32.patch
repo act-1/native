@@ -1,0 +1,12 @@
+diff --git a/node_modules/react-native-in-app-message/src/Noification/iOStyle.js b/node_modules/react-native-in-app-message/src/Noification/iOStyle.js
+index 67f0120..981de49 100644
+--- a/node_modules/react-native-in-app-message/src/Noification/iOStyle.js
++++ b/node_modules/react-native-in-app-message/src/Noification/iOStyle.js
+@@ -4,6 +4,7 @@ export const IOStyle = StyleSheet.create({
+ 	mainStyle: {
+ 		alignSelf: 'center',
+ 		position: 'absolute',
++		top: 10
+ 	},
+ 	innerContainer: {
+ 		width: '100%'
