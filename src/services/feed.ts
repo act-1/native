@@ -232,13 +232,14 @@ type EventPicturesProps = {
   afterDate?: FirebaseFirestoreTypes.Timestamp;
 };
 
-export async function getEventPictures({ eventId, startAfter, afterDate, limit }: EventPicturesProps) {
+export async function getEventPictures({ eventId, startAfter, afterDate, limit = 10 }: EventPicturesProps) {
   try {
     let query = firestore()
       .collection('posts')
       .where('eventId', '==', eventId)
       .where('type', '==', 'picture')
-      .orderBy('createdAt', 'desc');
+      .orderBy('createdAt', 'desc')
+      .limit(limit);
 
     // There's a strange behavior with the startAfter and limit conditions if we build the
     // query incrementally, so we create a new one.

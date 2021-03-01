@@ -55,8 +55,8 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
           icon={require('@assets/icons/gallery.png')}
           onPress={() =>
             navigation.navigate('EventPictures', {
-              eventId: route.params.checkIn.eventId,
-              eventTitle: route.params.checkIn.eventTitle,
+              eventId: checkInStore.lastCheckIn.eventId,
+              eventTitle: checkInStore.lastCheckIn.locationName,
             })
           }
         />

@@ -64,11 +64,18 @@ function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
   };
 
   useEffect(() => {
-    setEventPictureDocs(initialPictures);
-
     if (initialPictures && initialPictures.length > 0) {
       const pictures = initialPictures.map((picture) => picture.data() as PicturePost);
+      setEventPictureDocs(initialPictures);
       setEventPictures(pictures);
+    } else {
+      // Fetch pictures
+      getEventPictures({ eventId, limit: 8 }).then((pictureDocs) => {
+        console.log(pictureDocs.length);
+        const pictures = pictureDocs.map((picture) => picture.data() as PicturePost);
+        setEventPictureDocs(pictureDocs);
+        setEventPictures(pictures);
+      });
     }
   }, [initialPictures]);
 
