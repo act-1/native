@@ -1,5 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "com.google.firebase.firebase-perf"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
 
 project.ext.envConfigFiles = [
     debug: ".env.local",
