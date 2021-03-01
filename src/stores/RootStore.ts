@@ -31,7 +31,7 @@ class RootStore {
   // Initalization of the app during splash screen
   async initApp() {
     try {
-      this.mediaStore.getFeaturedPictures();
+      this.mediaStore.getHomeScreenPictures();
       this.eventStore.getEvents();
       this.userStore.getUserEvents();
       this.userStore.refreshFCMToken();

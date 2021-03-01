@@ -3,7 +3,6 @@ import { Dimensions, Platform, StyleSheet } from 'react-native';
 import { Box } from '../../components';
 import Svg, { Path } from 'react-native-svg';
 import { scale } from 'react-native-size-matters';
-import { Polygon } from 'react-native-maps';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -15,8 +14,8 @@ if (deviceWidth > 400) {
 type PostBoxBubbleProps = {
   children: React.ReactNode;
   direction: 'right' | 'left';
-  featured: boolean;
-  deleted: boolean;
+  featured?: boolean;
+  deleted?: boolean;
 };
 
 export default function PostBoxBubble({ children, direction, featured, deleted }: PostBoxBubbleProps) {

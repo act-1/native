@@ -158,10 +158,10 @@ function PostBox({ message, onPicturePress, updatePostLikeCount, deleteMessage }
                       style={[
                         styles.postPicture,
                         {
-                          width: message.pictureWidth > message.pictureHeight ? scale(245) : scale(135),
+                          width: message.pictureWidth > message.pictureHeight ? scale(245) : scale(173),
                           height:
                             message.pictureHeight /
-                            (message.pictureWidth / (message.pictureWidth > message.pictureHeight ? scale(245) : scale(130))),
+                            (message.pictureWidth / (message.pictureWidth > message.pictureHeight ? scale(245) : scale(175))),
                           marginBottom: message.text ? 6 : 0,
                         },
                       ]}

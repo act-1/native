@@ -11,22 +11,22 @@ const features = [
     description: 'עשו צ׳ק אין להפגנה וצפו מי עוד מפגין ברחבי הארץ',
   },
   {
-    key: 'pictures',
-    icon: require('@assets/icons/camera-color.png'),
-    title: 'תמונות',
-    description: 'העלו צילומים וצפו בתמונות מהאירועים האחרונים',
-  },
-  {
     key: 'events',
     icon: require('@assets/icons/event.png'),
     title: 'אירועים',
     description: 'בדקו הפגנות קרובות, סמנו הגעה וקבלו התראות על שינויים',
   },
   {
+    key: 'pictures',
+    icon: require('@assets/icons/camera-color.png'),
+    title: 'תמונות',
+    description: 'העלו צילומים וצפו בתמונות מהאירועים האחרונים',
+  },
+  {
     key: 'feed',
     icon: require('@assets/icons/news.png'),
-    title: 'פיד מחאה',
-    description: 'חדשות ועדכונים מהמאבקים השונים בארצנו',
+    title: 'צ׳אט הפגנה',
+    description: 'עדכונים ודיווחים ישירות מהמפגינים שאיתכם ',
   },
 ];
 

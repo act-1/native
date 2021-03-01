@@ -27,27 +27,28 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
 
   const imageUrls = React.useMemo(
     () =>
-      mediaStore.featuredPictures.map((item: PicturePost) => ({
+      mediaStore.homeScreenPictures.map((item: PicturePost) => ({
         url: item.pictureUrl,
       })),
-    [mediaStore.featuredPictures]
+    [mediaStore.homeScreenPictures]
   );
 
   const onPicturePress = (index: number) => {
     setImageIndex(index);
     setDisplayGallery(true);
-    logEvent('featured_picture_press', { picture_index: index + 1 });
+    logEvent('home_picture_press', { picture_index: index + 1 });
   };
 
   const onGalleryChange = (index: number | undefined) => {
-    logEvent('featured_pictures_viewer_swipe', { picture_index: index + 1 });
+    const pictureIndex = index ? index + 1 : 'undefined';
+    logEvent('home_picture_viewer_swipe', { picture_index: pictureIndex });
 
     if (index) {
       carouselRef.current?.snapToItem(index);
     }
   };
 
-  if (mediaStore.featuredPictures.length === 0) {
+  if (mediaStore.homeScreenPictures.length === 0) {
     return <FeaturedPicturesContentLoader style={style} />;
   }
 
@@ -80,7 +81,7 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
 
       <Carousel
         ref={carouselRef}
-        data={mediaStore.featuredPictures}
+        data={mediaStore.homeScreenPictures}
         hasParallaxImages={true}
         autoplay={true}
         autoplayInterval={4500}

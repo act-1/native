@@ -212,12 +212,12 @@ export async function getRecentPictures({ limit = 10, startAfter, afterDate }: G
   }
 }
 
-export async function getFeaturedPictures(): Promise<PicturePost[]> {
+export async function getHomeScreenPictures(): Promise<PicturePost[]> {
   try {
     const postsSnapshot = await firestore()
       .collection('posts')
       .where('type', '==', 'picture')
-      .where('featured', '==', true)
+      .where('homeScreen', '==', true)
       .get();
 
     const posts = postsSnapshot.docs.map((post) => post.data() as PicturePost);
@@ -237,7 +237,7 @@ type EventPicturesProps = {
 
 export async function getPictures({ source, sourceId, startAfter, afterDate, limit = 10 }: EventPicturesProps) {
   const sourceField = source + 'Id'; // `event` -> eventId, location -> locationId
-  console.log(sourceField);
+
   try {
     let query = firestore()
       .collection('posts')
@@ -288,7 +288,7 @@ export async function getPictures({ source, sourceId, startAfter, afterDate, lim
 export default {
   newImagePost,
   getRecentPictures,
-  getFeaturedPictures,
+  getHomeScreenPictures,
   getPictures,
   archivePost,
 };

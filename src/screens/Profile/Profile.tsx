@@ -1,11 +1,14 @@
 import React from 'react';
-import { FlatList, Button, Image, StyleSheet } from 'react-native';
+import { FlatList, Button, Image, StyleSheet, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Box, Text } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { ProfileScreenProps } from '../../types/navigation';
 import { BlurView, VibrancyView } from '@react-native-community/blur';
+
+const CustomView = (props) =>
+  Platform.select({ ios: <BlurView {...props} />, android: <Box {...props} backgroundColor="greyBackground" /> });
 
 function Profile({ navigation }: ProfileScreenProps) {
   const { userStore } = useStore();
@@ -23,7 +26,7 @@ function Profile({ navigation }: ProfileScreenProps) {
           פרופיל אישי - בקרוב
         </Text>
       </Box>
-      <BlurView style={{ ...StyleSheet.absoluteFillObject, zIndex: 10 }} />
+      <CustomView style={{ ...StyleSheet.absoluteFillObject, zIndex: 10 }} />
       <Box paddingTop="m" justifyContent="center" alignItems="center">
         <FastImage source={{ uri: userStore.userData?.profilePicture }} style={styles.profilePicture} />
 

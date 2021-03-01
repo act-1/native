@@ -9,7 +9,7 @@ import RecentPictures from '@screens/Community/RecentPictures';
 class MediaStore {
   rootStore: null | rootStore = null;
   currentFilter: 'featured' | 'recent' = 'featured';
-  featuredPictures: Post[] = [];
+  homeScreenPictures: Post[] = [];
 
   recentPictures: FirebaseFirestoreTypes.DocumentData[] = [];
   recentPicturesLoading = false;
@@ -24,12 +24,12 @@ class MediaStore {
     this.currentFilter = filter;
   };
 
-  async getFeaturedPictures() {
+  async getHomeScreenPictures() {
     try {
-      const featuredPictures = await FeedService.getFeaturedPictures();
+      const homeScreenPictures = await FeedService.getHomeScreenPictures();
 
       runInAction(() => {
-        this.featuredPictures = featuredPictures;
+        this.homeScreenPictures = homeScreenPictures;
       });
     } catch (err) {
       console.error(err);

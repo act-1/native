@@ -49,7 +49,6 @@ function Chat({ messages, fetchMoreMessages }: ChatProps) {
         },
         {
           text: 'ביטול',
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
       ],
