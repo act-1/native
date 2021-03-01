@@ -1,0 +1,17 @@
+diff --git a/node_modules/react-native-camera-kit/.DS_Store b/node_modules/react-native-camera-kit/.DS_Store
+new file mode 100644
+index 0000000..0859fac
+Binary files /dev/null and b/node_modules/react-native-camera-kit/.DS_Store differ
+diff --git a/node_modules/react-native-camera-kit/src/CameraScreen.tsx b/node_modules/react-native-camera-kit/src/CameraScreen.tsx
+index 4737bc3..e6bd4e4 100644
+--- a/node_modules/react-native-camera-kit/src/CameraScreen.tsx
++++ b/node_modules/react-native-camera-kit/src/CameraScreen.tsx
+@@ -396,7 +396,7 @@ const styles = StyleSheet.create(
+       alignItems: 'center',
+     },
+     bottomButton: {
+-      flex: 1,
++      flex: 0,
+       flexDirection: 'row',
+       alignItems: 'center',
+       padding: 10,
