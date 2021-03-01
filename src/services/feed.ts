@@ -4,7 +4,6 @@ import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
 import { Post, PicturePost, Event, Location } from '@types/collections';
 import Storage, { uploadPicture } from './storage';
-import { ImagePickerResponse } from 'react-native-image-picker';
 
 const GeoFirestore = geofirestore.initializeApp(firestore());
 const postsCollection = GeoFirestore.collection('posts');
@@ -88,18 +87,17 @@ export async function createTextPost({ text, locationData }: CreateTextPostProps
 }
 
 type NewImagePostProps = {
-  image: ImagePickerResponse;
+  imageUri: string;
   text?: string;
   location?: Location;
   event?: Event;
 };
 
-export async function newImagePost({ image, text, location, event }: NewImagePostProps) {
+export async function newImagePost({ imageUri, text, location, event }: NewImagePostProps) {
   try {
-    console.log(location);
     const currentUser = auth().currentUser;
     if (currentUser) {
-      const uploadedImage = await Storage.uploadPicture(image);
+      const uploadedImage = await Storage.uploadPicture(imageUri);
 
       let postData = {
         type: 'picture',
@@ -120,34 +118,37 @@ export async function newImagePost({ image, text, location, event }: NewImagePos
       if (event) {
         postData = {
           ...postData,
-          ...event,
+          eventId: event.id,
+          eventTitle: event.title,
+          locationId: event.locationId,
+          locationName: event.locationName,
+          province: event.province,
+          city: event.city,
+          coordinates: new firebase.firestore.GeoPoint(event.coordinates._latitude, event.coordinates._longitude),
         };
       }
 
       let postRef = null;
 
       if (location) {
-        postRef = postsCollection.doc();
-        await postRef.set({
+        postData = {
           ...postData,
-          id: postRef.id,
           locationId: location.id,
-          locationCity: location.city,
           locationName: location.name,
+          city: location.city,
           province: location.province,
           coordinates: new firebase.firestore.GeoPoint(location.coordinates._latitude, location.coordinates._longitude),
-          createdAt: firestore.FieldValue.serverTimestamp(),
-          updatedAt: firestore.FieldValue.serverTimestamp(),
-        });
-      } else {
-        postRef = firestore().collection('posts').doc();
-        await postRef.set({
-          ...postData,
-          id: postRef.id,
-          createdAt: firestore.FieldValue.serverTimestamp(),
-          updatedAt: firestore.FieldValue.serverTimestamp(),
-        });
+        };
       }
+
+      postRef = postsCollection.doc();
+
+      await postRef.set({
+        ...postData,
+        id: postRef.id,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+        updatedAt: firestore.FieldValue.serverTimestamp(),
+      });
 
       const postDocument = await postRef.get();
       return postDocument;

@@ -6,10 +6,10 @@ import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ChatService from '@services/chat';
+import { getImageSize } from '@services/storage';
 import { RealtimeDatabase } from '@services/databaseWrapper';
 import { ChatMessage, Event, Location } from '@types/collections';
 
-import { TakePictureResponse } from 'react-native-camera';
 import { nanoid } from 'nanoid/non-secure';
 import { updateArrayByObjectId } from '@utils/array-utils';
 
@@ -116,7 +116,7 @@ class ChatStore {
     });
   }
 
-  addPendingMessage({ messageKey, text, type, image }) {
+  async addPendingMessage({ messageKey, text, type, imageUri }) {
     const { uid: authorId, displayName: authorName, photoURL: authorPicture } = auth().currentUser!;
 
     let message: ChatMessage = {
@@ -131,13 +131,15 @@ class ChatStore {
     };
 
     if (type === 'picture') {
-      const { uri, width, height } = image;
-      message = { ...message, pictureUrl: uri, pictureWidth: width, pictureHeight: height };
+      const { width, height } = await getImageSize(imageUri);
+      message = { ...message, pictureUrl: imageUri, pictureWidth: width, pictureHeight: height };
     }
 
     runInAction(() => {
       this.messages = [message, ...this.messages];
     });
+
+    return message;
   }
 
   async sendMessage({ text }: { text: string }) {
@@ -155,12 +157,12 @@ class ChatStore {
     }
   }
 
-  async sendPictureMessage({ image, text, inGallery }: SendPictureMessageProps) {
+  async sendPictureMessage({ imageUri, text, inGallery }: SendPictureMessageProps) {
     try {
       const roomName = this.currentRoomName;
       const messageKey = nanoid(10);
 
-      this.addPendingMessage({ messageKey, text, type: 'picture', image });
+      this.addPendingMessage({ messageKey, text, type: 'picture', imageUri });
 
       // Attach event / location to picture
       let location,
@@ -171,7 +173,7 @@ class ChatStore {
         location = this.rootStore?.checkInStore?.currentLocation;
       }
 
-      const messageData = { roomName, image, text, inGallery, location, event, key: messageKey };
+      const messageData = { roomName, imageUri, text, inGallery, location, event, key: messageKey };
 
       const message = await ChatService.sendPictureMessage(messageData);
       return message;

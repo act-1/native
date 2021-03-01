@@ -3,7 +3,6 @@ import auth from '@react-native-firebase/auth';
 import { likePost, unlikePost, newImagePost, getAllPostLikes } from '@services/feed';
 import { Post, Location } from '@types/collections';
 import { removeArrayItem, updateArrayItem } from '@utils/array-utils';
-import { ImagePickerResponse } from 'react-native-image-picker';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -64,12 +63,12 @@ class FeedStore {
    * Therefor we moved it here for resolving the issue faster.
    */
   async uploadImage({
-    image,
+    imageUri,
     text,
     location,
     event,
   }: {
-    image: ImagePickerResponse;
+    imageUri: string;
     text?: string;
     location?: Location;
     event?: Event;
@@ -79,7 +78,7 @@ class FeedStore {
         this.uploadStatus = 'in_progress';
       });
 
-      const document = await newImagePost({ image, text, location, event });
+      const document = await newImagePost({ imageUri, text, location, event });
       // Upload to firestore
 
       runInAction(() => {

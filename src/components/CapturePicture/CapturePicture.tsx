@@ -3,9 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Switch, Image, Keyboard, Platform, KeyboardAvoidingView, Pressable } from 'react-native';
 import { Box, Text, CircularButton } from '..';
 import Composer from '../Chat/Composer';
-import TouchableScale from 'react-native-touchable-scale';
 import HapticFeedback from 'react-native-haptic-feedback';
-import { RNCamera, TakePictureResponse } from 'react-native-camera';
 import { CameraScreen } from 'react-native-camera-kit';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,29 +14,20 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
   const insets = useSafeAreaInsets();
 
   const [keyboardShown, setKeyboardShown] = useState(false);
-  const cameraRef = React.useRef<RNCamera>(null);
-  const [currentPicture, setCurrentPicture] = useState<TakePictureResponse | undefined>(undefined);
+  const [currentPictureURI, setCurrentPictureURI] = useState<string | undefined>(undefined);
   const [inGallery, setInGallery] = useState(true);
 
-  const closeButtonPress = () => {
-    if (currentPicture) {
-      Keyboard.dismiss();
-      setCurrentPicture(undefined);
-    } else {
-      navigation.goBack();
-    }
-  };
-
   const takePicture = (event: any) => {
-    setCurrentPicture(event.image);
+    HapticFeedback.trigger('impactHeavy');
+    setCurrentPictureURI(event.image.uri);
   };
 
   const onSendPress = (text?: string) => {
     const { onImageUpload } = route.params;
     AsyncStorage.setItem('inGallerySetting', `${inGallery}`);
 
-    if (currentPicture && onImageUpload) {
-      route.params.onImageUpload({ image: currentPicture, text, inGallery });
+    if (currentPictureURI && onImageUpload) {
+      route.params.onImageUpload({ imageUri: currentPictureURI, text, inGallery });
       navigation.goBack();
     }
   };
@@ -67,13 +56,19 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
 
   return (
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <Box position="absolute" bottom={currentPicture ? undefined : insets.bottom + 30} left={5} zIndex={10}>
-        <CircularButton iconName={currentPicture ? 'x' : 'arrow-right'} color="white" transparent onPress={closeButtonPress} />
+      <Box
+        position="absolute"
+        bottom={currentPictureURI ? undefined : insets.bottom + 30}
+        top={currentPictureURI ? 30 : undefined}
+        left={5}
+        zIndex={10}
+      >
+        <CircularButton iconName={'arrow-right'} color="white" transparent onPress={() => navigation.goBack()} />
       </Box>
 
-      {currentPicture ? (
+      {currentPictureURI ? (
         <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
-          <Image source={{ uri: currentPicture.uri }} style={styles.imageStyle} />
+          <Image source={{ uri: currentPictureURI }} style={styles.imageStyle} />
         </Pressable>
       ) : (
         // <RNCamera ref={cameraRef} style={styles.camera} captureAudio={false} useNativeZoom={true} />
@@ -86,14 +81,13 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
           }}
           cameraFlipImage={require('@assets/camera_screen/cameraFlipIcon.png')}
           captureButtonImage={require('@assets/camera_screen/cameraButton.png')}
-          actions={{ rightButtonText: 'Done', leftButtonText: undefined }}
           onBottomButtonPressed={takePicture}
           saveToCameraRoll={false}
         />
       )}
 
       <Box position="absolute" bottom={50} alignItems="center" width="100%">
-        {currentPicture && (
+        {currentPictureURI && (
           <Box
             style={[
               styles.composerContainer,

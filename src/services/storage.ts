@@ -1,10 +1,10 @@
+import { Image } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import storage, { FirebaseStorageTypes } from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import perf from '@react-native-firebase/perf';
 import { updateUserPicture } from './user';
 import { nanoid } from 'nanoid/non-secure';
-import { TakePictureResponse } from 'react-native-camera';
 import ImageResizer from 'react-native-image-resizer';
 
 export async function uploadProfilePicture(imagePath: string) {
@@ -60,55 +60,64 @@ export async function uploadProfilePictureFromURL(imageUrl: string) {
 //   }
 // }
 
-export async function uploadPicture(image: TakePictureResponse) {
+/**
+ * Promise wrapper for Image.getSize
+ */
+export function getImageSize(imageUri: string): Promise<{ width: number; height: number }> {
+  return new Promise((resolve, reject) => {
+    Image.getSize(
+      imageUri,
+      (width, height) => resolve({ width, height }),
+      (err) => reject(err)
+    );
+  });
+}
+
+export async function uploadPicture(imageUri: string) {
   try {
     const { uid: uploaderId } = auth().currentUser!;
 
-    const { uri, width, height } = image;
+    const { width, height } = await getImageSize(imageUri);
 
-    if (width && height && uri) {
-      // Whther to set the resize ratio based on the width (landscape image) or the height (portrait)
-      const resizeDimension = width > height ? width : height;
-      let resizeRatio = 1;
+    // Whther to set the resize ratio based on the width (landscape image) or the height (portrait)
+    const resizeDimension = width > height ? width : height;
+    let resizeRatio = 1;
 
-      // Resize dimensions for landscape picture
-      if (resizeDimension > 5000) {
-        resizeRatio = 2.2;
-      }
-      if (resizeDimension > 4000) {
-        resizeRatio = 1.8;
-      } else if (resizeDimension > 3000) {
-        resizeRatio = 1.5;
-      }
-
-      const resizedWidth = width / resizeRatio;
-      const resizedHeight = height / resizeRatio;
-
-      const resizedImage = await ImageResizer.createResizedImage(uri, resizedWidth, resizedHeight, 'JPEG', 75);
-
-      const uploadTrace = await perf().startTrace('imageUpload');
-      uploadTrace.putMetric('image_size', resizedImage.size);
-
-      const reference = storage().ref(resizedImage.name);
-      await reference.putFile(resizedImage.uri);
-
-      uploadTrace.stop();
-
-      const url = await reference.getDownloadURL();
-
-      const picture = await firestore().collection('pictures').add({
-        uploaderId,
-        storagePath: reference.fullPath,
-        width: resizedWidth,
-        height: resizedHeight,
-        url,
-        createdAt: firestore.FieldValue.serverTimestamp(),
-      });
-
-      return { id: picture.id, url, width: resizedWidth, height: resizedHeight };
-    } else {
-      throw new Error('Missing image properties.');
+    // Resize dimensions for landscape picture
+    if (resizeDimension > 5000) {
+      resizeRatio = 2.2;
     }
+    if (resizeDimension > 4000) {
+      resizeRatio = 1.8;
+    } else if (resizeDimension > 3000) {
+      resizeRatio = 1.5;
+    }
+
+    const resizedWidth = width / resizeRatio;
+    const resizedHeight = height / resizeRatio;
+    console.log('storage:', imageUri, resizedHeight, resizedWidth);
+    const resizedImage = await ImageResizer.createResizedImage(imageUri, resizedWidth, resizedHeight, 'JPEG', 75);
+
+    const uploadTrace = await perf().startTrace('imageUpload');
+    uploadTrace.putMetric('image_size', resizedImage.size);
+
+    const reference = storage().ref(resizedImage.name);
+    await reference.putFile(resizedImage.uri);
+
+    uploadTrace.stop();
+
+    const url = await reference.getDownloadURL();
+
+    const picture = await firestore().collection('pictures').add({
+      uploaderId,
+      storagePath: reference.fullPath,
+      width: resizedWidth,
+      height: resizedHeight,
+      url,
+      createdAt: firestore.FieldValue.serverTimestamp(),
+    });
+
+    return { id: picture.id, url, width: resizedWidth, height: resizedHeight };
   } catch (err) {
     throw err;
   }

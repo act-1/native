@@ -3,7 +3,6 @@ import { Keyboard, StyleSheet } from 'react-native';
 import { Box } from '../../components';
 import { useStore } from '../../stores';
 import { useNavigation } from '@react-navigation/native';
-import { TakePictureResponse } from 'react-native-camera';
 
 import Composer from './Composer';
 import Camera from './Camera';
@@ -19,8 +18,8 @@ function InputToolbar() {
     chatStore.sendMessage({ text });
   };
 
-  const onImageUpload = ({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery: boolean }) => {
-    chatStore.sendPictureMessage({ image, text, inGallery });
+  const onImageUpload = ({ imageUri, text, inGallery }: { imageUri: string; text?: string; inGallery: boolean }) => {
+    chatStore.sendPictureMessage({ imageUri, text, inGallery });
   };
 
   const openCamera = () => {

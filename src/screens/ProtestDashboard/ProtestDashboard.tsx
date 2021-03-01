@@ -19,7 +19,7 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkInStore.lastCheckIn]);
 
-  const onImageUpload = ({ image, text }: { image: TakePictureResponse; text?: string }) => {
+  const onImageUpload = ({ imageUri, text }: { imageUri: string; text?: string }) => {
     let event,
       location = null;
 
@@ -29,9 +29,7 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
       location = checkInStore.currentLocation;
     }
 
-    console.log(location, event);
-
-    feedStore.uploadImage({ image, text, event, location });
+    feedStore.uploadImage({ imageUri, text, event, location });
   };
 
   return (

@@ -1,7 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { ImagePickerResponse } from 'react-native-image-picker';
-import { TakePictureResponse } from 'react-native-camera';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { PicturePost, Location } from './collections';
 
@@ -45,7 +44,7 @@ export type RootStackParamList = {
   ActionScreen: undefined;
   NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: Location };
   CapturePicture: {
-    onImageUpload: ({ image, text, inGallery }: { image: TakePictureResponse; text?: string; inGallery?: boolean }) => void;
+    onImageUpload: ({ imageUri, text, inGallery }: { imageUri: string; text?: string; inGallery?: boolean }) => void;
     showGallerySwitch?: boolean;
   };
   SelectLocation: undefined;

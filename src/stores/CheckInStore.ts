@@ -60,7 +60,7 @@ class CheckInStore {
 
   async setCurrentEvent(event: Event) {
     this.currentEvent = event;
-    await AsyncStorage.setItem('eventCheckIn', JSON.stringify(event));
+    await AsyncStorage.setItem('checkInEvent', JSON.stringify(event));
   }
 
   setPrivacySetting = (value: PrivacyOption) => {
