@@ -29,8 +29,9 @@ export type RootStackParamList = {
   EventList: undefined;
   EventPage: { eventId: string };
   EventPictureList: {
-    eventId: string;
-    eventTitle: string;
+    eventId?: string;
+    locationId?: string;
+    title: string;
     initialPictures?: FirebaseFirestoreTypes.DocumentSnapshot[];
     initialIndex?: number;
     onPictureListRefresh?: (pictureDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot[], pictureData: PicturePost[]) => void;

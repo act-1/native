@@ -29,6 +29,8 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
       location = checkInStore.currentLocation;
     }
 
+    console.log(location, event);
+
     feedStore.uploadImage({ image, text, event, location });
   };
 
@@ -56,7 +58,8 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
           onPress={() =>
             navigation.navigate('EventPictures', {
               eventId: checkInStore.lastCheckIn.eventId,
-              eventTitle: checkInStore.lastCheckIn.locationName,
+              locationId: checkInStore.lastCheckIn.locationId,
+              title: checkInStore.lastCheckIn.locationName,
             })
           }
         />

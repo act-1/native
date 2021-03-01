@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import { Box, Text } from '../../components';
 import ScrollablePictures from '@components/Widgets/ScrollablePictures';
-import { getEventPictures } from '@services/feed';
+import { getPictures } from '@services/feed';
 
 import { Event, PicturePost } from '@types/collections';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
@@ -34,7 +34,7 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
   const onPicturePress = (index: number) => {
     navigation.navigate('EventPictureList', {
       eventId: event.id,
-      eventTitle: event.shortTitle || event.title,
+      title: event.shortTitle || event.title,
       initialPictures: eventPicturesDocs,
       initialIndex: index,
       onPictureListRefresh,
@@ -56,7 +56,7 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
   useEffect(() => {
     setFetchingPictures(true);
 
-    getEventPictures({ eventId: event.id, limit: 8 })
+    getPictures({ source: 'event', sourceId: event.id, limit: 8 })
       .then((pictureDocs) => {
         const pictures = pictureDocs.map((picture) => picture.data() as PicturePost);
         setEventPictures(pictures);

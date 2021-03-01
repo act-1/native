@@ -31,8 +31,10 @@ class CheckInStore {
       const lastCheckIn = JSON.parse(checkIn);
       this.setLastCheckIn(lastCheckIn);
 
-      if (checkInLocation) this.setCurrentLocation(JSON.parse(checkInLocation));
-      if (checkInEvent) this.setCurrentEvent(JSON.parse(checkInEvent));
+      console.log(checkInLocation, checkInEvent);
+
+      if (checkInLocation) this.currentLocation = JSON.parse(checkInLocation);
+      if (checkInEvent) this.currentEvent = JSON.parse(checkInEvent);
     }
   }
 

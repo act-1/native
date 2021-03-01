@@ -7,13 +7,17 @@ import { EventPicturesScreenProps } from '@types/navigation';
 import { PicturePost } from '@types/collections';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
-import { getEventPictures } from '@services/feed';
+import { getPictures } from '@services/feed';
 
 import PictureList from '../../components/PictureList';
 
 function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
   const { mediaStore } = useStore();
-  const { eventId, initialPictures } = route.params;
+  const { eventId, locationId, initialPictures } = route.params;
+
+  // We can fetch event / pictures here, depends on whether we receive `eventId` or `locationId`.
+  const source = React.useMemo(() => (eventId ? 'event' : 'location'), [eventId]);
+  const sourceId = React.useMemo(() => eventId || locationId, [eventId, locationId]);
 
   const [eventPictures, setEventPictures] = useState<PicturePost[]>([]);
   const [eventPictureDocs, setEventPictureDocs] = useState<FirebaseFirestoreTypes.QueryDocumentSnapshot[]>([]);
@@ -21,7 +25,7 @@ function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: route.params.eventTitle,
+      title: route.params.title,
     });
   }, [navigation, route.params.eventTitle]);
 
@@ -29,7 +33,8 @@ function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
     try {
       setFetchingPictures(true);
       const lastDocumentIndex = eventPictures.length - 1;
-      const docs = await getEventPictures({ eventId, startAfter: eventPictureDocs[lastDocumentIndex], limit: 8 });
+
+      const docs = await getPictures({ source, sourceId, startAfter: eventPictureDocs[lastDocumentIndex], limit: 8 });
       setEventPictureDocs([...eventPictureDocs, ...docs]);
 
       const pictures = docs.map((picture) => picture.data() as PicturePost);
@@ -45,7 +50,7 @@ function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
     try {
       setFetchingPictures(true);
       const firstPictureDate = eventPictures[0].createdAt;
-      const newPictures = await getEventPictures({ eventId, afterDate: firstPictureDate, limit: 8 });
+      const newPictures = await getPictures({ source, sourceId, afterDate: firstPictureDate, limit: 8 });
       setEventPictureDocs([...newPictures, ...eventPictureDocs]);
 
       if (newPictures.length > 0) {
@@ -70,7 +75,8 @@ function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
       setEventPictures(pictures);
     } else {
       // Fetch pictures
-      getEventPictures({ eventId, limit: 8 }).then((pictureDocs) => {
+      console.log(source, sourceId);
+      getPictures({ source, sourceId, limit: 8 }).then((pictureDocs) => {
         console.log(pictureDocs.length);
         const pictures = pictureDocs.map((picture) => picture.data() as PicturePost);
         setEventPictureDocs(pictureDocs);

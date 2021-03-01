@@ -96,6 +96,7 @@ type NewImagePostProps = {
 
 export async function newImagePost({ image, text, location, event }: NewImagePostProps) {
   try {
+    console.log(location);
     const currentUser = auth().currentUser;
     if (currentUser) {
       const uploadedImage = await Storage.uploadPicture(image);
@@ -226,18 +227,22 @@ export async function getFeaturedPictures(): Promise<PicturePost[]> {
 }
 
 type EventPicturesProps = {
-  eventId: string;
+  source: 'event' | 'location';
+  sourceId: string;
   limit?: number;
   startAfter?: FirebaseFirestoreTypes.DocumentData;
   afterDate?: FirebaseFirestoreTypes.Timestamp;
 };
 
-export async function getEventPictures({ eventId, startAfter, afterDate, limit = 10 }: EventPicturesProps) {
+export async function getPictures({ source, sourceId, startAfter, afterDate, limit = 10 }: EventPicturesProps) {
+  const sourceField = source + 'Id'; // `event` -> eventId, location -> locationId
+  console.log(sourceField);
   try {
     let query = firestore()
       .collection('posts')
-      .where('eventId', '==', eventId)
       .where('type', '==', 'picture')
+      .where('archived', '==', false)
+      .where(sourceField, '==', sourceId)
       .orderBy('createdAt', 'desc')
       .limit(limit);
 
@@ -248,7 +253,7 @@ export async function getEventPictures({ eventId, startAfter, afterDate, limit =
         .collection('posts')
         .where('type', '==', 'picture')
         .where('archived', '==', false)
-        .where('eventId', '==', eventId)
+        .where(sourceField, '==', sourceId)
         .orderBy('createdAt', 'desc')
         .startAfter(startAfter);
 
@@ -263,7 +268,7 @@ export async function getEventPictures({ eventId, startAfter, afterDate, limit =
         .collection('posts')
         .where('type', '==', 'picture')
         .where('archived', '==', false)
-        .where('eventId', '==', eventId)
+        .where(sourceField, '==', sourceId)
         .where('createdAt', '>', afterDate)
         .orderBy('createdAt', 'desc');
 
@@ -283,6 +288,6 @@ export default {
   newImagePost,
   getRecentPictures,
   getFeaturedPictures,
-  getEventPictures,
+  getPictures,
   archivePost,
 };
