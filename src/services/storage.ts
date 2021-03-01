@@ -95,13 +95,13 @@ export async function uploadPicture(imageUri: string) {
 
     const resizedWidth = width / resizeRatio;
     const resizedHeight = height / resizeRatio;
-    console.log('storage:', imageUri, resizedHeight, resizedWidth);
+
     const resizedImage = await ImageResizer.createResizedImage(imageUri, resizedWidth, resizedHeight, 'JPEG', 75);
 
     const uploadTrace = await perf().startTrace('imageUpload');
     uploadTrace.putMetric('image_size', resizedImage.size);
 
-    const reference = storage().ref(resizedImage.name);
+    const reference = storage().ref(`uploaded_pictures/${resizedImage.name}`);
     await reference.putFile(resizedImage.uri);
 
     uploadTrace.stop();
