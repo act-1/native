@@ -26,7 +26,7 @@ function ProtestDashboardNavigator({ navigation }) {
           fontSize: 22,
           fontFamily: 'AtlasDL3.1AAA-Medium',
           color: '#EC534B',
-          marginBottom: Platform.OS === 'ios' ? 11 : 2,
+          marginBottom: Platform.select({ ios: 11, android: 2 }),
         },
         headerTintColor: '#8a8a8b',
         headerStyle: { backgroundColor: '#171b1f', shadowOpacity: 0 },
@@ -36,6 +36,7 @@ function ProtestDashboardNavigator({ navigation }) {
         name="Dashboard"
         component={ProtestDashboard}
         options={{
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <Box flexDirection="row">
               <CircularButton
@@ -45,7 +46,7 @@ function ProtestDashboardNavigator({ navigation }) {
                 iconName="x"
                 color="grey"
                 size="small"
-                style={{ opacity: 0.8, marginLeft: 12, marginBottom: 6 }}
+                style={{ opacity: 0.8, marginLeft: 12, marginBottom: Platform.select({ ios: 6, android: 4 }) }}
               />
             </Box>
           ),

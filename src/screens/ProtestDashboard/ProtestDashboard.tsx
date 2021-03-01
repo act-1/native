@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Platform } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { Box, Text, LocationCounter } from '../../components';
@@ -67,6 +67,7 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
 
   return (
     <Box flex={1} style={{ backgroundColor: '#181a1b' }}>
+      <StatusBar backgroundColor="#181a1b" />
       {Platform.OS === 'ios' && (
         <BannerNotification
           customComponent={<UploadBanner />}
