@@ -20,6 +20,7 @@ function InputToolbar() {
 
   const onImageUpload = ({ imageUri, text, inGallery }: { imageUri: string; text?: string; inGallery: boolean }) => {
     chatStore.sendPictureMessage({ imageUri, text, inGallery });
+    navigation.goBack();
   };
 
   const openCamera = () => {

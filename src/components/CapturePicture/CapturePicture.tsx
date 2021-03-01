@@ -28,7 +28,6 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
 
     if (currentPictureURI && onImageUpload) {
       route.params.onImageUpload({ imageUri: currentPictureURI, text, inGallery });
-      navigation.goBack();
     }
   };
 
