@@ -6,6 +6,7 @@ import Composer from '../Chat/Composer';
 import TouchableScale from 'react-native-touchable-scale';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { RNCamera, TakePictureResponse } from 'react-native-camera';
+import { CameraScreen } from 'react-native-camera-kit';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CapturePictureProps } from '@types/navigation';
@@ -28,13 +29,8 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
     }
   };
 
-  const takePicture = async () => {
-    try {
-      const image = await cameraRef.current?.takePictureAsync({ quality: 1 });
-      setCurrentPicture(image);
-    } catch (err) {
-      console.error(err);
-    }
+  const takePicture = (event: any) => {
+    setCurrentPicture(event.image);
   };
 
   const onSendPress = (text?: string) => {
@@ -71,7 +67,7 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
 
   return (
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <Box position="absolute" top={insets.top} left={5} zIndex={10}>
+      <Box position="absolute" bottom={currentPicture ? undefined : insets.bottom + 30} left={5} zIndex={10}>
         <CircularButton iconName={currentPicture ? 'x' : 'arrow-right'} color="white" transparent onPress={closeButtonPress} />
       </Box>
 
@@ -80,11 +76,24 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
           <Image source={{ uri: currentPicture.uri }} style={styles.imageStyle} />
         </Pressable>
       ) : (
-        <RNCamera ref={cameraRef} style={styles.camera} captureAudio={false} useNativeZoom={true} />
+        // <RNCamera ref={cameraRef} style={styles.camera} captureAudio={false} useNativeZoom={true} />
+
+        <CameraScreen
+          flashImages={{
+            on: require('@assets/camera_screen/flashOn.png'),
+            off: require('@assets/camera_screen/flashOff.png'),
+            auto: require('@assets/camera_screen/flashAuto.png'),
+          }}
+          cameraFlipImage={require('@assets/camera_screen/cameraFlipIcon.png')}
+          captureButtonImage={require('@assets/camera_screen/cameraButton.png')}
+          actions={{ rightButtonText: 'Done', leftButtonText: undefined }}
+          onBottomButtonPressed={takePicture}
+          saveToCameraRoll={false}
+        />
       )}
 
       <Box position="absolute" bottom={50} alignItems="center" width="100%">
-        {currentPicture ? (
+        {currentPicture && (
           <Box
             style={[
               styles.composerContainer,
@@ -104,16 +113,6 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
               ActionComponent={ActionComponent}
             />
           </Box>
-        ) : (
-          <TouchableScale
-            activeScale={1.1}
-            friction={10}
-            onPress={takePicture}
-            onPressIn={() => HapticFeedback.trigger('impactLight')}
-            onPressOut={() => HapticFeedback.trigger('impactMedium')}
-          >
-            <Box style={styles.captureButton}></Box>
-          </TouchableScale>
         )}
       </Box>
     </KeyboardAvoidingView>
