@@ -1,7 +1,12 @@
-import React, { useRef, useCallback } from 'react';
-import { Animated } from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, ViewStyle } from 'react-native';
 
-function FadeInOutView({ children }) {
+type FadeInOutViewProps = {
+  style?: ViewStyle;
+  children?: React.ReactNode;
+};
+
+function FadeInOutView({ style, children }: FadeInOutViewProps) {
   const fadeInOut = useRef(new Animated.Value(1)).current;
 
   const sequence = Animated.sequence([
@@ -22,7 +27,7 @@ function FadeInOutView({ children }) {
     Animated.loop(sequence).start();
   }, [sequence]);
 
-  return <Animated.View style={{ opacity: fadeInOut }}>{children}</Animated.View>;
+  return <Animated.View style={[style, { opacity: fadeInOut }]}>{children}</Animated.View>;
 }
 
 export default FadeInOutView;
