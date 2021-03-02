@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
-import { Box, Text } from '../../components';
+import { Box, Text } from '../../../components';
 import FastImage from 'react-native-fast-image';
 import { PicturePost } from '@types/collections';
 import TouchableScale from 'react-native-touchable-scale';

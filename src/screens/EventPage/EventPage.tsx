@@ -8,7 +8,6 @@ import { useStore } from '../../stores';
 import { Event } from '@types/collections';
 import { EventPageScreenProps } from '@types/navigation';
 import { Box, Text, StickyHeaderScrollView } from '../../components';
-import ScrollablePictures from '@components/Widgets/ScrollablePictures';
 
 import EventPageCounter from './EventPageCounter';
 import EventPageActions from './EventPageActions';

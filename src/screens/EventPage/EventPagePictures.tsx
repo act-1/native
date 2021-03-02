@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import { Box, Text } from '../../components';
-import ScrollablePictures from '@components/Widgets/ScrollablePictures';
+import { ScrollablePictures } from '../../components/Widgets';
 import { getPictures } from '@services/feed';
 
 import { Event, PicturePost } from '@types/collections';
