@@ -88,7 +88,7 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
         size="small"
       />
 
-      <Box flexDirection="row" justifyContent="space-evenly" marginBottom="xl" backgroundColor="seperator" paddingVertical="xxl">
+      <Box flexDirection="row" justifyContent="space-evenly" backgroundColor="seperator" paddingVertical="xxl" flex={1}>
         {chatStore.currentRoomName !== undefined && (
           <ProtestActionButton
             title="צ׳אט הפגנה"
