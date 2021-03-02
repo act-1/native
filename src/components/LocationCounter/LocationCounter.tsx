@@ -69,7 +69,7 @@ function LocationCounter({ locationId, variant = 'small', style }: LocationCount
 
   if (isLoading) {
     return (
-      <Box justifyContent="center" alignItems="center" height={110} style={style}>
+      <Box justifyContent="center" alignItems="center" height={105} style={style}>
         <ActivityIndicator size="small" color="grey" />
       </Box>
     );
@@ -77,7 +77,7 @@ function LocationCounter({ locationId, variant = 'small', style }: LocationCount
 
   if (!isLoading && (counter === 0 || counter === null)) {
     return (
-      <Box justifyContent="center" alignItems="center" height={110} style={style} backgroundColor="greyBackground">
+      <Box justifyContent="center" alignItems="center" height={105} style={style} backgroundColor="greyBackground">
         <Text variant="boxTitle" textAlign="center" color="attentionBackground" marginBottom="xs" paddingHorizontal="xm">
           עכשיו בהפגנה?
         </Text>
@@ -118,7 +118,7 @@ function LocationCounter({ locationId, variant = 'small', style }: LocationCount
     );
   } else {
     counterComponent = (
-      <Box alignItems="center" marginBottom="m">
+      <Box alignItems="center" marginBottom="m" minHeight={105}>
         <Ticker textStyle={{ fontSize: 54, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#ededed' }}>{counter}</Ticker>
         <Text variant="extraLargeTitle">מפגינים עכשיו</Text>
       </Box>
@@ -126,7 +126,7 @@ function LocationCounter({ locationId, variant = 'small', style }: LocationCount
   }
 
   return (
-    <View style={[{ width: '100%', paddingVertical: 12, backgroundColor: '#111111' }, style]}>
+    <View style={[{ width: '100%', paddingVertical: 12 }, style]}>
       {counterComponent}
 
       <Box>

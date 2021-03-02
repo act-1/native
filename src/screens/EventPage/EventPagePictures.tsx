@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { Box, Text } from '../../components';
 import { ScrollablePictures } from '../../components/Widgets';
 import { getPictures } from '@services/feed';
@@ -30,7 +30,7 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
 
   const [eventPictures, setEventPictures] = useState<PicturePost[]>([]);
   const [eventPicturesDocs, setEventPicturesDocs] = useState<FirebaseFirestoreTypes.QueryDocumentSnapshot[]>([]);
-  const [fetchingPictures, setFetchingPictures] = useState(false);
+  const [fetchingPictures, setFetchingPictures] = useState(true);
 
   const onPicturePress = (index: number) => {
     navigation.navigate('EventPictureList', {
@@ -71,11 +71,11 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
       .finally(() => setFetchingPictures(false));
   }, [event, location]);
 
-  return <Box style={styles.eventPicturesWrapper}>{renderComponent}</Box>;
+  return (
+    <Box style={{ minHeight: size === 'small' ? 184 : 225 }} justifyContent="center" paddingVertical="xm" marginBottom="m">
+      {renderComponent}
+    </Box>
+  );
 }
 
 export default EventPagePictures;
-
-const styles = StyleSheet.create({
-  eventPicturesWrapper: { justifyContent: 'center' },
-});

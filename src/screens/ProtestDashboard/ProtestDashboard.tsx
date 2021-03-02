@@ -67,7 +67,7 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
   }, [feedStore.uploadStatus]);
 
   return (
-    <Box flex={1} style={{ backgroundColor: '#222222' }}>
+    <Box flex={1} style={{ backgroundColor: '#111111' }}>
       <StatusBar backgroundColor="#121314" />
       {Platform.OS === 'ios' && (
         <BannerNotification

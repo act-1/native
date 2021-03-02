@@ -80,7 +80,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
               </Text>
             </Box>
 
-            <Box marginBottom="xm">
+            <Box marginBottom="xm" backgroundColor="sectionListSeperator">
               {event.attendingCount >= 0 && (
                 <EventPageCounter
                   eventStatus={event.status}

@@ -17,22 +17,24 @@ function ScrollablePictures({ pictures, onPicturePress, size, style }: Scrollabl
   const pictureSize = size === 'large' ? styles.largePicture : styles.smallPicture;
 
   return (
-    <Box paddingVertical="xm" marginBottom="m" backgroundColor="sectionListSeperator" style={{ minHeight: pictureSize.height }}>
-      <ScrollView contentContainerStyle={styles.scrollablePictures} showsHorizontalScrollIndicator={false} horizontal={true}>
-        {pictures.map((picture, index) => (
-          <TouchableScale
-            activeScale={0.96}
-            friction={20}
-            style={styles.pictureWrapper}
-            key={picture.id}
-            onPress={() => onPicturePress(index)}
-          >
-            <FastImage source={{ uri: picture.pictureUrl }} style={[styles.picture, pictureSize]} />
-            <Text variant="boxSubtitle">{timeAgo(picture.createdAt.toDate())}</Text>
-          </TouchableScale>
-        ))}
-      </ScrollView>
-    </Box>
+    <ScrollView
+      contentContainerStyle={[styles.scrollablePictures, style]}
+      showsHorizontalScrollIndicator={false}
+      horizontal={true}
+    >
+      {pictures.map((picture, index) => (
+        <TouchableScale
+          activeScale={0.96}
+          friction={20}
+          style={styles.pictureWrapper}
+          key={picture.id}
+          onPress={() => onPicturePress(index)}
+        >
+          <FastImage source={{ uri: picture.pictureUrl }} style={[styles.picture, pictureSize]} />
+          <Text variant="boxSubtitle">{timeAgo(picture.createdAt.toDate())}</Text>
+        </TouchableScale>
+      ))}
+    </ScrollView>
   );
 }
 
