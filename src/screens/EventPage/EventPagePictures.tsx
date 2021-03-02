@@ -4,7 +4,7 @@ import { Box, Text } from '../../components';
 import { ScrollablePictures } from '../../components/Widgets';
 import { getPictures } from '@services/feed';
 
-import { Event, PicturePost } from '@types/collections';
+import { Event, Location, PicturePost } from '@types/collections';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 import { useNavigation } from '@react-navigation/native';
@@ -16,15 +16,16 @@ const noPicturesText = (
 );
 
 type EventPagePicturesProps = {
-  event: Event;
-  filter: 'featured' | 'recent';
+  event?: Event;
+  location?: Location;
+  size: 'small' | 'large';
 };
 
 /**
  * Fetch and display event pictures, according to the provided `filter`.
  */
 
-function EventPagePictures({ event }: EventPagePicturesProps) {
+function EventPagePictures({ event, location, size = 'large' }: EventPagePicturesProps) {
   const navigation = useNavigation();
 
   const [eventPictures, setEventPictures] = useState<PicturePost[]>([]);
@@ -33,8 +34,9 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
 
   const onPicturePress = (index: number) => {
     navigation.navigate('EventPictureList', {
-      eventId: event.id,
-      title: event.shortTitle || event.title,
+      source: event ? 'event' : 'location',
+      sourceId: event?.id || location?.id,
+      title: event?.shortTitle || event?.title || location?.name,
       initialPictures: eventPicturesDocs,
       initialIndex: index,
       onPictureListRefresh,
@@ -44,7 +46,7 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
   const renderComponent = useMemo(() => {
     if (fetchingPictures) return <ActivityIndicator color="grey" />;
     if (eventPictures.length === 0) return noPicturesText;
-    return <ScrollablePictures pictures={eventPictures} onPicturePress={onPicturePress} />;
+    return <ScrollablePictures pictures={eventPictures} onPicturePress={onPicturePress} size={size} />;
   }, [eventPictures, fetchingPictures]);
 
   // Refresh local state if refersh occurs on EventPictureList
@@ -56,7 +58,10 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
   useEffect(() => {
     setFetchingPictures(true);
 
-    getPictures({ source: 'event', sourceId: event.id, limit: 8 })
+    const source = event ? 'event' : 'location';
+    const sourceId = event ? event.id : location!.id;
+
+    getPictures({ source, sourceId, limit: 8 })
       .then((pictureDocs) => {
         const pictures = pictureDocs.map((picture) => picture.data() as PicturePost);
         setEventPictures(pictures);
@@ -64,7 +69,7 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
       })
       .catch((err) => console.error(err))
       .finally(() => setFetchingPictures(false));
-  }, [event.id]);
+  }, [event, location]);
 
   return <Box style={styles.eventPicturesWrapper}>{renderComponent}</Box>;
 }
@@ -72,5 +77,5 @@ function EventPagePictures({ event }: EventPagePicturesProps) {
 export default EventPagePictures;
 
 const styles = StyleSheet.create({
-  eventPicturesWrapper: { justifyContent: 'center', minHeight: 230 },
+  eventPicturesWrapper: { justifyContent: 'center' },
 });

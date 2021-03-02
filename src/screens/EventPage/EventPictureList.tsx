@@ -13,11 +13,7 @@ import PictureList from '../../components/PictureList';
 
 function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
   const { mediaStore } = useStore();
-  const { eventId, locationId, initialPictures } = route.params;
-
-  // We can fetch event / pictures here, depends on whether we receive `eventId` or `locationId`.
-  const source = React.useMemo(() => (eventId ? 'event' : 'location'), [eventId]);
-  const sourceId = React.useMemo(() => eventId || locationId, [eventId, locationId]);
+  const { source, sourceId, initialPictures } = route.params;
 
   const [eventPictures, setEventPictures] = useState<PicturePost[]>([]);
   const [eventPictureDocs, setEventPictureDocs] = useState<FirebaseFirestoreTypes.QueryDocumentSnapshot[]>([]);
@@ -27,7 +23,7 @@ function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
     navigation.setOptions({
       title: route.params.title,
     });
-  }, [navigation, route.params.eventTitle]);
+  }, [navigation, route.params.title]);
 
   const fetchMorePictures = async () => {
     try {
@@ -75,7 +71,6 @@ function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
       setEventPictures(pictures);
     } else {
       // Fetch pictures
-      console.log(source, sourceId);
       getPictures({ source, sourceId, limit: 8 }).then((pictureDocs) => {
         console.log(pictureDocs.length);
         const pictures = pictureDocs.map((picture) => picture.data() as PicturePost);

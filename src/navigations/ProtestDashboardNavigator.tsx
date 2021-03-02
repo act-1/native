@@ -29,7 +29,7 @@ function ProtestDashboardNavigator({ navigation }) {
           marginBottom: Platform.select({ ios: 11, android: 2 }),
         },
         headerTintColor: '#8a8a8b',
-        headerStyle: { backgroundColor: '#171b1f', shadowOpacity: 0 },
+        headerStyle: { backgroundColor: '#111111', shadowOpacity: 0 },
       }}
     >
       <ProtestDashboardStack.Screen
@@ -53,7 +53,7 @@ function ProtestDashboardNavigator({ navigation }) {
         }}
       />
       <ProtestDashboardStack.Screen
-        name="EventPictures"
+        name="EventPictureList"
         component={EventPictureList}
         options={{
           headerShown: true,

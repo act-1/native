@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { Platform, StatusBar } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-import { Box, LocationCounter } from '../../components';
-import { ScrollablePictures } from '../../components/Widgets';
+import { Box, Text, LocationCounter } from '../../components';
 import { ProtestDashboardProps } from '@types/navigation';
 import { logEvent } from '@services/analytics';
 import ProtestActionButton from './ProtestActionButton';
+import EventPagePictures from '../EventPage/EventPagePictures';
 
 import { Notification as BannerNotification } from 'react-native-in-app-message';
 import UploadBanner from '@components/UploadBanner';
@@ -18,7 +18,7 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
   React.useLayoutEffect(() => {
     if (checkInStore.lastCheckIn) {
       navigation.setOptions({
-        headerTitle: checkInStore.lastCheckIn.locationName,
+        headerTitle: checkInStore.lastCheckIn.eventName || checkInStore.lastCheckIn.locationName,
       });
     }
 
@@ -67,8 +67,8 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
   }, [feedStore.uploadStatus]);
 
   return (
-    <Box flex={1} style={{ backgroundColor: '#181a1b' }}>
-      <StatusBar backgroundColor="#181a1b" />
+    <Box flex={1} style={{ backgroundColor: '#222222' }}>
+      <StatusBar backgroundColor="#121314" />
       {Platform.OS === 'ios' && (
         <BannerNotification
           customComponent={<UploadBanner />}
@@ -79,11 +79,16 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
           hideStatusBar={false}
         />
       )}
-      <LocationCounter
-        locationId={checkInStore.lastCheckIn.locationId}
-        style={{ marginBottom: 16, backgroundColor: '#111111', zIndex: 0 }}
+
+      <LocationCounter locationId={checkInStore.lastCheckIn.locationId} variant="large" />
+
+      <EventPagePictures
+        event={checkInStore.lastCheckIn.eventId ? checkInStore.currentEvent : undefined}
+        location={checkInStore.lastCheckIn.eventId ? undefined : checkInStore.currentLocation}
+        size="small"
       />
-      <Box flexDirection="row" justifyContent="space-evenly" marginBottom="xl">
+
+      <Box flexDirection="row" justifyContent="space-evenly" marginBottom="xl" backgroundColor="seperator" paddingVertical="xxl">
         {chatStore.currentRoomName !== undefined && (
           <ProtestActionButton
             title="צ׳אט הפגנה"
@@ -96,20 +101,6 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
           icon={require('@assets/icons/camera-fluent.png')}
           onPress={() => navigation.navigate('ChatImageUpload', { onImageUpload })}
         />
-      </Box>
-      <Box flexDirection="row" justifyContent="space-evenly">
-        <ProtestActionButton
-          title="גלריית תמונות"
-          icon={require('@assets/icons/gallery.png')}
-          onPress={() =>
-            navigation.navigate('EventPictures', {
-              eventId: checkInStore.lastCheckIn.eventId,
-              locationId: checkInStore.lastCheckIn.locationId,
-              title: checkInStore.lastCheckIn.locationName,
-            })
-          }
-        />
-        <ProtestActionButton title="הזמנת חברים" icon={require('@assets/icons/fist-color.png')} />
       </Box>
     </Box>
   );

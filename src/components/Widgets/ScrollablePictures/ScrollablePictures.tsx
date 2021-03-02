@@ -9,15 +9,15 @@ import { timeAgo } from '@utils/date-utils';
 type ScrollablePicturesProps = {
   pictures: PicturePost[];
   onPicturePress: (index: number) => void;
+  size: 'small' | 'large';
   style?: ViewStyle;
 };
 
-function ScrollablePictures({ pictures, onPicturePress, style }: ScrollablePicturesProps) {
+function ScrollablePictures({ pictures, onPicturePress, size, style }: ScrollablePicturesProps) {
+  const pictureSize = size === 'large' ? styles.largePicture : styles.smallPicture;
+
   return (
-    <Box padding="m" marginBottom="m" style={style}>
-      <Text variant="largeTitle" marginBottom="m">
-        תמונות אחרונות
-      </Text>
+    <Box paddingVertical="xm" marginBottom="m" backgroundColor="sectionListSeperator" style={{ minHeight: pictureSize.height }}>
       <ScrollView contentContainerStyle={styles.scrollablePictures} showsHorizontalScrollIndicator={false} horizontal={true}>
         {pictures.map((picture, index) => (
           <TouchableScale
@@ -27,7 +27,7 @@ function ScrollablePictures({ pictures, onPicturePress, style }: ScrollablePictu
             key={picture.id}
             onPress={() => onPicturePress(index)}
           >
-            <FastImage source={{ uri: picture.pictureUrl }} style={styles.picture} />
+            <FastImage source={{ uri: picture.pictureUrl }} style={[styles.picture, pictureSize]} />
             <Text variant="boxSubtitle">{timeAgo(picture.createdAt.toDate())}</Text>
           </TouchableScale>
         ))}
@@ -39,7 +39,9 @@ function ScrollablePictures({ pictures, onPicturePress, style }: ScrollablePictu
 export default ScrollablePictures;
 
 const styles = StyleSheet.create({
-  scrollablePictures: { minWidth: '100%' },
+  scrollablePictures: { minWidth: '100%', paddingLeft: 12 },
   pictureWrapper: { marginRight: 12 },
-  picture: { width: 225, height: 225, marginBottom: 4, borderRadius: 4 },
+  picture: { marginBottom: 4, borderRadius: 4, elevation: 6 },
+  largePicture: { width: 225, height: 225 },
+  smallPicture: { width: 125, height: 125 },
 });

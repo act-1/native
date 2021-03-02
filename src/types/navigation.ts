@@ -28,8 +28,8 @@ export type RootStackParamList = {
   EventList: undefined;
   EventPage: { eventId: string };
   EventPictureList: {
-    eventId?: string;
-    locationId?: string;
+    source: string;
+    sourceId: string;
     title: string;
     initialPictures?: FirebaseFirestoreTypes.DocumentSnapshot[];
     initialIndex?: number;

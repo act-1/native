@@ -92,7 +92,11 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
 
             {event.status === 'upcoming' && <EventPageActions isAttending={isAttending} attendEvent={attendEvent} />}
 
-            {event.status === 'live' && <EventPagePictures event={event} filter="recent" />}
+            <Text variant="largeTitle" marginBottom="m">
+              תמונות אחרונות
+            </Text>
+
+            {event.status === 'live' && <EventPagePictures event={event} />}
 
             <Box padding="m" marginBottom="m" backgroundColor="greyBackground">
               <Text variant="largeTitle" marginBottom="m">
