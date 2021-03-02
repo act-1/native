@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Keyboard, StyleSheet } from 'react-native';
-import { Box } from '../../components';
+import { Box, Text } from '../../components';
 import { useStore } from '../../stores';
 import { useNavigation } from '@react-navigation/native';
 import { logEvent } from '@services/analytics';
@@ -10,7 +10,7 @@ import Camera from './Camera';
 import Send from './Send';
 
 function InputToolbar() {
-  const { chatStore } = useStore();
+  const { chatStore, checkInStore } = useStore();
   const navigation = useNavigation();
   const [keyboardShown, setKeyboardShown] = useState(false);
 
@@ -42,6 +42,18 @@ function InputToolbar() {
 
   return (
     <Box backgroundColor="seperator">
+      {checkInStore.lastCheckIn?.privacySetting !== 'PUBLIC' && (
+        <Box justifyContent="center" zIndex={10} style={[StyleSheet.absoluteFillObject, { backgroundColor: 'rgba(0,0,0,0.75)' }]}>
+          <Box alignItems="center" marginBottom="m">
+            <Text variant="text" fontSize={14.5} color="lightText" opacity={0.85}>
+              הגדרת הפרטיות שנבחרה לא מאפשרת לכתוב בצ’אט.
+            </Text>
+            <Text variant="text" fontSize={14.5} color="lightText" opacity={0.85}>
+              אנחנו עובדים על אפשרות להשתתפות אנונימית.
+            </Text>
+          </Box>
+        </Box>
+      )}
       <Composer
         keyboardShown={keyboardShown}
         ActionComponent={({ text, resetText }: { text: string; resetText: () => void }) => (
