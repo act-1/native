@@ -14,19 +14,17 @@ const deviceWidth = Dimensions.get('window').width;
 type LocationCounterProps = { locationId: string; variant: 'small' | 'large'; style?: ViewStyle };
 
 function LocationCounter({ locationId, variant = 'small', style }: LocationCounterProps) {
-  const { userStore } = useStore();
+  const { userStore, liveStore } = useStore();
   const [isLoading, setIsLoading] = useState(true);
   const [checkIns, setCheckIns] = useState<RTDBCheckIn[]>([]);
-  const [counter, setCounter] = useState<number | null>(null);
   const carouselRef = useRef<Carousel<RTDBCheckIn>>(null);
 
   // Subscribe to location count & public check ins
   useEffect(() => {
     // TODO: Filter by createdAt property
     const checkInsQuery = RealtimeDatabase.database.ref(`/checkIns/${locationId}`).orderByChild('isActive').equalTo(true);
-    const checkInCount = RealtimeDatabase.database.ref(`/locationCounter/${locationId}`);
 
-    checkInsQuery.once('value', (snapshot) => {
+    checkInsQuery.once('value', () => {
       setIsLoading(false);
     });
 
@@ -43,28 +41,6 @@ function LocationCounter({ locationId, variant = 'small', style }: LocationCount
         return [...prevState, checkIn];
       });
     });
-
-    checkInCount.on('value', (snapshot) => {
-      if (snapshot.val()) {
-        const count = snapshot.val();
-
-        // Something went wrong!
-        if (count < 0) {
-          crashlytics().setAttributes({ locationId });
-          crashlytics().log('Check in counter is below zero.');
-          return;
-        }
-
-        setCounter(snapshot.val());
-      } else {
-        setCounter(0);
-      }
-
-      return () => {
-        checkInsQuery.off();
-        checkInCount.off();
-      };
-    });
   }, [locationId]);
 
   if (isLoading) {
@@ -75,7 +51,7 @@ function LocationCounter({ locationId, variant = 'small', style }: LocationCount
     );
   }
 
-  if (!isLoading && (counter === 0 || counter === null)) {
+  if (!isLoading && !liveStore.locationsCount[locationId]) {
     return (
       <Box justifyContent="center" alignItems="center" height={105} style={style} backgroundColor="greyBackground">
         <Text variant="boxTitle" textAlign="center" color="attentionBackground" marginBottom="xs" paddingHorizontal="xm">
@@ -110,7 +86,9 @@ function LocationCounter({ locationId, variant = 'small', style }: LocationCount
   if (variant === 'small') {
     counterComponent = (
       <FadeInOutView style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 8 }}>
-        <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>{counter}</Ticker>
+        <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>
+          {liveStore.locationsCount[locationId]}
+        </Ticker>
         <Text variant="text" fontFamily="AtlasDL3.1AAA-Bold" color="primaryColor" marginLeft="xs">
           מפגינים עכשיו
         </Text>
@@ -119,7 +97,9 @@ function LocationCounter({ locationId, variant = 'small', style }: LocationCount
   } else {
     counterComponent = (
       <Box alignItems="center" marginBottom="m" minHeight={105}>
-        <Ticker textStyle={{ fontSize: 54, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#ededed' }}>{counter}</Ticker>
+        <Ticker textStyle={{ fontSize: 54, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#ededed' }}>
+          {liveStore.locationsCount[locationId]}
+        </Ticker>
         <Text variant="extraLargeTitle">מפגינים עכשיו</Text>
       </Box>
     );

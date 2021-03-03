@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Box, Text } from '../..';
+import { Box, Text, Ticker } from '../..';
 import FastImage from 'react-native-fast-image';
 import TouchableScale from 'react-native-touchable-scale';
 import { LiveEvent, PastEvent } from '@types/collections';
 import FadeInOutView from '../../FadeInOutView';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../../stores';
 
 type LiveLocationBoxProps = {
   protest: LiveEvent | PastEvent;
@@ -18,7 +20,15 @@ function getRandomNumber() {
 const boxWidth = 280; // Substract 12 margins
 
 function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
-  const { status, title, city, locationName, thumbnail } = protest;
+  const { liveStore } = useStore();
+  const { status, title, city, locationName, locationId, thumbnail } = protest;
+
+  let protestersCount = '---';
+
+  if (protest.status === 'live' && liveStore.locationsCount[locationId]) {
+    protestersCount = liveStore.locationsCount[locationId];
+  }
+
   return (
     <TouchableScale activeScale={0.96} friction={20} onPress={onPress} style={{ width: boxWidth, marginHorizontal: 12 }}>
       <FastImage style={styles.eventThumbnail} source={{ uri: thumbnail }} />
@@ -45,9 +55,12 @@ function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
               style={styles.attendingProfilePic}
             />
             {status === 'live' && (
-              <FadeInOutView>
-                <Text variant="boxTitle" color="important" marginLeft="xs" fontSize={14}>
-                  301 עכשיו בהפגנה
+              <FadeInOutView style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: 6 }}>
+                <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>
+                  {protestersCount}
+                </Ticker>
+                <Text variant="text" fontFamily="AtlasDL3.1AAA-Bold" color="primaryColor" marginLeft="xs">
+                  עכשיו בהפגנה
                 </Text>
               </FadeInOutView>
             )}
@@ -64,7 +77,7 @@ function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
   );
 }
 
-export default React.memo(FeaturedProtestBox);
+export default React.memo(observer(FeaturedProtestBox));
 
 const styles = StyleSheet.create({
   eventThumbnail: {
