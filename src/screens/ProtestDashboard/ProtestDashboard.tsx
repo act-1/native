@@ -80,7 +80,7 @@ function ProtestDashboard({ navigation, route }: ProtestDashboardProps) {
         />
       )}
 
-      <LocationCounter locationId={checkInStore.lastCheckIn.locationId} variant="large" />
+      <LocationCounter locationId={checkInStore.lastCheckIn.locationId} variant="large" style={{ marginBottom: 16 }} />
 
       <EventPagePictures
         event={checkInStore.lastCheckIn.eventId ? checkInStore.currentEvent : undefined}

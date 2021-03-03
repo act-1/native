@@ -18,7 +18,7 @@ const noPicturesText = (
 type EventPagePicturesProps = {
   event?: Event;
   location?: Location;
-  size: 'small' | 'large';
+  size?: 'small' | 'large';
 };
 
 /**
@@ -72,7 +72,7 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
   }, [event, location]);
 
   return (
-    <Box style={{ minHeight: size === 'small' ? 184 : 225 }} justifyContent="center" paddingVertical="xm" marginBottom="m">
+    <Box style={{ minHeight: size === 'small' ? 152 : 225 }} justifyContent="center" marginBottom="m">
       {renderComponent}
     </Box>
   );
