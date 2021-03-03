@@ -13,10 +13,6 @@ type LiveLocationBoxProps = {
   onPress: () => void;
 };
 
-function getRandomNumber() {
-  return Math.floor(Math.random() * 60) + 1;
-}
-
 const boxWidth = 280; // Substract 12 margins
 
 function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
@@ -41,36 +37,35 @@ function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
           {locationName}, {city}
         </Text>
         <Box width={'100%'} marginLeft="s">
-          <Box flexDirection="row" alignItems="center">
-            <FastImage
-              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
-              style={styles.attendingProfilePic}
-            />
-            <FastImage
-              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
-              style={styles.attendingProfilePic}
-            />
-            <FastImage
-              source={{ uri: `https://i.pravatar.cc/150?img=${getRandomNumber()}` }}
-              style={styles.attendingProfilePic}
-            />
-            {status === 'live' && (
+          {status === 'live' && liveStore.locationProtesters[locationId]?.length === 3 && (
+            <Box flexDirection="row" alignItems="center">
+              {liveStore.locationProtesters[locationId].map((profilePicture: string) => (
+                <FastImage key={profilePicture} source={{ uri: profilePicture }} style={styles.attendingProfilePic} />
+              ))}
+
               <FadeInOutView style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: 6 }}>
-                <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>
-                  {protestersCount}
-                </Ticker>
+                {typeof protestersCount === 'number' ? (
+                  <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>
+                    {protestersCount}
+                  </Ticker>
+                ) : (
+                  <Text variant="text" fontFamily="AtlasDL3.1AAA-Bold" color="primaryColor" marginLeft="xs">
+                    ---
+                  </Text>
+                )}
+
                 <Text variant="text" fontFamily="AtlasDL3.1AAA-Bold" color="primaryColor" marginLeft="xs">
                   עכשיו בהפגנה
                 </Text>
               </FadeInOutView>
-            )}
+            </Box>
+          )}
 
-            {status === 'past' && (
-              <Text variant="boxTitle" color="important" marginLeft="xs" fontSize={14}>
-                301 יצאו להפגין
-              </Text>
-            )}
-          </Box>
+          {status === 'past' && (
+            <Text variant="boxTitle" color="important" marginLeft="xs" fontSize={14}>
+              301 יצאו להפגין
+            </Text>
+          )}
         </Box>
       </Box>
     </TouchableScale>

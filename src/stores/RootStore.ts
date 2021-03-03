@@ -35,7 +35,9 @@ class RootStore {
   async initApp() {
     try {
       this.mediaStore.getHomeScreenPictures();
-      this.eventStore.getEvents();
+      this.eventStore.getEvents().then(({ liveEvents }) => {
+        this.liveStore.getLiveProtestersPictures(liveEvents);
+      });
       this.liveStore.setLiveListeners();
       this.userStore.getUserEvents();
       this.userStore.refreshFCMToken();
