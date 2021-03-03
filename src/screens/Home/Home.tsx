@@ -24,7 +24,7 @@ function Home() {
 
       <FeaturedPictures style={{ marginBottom: 12 }} />
 
-      {eventStore.liveEvents.length > 1 && (
+      {eventStore.liveEvents.length > 0 && (
         <>
           <Text variant="largeTitle" paddingHorizontal="m" marginTop="m" marginBottom="xm">
             עכשיו מפגינים
