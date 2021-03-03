@@ -1,12 +1,9 @@
 import React from 'react';
 import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
+import { logEvent } from '@services/analytics';
 import { Box } from '../..';
-// import analytics from '@react-native-firebase/analytics';
-
 import { useNavigation } from '@react-navigation/native';
-
 import FeaturedProtestBox from './FeaturedProtestBox';
-
 import { Event } from '@types/collections';
 
 type EventsWidgetProps = {
@@ -16,16 +13,17 @@ type EventsWidgetProps = {
 
 function FeaturedProtests({ protests, style }: EventsWidgetProps) {
   const navigation = useNavigation();
+
+  const onProtestPress = (eventId: string, index: number) => {
+    navigation.navigate('EventPage', { eventId });
+    logEvent('featured_protest_press', { eventId, index: index + 1 });
+  };
+
   return (
     <Box style={style} flex={1} width="100%">
       <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} contentContainerStyle={styles.featuredProtests}>
-        {protests.map((protest) => (
-          <FeaturedProtestBox
-            key={protest.id}
-            protest={protest}
-            attendingCount={3021}
-            onPress={() => navigation.navigate('EventPage', { eventId: protest.id })}
-          />
+        {protests.map((protest, index) => (
+          <FeaturedProtestBox key={protest.id} protest={protest} onPress={() => onProtestPress(protest.id, index)} />
         ))}
       </ScrollView>
     </Box>

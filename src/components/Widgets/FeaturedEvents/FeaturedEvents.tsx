@@ -34,7 +34,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
 
   const onEventPress = (eventId: string, index: number) => {
     navigation.navigate('EventPage', { eventId });
-    logEvent('featured_events_press', { event_id: eventId, featured_event_index: index + 1 });
+    logEvent('featured_event_press', { event_id: eventId, index: index + 1 });
   };
 
   return (
