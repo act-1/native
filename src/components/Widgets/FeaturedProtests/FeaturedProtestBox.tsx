@@ -36,11 +36,11 @@ function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
         <Text variant="boxSubtitle" fontSize={14} marginBottom="xs">
           {locationName}, {city}
         </Text>
-        <Box width={'100%'} marginLeft="s">
+        <Box width={'100%'}>
           {status === 'live' && liveStore.locationProtesters[locationId]?.length === 3 && (
-            <Box flexDirection="row" alignItems="center">
-              {liveStore.locationProtesters[locationId].map((profilePicture: string) => (
-                <FastImage key={profilePicture} source={{ uri: profilePicture }} style={styles.attendingProfilePic} />
+            <Box flexDirection="row" alignItems="center" marginLeft="xs">
+              {liveStore.locationProtesters[locationId].map((profilePicture: string, index: number) => (
+                <FastImage key={index} source={{ uri: profilePicture }} style={styles.attendingProfilePic} />
               ))}
 
               <FadeInOutView style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: 6 }}>
@@ -62,7 +62,7 @@ function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
           )}
 
           {status === 'past' && (
-            <Text variant="boxTitle" color="important" marginLeft="xs" fontSize={14}>
+            <Text variant="boxInfo" color="important" fontSize={14}>
               301 יצאו להפגין
             </Text>
           )}
