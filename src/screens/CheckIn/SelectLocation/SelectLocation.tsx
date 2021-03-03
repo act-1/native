@@ -19,6 +19,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
     let locationId = '';
     let eventId: null | string = null;
     let eventName: null | string = null;
+    let eventEndDate: null | Date = null;
 
     // Since the location can be either an event or location object, we have to mormalize the data.
     if (entry.type === 'location') {
@@ -31,13 +32,16 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       checkInStore.setCurrentEvent(entry);
       eventId = entry.id;
       eventName = entry.title;
+      // TODO: If the event will be taken from the store instead of being fetched in `locations.ts`,
+      // it won't be necessary to transform it `toDate` as it already being done in `events.ts`.
+      eventEndDate = entry.endDate.toDate();
       locationId = entry.locationId;
       locationName = entry.locationName;
 
       logEvent('check_in_select_event', { eventId });
     }
 
-    checkInStore.setPendingCheckIn({ locationId, locationName, eventId, eventName, coordinates, city, province });
+    checkInStore.setPendingCheckIn({ locationId, locationName, eventId, eventName, eventEndDate, coordinates, city, province });
     navigation.navigate('CheckInPrivacy');
   };
 
