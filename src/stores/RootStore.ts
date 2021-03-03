@@ -7,6 +7,7 @@ import eventStore from './EventStore';
 import mediaStore from './MediaStore';
 import chatStore from './ChatStore';
 import checkInStore from './CheckInStore';
+import liveStore from './LiveStore';
 
 class RootStore {
   userStore: userStore;
@@ -16,6 +17,7 @@ class RootStore {
   mediaStore: mediaStore;
   chatStore: chatStore;
   checkInStore: checkInStore;
+  liveStore: liveStore;
 
   constructor() {
     makeAutoObservable(this);
@@ -26,6 +28,7 @@ class RootStore {
     this.mediaStore = new mediaStore(this);
     this.chatStore = new chatStore(this);
     this.checkInStore = new checkInStore(this);
+    this.liveStore = new liveStore(this);
   }
 
   // Initalization of the app during splash screen
@@ -33,6 +36,7 @@ class RootStore {
     try {
       this.mediaStore.getHomeScreenPictures();
       this.eventStore.getEvents();
+      this.liveStore.setLiveListeners();
       this.userStore.getUserEvents();
       this.userStore.refreshFCMToken();
       this.feedStore.getUserLikes();

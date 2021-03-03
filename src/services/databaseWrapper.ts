@@ -8,7 +8,7 @@ class DatabaseWrapper {
       // this.database = firebase.app().database('http://localhost:9000/?ns=act1-dev-default-rtdb');
       this.database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
     } else {
-      this.database = firebase.app().database('https://act1-dev-default-rtdb.firebaseio.com/');
+      this.database = firebase.app().database('https://act1co-default-rtdb.firebaseio.com/');
     }
   }
 }
