@@ -111,6 +111,7 @@ const theme = createTheme({
       fontFamily: 'AtlasDL3.1AAA-Medium',
       fontSize: 13,
       color: 'eventBoxDateColor',
+      textAlign: 'left',
     },
     boxSubtitle: {
       fontFamily: 'AtlasDL3.1AAA-Regular',
