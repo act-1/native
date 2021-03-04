@@ -1,11 +1,11 @@
 import React from 'react';
 import { FlatList, Button, Image, StyleSheet, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { Box, Text } from '../../components';
+import { Box, Text, EditProfilePicture } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { ProfileScreenProps } from '../../types/navigation';
-import { BlurView, VibrancyView } from '@react-native-community/blur';
+import { BlurView } from '@react-native-community/blur';
 
 const CustomView = (props) =>
   Platform.select({ ios: <BlurView {...props} />, android: <Box {...props} backgroundColor="greyBackground" /> });
@@ -13,22 +13,16 @@ const CustomView = (props) =>
 function Profile({ navigation }: ProfileScreenProps) {
   const { userStore } = useStore();
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => null,
-    });
-  }, [navigation]);
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     header: () => null,
+  //   });
+  // }, [navigation]);
 
   return (
     <>
-      <Box zIndex={12} paddingTop="xxl" style={StyleSheet.absoluteFill}>
-        <Text variant="extraLargeTitle" textAlign="center">
-          פרופיל אישי - בקרוב
-        </Text>
-      </Box>
-      <CustomView style={{ ...StyleSheet.absoluteFillObject, zIndex: 10 }} />
       <Box paddingTop="m" justifyContent="center" alignItems="center">
-        <FastImage source={{ uri: userStore.userData?.profilePicture }} style={styles.profilePicture} />
+        <EditProfilePicture displayEditLink={false} />
 
         <Box
           flexDirection="row"
@@ -66,13 +60,4 @@ function Profile({ navigation }: ProfileScreenProps) {
 
 export default observer(Profile);
 
-const styles = StyleSheet.create({
-  profilePicture: {
-    width: 90,
-    height: 90,
-    marginBottom: 12,
-    borderWidth: 4,
-    borderColor: '#393939',
-    borderRadius: 50,
-  },
-});
+const styles = StyleSheet.create({});

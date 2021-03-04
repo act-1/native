@@ -10,7 +10,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 
 const DEFAULT_PICTURE = 'https://res.cloudinary.com/act1/image/upload/v1610881280/profile_pictures/account-placeholder.png';
 
-function EditProfilePicture() {
+function EditProfilePicture({ displayEditLink = true }: { displayEditLink?: boolean }) {
   const { userStore } = useStore();
   const [pictureUrl, setPictureUrl] = useState<string>(DEFAULT_PICTURE);
   const [uploadingProfilePic, setUploadingProfilePic] = useState(false);
@@ -61,7 +61,7 @@ function EditProfilePicture() {
   };
 
   return (
-    <Box alignItems="center" marginBottom="xm">
+    <Box alignItems="center">
       <Pressable onPress={dislpayActionSheet}>
         <Box style={styles.profilePictureWrapper} marginBottom="m">
           {uploadingProfilePic ? (
@@ -70,10 +70,11 @@ function EditProfilePicture() {
             <Image source={{ uri: pictureUrl }} style={styles.profilePicture} />
           )}
         </Box>
-
-        <Text color="link" fontSize={18} fontWeight="500" onPress={dislpayActionSheet}>
-          שינוי תמונה
-        </Text>
+        {displayEditLink && (
+          <Text color="link" fontSize={18} fontWeight="500" onPress={dislpayActionSheet}>
+            שינוי תמונה
+          </Text>
+        )}
       </Pressable>
     </Box>
   );
@@ -83,8 +84,8 @@ export default observer(EditProfilePicture);
 
 const styles = StyleSheet.create({
   profilePictureWrapper: {
-    height: 85,
-    width: 85,
+    width: 90,
+    height: 90,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 50,
@@ -94,6 +95,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 2,
+    borderWidth: 4,
+    borderColor: '#393939',
   },
   profilePicture: {
     height: '100%',
