@@ -32,18 +32,14 @@ function RecentPictures({ route }: RecentPicturesProps) {
   }, [mediaStore.recentPictures]);
 
   return (
-    <>
-      <StatusBar backgroundColor="#161c22" />
-
-      <PictureList
-        pictures={recentPictures}
-        updatePostLikeCount={updatePostLikeCount}
-        fetchMorePictures={fetchMorePictures}
-        initialIndex={route?.params?.initialIndex}
-        fetchingPictures={mediaStore.recentPicturesLoading}
-        onRefresh={() => mediaStore.getNewRecentPictures()}
-      />
-    </>
+    <PictureList
+      pictures={recentPictures}
+      updatePostLikeCount={updatePostLikeCount}
+      fetchMorePictures={fetchMorePictures}
+      initialIndex={route?.params?.initialIndex}
+      fetchingPictures={mediaStore.recentPicturesLoading}
+      onRefresh={() => mediaStore.getNewRecentPictures()}
+    />
   );
 }
 
