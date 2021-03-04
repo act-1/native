@@ -16,7 +16,7 @@ function Home() {
       showsVerticalScrollIndicator={false}
     >
       <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
-      <Stats />
+      {/* <Stats /> */}
       {/* <Button title="check in update" onPress={() => functions().httpsCallable('updateCheckInCountManually')()} /> */}
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         תמונות נבחרות
