@@ -52,19 +52,7 @@ function LocationCounter({ locationId, variant = 'small', style }: LocationCount
   }
 
   if (!isLoading && !liveStore.locationsCount[locationId]) {
-    return (
-      <Box justifyContent="center" alignItems="center" height={105} style={style} backgroundColor="greyBackground">
-        <Text variant="boxTitle" textAlign="center" color="attentionBackground" marginBottom="xs" paddingHorizontal="xm">
-          עכשיו בהפגנה?
-        </Text>
-        <Text variant="boxTitle" textAlign="center" color="attentionBackground" marginBottom="m" paddingHorizontal="xm">
-          עשו צ׳ק אין!
-        </Text>
-        <FadeInOutView>
-          <Icon name="chevrons-down" size={28} color="#FFC281" />
-        </FadeInOutView>
-      </Box>
-    );
+    return null;
   }
 
   const chunkedCheckIns = chunkArray(checkIns, 6);
