@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, ActivityIndicator, StyleSheet, Alert, Pressable } from 'react-native';
+import { Image, ActivityIndicator, StyleSheet, Alert, Pressable, Platform } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -8,6 +8,7 @@ import { uploadProfilePicture } from '@services/storage';
 import { updateUserPicture } from '@services/user';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
+import Icon from 'react-native-vector-icons/Feather';
 
 const DEFAULT_PICTURE = 'https://res.cloudinary.com/act1/image/upload/v1610881280/profile_pictures/account-placeholder.png';
 
@@ -53,16 +54,25 @@ function EditProfilePicture({ displayEditLink = true }: { displayEditLink?: bool
   };
 
   const dislpayActionSheet = () => {
-    const options = ['בחירת תמונה חדשה', 'מחיקת תמונה', 'ביטול'];
+    const options = ['בחירת תמונה חדשה', 'מחיקת תמונה'];
+    if (Platform.OS === 'ios') options.push('ביטול');
+    const icons = [{ iconName: 'image' }, { iconName: 'trash', destructive: true }, { iconName: 'arrow-down' }].map((item) => (
+      <Icon name={item.iconName as string} size={20} color={item.destructive ? '#d32f2f' : '#ededed'} />
+    ));
+
     const destructiveButtonIndex = 1;
     const cancelButtonIndex = 2;
 
     showActionSheetWithOptions(
       {
         options,
-        message: 'תמונת פרופיל',
+        icons,
         cancelButtonIndex,
         destructiveButtonIndex,
+        textStyle: { marginLeft: -20, marginBottom: 4, color: '#ededed' },
+        containerStyle: { backgroundColor: '#2a2a29' },
+        showSeparators: true,
+        separatorStyle: { backgroundColor: '#3b3b3b' },
       },
       (buttonIndex) => {
         if (buttonIndex === 0) {
