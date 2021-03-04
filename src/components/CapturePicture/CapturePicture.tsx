@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from 'react';
 
-import { StyleSheet, Switch, Image, Keyboard, Platform, KeyboardAvoidingView, Pressable } from 'react-native';
+import { StyleSheet, Switch, Image, Keyboard, Platform, KeyboardAvoidingView, Dimensions, Pressable } from 'react-native';
 import { Box, Text, CircularButton } from '..';
 import Composer from '../Chat/Composer';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { CameraScreen } from 'react-native-camera-kit';
 
+import { getImageSize } from '@services/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CapturePictureProps } from '@types/navigation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const deviceWidth = Dimensions.get('window').width;
 
 function CapturePicture({ navigation, route }: CapturePictureProps) {
   const insets = useSafeAreaInsets();
 
   const [keyboardShown, setKeyboardShown] = useState(false);
-  const [currentPictureURI, setCurrentPictureURI] = useState<string | undefined>(undefined);
+  const [currentPicture, setCurrentPicture] = useState<{ uri: string; width: number; height: number } | undefined>(undefined);
   const [inGallery, setInGallery] = useState(true);
 
-  const takePicture = (event: any) => {
+  const takePicture = async (event: any) => {
     HapticFeedback.trigger('impactHeavy');
-    setCurrentPictureURI(event.image.uri);
+    const uri = event.image.uri;
+    const { width, height } = await getImageSize(uri);
+
+    const picture = { uri, width, height };
+    setCurrentPicture(picture);
   };
 
   const onSendPress = (text?: string) => {
     const { onImageUpload } = route.params;
     AsyncStorage.setItem('inGallerySetting', `${inGallery}`);
 
-    if (currentPictureURI && onImageUpload) {
-      route.params.onImageUpload({ imageUri: currentPictureURI, text, inGallery });
+    if (currentPicture && onImageUpload) {
+      route.params.onImageUpload({ imageUri: currentPicture.uri, text, inGallery });
     }
   };
 
@@ -57,17 +64,20 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
     <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Box
         position="absolute"
-        bottom={currentPictureURI ? undefined : insets.bottom + 30}
-        top={currentPictureURI ? 30 : undefined}
+        bottom={currentPicture ? undefined : insets.bottom + 30}
+        top={currentPicture ? 30 : undefined}
         left={5}
         zIndex={10}
       >
         <CircularButton iconName={'arrow-right'} color="white" transparent onPress={() => navigation.goBack()} />
       </Box>
 
-      {currentPictureURI ? (
-        <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
-          <Image source={{ uri: currentPictureURI }} style={styles.imageStyle} />
+      {currentPicture ? (
+        <Pressable style={{ flex: 1, justifyContent: 'center' }} onPress={() => Keyboard.dismiss()}>
+          <Image
+            source={{ uri: currentPicture.uri }}
+            style={[{ height: currentPicture.height / (currentPicture.width / deviceWidth) }, styles.imageStyle]}
+          />
         </Pressable>
       ) : (
         // <RNCamera ref={cameraRef} style={styles.camera} captureAudio={false} useNativeZoom={true} />
@@ -86,7 +96,7 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
       )}
 
       <Box position="absolute" bottom={50} alignItems="center" width="100%">
-        {currentPictureURI && (
+        {currentPicture && (
           <Box
             style={[
               styles.composerContainer,
@@ -127,7 +137,6 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     width: '100%',
-    height: '100%',
   },
   composerContainer: {
     flex: 1,
