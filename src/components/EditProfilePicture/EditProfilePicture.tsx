@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { Text, Box } from '../../components';
 import { uploadProfilePicture } from '@services/storage';
+import { updateUserPicture } from '@services/user';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 
@@ -38,8 +39,22 @@ function EditProfilePicture({ displayEditLink = true }: { displayEditLink?: bool
       });
   };
 
+  const resetPicture = async () => {
+    try {
+      setUploadingProfilePic(true);
+      await updateUserPicture(DEFAULT_PICTURE, null);
+    } catch (err) {
+      console.error(err);
+      crashlytics().log('Profile picture upload failed.');
+      crashlytics().recordError(err);
+    } finally {
+      setUploadingProfilePic(false);
+    }
+  };
+
   const dislpayActionSheet = () => {
-    const options = ['בחירת תמונה חדשה', 'ביטול'];
+    const options = ['בחירת תמונה חדשה', 'מחיקת תמונה', 'ביטול'];
+    const destructiveButtonIndex = 1;
     const cancelButtonIndex = 2;
 
     showActionSheetWithOptions(
@@ -47,15 +62,15 @@ function EditProfilePicture({ displayEditLink = true }: { displayEditLink?: bool
         options,
         message: 'תמונת פרופיל',
         cancelButtonIndex,
+        destructiveButtonIndex,
       },
       (buttonIndex) => {
         if (buttonIndex === 0) {
           editPicture();
         }
-        // if (buttonIndex === destructiveButtonIndex) {
-        //   // Delete picture
-        //   alert('Deleting picture!');
-        // }
+        if (buttonIndex === destructiveButtonIndex) {
+          resetPicture();
+        }
       }
     );
   };
