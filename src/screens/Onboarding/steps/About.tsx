@@ -17,7 +17,7 @@ function Welcome({ nextPage }: BoardingScreenProps) {
         </Text>
 
         <Text variant="largeTitle" textAlign="center" marginBottom="xm" color="yellow">
-          אנחנו מאמינות ומאמינים בעולם שיוויני וצודק, בו נחיה בשלום וערבות הדדית
+          אנחנו מאמינות ומאמינים בעולם שיוויוני וצודק, בו נחיה בשלום וערבות הדדית
         </Text>
 
         <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="xs" style={{ marginHorizontal: -12 }}>
