@@ -55,9 +55,12 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
   useEffect(() => {
     if (route.params?.eventId && eventStore.events.length > 0) {
       const eventData = eventStore.events.find((e: Event) => e.id === route.params.eventId);
-      if (eventData) setEvent(eventData);
-      if (userStore.userEventIds.includes(eventData.id)) {
-        setAttending(true);
+
+      if (eventData) {
+        setEvent(eventData);
+        if (userStore.userEventIds.includes(eventData.id)) {
+          setAttending(true);
+        }
       }
     }
   }, [route.params, eventStore.events]);

@@ -57,7 +57,9 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
 
   return (
     <Box paddingVertical="xm" paddingHorizontal="m" style={{ paddingTop: insets.top + 40 }} flex={1}>
-      <EditProfilePicture />
+      <Box marginBottom="xm">
+        <EditProfilePicture />
+      </Box>
 
       <Box
         flexDirection="row"

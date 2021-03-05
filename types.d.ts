@@ -16,11 +16,14 @@ type CheckIn = {
   coordinates: { _latitude: number; _longitude: number } | any; // Any as a temp workaround for GeoPoint values
   eventId?: string | null;
   eventName?: string | null;
+  eventThumbnail?: string;
+  blurhash?: string;
   eventEndDate?: Date;
   expireAt: Date;
   createdAt: Date;
   isActive: boolean;
   privacySetting: PrivacyOption;
+  protestersCount?: number;
 };
 
 type RTDBCheckIn = {

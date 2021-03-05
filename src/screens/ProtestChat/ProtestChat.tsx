@@ -22,13 +22,11 @@ const ProtestChatTitle = () => {
 
 function ProtestChat({ navigation, route }: ProtestChatProps) {
   const insets = useSafeAreaInsets();
-  const { chatStore } = useStore();
+  const { chatStore, checkInStore } = useStore();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      // headerStyle: { height: 60 + insets.top, elevation: 4 },
-      // headerTitle: ProtestChatTitle,
-      headerTitle: 'בלה',
+      headerTitle: checkInStore.lastCheckIn.eventName || checkInStore.lastCheckIn.locationName,
     });
   }, [navigation]);
 

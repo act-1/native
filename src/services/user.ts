@@ -77,13 +77,11 @@ export async function updateUserProvince(province: string) {
   }
 }
 
-export async function updateUserPicture(pictureUrl: string, filePath: string) {
+export async function updateUserPicture(pictureUrl: string, filePath: string | null) {
   try {
     const user = auth().currentUser;
 
-    if (!user) {
-      throw new Error('User is not authenticated.');
-    }
+    if (!user) throw new Error('User is not authenticated.');
 
     // Update firebase user display name
     await user.updateProfile({ photoURL: pictureUrl });

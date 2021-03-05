@@ -70,6 +70,7 @@ type EventBase = {
   endDate: Date;
   thumbnail: string;
   compactThumbnail?: string;
+  blurhash: string;
   content: string;
   organizers: { id: string; profilePicture: string; name: string }[];
   attendingCount: number;
