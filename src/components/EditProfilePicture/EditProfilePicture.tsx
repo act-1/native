@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Image, ActivityIndicator, StyleSheet, Alert, Pressable, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator, StyleSheet, Pressable, Platform } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -8,23 +8,15 @@ import { uploadProfilePicture } from '@services/storage';
 import { updateUserPicture } from '@services/user';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
+import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Feather';
 
 const DEFAULT_PICTURE = 'https://res.cloudinary.com/act1/image/upload/v1610881280/profile_pictures/account-placeholder.png';
 
 function EditProfilePicture({ displayEditLink = true }: { displayEditLink?: boolean }) {
   const { userStore } = useStore();
-  const [pictureUrl, setPictureUrl] = useState<string>(DEFAULT_PICTURE);
   const [uploadingProfilePic, setUploadingProfilePic] = useState(false);
   const { showActionSheetWithOptions } = useActionSheet();
-
-  useEffect(() => {
-    if (userStore.userData && userStore.userData.profilePicture && userStore.userData.profilePicture !== pictureUrl) {
-      setPictureUrl(userStore.userData.profilePicture);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userStore.userData]);
 
   const editPicture = () => {
     ImagePicker.openPicker({ width: 200, height: 200, cropping: true })
@@ -92,7 +84,7 @@ function EditProfilePicture({ displayEditLink = true }: { displayEditLink?: bool
           {uploadingProfilePic ? (
             <ActivityIndicator color="grey" />
           ) : (
-            <Image source={{ uri: pictureUrl }} style={styles.profilePicture} />
+            <FastImage source={{ uri: userStore.userData?.profilePicture || DEFAULT_PICTURE }} style={styles.profilePicture} />
           )}
         </Box>
         {displayEditLink && (
