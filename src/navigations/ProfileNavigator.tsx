@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../stores';
-import { Profile } from '../screens';
+import { Profile, EventPage } from '../screens';
 
 import { RootStackParamList } from '../types/navigation';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -26,6 +26,7 @@ function ProfileNavigator() {
         }}
         component={Profile}
       />
+      <ProfileStack.Screen name="EventPage" component={EventPage} options={{ headerShown: false }} />
     </ProfileStack.Navigator>
   );
 }

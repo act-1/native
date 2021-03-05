@@ -73,3 +73,15 @@ export async function deleteCheckIn({ checkInId, locationId, isActive = true }: 
     throw err;
   }
 }
+
+export async function getUserCheckIns() {
+  const { uid: userId } = auth().currentUser!;
+
+  try {
+    const snapshot = await firestore().collection('checkIns').where('userId', '==', userId).orderBy('createdAt', 'desc').get();
+    const data = snapshot.docs.map((doc) => doc.data() as CheckIn);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}

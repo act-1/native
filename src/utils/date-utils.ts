@@ -51,6 +51,15 @@ export function formatShortDate(date: Date): string {
 }
 
 /**
+ * Format the date to it's local short version.
+ * @param date The date to format.
+ * @returns The short date, e.g. 31 בדצמבר.
+ */
+export function formatLongDate(date: Date): string {
+  return format(new Date(date), 'd בMMMM, yyyy', { locale: heLocale });
+}
+
+/**
  * Creates a firestore timestamp object.
  */
 export function createTimestamp(seconds: number, nanoseconds: number) {

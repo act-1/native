@@ -19,6 +19,8 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
     let locationId = '';
     let eventId: null | string = null;
     let eventName: null | string = null;
+    let eventThumbnail: null | string = null;
+    let blurhash: null | string = null;
     let eventEndDate: null | Date = null;
 
     // Since the location can be either an event or location object, we have to mormalize the data.
@@ -32,6 +34,8 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       checkInStore.setCurrentEvent(entry);
       eventId = entry.id;
       eventName = entry.title;
+      eventThumbnail = entry.thumbnail;
+      blurhash = entry.blurhash;
       // TODO: If the event will be taken from the store instead of being fetched in `locations.ts`,
       // it won't be necessary to transform it `toDate` as it already being done in `events.ts`.
       eventEndDate = entry.endDate.toDate();
@@ -41,7 +45,18 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       logEvent('check_in_select_event', { eventId });
     }
 
-    checkInStore.setPendingCheckIn({ locationId, locationName, eventId, eventName, eventEndDate, coordinates, city, province });
+    checkInStore.setPendingCheckIn({
+      locationId,
+      locationName,
+      eventId,
+      eventName,
+      eventEndDate,
+      eventThumbnail,
+      blurhash,
+      coordinates,
+      city,
+      province,
+    });
     navigation.navigate('CheckInPrivacy');
   };
 
