@@ -22,13 +22,13 @@ export default function ProfileCheckInBox({ checkIn }: { checkIn: CheckIn }) {
               source={{
                 uri: checkIn.eventThumbnail,
               }}
-              style={{ width: 95.5, borderRadius: 4, height: 50 }}
+              style={{ width: 95.5, height: 50, borderRadius: 4 }}
             />
           </Box>
         ) : (
           <FastImage
             source={require('@assets/icons/location-circular-icon.png')}
-            style={{ width: 42.5, borderRadius: 4, height: 42.5 }}
+            style={{ width: 40, height: 40, borderRadius: 4 }}
           />
         )}
 
