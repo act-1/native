@@ -12,7 +12,7 @@ export default function ProfileCheckInBox({ checkIn }: { checkIn: CheckIn }) {
     <TouchableOpacity
       activeOpacity={0.8}
       style={{ width: '100%', padding: 12 }}
-      onPress={() => navigation.navigate('EventPage', { eventId: 'ohana-maniok' })}
+      onPress={() => checkIn.eventId && navigation.navigate('EventPage', { eventId: checkIn.eventId })}
     >
       {checkIn.blurhash && <Blurhash blurhash={checkIn.blurhash} style={styles.boxBackground} />}
       <Box flexDirection="row" alignItems="center">
