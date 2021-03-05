@@ -51,7 +51,7 @@ export default function ProfileCheckInBox({ checkIn }: { checkIn: CheckIn }) {
               textShadowOffset={{ width: 0, height: 1 }}
               textShadowRadius={3}
             >
-              {checkIn.protestersCount} מפגינים.ות ב- ACT1
+              {checkIn.protestersCount} יצאו להפגין
             </Text>
           )}
         </Box>

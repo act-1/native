@@ -1,7 +1,8 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../stores';
-import { Profile, EventPage } from '../screens';
+import { Profile, EventPage, EventPictureList } from '../screens';
 
 import { RootStackParamList } from '../types/navigation';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -27,6 +28,22 @@ function ProfileNavigator() {
         component={Profile}
       />
       <ProfileStack.Screen name="EventPage" component={EventPage} options={{ headerShown: false }} />
+      <ProfileStack.Screen
+        name="EventPictureList"
+        component={EventPictureList}
+        options={{
+          headerShown: true,
+          headerStyle: { backgroundColor: '#0a0a0a', shadowOpacity: 0 },
+          headerTintColor: '#8a8a8b',
+          headerBackTitleVisible: false,
+          headerTitleStyle: {
+            fontSize: 20,
+            fontFamily: 'AtlasDL3.1AAA-Bold',
+            fontWeight: Platform.select({ ios: '700', android: null }),
+            color: '#EC534B',
+          },
+        }}
+      />
     </ProfileStack.Navigator>
   );
 }
