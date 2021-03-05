@@ -59,15 +59,9 @@ type DeleteCheckInParams = {
 
 export async function deleteCheckIn({ checkInId, locationId, isActive = true }: DeleteCheckInParams) {
   try {
-    const userId = auth().currentUser?.uid;
     const checkInRef = firestore().collection('checkIns').doc(checkInId);
-    const userCheckInRef = firestore().collection(`users/${userId}/checkIns`).doc(checkInId);
 
-    // Delete check in documents
-    const batch = firestore().batch();
-    batch.delete(checkInRef);
-    batch.delete(userCheckInRef);
-    await batch.commit();
+    await checkInRef.delete();
 
     // Decrement the location counter in the realtime database if the check in is currently active.
     if (isActive) {
