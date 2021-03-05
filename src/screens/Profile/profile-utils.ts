@@ -11,7 +11,6 @@ export function formatCheckInsForSectionList(checkIns: CheckIn[]): CheckInListIt
   const checkInsByDates: { [key: string]: [CheckIn] } = {};
 
   checkIns.forEach((checkIn) => {
-    console.log('ho', checkIn.createdAt);
     const checkInDate = format(checkIn.createdAt.toDate(), 'dd/MM/yyyy');
     if (!checkInsByDates[checkInDate]) {
       checkInsByDates[checkInDate] = [checkIn];
