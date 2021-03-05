@@ -84,13 +84,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
             </Box>
 
             <Box marginBottom="xm" backgroundColor="sectionListSeperator">
-              {event.attendingCount >= 0 && (
-                <EventPageCounter
-                  eventStatus={event.status}
-                  attendingCount={event.attendingCount}
-                  locationId={event.locationId}
-                />
-              )}
+              {event.attendingCount >= 0 && <EventPageCounter event={event} />}
             </Box>
 
             {event.status === 'upcoming' && <EventPageActions isAttending={isAttending} attendEvent={attendEvent} />}

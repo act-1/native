@@ -56,6 +56,7 @@ export async function getEventList(): Promise<Event[]> {
     startDate: doc.startDate.toDate(),
     endDate: doc.endDate.toDate(),
     status: getEventStatus(doc.startDate.toDate(), doc.endDate.toDate()),
+    protestersCount: doc.protestersCount,
   })) as Event[];
 
   return events;

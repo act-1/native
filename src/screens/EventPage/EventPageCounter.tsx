@@ -2,22 +2,19 @@ import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import { Box, Text, LocationCounter } from '../../components';
 import Ticker from '@components/Ticker';
+import { Event } from '@types/collections';
 
 type EventPageCounterProps = {
-  eventStatus: EventStatus;
-  attendingCount: number;
-  locationId: string;
+  event: Event;
   style?: ViewStyle;
 };
 
-function EventPageCounter({ eventStatus, attendingCount, locationId, style }: EventPageCounterProps) {
-  if (eventStatus === 'live') {
-    return <LocationCounter locationId={locationId} />;
+function EventPageCounter({ event, style }: EventPageCounterProps) {
+  if (event.status === 'live') {
+    return <LocationCounter locationId={event.locationId} />;
   }
 
-  const formattedNumber = attendingCount.toLocaleString();
-
-  if (eventStatus === 'past') {
+  if (event.status === 'past') {
     return (
       <Box
         justifyContent="center"
@@ -26,7 +23,7 @@ function EventPageCounter({ eventStatus, attendingCount, locationId, style }: Ev
         borderColor="lightBorderColor"
         style={[styles.counterBox, style]}
       >
-        <Text style={styles.countTextStyle}>{formattedNumber}</Text>
+        <Text style={styles.countTextStyle}>{event.protestersCount.toLocaleString()}</Text>
         <Text variant="text">יצאו להפגין</Text>
       </Box>
     );
@@ -41,7 +38,7 @@ function EventPageCounter({ eventStatus, attendingCount, locationId, style }: Ev
       style={[styles.counterBox, style]}
     >
       <Box minHeight={35}>
-        <Ticker textStyle={styles.countTextStyle}>{formattedNumber}</Ticker>
+        <Ticker textStyle={styles.countTextStyle}>{event.attendingCount.toLocaleString()}</Ticker>
       </Box>
       <Text variant="text">יוצאים להפגין</Text>
     </Box>
