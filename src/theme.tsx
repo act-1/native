@@ -126,7 +126,7 @@ const theme = createTheme({
     },
     roundedButtonText: {
       fontFamily: 'AtlasDL3.1AAA-Bold',
-      fontSize: 16,
+      fontSize: 16.5,
     },
     circularButtonText: {
       fontFamily: 'AtlasDL3.1AAA-Medium',

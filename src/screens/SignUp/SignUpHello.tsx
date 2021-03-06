@@ -6,6 +6,9 @@ import RoundedButton from '@components/Buttons/RoundedButton';
 function SignUpHello({ navigation }) {
   return (
     <Box flex={1}>
+      <Text variant="hugeTitle" color="primaryColor" fontSize={68} textAlign="center" marginBottom="xxl">
+        ACT1
+      </Text>
       <Text variant="hugeTitle" marginBottom="xm">
         היי! 👋
       </Text>
@@ -13,7 +16,7 @@ function SignUpHello({ navigation }) {
         בשביל שנוכל להתאים את האפליקציה עבורכן.ם, יש לנו כמה שאלות.
       </Text>
       <Text variant="largeTitle" marginBottom="xl">
-        אין חובה לענות על שום שאלה. {'\n'}כל התשובות נשמרות באופן אנונימי.
+        אין חובה לענות על שום שאלה. {'\nֿֿ\n'}כל התשובות נשמרות באופן אנונימי.
       </Text>
 
       <Box alignItems="center">

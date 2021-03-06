@@ -11,7 +11,7 @@ const heIcon = Platform.select({ ios: '👦', android: '🧑‍' });
 const sheIcon = Platform.select({ ios: '👧', android: '👩‍' });
 const nonBinaryIcon = Platform.select({ ios: '🧒', android: '👦' });
 
-function SignUpPronoun({ navigation }) {
+function SignUpProvince({ navigation }) {
   const { userStore } = useStore();
 
   const onPronounPress = (pronoun: Pronoun) => {
@@ -54,12 +54,12 @@ function SignUpPronoun({ navigation }) {
         />
       </Box>
       <Box alignItems="center">
-        <RoundedButton color="yellow" text="המשך" onPress={() => navigation.navigate('SignUpProvince')} />
+        <RoundedButton color="yellow" text="המשך" onPress={() => navigation.goBack()} />
       </Box>
     </Box>
   );
 }
 
-export default observer(SignUpPronoun);
+export default observer(SignUpProvince);
 
 const styles = StyleSheet.create({});

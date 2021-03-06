@@ -32,7 +32,7 @@ function getButtonDimenions(size: string): ViewStyle {
 
   return {
     width: 250,
-    height: 45,
+    height: 47.5,
   };
 }
 
