@@ -2,6 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
 import { getDeviceId, getUniqueId } from 'react-native-device-info';
+import Ivrita from 'ivrita';
 
 export async function getUserFCMToken(userId: string, fcmToken: string) {
   try {
@@ -56,7 +57,7 @@ export async function updateUserDisplayName(displayName: string) {
     await user.updateProfile({ displayName });
     // Update firestore user document
     const userRef = firestore().collection('users').doc(user.uid);
-    return userRef.update({ displayName, signupCompleted: true });
+    return userRef.update({ displayName });
   } catch (err) {
     throw err;
   }
@@ -96,6 +97,29 @@ export async function updateUserPicture(pictureUrl: string, filePath: string | n
 export async function submitUserSignUpData(signUpData) {
   try {
     const user = auth().currentUser;
+    const DEFAULT_PICTURE = 'https://res.cloudinary.com/act1/image/upload/v1610881280/profile_pictures/account-placeholder.png';
+
+    updateUserPicture(DEFAULT_PICTURE, null);
+
+    const { pronoun, avatar } = signUpData;
+
+    let nickName = Ivrita.genderize('אנונימ.ית', Ivrita[pronoun]);
+    if (avatar) {
+      if (avatar === 'anarchist') {
+        nickName = Ivrita.genderize('אנרכיסט.ית אנונימי.ת', Ivrita[pronoun]);
+      }
+      if (avatar === 'alien') {
+        nickName = Ivrita.genderize('חייזר.ית אנונימי.ת', Ivrita[pronoun]);
+      }
+      if (avatar === 'diseaseDistributor') {
+        nickName = Ivrita.genderize('מפיצ.ת מחלות', Ivrita[pronoun]);
+      }
+      if (avatar === 'traitor') {
+        nickName = Ivrita.genderize('בוגד.ת אנונימי.ת', Ivrita[pronoun]);
+      }
+    }
+
+    updateUserDisplayName(nickName);
 
     if (user) {
       return firestore()
