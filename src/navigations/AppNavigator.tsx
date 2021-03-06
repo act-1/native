@@ -9,6 +9,7 @@ import { EventPage, EventPictureList, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
 import CheckInNavigator from './CheckInNavigator';
 import ProtestDashboardNavigator from './ProtestDashboardNavigator';
+import SignUpNavigator from './SignUpNavigator';
 import { LocationPage } from '@screens/LocationPage';
 
 enableScreens();
@@ -86,6 +87,7 @@ function AppNavigator() {
         </>
       ) : (
         <>
+          <RootStack.Screen name="SignUp" component={SignUpNavigator} options={{ headerShown: false }} />
           <RootStack.Screen name="OnboardingModal" component={Onboarding} options={{ headerShown: false }} />
         </>
       )}

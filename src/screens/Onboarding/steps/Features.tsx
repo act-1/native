@@ -32,13 +32,7 @@ const features = [
 
 function Features({ nextPage }: BoardingScreenProps) {
   return (
-    <Box
-      flex={1}
-      justifyContent="flex-start"
-      alignItems="center"
-      marginTop="xm"
-      style={{ paddingHorizontal: 60, marginTop: 110 }}
-    >
+    <Box flex={1} justifyContent="flex-start" alignItems="center" marginTop="xm" style={{ paddingHorizontal: 60 }}>
       {features.map((feature) => (
         <Box flexDirection="row" marginBottom="xm" key={feature.key}>
           <Box marginRight="xm">

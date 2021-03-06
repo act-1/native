@@ -40,7 +40,7 @@ export type RootStackParamList = {
   LocationPage: { locationId: string };
   Profile: undefined;
   SignUpNavigator: undefined;
-  SignUpForm: undefined;
+  SignUpHello: undefined;
   ActionScreen: undefined;
   NewPost: { image: ImagePickerResponse; completionScreen: 'closeModal'; location?: Location };
   CapturePicture: {

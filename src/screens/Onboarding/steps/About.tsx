@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { Platform, SafeAreaView } from 'react-native';
 import { Box, Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,7 +11,12 @@ function Welcome({ nextPage }: BoardingScreenProps) {
     <Box flex={1}>
       <SafeAreaView />
 
-      <Box flex={1} justifyContent="flex-start" alignItems="center" style={{ paddingHorizontal: 36, marginTop: 54 + insets.top }}>
+      <Box
+        flex={1}
+        justifyContent="flex-start"
+        alignItems="center"
+        style={{ paddingHorizontal: 36, marginTop: Platform.select({ ios: -26 + insets.top, android: 16 + insets.top }) }}
+      >
         <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="m" style={{ writingDirection: 'rtl' }}>
           ברוכות הבאות לאפליקציית האקטיביזם של ישראל
         </Text>

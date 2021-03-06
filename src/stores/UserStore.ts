@@ -20,6 +20,7 @@ class UserStore {
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
   userData: FirebaseFirestoreTypes.DocumentData | null = null;
+  signUpData: { pronoun?: Pronoun } = {};
   initializedUser = false;
 
   constructor(rootStore: rootStore) {
@@ -180,6 +181,11 @@ class UserStore {
     } catch (err) {
       throw err;
     }
+  }
+
+  updateSignUpData(changedData: { [key: string]: string }) {
+    const updatedData = Object.assign(this.signUpData, changedData);
+    this.signUpData = updatedData;
   }
 }
 

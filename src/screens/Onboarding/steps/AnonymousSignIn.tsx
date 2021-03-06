@@ -41,13 +41,13 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
   }, [userStore.userData, currentIndex]);
 
   return (
-    <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xm">
+    <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xm" style={{ marginTop: -32 }}>
       <Spinner visible={isLoading} textContent={loadingText} overlayColor={'rgba(0, 0, 0, 0.6)'} textStyle={{ color: '#FFF' }} />
 
       <Image source={require('@assets/illustrations/privacy-image.png')} style={{ marginTop: 36, marginBottom: 25 }} />
 
       <Text variant="extraLargeTitle" color="primaryColor" textAlign="center" paddingHorizontal="xl" marginBottom="xxm">
-        ב- ACT1, פרטיות היא ערך עליון.
+        פרטיות היא ערך עליון.
       </Text>
 
       <Text variant="largeTitle" paddingHorizontal="xl" textAlign="center" marginBottom="xm">

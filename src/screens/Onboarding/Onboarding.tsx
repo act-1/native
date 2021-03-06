@@ -54,7 +54,7 @@ function Onboarding() {
             width: '100%',
             opacity: pageProgress.interpolate({
               inputRange: [0, 1, 2, 3, 4],
-              outputRange: [0, 0.75, 0.8, 0.9, 0.9],
+              outputRange: [0, 0.8, 0.8, 0.95, 0.9],
             }),
             backgroundColor: '#000',
             zIndex: 0,
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
   heading: {
     position: 'relative',
     fontSize: 56,
+    marginBottom: Platform.select({ ios: 90, android: 32 }),
     textAlign: 'center',
     fontFamily: 'AtlasDL3.1AAA-Bold',
     fontWeight: '900',

@@ -73,7 +73,7 @@ const theme = createTheme({
   textVariants: {
     hugeTitle: {
       fontFamily: 'AtlasDL3.1AAA-Bold',
-      fontSize: 30,
+      fontSize: 38,
       color: 'primaryText',
       textAlign: 'left',
     },
