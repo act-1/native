@@ -10,6 +10,7 @@ import EventsAPI from '@services/events';
 import { getUserFCMToken, createUserFCMToken } from '@services/user';
 import rootStore from './RootStore';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let userDataListenerActive = false;
 
@@ -19,13 +20,14 @@ class UserStore {
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
   userData: FirebaseFirestoreTypes.DocumentData | null = null;
+  signUpData: { pronoun?: Pronoun } = {};
   initializedUser = false;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
     this.initUserLocation();
-    // auth().signOut();
+    // this.signOut();
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user?.uid) {
         if (userDataListenerActive === false) {
@@ -83,6 +85,7 @@ class UserStore {
     auth().signOut();
     this.userData = null;
     userDataListenerActive = false;
+    AsyncStorage.clear();
   }
 
   async getUserEvents() {
@@ -178,6 +181,11 @@ class UserStore {
     } catch (err) {
       throw err;
     }
+  }
+
+  updateSignUpData(changedData: { [key: string]: string }) {
+    const updatedData = Object.assign(this.signUpData, changedData);
+    this.signUpData = updatedData;
   }
 }
 

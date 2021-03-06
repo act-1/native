@@ -4,6 +4,10 @@ import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 're
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { uploadProfilePictureFromURL } from './storage';
 
+export function signInAnonymously() {
+  return auth().signInAnonymously();
+}
+
 export async function facebookLogin(): Promise<{ ok: boolean; isNewUser: boolean; photoURL?: string }> {
   try {
     // Attempt login with permissions

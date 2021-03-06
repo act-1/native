@@ -1,5 +1,11 @@
 type LatLng = [number, number];
 
+// 🚨 PC ALERT 🚨 //
+// The following line contains non-pc content.
+// We know those are not correct pronouns, but that's the constant names used in Ivrita.js. Blames should go to thier issue list.
+type Pronoun = 'MALE' | 'FEMALE' | 'NEUTRAL' | 'ORIGINAL';
+type Avatar = 'alien' | 'anarchist' | 'diseaseDistributor' | 'traitor';
+
 type EventStatus = 'upcoming' | 'live' | 'past';
 
 type PrivacyOption = 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
@@ -56,16 +62,16 @@ type GraphAPIResult = {
 };
 
 type Province = [
-  'תל אביב',
-  'השרון',
-  'חיפה והקריות',
-  'הגליל התחתון',
   'הגליל העליון',
-  'גולן',
+  'הגליל התחתון',
+  'הגולן',
+  'חיפה והקריות',
+  'ירושלים',
+  'השרון',
+  'תל אביב',
   'המרכז',
   'השפלה',
   'חוף אשקלון ועוטף עזה',
   'הנגב',
-  'אילת והערבה',
-  'ירושלים'
+  'אילת והערבה'
 ];

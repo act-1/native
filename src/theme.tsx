@@ -73,7 +73,7 @@ const theme = createTheme({
   textVariants: {
     hugeTitle: {
       fontFamily: 'AtlasDL3.1AAA-Bold',
-      fontSize: 30,
+      fontSize: 38,
       color: 'primaryText',
       textAlign: 'left',
     },
@@ -126,7 +126,7 @@ const theme = createTheme({
     },
     roundedButtonText: {
       fontFamily: 'AtlasDL3.1AAA-Bold',
-      fontSize: 16,
+      fontSize: 16.5,
     },
     circularButtonText: {
       fontFamily: 'AtlasDL3.1AAA-Medium',

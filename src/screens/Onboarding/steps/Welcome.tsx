@@ -15,10 +15,10 @@ function Welcome({ nextPage, style }: BoardingScreenProps) {
       <Text variant="hugeTitle" fontSize={68} fontWeight="900" color="headerTitle">
         ACT1
       </Text>
-      <Text variant="hugeTitle" color="lightText">
+      <Text variant="hugeTitle" fontSize={30} color="lightText">
         יוצאים להפגין.
       </Text>
-      <Text variant="hugeTitle" color="lightText" marginBottom="xm">
+      <Text variant="hugeTitle" fontSize={30} color="lightText" marginBottom="xm">
         ככה זה מתחיל.
       </Text>
       <RoundedButton text="בואו נתחיל" color="yellow" onPress={startButtonPress} />
