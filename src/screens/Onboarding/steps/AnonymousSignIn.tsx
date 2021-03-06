@@ -6,9 +6,11 @@ import { useStore } from '../../../stores';
 import { observer } from 'mobx-react-lite';
 import { signInAnonymously } from '@services/auth';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { useNavigation } from '@react-navigation/native';
 
 function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
   const { userStore } = useStore();
+  const navigatino = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [loadingText, setLoadingText] = useState('יוצרת חשבון אנונימי...');
 
@@ -33,7 +35,7 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
     if (currentIndex === 3) {
       if (userStore.userData?.signupCompleted === false) {
         setIsLoading(false);
-        nextPage();
+        navigatino.navigate('SignUp');
       }
     }
 

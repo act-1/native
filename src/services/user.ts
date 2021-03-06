@@ -92,3 +92,20 @@ export async function updateUserPicture(pictureUrl: string, filePath: string | n
     throw err;
   }
 }
+
+export async function submitUserSignUpData(signUpData) {
+  try {
+    const user = auth().currentUser;
+
+    if (user) {
+      return firestore()
+        .collection('users')
+        .doc(user.uid)
+        .update({ ...signUpData, signupCompleted: true });
+    } else {
+      throw new Error('User is not authenticated.');
+    }
+  } catch (err) {
+    throw err;
+  }
+}

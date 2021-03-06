@@ -13,11 +13,11 @@ function CircularOption({ content, caption, selected, onPress }: CircularOptionP
   return (
     <Box>
       <Pressable
-        style={[styles.optionWrapper, { backgroundColor: selected ? '#ff9c97' : 'white' }]}
+        style={[styles.optionWrapper, { backgroundColor: selected ? '#ff7a7a' : 'white' }]}
         onPress={onPress}
-        android_ripple={{ color: '#ff9c97', radius: 50 }}
+        android_ripple={{ color: '#FF5858', radius: 50 }}
       >
-        <Text fontSize={58}>{content}</Text>
+        {typeof content === 'string' ? <Text fontSize={58}>{content}</Text> : content}
       </Pressable>
       {caption && (
         <Text variant="text" textAlign="center">

@@ -16,7 +16,7 @@ function SignUpHello({ navigation }) {
         בשביל שנוכל להתאים את האפליקציה עבורכן.ם, יש לנו כמה שאלות.
       </Text>
       <Text variant="largeTitle" marginBottom="xl">
-        אין חובה לענות על שום שאלה. {'\nֿֿ\n'}כל התשובות נשמרות באופן אנונימי.
+        אין חובה לענות על שום שאלה.
       </Text>
 
       <Box alignItems="center">
