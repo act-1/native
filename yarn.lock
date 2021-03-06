@@ -5471,6 +5471,11 @@ istanbul-reports@^3.0.2:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
+ivrita@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/ivrita/-/ivrita-0.1.4.tgz#df730f48870a4c8698734ab6daabb8108e848127"
+  integrity sha512-zJL8dlgvbGpfd2iYrS4hYVMRflGic7xwK1MpGRJN2jljr2Cey+haS8/0VzWlybgY43UGETOjdv6207T4M0HjRA==
+
 jest-changed-files@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-26.6.2.tgz"
