@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { Image } from 'react-native';
 import { Box, Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
 import { useStore } from '../../../stores';
@@ -43,11 +43,21 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
   return (
     <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xm">
       <Spinner visible={isLoading} textContent={loadingText} overlayColor={'rgba(0, 0, 0, 0.6)'} textStyle={{ color: '#FFF' }} />
-      <Text variant="largeTitle" fontSize={24} marginBottom="xl">
-        מתחברים למהפכה.
+
+      <Image source={require('@assets/illustrations/privacy-image.png')} style={{ marginTop: 36, marginBottom: 25 }} />
+
+      <Text variant="extraLargeTitle" color="primaryColor" textAlign="center" paddingHorizontal="xl" marginBottom="xxm">
+        ב- ACT1, פרטיות היא ערך עליון.
       </Text>
 
-      <RoundedButton text="התחברות אנונימית" onPress={() => signInPress()} color="darkBlue" style={{ marginBottom: 16 }} />
+      <Text variant="largeTitle" paddingHorizontal="xl" textAlign="center" marginBottom="xm">
+        השימוש באפליקציה אנונימי ולא מצריך פרטים מזהים
+      </Text>
+      <Text variant="largeTitle" fontSize={15} paddingHorizontal="m" marginBottom="xxm" textAlign="center">
+        (אם תרצו, תוכלו להוסיף שם ותמונה)
+      </Text>
+
+      <RoundedButton text="התחברות אנונימית" onPress={() => signInPress()} color="blue" style={{ marginBottom: 16 }} />
     </Box>
   );
 }

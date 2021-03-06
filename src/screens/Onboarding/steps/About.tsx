@@ -2,27 +2,27 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { Box, Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function Welcome({ nextPage }: BoardingScreenProps) {
+  const insets = useSafeAreaInsets();
+
   return (
     <Box flex={1}>
       <SafeAreaView />
 
-      <Box flex={1} justifyContent="flex-start" alignItems="center" style={{ paddingHorizontal: 36 }}>
+      <Box flex={1} justifyContent="flex-start" alignItems="center" style={{ paddingHorizontal: 36, marginTop: 54 + insets.top }}>
         <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="m" style={{ writingDirection: 'rtl' }}>
-          מערכה ראשונה היא החלק הראשון היוצר הכרות עם הגיבור.ה היוצא.ת לפעול
+          ברוכות הבאות לאפליקציית האקטיביזם של ישראל
         </Text>
         <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="xm" style={{ writingDirection: 'rtl' }}>
-          אנו רואים את ACT1 ככלי המשרת אותנו, הגיבורים.ות במאבקים הקרובים לליבנו, בהם אנחנו מאמינים
+          ACT1 היא כלי הישרת אותנו במאבקים בהם אנחנו מאמינים
         </Text>
 
         <Text variant="largeTitle" textAlign="center" marginBottom="xm" color="yellow">
           אנחנו מאמינות ומאמינים בעולם שיוויוני וצודק, בו נחיה בשלום וערבות הדדית
         </Text>
 
-        <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="xs" style={{ marginHorizontal: -12 }}>
-          כל שינוי מתחיל במערכה ראשונה
-        </Text>
         <Text variant="largeTitle" textAlign="center" color="lightText" marginBottom="xs">
           בגלל זה נצא ונפגין
         </Text>

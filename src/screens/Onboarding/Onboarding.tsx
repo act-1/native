@@ -54,41 +54,41 @@ function Onboarding() {
             width: '100%',
             opacity: pageProgress.interpolate({
               inputRange: [0, 1, 2, 3, 4],
-              outputRange: [0, 0.75, 0.8, 0.8, 0.9],
+              outputRange: [0, 0.75, 0.8, 0.9, 0.9],
             }),
             backgroundColor: '#000',
             zIndex: 0,
           }}
         />
-        {currentIndex < 4 && (
-          <Animated.Text
-            style={[
-              styles.heading,
-              {
-                marginTop: 36 + insets.top,
-                opacity: pageProgress.interpolate({
-                  inputRange: [0, 0.9, 1, 2, 3, 4],
-                  outputRange: [0, 1, 1, 1, 1, 0],
-                }),
-                transform: [
-                  {
-                    translateX: pageProgress.interpolate({
-                      inputRange: [0, 0.95, 1, 2, 3, 4],
-                      outputRange: [-width, 0, 1, 1, 1, width],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          >
-            ACT1
-          </Animated.Text>
-        )}
+
+        <Animated.Text
+          style={[
+            styles.heading,
+            {
+              opacity: pageProgress.interpolate({
+                inputRange: [0, 0.9, 1],
+                outputRange: [0, 1, 1],
+              }),
+              transform: [
+                {
+                  translateX: pageProgress.interpolate({
+                    inputRange: [0, 0.95, 1, 2, 3],
+                    outputRange: [-width, 0, 1, 1, width],
+                  }),
+                },
+                { translateY: 36 + insets.top },
+              ],
+            },
+          ]}
+        >
+          ACT1
+        </Animated.Text>
+
         <Pages
           style={{ flex: 1, position: 'absolute' }}
           ref={pages}
           onScrollEnd={onScrollEnd}
-          scrollEnabled={false}
+          scrollEnabled={true}
           indicatorOpacity={0}
           progress={pageProgress}
           indicatorColor="black"
@@ -110,11 +110,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   heading: {
+    position: 'relative',
     fontSize: 56,
     textAlign: 'center',
     fontFamily: 'AtlasDL3.1AAA-Bold',
     fontWeight: '900',
-    marginBottom: 20,
     color: '#eb524b',
   },
 });
