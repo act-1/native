@@ -10,6 +10,7 @@ import EventsAPI from '@services/events';
 import { getUserFCMToken, createUserFCMToken } from '@services/user';
 import rootStore from './RootStore';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let userDataListenerActive = false;
 
@@ -25,7 +26,7 @@ class UserStore {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
     this.initUserLocation();
-    // auth().signOut();
+    // this.signOut();
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user?.uid) {
         if (userDataListenerActive === false) {
@@ -83,6 +84,7 @@ class UserStore {
     auth().signOut();
     this.userData = null;
     userDataListenerActive = false;
+    AsyncStorage.clear();
   }
 
   async getUserEvents() {

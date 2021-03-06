@@ -3,7 +3,7 @@ import { Platform, Animated, ImageBackground, StyleSheet, Dimensions, StatusBar 
 import analytics from '@react-native-firebase/analytics';
 import { Box } from '../../components';
 import { Pages } from 'react-native-pages';
-import { Welcome, About, Features, Providers } from './steps';
+import { Welcome, About, Features, AnonymousSignIn } from './steps';
 import SignUpForm from '../SignUp/SignUpForm';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -37,7 +37,7 @@ function Onboarding() {
     <Welcome nextPage={nextPage} key="welcome" style={{ marginBottom: insets.bottom + 55 }} />,
     <About nextPage={nextPage} key="about" />,
     <Features nextPage={nextPage} key="features" />,
-    <Providers nextPage={nextPage} currentIndex={currentIndex} scrollToPage={scrollToPage} key="providers" />,
+    <AnonymousSignIn nextPage={nextPage} currentIndex={currentIndex} scrollToPage={scrollToPage} key="providers" />,
     <SignUpForm currentIndex={currentIndex} key="signUpForm" />,
   ];
 
