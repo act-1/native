@@ -44,7 +44,7 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
 
   return (
     <Box flex={1} justifyContent="flex-start" alignItems="center" paddingHorizontal="xm" style={{ marginTop: -32 }}>
-      <Spinner visible={isLoading} textContent={loadingText} overlayColor={'rgba(0, 0, 0, 0.6)'} textStyle={{ color: '#FFF' }} />
+      <Spinner visible={isLoading} textContent={loadingText} overlayColor={'rgba(0, 0, 0, 0.85)'} textStyle={{ color: '#FFF' }} />
 
       <Image source={require('@assets/illustrations/privacy-image.png')} style={{ marginTop: 36, marginBottom: 25 }} />
 
