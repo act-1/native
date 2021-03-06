@@ -22,7 +22,7 @@ export default function ProfileCheckInBox({ checkIn }: { checkIn: CheckIn }) {
               source={{
                 uri: checkIn.eventThumbnail,
               }}
-              style={{ width: 95.5, height: 50, borderRadius: 4 }}
+              style={{ width: 100, height: 52.5, borderRadius: 4 }}
             />
           </Box>
         ) : (
@@ -44,12 +44,26 @@ export default function ProfileCheckInBox({ checkIn }: { checkIn: CheckIn }) {
             {checkIn.eventName || checkIn.locationName}
           </Text>
 
+          <Text
+            variant="boxSubtitle"
+            color="lightText"
+            marginBottom="xxs"
+            fontSize={13}
+            textShadowColor="mainBackground"
+            textShadowOffset={{ width: 0, height: 1 }}
+            textShadowRadius={3}
+          >
+            {checkIn.eventName && `${checkIn.locationName}, `}
+            {checkIn.city}
+          </Text>
+
           {checkIn.protestersCount && (
             <Text
               variant="boxInfo"
               textShadowColor="sectionListSeperator"
               textShadowOffset={{ width: 0, height: 1 }}
               textShadowRadius={3}
+              opacity={0.9}
             >
               {checkIn.protestersCount} יצאו להפגין
             </Text>
