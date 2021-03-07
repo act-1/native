@@ -64,7 +64,6 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
         .orderBy('createdAt', 'desc');
 
       const unsubscribe = query.onSnapshot((snapshot) => {
-        console.log(snapshot);
         if (snapshot === null) return;
         snapshot.docChanges().forEach((change) => {
           if (change.type === 'added') {
@@ -74,7 +73,6 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
             // See https://firebase.google.com/docs/firestore/query-data/listen#events-local-changes
             picture = { ...picture, createdAt: firestore.Timestamp.fromDate(new Date()) };
 
-            console.log(picture);
             setEventPicturesDocs((prevState) => [change.doc, ...prevState]);
             setEventPictures((prevState) => [picture, ...prevState]);
           }

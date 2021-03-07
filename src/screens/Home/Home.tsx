@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StatusBar, StyleSheet, ScrollView } from 'react-native';
 import { Text } from '../../components';
 import { Stats, FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
 
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
+import { Event } from '@types/collections';
 
 function Home() {
-  const { eventStore } = useStore();
+  const { eventStore, liveStore } = useStore();
+  const liveEvents = React.useMemo(() => {
+    return eventStore.liveEvents
+      .map((event: Event) => {
+        const protesters = liveStore.locationsCount[event.locationId];
+        if (protesters) {
+          return { ...event, protesters };
+        } else {
+          return { ...event, protesters: 0 };
+        }
+      })
+      .sort((a, b) => b.protesters - a.protesters);
+  }, [eventStore.liveEvents, liveStore.locationsCount]);
 
   return (
     <ScrollView
@@ -24,13 +37,13 @@ function Home() {
 
       <FeaturedPictures style={{ marginBottom: 12 }} />
 
-      {eventStore.liveEvents.length > 0 && (
+      {liveEvents.length > 0 && (
         <>
           <Text variant="largeTitle" paddingHorizontal="m" marginTop="m" marginBottom="xm">
             עכשיו מפגינים
           </Text>
 
-          <FeaturedProtests protests={eventStore.liveEvents} style={{ marginBottom: 12 }} />
+          <FeaturedProtests protests={liveEvents} style={{ marginBottom: 12 }} />
         </>
       )}
 

@@ -30,6 +30,7 @@ class LiveStore {
         const updatedLocation = { [locationId]: locationCounter };
 
         const locationsCount = Object.assign(this.locationsCount, updatedLocation);
+
         runInAction(() => {
           this.locationsCount = locationsCount;
         });
