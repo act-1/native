@@ -43,17 +43,20 @@ function App() {
 
     if (initalizedApp) return;
 
+    // User haven't signed up yet
     if (store.userStore.initializedUser && store.userStore.userData === null) {
       RNBootSplash.hide({ fade: true });
       return;
     }
 
-    if (store.userStore.initializedUser && store.userStore.user !== null && store.userStore.userData?.signupCompleted) {
+    // User has signed up and completed the sign up process
+    if (store.userStore.initializedUser && store.userStore.user !== null && store.userStore.userData?.signupCompleted === true) {
       initalizedApp = true;
       initApp();
     }
 
-    if (store.userStore.initializedUser) {
+    // User signed up but haven't completed the sign up process
+    if (store.userStore.initializedUser && store.userStore.user !== null && store.userStore.userData?.signupCompleted === false) {
       RNBootSplash.hide({ fade: true });
     }
 

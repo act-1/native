@@ -7,21 +7,21 @@ import HapticFeedback from 'react-native-haptic-feedback';
 import RoundedButton from '@components/Buttons/RoundedButton';
 import Ivrita from 'ivrita';
 
-function getProvinceCaption(province) {
-  switch (province) {
-    case 'חוף אשקלון ועוטף עזה':
-      return 'פיצוץ! 🚀';
-    case 'אילת והערבה':
-      return 'עיר של מלכים 👑';
-    case 'הגדה המערבית':
-      return 'כבשתן אותנו 👹';
-    case 'הגדה המערבית':
-      return 'כבשתן אותנו 👹';
+// function getProvinceCaption(province) {
+//   switch (province) {
+//     case 'חוף אשקלון ועוטף עזה':
+//       return 'פיצוץ! 🚀';
+//     case 'אילת והערבה':
+//       return 'עיר של מלכים 👑';
+//     case 'הגדה המערבית':
+//       return 'כבשתן אותנו 👹';
+//     case 'הגדה המערבית':
+//       return 'כבשתן אותנו 👹';
 
-    default:
-      '';
-  }
-}
+//     default:
+//       '';
+//   }
+// }
 
 function SignUpProvince({ navigation }) {
   const { userStore } = useStore();
@@ -44,7 +44,7 @@ function SignUpProvince({ navigation }) {
       <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Light" marginBottom="l">
         בשביל שנוכל להציג הפגנות באיזורך
       </Text>
-      <Box flexDirection="row" flexWrap="wrap" marginBottom="xm">
+      <Box flexDirection="row" flexWrap="wrap" marginBottom="l">
         <ProvinceOption value="הגליל העליון" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
         <ProvinceOption value="הגליל התחתון" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
         <ProvinceOption value="הגולן" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
@@ -60,11 +60,11 @@ function SignUpProvince({ navigation }) {
         <ProvinceOption value="אילת והערבה" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
       </Box>
 
-      <Box minHeight={70}>
+      {/* <Box minHeight={70}>
         <Text variant="largeTitle" textAlign="center" marginBottom="xl">
           {getProvinceCaption(province)}
         </Text>
-      </Box>
+      </Box> */}
 
       <Box alignItems="center" marginBottom="m">
         <RoundedButton color="yellow" text="המשך" onPress={() => navigation.navigate('SignUpIncitement')} />

@@ -39,6 +39,14 @@ function Providers({ nextPage, currentIndex }: BoardingScreenProps) {
       }
     }
 
+    // If the user has signed up but not completed the process, open up the sign up
+    // form on app reopen.
+    if (currentIndex === 0) {
+      if (userStore.userData?.signupCompleted === false) {
+        navigatino.navigate('SignUp');
+      }
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userStore.userData, currentIndex]);
 
