@@ -52,7 +52,6 @@ function SignUpProvince({ navigation }) {
         <ProvinceOption value="השרון" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
         <ProvinceOption value="תל אביב" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
         <ProvinceOption value="המרכז" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="הגדה המערבית" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
         <ProvinceOption value="השפלה" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
         <ProvinceOption value="ירושלים" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
         <ProvinceOption value="חוף אשקלון ועוטף עזה" onPress={(value) => onProvincePress(value)} selectedProvince={province} />

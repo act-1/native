@@ -19,7 +19,7 @@ function SignUpNavigator() {
       screenOptions={{
         headerShown: false,
         cardStyle: {
-          paddingTop: Platform.select({ ios: 20, android: 40 }) + insets.top,
+          paddingTop: Platform.select({ ios: 0, android: 40 }) + insets.top,
           paddingHorizontal: 24,
           backgroundColor: '#111112',
         },
