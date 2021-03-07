@@ -219,6 +219,7 @@ export async function getHomeScreenPictures(): Promise<PicturePost[]> {
       .where('type', '==', 'picture')
       .where('homeScreen', '==', true)
       .orderBy('createdAt', 'desc')
+      .limit(8)
       .get();
 
     const posts = postsSnapshot.docs.map((post) => post.data() as PicturePost);
