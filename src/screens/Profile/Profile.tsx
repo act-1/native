@@ -20,7 +20,7 @@ function Profile({ navigation }: ProfileScreenProps) {
       setCheckInsLength(checkIns.length);
       const list = formatCheckInsForSectionList(checkIns);
       setCheckInList(list);
-      setListLoading(true);
+      setListLoading(false);
     });
   }, []);
 
