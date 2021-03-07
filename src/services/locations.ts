@@ -51,7 +51,7 @@ export async function fetchNearbyLocations({ position, radius = 2 }: NearbyLocat
  * @param position The position to fetch locations around.
  * @param radius The radius number to search for locations.
  */
-export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: NearbyLocationsParams): Promise<GeoQuerySnapshot> {
+export async function fetchNearbyUpcomingEvents({ position, radius = 10 }: NearbyLocationsParams): Promise<GeoQuerySnapshot> {
   try {
     const [lat, lng] = position;
 
@@ -61,6 +61,7 @@ export async function fetchNearbyUpcomingEvents({ position, radius = 5 }: Nearby
     });
     return query.limit(3).get();
   } catch (err) {
+    console.error(err);
     throw err;
   }
 }

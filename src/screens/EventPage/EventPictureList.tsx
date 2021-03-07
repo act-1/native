@@ -72,7 +72,6 @@ function EventPictureList({ navigation, route }: EventPicturesScreenProps) {
     } else {
       // Fetch pictures
       getPictures({ source, sourceId, limit: 8 }).then((pictureDocs) => {
-        console.log(pictureDocs.length);
         const pictures = pictureDocs.map((picture) => picture.data() as PicturePost);
         setEventPictureDocs(pictureDocs);
         setEventPictures(pictures);

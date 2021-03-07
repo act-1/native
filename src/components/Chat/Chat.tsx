@@ -57,19 +57,27 @@ function Chat({ messages, fetchMoreMessages }: ChatProps) {
   };
 
   useEffect(() => {
-    // If messages are updated, with no new messages - just refresh the list.
-    if (messages.length > 0 && messages.length === listMessages.length) {
-      setListMessages(messages);
-    }
+    // Set messages initially
+    // if (messages.length > 0 && listMessages.length === 0) {
+    //   setListMessages(messages);
+    // }
 
     // If new messages have been added by the user, refresh the list and scroll to the new message.
-    else if (messages.length > 0 && messages[0].authorId === userStore.user?.uid) {
+    if (messages.length > 0 && messages[0].authorId === userStore.user?.uid) {
       // Delay scroll to prevent cases where FlatList updates list after scroll
       setListMessages(messages);
       setTimeout(() => {
         flatListRef.current?.scrollToIndex({ index: 0 });
       }, 50);
+    } else {
+      // Otherwise, just update the list
+      setListMessages(messages);
     }
+
+    // If messages are updated, with no new messages - just refresh the list.
+    // if (messages.length > 0 && messages.length === listMessages.length) {
+    //   setListMessages(messages);
+    // }
   }, [messages]);
 
   return (

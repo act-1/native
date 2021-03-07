@@ -106,7 +106,7 @@ function CapturePicture({ navigation, route }: CapturePictureProps) {
             {route.params?.showGallerySwitch && (
               <Box flexDirection="row" justifyContent="space-between" alignItems="center" marginHorizontal="m" marginVertical="m">
                 <Text variant="boxTitle" marginLeft="m">
-                  הוספה לעמוד הקהילה
+                  הוספה לגלריית ההפגנה
                 </Text>
                 <Switch ios_backgroundColor="#39383c" onValueChange={setInGallery} value={inGallery} />
               </Box>

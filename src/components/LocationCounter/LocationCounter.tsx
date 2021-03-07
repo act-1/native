@@ -41,6 +41,10 @@ function LocationCounter({ locationId, variant = 'small', style }: LocationCount
         return [...prevState, checkIn];
       });
     });
+
+    return () => {
+      checkInsQuery.off();
+    };
   }, [locationId]);
 
   if (isLoading) {
