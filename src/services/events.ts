@@ -38,10 +38,7 @@ export async function getEventList(): Promise<Event[]> {
 
   const querySnapshot = await geocollection.where('startDate', '>', weekBefore).where('startDate', '<', weekAfter).get();
 
-  const documents = querySnapshot.docs
-    .map((doc): FirebaseFirestoreTypes.DocumentData => ({ ...doc.data(), id: doc.id }))
-    .sort((a, b) => b.endDate - a.endDate);
-
+  const documents = querySnapshot.docs.map((doc): FirebaseFirestoreTypes.DocumentData => ({ ...doc.data(), id: doc.id }));
   const events = documents.map((doc) => ({
     id: doc.id,
     title: doc.title,

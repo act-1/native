@@ -20,7 +20,7 @@ class UserStore {
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
   userData: FirebaseFirestoreTypes.DocumentData | null = null;
-  signUpData: { pronoun?: Pronoun } = {};
+  signUpData: { pronoun?: Pronoun; province: Province; avatar: Avatar } = { pronoun: 'ORIGINAL', province: null, avatar: null };
   initializedUser = false;
 
   constructor(rootStore: rootStore) {

@@ -22,9 +22,11 @@ class EventStore {
   async getEvents() {
     try {
       const events = await EventsAPI.getEventList();
-      const upcomingEvents = events.filter((event) => event.status === 'upcoming') as UpcomingEvent[];
+      const upcomingEvents = events
+        .filter((event) => event.status === 'upcoming')
+        .sort((a, b) => a.startDate - b.startDate) as UpcomingEvent[];
       const liveEvents = events.filter((event) => event.status === 'live') as LiveEvent[];
-      const pastEvents = events.filter((event) => event.status === 'past') as PastEvent[];
+      const pastEvents = events.filter((event) => event.status === 'past').sort((a, b) => b.endDate - a.endDate) as PastEvent[];
 
       runInAction(() => {
         this.events = events;

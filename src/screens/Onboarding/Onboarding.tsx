@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   heading: {
     position: 'relative',
     fontSize: 56,
-    marginBottom: Platform.select({ ios: 75, android: 32 }),
+    marginBottom: Platform.select({ ios: 95, android: 36 }),
     textAlign: 'center',
     fontFamily: 'AtlasDL3.1AAA-Bold',
     fontWeight: '900',
