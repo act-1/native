@@ -61,9 +61,9 @@ function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
             </Box>
           )}
 
-          {protest.status === 'past' && protest.protestersCount && (
+          {protest.status === 'past' && (
             <Text variant="boxInfo" color="important" fontSize={14}>
-              {protest.protestersCount} יצאו להפגין
+              {protest.protestersCount > 10 && `${protest.protestersCount} יצאו להפגין`}
             </Text>
           )}
         </Box>
