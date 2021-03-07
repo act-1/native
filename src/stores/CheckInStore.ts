@@ -65,10 +65,9 @@ class CheckInStore {
     this.privacySetting = value;
   };
 
-  async checkIn() {
+  async checkIn(checkInData) {
     try {
-      const checkInData = { ...this.pendingCheckIn, privacySetting: this.privacySetting };
-      const { checkIn } = await createCheckIn(checkInData);
+      const { checkIn } = await createCheckIn({ ...checkInData, privacySetting: this.privacySetting });
 
       this.setLastCheckIn(checkIn);
 

@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
-import { Image, ScrollView } from 'react-native';
+import { Alert, Image, ScrollView } from 'react-native';
 import { logEvent } from '@services/analytics';
 import { SelectLocationScreenProps } from '@types/navigation';
 import { Box, Text, LocationBox, EventBox } from '../../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../stores';
 import LocationPermissionMessage from './LocationPermissionMessage';
-import { Location, Event, SelectEntry } from '@types/collections';
+import { SelectEntry } from '@types/collections';
 import Ivrita from 'ivrita';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore, locationStore, checkInStore } = useStore();
   const { userCurrentPosition } = userStore;
 
-  const onLocationPress = async (entry: SelectEntry) => {
+  const checkIn = async (entry: SelectEntry) => {
     let locationName = '';
     const { city, province, coordinates } = entry;
 
@@ -46,7 +46,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       logEvent('check_in_select_event', { eventId });
     }
 
-    checkInStore.setPendingCheckIn({
+    const checkInData = {
       locationId,
       locationName,
       eventId,
@@ -57,8 +57,35 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       coordinates,
       city,
       province,
-    });
-    navigation.navigate('CheckInPrivacy');
+    };
+
+    checkInStore.setLastCheckIn(checkInData);
+
+    navigation.dangerouslyGetParent()?.goBack();
+    setTimeout(() => {
+      navigation.navigate('ProtestDashboard');
+    }, 125);
+
+    try {
+      await checkInStore.checkIn(checkInData);
+      logEvent('check_in_success');
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  const onLocationPress = (entry: SelectEntry) => {
+    let locationName = '';
+
+    // Extract the location name according the selected entry type (location / event)
+    if (entry.type === 'location') {
+      locationName = entry.name;
+    } else {
+      locationName = entry.locationName;
+    }
+
+    const alertMessage = `לבצע צ׳ק אין להפגנה ב${locationName}?`;
+    Alert.alert('צ׳ק אין', alertMessage, [{ text: 'אישור', onPress: () => checkIn(entry) }, { text: 'ביטול' }]);
   };
 
   useEffect(() => {
