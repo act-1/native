@@ -40,6 +40,7 @@ export default function ProfileCheckInBox({ checkIn }: { checkIn: CheckIn }) {
             textShadowColor="mainBackground"
             textShadowOffset={{ width: 0, height: 1 }}
             textShadowRadius={3}
+            opacity={0.85}
           >
             {checkIn.eventName || checkIn.locationName}
           </Text>
@@ -52,6 +53,7 @@ export default function ProfileCheckInBox({ checkIn }: { checkIn: CheckIn }) {
             textShadowColor="mainBackground"
             textShadowOffset={{ width: 0, height: 1 }}
             textShadowRadius={3}
+            opacity={0.85}
           >
             {checkIn.eventName && `${checkIn.locationName}, `}
             {checkIn.city}
