@@ -14,7 +14,7 @@ import EventPageActions from './EventPageActions';
 import EventPageDetail from './EventPageDetail';
 import EventPagePictures from './EventPagePictures';
 
-import { formatShortDate, formatUpcomingDate } from '@utils/date-utils';
+import { formatShortDate, formatUpcomingDate, timeAgo } from '@utils/date-utils';
 import mapStyle from '@utils/mapStyle.json';
 import HapticFeedback from 'react-native-haptic-feedback';
 import { format } from 'date-fns';
@@ -79,7 +79,7 @@ function EventPage({ navigation, route }: EventPageScreenProps) {
                 {event.title}
               </Text>
               <Text variant="text">
-                {event.startDate > new Date() ? upcomingDate : eventDate} בשעה {eventTime}
+                {event.startDate > new Date() ? `${upcomingDate} בשעה ${eventTime}` : `${shortDate} בשעה ${eventTime}`}
               </Text>
             </Box>
 
