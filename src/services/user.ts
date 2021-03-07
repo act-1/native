@@ -103,7 +103,7 @@ export async function submitUserSignUpData(signUpData) {
 
     const { pronoun, avatar } = signUpData;
 
-    let nickName = Ivrita.genderize('אנונימ.ית', Ivrita[pronoun]);
+    let nickName = Ivrita.genderize('אנונימי.ת', Ivrita[pronoun]);
     if (avatar) {
       if (avatar === 'anarchist') {
         nickName = Ivrita.genderize('אנרכיסט.ית אנונימי.ת', Ivrita[pronoun]);

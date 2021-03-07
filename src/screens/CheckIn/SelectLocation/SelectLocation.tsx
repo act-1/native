@@ -7,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../stores';
 import LocationPermissionMessage from './LocationPermissionMessage';
 import { Location, Event, SelectEntry } from '@types/collections';
+import Ivrita from 'ivrita';
 
 function SelectLocation({ navigation }: SelectLocationScreenProps) {
   const { userStore, locationStore, checkInStore } = useStore();
@@ -74,7 +75,7 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
       <Box justifyContent="center" alignItems="center" style={{ marginTop: -200 }} marginBottom="m">
         <Text variant="extraLargeTitle" color="primaryColor">
-          יצאתן.ם להפגין?
+          {Ivrita.genderize('יצאתן.ם להפגין?', Ivrita[userStore.userData?.pronoun])}
         </Text>
         <Text variant="extraLargeTitle" color="primaryColor">
           עשו צ׳ק אין!
