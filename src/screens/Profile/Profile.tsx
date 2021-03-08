@@ -36,7 +36,7 @@ function Profile({ navigation }: ProfileScreenProps) {
     return (
       <Box alignItems="center" marginTop="xm">
         <Text variant="boxTitle" color="subText" textAlign="center" marginBottom="xs">
-          כאן יופיעו ההפגנות שהלכת אליהן
+          כאן יופיעו הפגנות שהלכת אליהן.
         </Text>
         <Text variant="boxTitle" color="subText" textAlign="center" marginBottom="m">
           עכשיו בהפגנה? עשו צ׳ק אין!
