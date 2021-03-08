@@ -21,6 +21,7 @@ class UserStore {
   userCurrentPosition: LatLng | undefined;
   userData: FirebaseFirestoreTypes.DocumentData | null = null;
   signUpData: { pronoun?: Pronoun; province: Province; avatar: Avatar } = {};
+  FCMToken: string = '';
   initializedUser = false;
 
   constructor(rootStore: rootStore) {
@@ -116,6 +117,7 @@ class UserStore {
       }
 
       const FCMToken = await messaging().getToken();
+      this.FCMToken = FCMToken;
 
       const userFCMToken = await getUserFCMToken(userId, FCMToken);
 
