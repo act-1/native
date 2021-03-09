@@ -159,13 +159,10 @@ export async function newImagePost({ imageUri, text, location, event }: NewImage
   }
 }
 
-export function archivePost(postId: string) {
-  return firestore().collection('posts').doc(postId).update({
-    archived: true,
-    updatedAt: firestore.FieldValue.serverTimestamp(),
-    archivedAt: firestore.FieldValue.serverTimestamp(),
-  });
+export function deletePost(postId: string) {
+  return firestore().collection('posts').doc(postId).delete();
 }
+
 type GetRecentPicturesProps = {
   limit?: number;
   startAfter?: FirebaseFirestoreTypes.DocumentData;
@@ -292,5 +289,5 @@ export default {
   getRecentPictures,
   getHomeScreenPictures,
   getPictures,
-  archivePost,
+  deletePost,
 };

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { FlatList, Platform, RefreshControl, ActivityIndicator } from 'react-native';
+import { FlatList, RefreshControl, ActivityIndicator, Alert } from 'react-native';
 import { PicturePost } from '@types/collections';
+import FeedService from '@services/feed';
 import PictureListItem from './PictureListItem';
 
 type PictureListProps = {
@@ -33,6 +34,31 @@ function PictureList({
     }
   };
 
+  const deletePost = (pictureId: string) => {
+    Alert.alert(
+      'מחיקת תמונה',
+      'התמונה תמחק לצמיתות',
+      [
+        {
+          text: 'מחיקה',
+          onPress: () => {
+            FeedService.deletePost(pictureId)
+              .then(() => Alert.alert('התמונה נמחקה בהצלחה'))
+              .catch((err) => {
+                throw err;
+              });
+          },
+          style: 'destructive',
+        },
+        {
+          text: 'ביטול',
+          style: 'cancel',
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <FlatList
       ref={flatListRef}
@@ -40,7 +66,7 @@ function PictureList({
       contentContainerStyle={{ marginTop: 8 }}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <PictureListItem post={item} updatePostLikeCount={updatePostLikeCount} />}
+      renderItem={({ item }) => <PictureListItem post={item} updatePostLikeCount={updatePostLikeCount} deletePost={deletePost} />}
       initialNumToRender={8}
       onScrollToIndexFailed={() => {}}
       refreshing={fetchingPictures}

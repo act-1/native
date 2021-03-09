@@ -1,54 +1,97 @@
 import React from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Pressable } from 'react-native';
 import { Box, Text, LikeButton } from '../';
 import { useStore } from '../../stores';
 import FastImage from 'react-native-fast-image';
-import { likePost, unlikePost } from '@services/feed';
+import { likePost, unlikePost, reportPost } from '@services/feed';
 import { PicturePost } from '@types/collections';
 import Pinchable from 'react-native-pinchable';
 import { timeAgo } from '@utils/date-utils';
+import Icon from 'react-native-vector-icons/Feather';
+import { useActionSheet } from '@expo/react-native-action-sheet';
 
 const deviceWidth = Dimensions.get('window').width;
 
 type PictureListItemProps = {
   post: PicturePost;
   updatePostLikeCount: (postId: string, likeCount: number) => void;
+  deletePicture: (postId: string) => void;
+  reportPost: (postInfo: PicturePost) => void;
 };
 
-function PictureListItem({ post, updatePostLikeCount }: PictureListItemProps) {
-  const { feedStore } = useStore();
+function PictureListItem({ post, updatePostLikeCount, deletePost, reportPost }: PictureListItemProps) {
+  const { userStore } = useStore();
+  const { showActionSheetWithOptions } = useActionSheet();
 
-  const likePress = async () => {
-    const liked = feedStore.userPostLikes.includes(post.id);
-    try {
-      const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
-
-      updatePostLikeCount(post.id, newLikeCount);
-      feedStore.updatePostLike(post.id, !liked);
-
-      const updateFunction = liked ? unlikePost : likePost;
-
-      await updateFunction(post.id);
-    } catch (err) {
-      feedStore.updatePostLike(post.id, !liked);
-      console.error(err); // TODO: Record to crashlytics.
+  const openPostActionSheet = () => {
+    const options: { title: string; key?: 'delete' | 'report'; icon?: string; destructive?: boolean }[] = [];
+    if (post.authorId === userStore.user.uid) {
+      options.push({ title: 'מחיקה', key: 'delete', icon: 'trash-2', destructive: true });
+    } else {
+      options.push({ title: 'דיווח', key: 'report', icon: 'alert-circle', destructive: true });
     }
+
+    options.push({ title: 'ביטול' });
+
+    const icons = options.map((item) => {
+      if (item.icon) {
+        return <Icon name={item.icon as string} size={20} color={item.destructive ? '#d32f2f' : '#ededed'} />;
+      } else {
+        return null;
+      }
+    });
+
+    const actionSheetOptions = {
+      options: options.map((option) => option.title),
+      icons,
+      cancelButtonIndex: 1,
+      textStyle: { marginLeft: -20, marginBottom: 4, color: '#ededed' },
+      destructiveButtonIndex: 0,
+      containerStyle: { backgroundColor: '#2a2a29' },
+      showSeparators: true,
+      separatorStyle: { backgroundColor: '#3b3b3b' },
+    };
+
+    const callback = (buttonIndex: number) => {
+      if (buttonIndex === 0) {
+        if (options[buttonIndex].key === 'delete') {
+          deletePost(post.id);
+        }
+
+        if (options[buttonIndex].key === 'report') {
+          deletePost(post.id);
+        }
+      }
+      // if (buttonIndex > menuItems.length) return; // When pressing outside the action sheet, the buttonIndex is `options.length + 1` - outside the bounds of the menu items
+      // if (menuItems[buttonIndex].actionKey === 'copy' && message.type === 'text') {
+      //   copyToClipboard(message.text);
+      // } else if (menuItems[buttonIndex].actionKey === 'delete') {
+      //   deleteMessage(message.id);
+      // }
+    };
+
+    showActionSheetWithOptions(actionSheetOptions, callback);
   };
 
   return (
     <Box>
-      <Box flexDirection="row" alignItems="center" marginBottom="m" paddingHorizontal="s">
-        <FastImage source={{ uri: post.authorPicture }} style={styles.profilePic} />
-        <Box>
-          <Text variant="boxTitle">{post.authorName}</Text>
-          {post.locationId && (
-            <Box flexDirection="row" alignItems="center">
-              <Text variant="boxSubtitle" textAlign="left">
-                {post.locationName}
-              </Text>
-            </Box>
-          )}
+      <Box style={styles.postItemAuthorRow}>
+        <Box flexDirection="row">
+          <FastImage source={{ uri: post.authorPicture }} style={styles.profilePic} />
+          <Box>
+            <Text variant="boxTitle">{post.authorName}</Text>
+            {post.locationId && (
+              <Box flexDirection="row" alignItems="center">
+                <Text variant="boxSubtitle" textAlign="left">
+                  {post.locationName}
+                </Text>
+              </Box>
+            )}
+          </Box>
         </Box>
+        <Pressable onPress={openPostActionSheet}>
+          <Icon name="more-horizontal" color="#bfc7cf" size={20} />
+        </Pressable>
       </Box>
       <Pinchable maximumZoomScale={3.75}>
         <Box style={{ marginHorizontal: -16, marginBottom: 8 }}>
@@ -67,7 +110,6 @@ function PictureListItem({ post, updatePostLikeCount }: PictureListItemProps) {
       )}
 
       <Box paddingHorizontal="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="xxm">
-        {/* <LikeButton onPress={likePress} liked={feedStore.userPostLikes.includes(post.id)} likeCount={post.likeCount} /> */}
         <Text variant="boxSubtitle" fontSize={14} textAlign="left">
           {post.createdAt && timeAgo(post.createdAt.toDate())}
         </Text>
@@ -79,6 +121,14 @@ function PictureListItem({ post, updatePostLikeCount }: PictureListItemProps) {
 export default React.memo(PictureListItem);
 
 const styles = StyleSheet.create({
+  postItemAuthorRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 8,
+    paddingRight: 16,
+    marginBottom: 12,
+  },
   profilePic: {
     width: 42,
     height: 42,
@@ -92,3 +142,28 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
 });
+
+/**
+ * Like press handler, for future implementation
+ */
+// const { feedStore } = useStore();
+
+// const likePress = async () => {
+//   const liked = feedStore.userPostLikes.includes(post.id);
+//   try {
+//     const newLikeCount = liked ? post.likeCount - 1 : post.likeCount + 1;
+
+//     updatePostLikeCount(post.id, newLikeCount);
+//     feedStore.updatePostLike(post.id, !liked);
+
+//     const updateFunction = liked ? unlikePost : likePost;
+
+//     await updateFunction(post.id);
+//   } catch (err) {
+//     feedStore.updatePostLike(post.id, !liked);
+//     console.error(err); // TODO: Record to crashlytics.
+//   }
+// };
+
+// render button:
+/* <LikeButton onPress={likePress} liked={feedStore.userPostLikes.includes(post.id)} likeCount={post.likeCount} /> */
