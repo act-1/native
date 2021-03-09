@@ -14,6 +14,7 @@ export type EventPicturesScreenProps = StackScreenProps<RootStackParamList, 'Eve
 export type CheckInFormScreenProps = StackScreenProps<RootStackParamList, 'CheckInForm'>;
 export type LocationScreenProps = StackScreenProps<RootStackParamList, 'LocationPage'>;
 export type ProfileScreenProps = StackScreenProps<RootStackParamList, 'Profile'>;
+export type SettingsScreenProps = StackScreenProps<RootStackParamList, 'Settings'>;
 export type ActionScreenProps = StackScreenProps<RootStackParamList, 'ActionScreen'>;
 export type NewPostProps = StackScreenProps<RootStackParamList, 'NewPost'>;
 export type RecentPicturesProps = StackScreenProps<RootStackParamList, 'RecentPictures'>;
@@ -39,6 +40,7 @@ export type RootStackParamList = {
   CheckInForm: { checkInData: CheckInParams };
   LocationPage: { locationId: string };
   Profile: undefined;
+  Settings: undefined;
   SignUpNavigator: undefined;
   SignUpHello: undefined;
   ActionScreen: undefined;

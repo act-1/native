@@ -1,4 +1,5 @@
 export { default as Home } from './Home';
+export { default as Settings } from './Settings';
 export { default as EventList } from './EventList';
 export { default as EventPage } from './EventPage';
 export { default as EventPictureList } from './EventPage/EventPictureList';
