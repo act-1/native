@@ -6,10 +6,7 @@ import FastImage from 'react-native-fast-image';
 import { likePost, unlikePost } from '@services/feed';
 import { PicturePost } from '@types/collections';
 import Pinchable from 'react-native-pinchable';
-
-import * as timeago from 'timeago.js';
-import he from 'timeago.js/lib/lang/he';
-timeago.register('he', he);
+import { timeAgo } from '@utils/date-utils';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -72,7 +69,7 @@ function PictureListItem({ post, updatePostLikeCount }: PictureListItemProps) {
       <Box paddingHorizontal="m" flexDirection="row" alignItems="center" justifyContent="space-between" marginBottom="xxm">
         {/* <LikeButton onPress={likePress} liked={feedStore.userPostLikes.includes(post.id)} likeCount={post.likeCount} /> */}
         <Text variant="boxSubtitle" fontSize={14} textAlign="left">
-          {post.createdAt && timeago.format(post.createdAt.toDate(), 'he')}
+          {post.createdAt && timeAgo(post.createdAt.toDate())}
         </Text>
       </Box>
     </Box>
