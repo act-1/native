@@ -8,6 +8,8 @@ type Avatar = 'alien' | 'anarchist' | 'diseaseDistributor' | 'traitor';
 
 type EventStatus = 'upcoming' | 'live' | 'past';
 
+type PostAction = 'report' | 'delete';
+
 type PrivacyOption = 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
 
 type CheckIn = {

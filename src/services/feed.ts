@@ -284,10 +284,28 @@ export async function getPictures({ source, sourceId, startAfter, afterDate, lim
   }
 }
 
+export async function reportPost(postInfo: Post) {
+  try {
+    const userId = auth().currentUser!.uid;
+
+    const reportId = `${postInfo.id}${userId}`;
+    return firestore()
+      .collection('reports')
+      .doc(reportId)
+      .set({
+        ...postInfo,
+        reporterId: userId,
+      });
+  } catch (err) {
+    throw err;
+  }
+}
+
 export default {
   newImagePost,
   getRecentPictures,
   getHomeScreenPictures,
   getPictures,
   deletePost,
+  reportPost,
 };

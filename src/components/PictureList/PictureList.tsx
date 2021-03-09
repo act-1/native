@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { FlatList, RefreshControl, ActivityIndicator, Alert } from 'react-native';
 import { PicturePost } from '@types/collections';
-import FeedService from '@services/feed';
+import PicturePostActions from './PicturePostActions';
 import PictureListItem from './PictureListItem';
 
 type PictureListProps = {
@@ -34,29 +34,9 @@ function PictureList({
     }
   };
 
-  const deletePost = (pictureId: string) => {
-    Alert.alert(
-      'מחיקת תמונה',
-      'התמונה תמחק לצמיתות',
-      [
-        {
-          text: 'מחיקה',
-          onPress: () => {
-            FeedService.deletePost(pictureId)
-              .then(() => Alert.alert('התמונה נמחקה בהצלחה'))
-              .catch((err) => {
-                throw err;
-              });
-          },
-          style: 'destructive',
-        },
-        {
-          text: 'ביטול',
-          style: 'cancel',
-        },
-      ],
-      { cancelable: false }
-    );
+  const postAction = (type: PostAction, post: PicturePost) => {
+    const { title, message, action } = PicturePostActions(post)[type];
+    Alert.alert(title, message, [action, { text: 'ביטול', style: 'cancel' }], { cancelable: false });
   };
 
   return (
@@ -66,7 +46,7 @@ function PictureList({
       contentContainerStyle={{ marginTop: 8 }}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <PictureListItem post={item} updatePostLikeCount={updatePostLikeCount} deletePost={deletePost} />}
+      renderItem={({ item }) => <PictureListItem post={item} updatePostLikeCount={updatePostLikeCount} postAction={postAction} />}
       initialNumToRender={8}
       onScrollToIndexFailed={() => {}}
       refreshing={fetchingPictures}

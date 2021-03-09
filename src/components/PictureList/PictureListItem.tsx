@@ -15,11 +15,10 @@ const deviceWidth = Dimensions.get('window').width;
 type PictureListItemProps = {
   post: PicturePost;
   updatePostLikeCount: (postId: string, likeCount: number) => void;
-  deletePicture: (postId: string) => void;
-  reportPost: (postInfo: PicturePost) => void;
+  postAction: (type: PostAction, post: PicturePost) => void;
 };
 
-function PictureListItem({ post, updatePostLikeCount, deletePost, reportPost }: PictureListItemProps) {
+function PictureListItem({ post, updatePostLikeCount, postAction }: PictureListItemProps) {
   const { userStore } = useStore();
   const { showActionSheetWithOptions } = useActionSheet();
 
@@ -55,19 +54,13 @@ function PictureListItem({ post, updatePostLikeCount, deletePost, reportPost }: 
     const callback = (buttonIndex: number) => {
       if (buttonIndex === 0) {
         if (options[buttonIndex].key === 'delete') {
-          deletePost(post.id);
+          postAction('delete', post);
         }
 
         if (options[buttonIndex].key === 'report') {
-          deletePost(post.id);
+          postAction('report', post);
         }
       }
-      // if (buttonIndex > menuItems.length) return; // When pressing outside the action sheet, the buttonIndex is `options.length + 1` - outside the bounds of the menu items
-      // if (menuItems[buttonIndex].actionKey === 'copy' && message.type === 'text') {
-      //   copyToClipboard(message.text);
-      // } else if (menuItems[buttonIndex].actionKey === 'delete') {
-      //   deleteMessage(message.id);
-      // }
     };
 
     showActionSheetWithOptions(actionSheetOptions, callback);
