@@ -1,71 +1,90 @@
 import React from 'react';
-import { Image, StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { Box, Text } from '../';
 import { RoundedButton } from '../Buttons';
-import analytics from '@react-native-firebase/analytics';
+import { logEvent } from '@services/analytics';
+import Modal from 'react-native-modal';
 import messaging from '@react-native-firebase/messaging';
-import { modalfy } from 'react-native-modalfy';
+import LottieView from 'lottie-react-native';
 
-const modalWidth = Dimensions.get('screen').width * 0.8;
-const modalHeight = Dimensions.get('screen').height * 0.55;
+const checkMarkAnimation = require('@assets/checkmark.json');
 
-function AttendingModal() {
+type AttendingModalProps = {
+  isModalVisible: boolean;
+  setModalVisible: (modalVisible: boolean) => void;
+};
+function AttendingModal({ isModalVisible, setModalVisible }: AttendingModalProps) {
   const notificationPermissionsRequest = async () => {
     const authorizationStatus = await messaging().requestPermission();
 
     if (authorizationStatus) {
-      analytics().logEvent('event_notification_permission_received', { authorizationStatus });
-      modalfy().closeModal('AttendingModal');
+      logEvent('event_notification_permission_received', { authorizationStatus });
+      setModalVisible(false);
     }
   };
 
+  const notificationButtonPress = () => {
+    logEvent('notification_modal_permission_click');
+    notificationPermissionsRequest();
+  };
+
   return (
-    <Box
-      width={modalWidth}
-      minHeight={modalHeight}
-      justifyContent="center"
-      alignItems="center"
-      paddingHorizontal="xm"
-      borderRadius={6}
-      style={{ shadowColor: '#333333' }}
-      shadowOpacity={1}
-      shadowOffset={{ width: 0, height: 2 }}
-      shadowRadius={4}
-      backgroundColor="mainBackground"
+    <Modal
+      isVisible={isModalVisible}
+      backdropOpacity={0.825}
+      animationIn="zoomIn"
+      animationInTiming={350}
+      animationOut="zoomOut"
+      animationOutTiming={350}
+      onBackdropPress={() => setModalVisible(false)}
+      useNativeDriver
     >
-      <Image source={require('../../assets/illustrations/hand-v.png')} style={styles.modalImage} />
-      <Text variant="largeTitle" marginBottom="s">
-        נתראה בקרוב!
-      </Text>
-      <Text variant="text" fontWeight="300" textAlign="center" marginBottom="m">
-        תרצו לקבל עדכונים על ההפגנה?
-      </Text>
-      <RoundedButton
-        text="הפעלת התראות"
-        color="yellow"
-        onPress={() => {
-          analytics().logEvent('notification_modal_permission_click');
-          notificationPermissionsRequest();
-        }}
-      />
-      <Text variant="text" fontSize={15} fontWeight="300" textAlign="center" marginVertical="m">
-        זה נטו להודעות חשובות ועדכונים בלוחות זמנים. לא חופרים, באמא.{' '}
-      </Text>
-      <RoundedButton
-        text="לא עכשיו"
-        color="porcelain"
-        onPress={() => {
-          analytics().logEvent('notification_modal_cancel_click');
-          modalfy().closeModal('AttendingModal');
-        }}
-      />
-    </Box>
+      <Box style={styles.modalWrapper}>
+        <LottieView source={checkMarkAnimation} autoPlay speed={0.85} loop={false} style={styles.modalImage} />
+        <Text variant="largeTitle" marginBottom="s">
+          נתראה בקרוב!
+        </Text>
+        <Text variant="text" fontWeight="300" textAlign="center" marginBottom="m">
+          תרצו לקבל עדכונים על ההפגנה?
+        </Text>
+        <RoundedButton text="הפעלת התראות" color="yellow" style={{ marginBottom: -4 }} onPress={notificationButtonPress} />
+        <Text variant="text" fontSize={15} fontWeight="300" textAlign="center" marginVertical="m">
+          זה נטו להודעות חשובות ועדכונים בלוחות זמנים. לא חופרים, באמא.
+        </Text>
+        <RoundedButton
+          text="לא עכשיו"
+          color="porcelain"
+          onPress={() => {
+            logEvent('notification_modal_cancel_click');
+            setModalVisible(false);
+          }}
+        />
+      </Box>
+    </Modal>
   );
 }
 export default AttendingModal;
 
+const modalHeight = Dimensions.get('screen').height * 0.48;
+
 const styles = StyleSheet.create({
   modalImage: {
-    marginBottom: 16,
+    width: 200,
+    marginBottom: -12,
+  },
+  modalWrapper: {
+    height: modalHeight,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingBottom: 28,
+    marginHorizontal: 24,
+    borderRadius: 6,
+    shadowColor: '#000000',
+    shadowOpacity: 0.45,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 4,
+    backgroundColor: '#111111',
   },
 });
