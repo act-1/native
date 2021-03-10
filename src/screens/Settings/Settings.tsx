@@ -1,11 +1,17 @@
 import React from 'react';
-import { ScrollView, Linking } from 'react-native';
+import { ScrollView, Platform, Linking } from 'react-native';
 import { Box, Text } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { SettingsScreenProps } from '../../types/navigation';
 import SettingBox from './SettingsBox';
 import DeviceInfo from 'react-native-device-info';
+
+// Facebook page link
+const pageID = 'Act1.co.il';
+const scheme = Platform.select({ ios: 'fb://profile/', android: 'fb://page/' });
+
+const facebookUrl = `${scheme}${pageID}`;
 
 function Settings({ navigation }: SettingsScreenProps) {
   const { userStore } = useStore();
@@ -24,13 +30,7 @@ function Settings({ navigation }: SettingsScreenProps) {
       </Box>
 
       <Box margin="m" borderRadius={10} backgroundColor="sectionListSeperator">
-        <SettingBox
-          first
-          endIcon="external-link"
-          title="פייסבוק"
-          icon="😳"
-          onPress={() => Linking.openURL('https://instagram.com/act1.co.il')}
-        />
+        <SettingBox first endIcon="external-link" title="פייסבוק" icon="😳" onPress={() => Linking.openURL(facebookUrl)} />
         <SettingBox
           last
           endIcon="external-link"
