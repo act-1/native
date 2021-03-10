@@ -14,7 +14,7 @@ export async function uploadProfilePicture(imagePath: string) {
     //   return 'https://avatars.githubusercontent.com/u/75989338?s=200';
     // }
 
-    const filePath = `/profilePictures/${auth().currentUser!.uid}/${nanoid(10)}.jpg`;
+    const filePath = `/user_content/${auth().currentUser!.uid}/profilePictures/${nanoid(10)}.jpg`;
     const reference = storage().ref(filePath);
     await reference.putFile(imagePath);
     const pictureUrl = await reference.getDownloadURL();
@@ -34,7 +34,7 @@ export async function uploadProfilePictureFromURL(imageUrl: string) {
     //   return imageUrl;
     // }
 
-    const filePath = `/profilePictures/${auth().currentUser!.uid}/${nanoid(10)}.jpg`;
+    const filePath = `/user_content/${auth().currentUser!.uid}/profilePictures/${nanoid(10)}.jpg`;
     const reference = storage().ref(filePath);
 
     const imageResult = await fetch(imageUrl);
@@ -101,7 +101,7 @@ export async function uploadPicture(imageUri: string) {
     const uploadTrace = await perf().startTrace('imageUpload');
     uploadTrace.putMetric('image_size', resizedImage.size);
 
-    const reference = storage().ref(`uploaded_pictures/${resizedImage.name}`);
+    const reference = storage().ref(`/user_content/${uploaderId}/uploaded_pictures/${resizedImage.name}`);
     await reference.putFile(resizedImage.uri);
 
     uploadTrace.stop();
