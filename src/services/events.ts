@@ -61,7 +61,15 @@ export async function getEventList(): Promise<Event[]> {
   return events;
 }
 
-export async function attendEvent({ eventId, eventDate }: { eventId: string; eventDate: Date }): Promise<{ attended: boolean }> {
+export async function attendEvent({
+  eventId,
+  eventDate,
+  fcmToken,
+}: {
+  eventId: string;
+  eventDate: Date;
+  fcmToken: string | null;
+}) {
   try {
     const userId = firebase.auth().currentUser?.uid;
     const userAttendRef = firestore().collection('users').doc(userId).collection('attendingEvents').doc(eventId);
@@ -69,8 +77,8 @@ export async function attendEvent({ eventId, eventDate }: { eventId: string; eve
     const eventRef = firestore().collection('events').doc(eventId);
 
     const batch = firestore().batch();
-    batch.set(eventAttendRef, { notifications: true, attendedAt: firestore.FieldValue.serverTimestamp() });
-    batch.set(userAttendRef, { eventDate: eventDate, attendedAt: firestore.FieldValue.serverTimestamp() });
+    batch.set(eventAttendRef, { userId, fcmToken, notifications: true, attendedAt: firestore.FieldValue.serverTimestamp() });
+    batch.set(userAttendRef, { userId, eventDate, attendedAt: firestore.FieldValue.serverTimestamp() });
     batch.update(eventRef, { attendingCount: firestore.FieldValue.increment(1) });
     await batch.commit();
 

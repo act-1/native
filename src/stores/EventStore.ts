@@ -61,7 +61,8 @@ class EventStore {
         this.events = updatedEvents;
       });
 
-      const result = await EventsAPI.attendEvent({ eventId, eventDate });
+      const fcmToken = this.rootStore?.userStore.FCMToken || null;
+      const result = await EventsAPI.attendEvent({ eventId, eventDate, fcmToken });
 
       return result;
     } catch (err) {
