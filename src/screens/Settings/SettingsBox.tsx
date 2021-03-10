@@ -1,4 +1,4 @@
-import React, { ReactChild } from 'react';
+import React from 'react';
 import { ViewStyle, StyleSheet } from 'react-native';
 import { Box, Text } from '../../components';
 import { TouchableHighlight } from 'react-native-gesture-handler';
