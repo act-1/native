@@ -1,11 +1,12 @@
 import { backgroundColor } from '@shopify/restyle';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, ReactElement } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { Box, Text } from '../../components';
 
 type CircularOptionProps = {
-  content: string;
+  content: string | ReactElement;
   caption?: string;
+  selected?: boolean;
   onPress?: () => void;
 };
 
