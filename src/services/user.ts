@@ -1,7 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
-import { getDeviceId, getUniqueId } from 'react-native-device-info';
 import Ivrita from 'ivrita';
 
 export async function getUserFCMToken(userId: string, fcmToken: string) {
@@ -14,10 +13,7 @@ export async function getUserFCMToken(userId: string, fcmToken: string) {
 
 export async function createUserFCMToken(userId: string, fcmToken: string) {
   try {
-    const deviceId = getUniqueId();
-    const deviceName = getDeviceId();
-
-    const result = await functions().httpsCallable('createUserFCMToken')({ userId, fcmToken, deviceId, deviceName });
+    const result = await functions().httpsCallable('createUserFCMToken')({ userId, fcmToken });
 
     return result.data;
   } catch (err) {
