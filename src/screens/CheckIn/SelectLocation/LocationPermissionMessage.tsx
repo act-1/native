@@ -142,7 +142,7 @@ function LocationPermissionMessage() {
         </Text>
         <RoundedButton
           text="שליחת מייל ל- ACT1"
-          onPress={() => Linking.openURL('mailto:guytepper@act1.co.il')}
+          onPress={() => Linking.openURL('mailto:team@act1.co.il')}
           color="darkBlue"
           textStyle={{ fontWeight: 'bold' }}
         />

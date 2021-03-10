@@ -59,8 +59,18 @@ const AppTabs = ({ navigation }) => {
               <TouchableScale
                 activeScale={0.92}
                 friction={6}
-                onPressIn={() => HapticFeedback.trigger('impactLight')}
-                onPressOut={() => HapticFeedback.trigger('impactMedium')}
+                onPressIn={() => {
+                  // Vibrate some android devices in an annoying way.
+                  // Better leave it exclusively to iOS for now.
+                  if (Platform.OS === 'ios') {
+                    HapticFeedback.trigger('impactLight');
+                  }
+                }}
+                onPressOut={() => {
+                  if (Platform.OS === 'ios') {
+                    HapticFeedback.trigger('impactMedium');
+                  }
+                }}
                 onPress={() => {
                   if (checkInStore.hasActiveCheckIn) {
                     navigation.navigate('ProtestDashboard');
