@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useRef } from 'react';
 import { StatusBar, StyleSheet, ScrollView } from 'react-native';
+import { useScrollToTop } from '@react-navigation/native';
 import { Text } from '../../components';
 import { Stats, FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
 
@@ -9,6 +10,10 @@ import { Event } from '@types/collections';
 
 function Home() {
   const { eventStore, liveStore } = useStore();
+  const scrollViewRef = useRef(null);
+
+  useScrollToTop(scrollViewRef);
+
   const liveEvents = React.useMemo(() => {
     return eventStore.liveEvents
       .map((event: Event) => {
@@ -24,6 +29,7 @@ function Home() {
 
   return (
     <ScrollView
+      ref={scrollViewRef}
       style={styles.homeWrapper}
       contentContainerStyle={styles.scrollViewContainer}
       showsVerticalScrollIndicator={false}

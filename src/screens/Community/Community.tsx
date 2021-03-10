@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ScrollView } from 'react-native';
+import { useScrollToTop } from '@react-navigation/native';
 import { Box, Text } from '../../components';
 import { RecentPicturesWidget, FeaturedProtests } from '@components/Widgets';
 import CommunityStats from './CommunityStats';
@@ -9,9 +10,12 @@ import { observer } from 'mobx-react-lite';
 
 const Community = () => {
   const { eventStore } = useStore();
+  const scrollViewRef = useRef(null);
+
+  useScrollToTop(scrollViewRef);
 
   return (
-    <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+    <ScrollView ref={scrollViewRef} style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       {/* <CommunityStats /> */}
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         תמונות אחרונות
