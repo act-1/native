@@ -55,29 +55,38 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
   };
 
   useEffect(() => {
-    const newPicturesListener = (source: string, sourceId: string, lastDoc: FirebaseFirestoreTypes.QueryDocumentSnapshot) => {
+    const newPicturesListener = (source: string, sourceId: string) => {
+      const sourceField = source + 'Id';
+
       const query = firestore()
         .collection('posts')
         .where('type', '==', 'picture')
-        .where(`${source}Id`, '==', sourceId)
-        .where('createdAt', '>', new Date())
-        .orderBy('createdAt', 'desc');
+        .where(sourceField, '==', sourceId)
+        .where('createdAt', '>', new Date());
 
-      const unsubscribe = query.onSnapshot((snapshot) => {
-        if (snapshot === null) return;
-        snapshot.docChanges().forEach((change) => {
-          if (change.type === 'added') {
-            let picture = change.doc.data() as PicturePost;
+      const unsubscribe = query.onSnapshot(
+        (snapshot) => {
+          console.log(new Date());
+          if (snapshot === null) return;
+          snapshot.docChanges().forEach((change) => {
+            if (change.type === 'added') {
+              console.log(change.doc.data());
+              let picture = change.doc.data() as PicturePost;
 
-            // Local writes arrives without `createdAt`.
-            // See https://firebase.google.com/docs/firestore/query-data/listen#events-local-changes
-            picture = { ...picture, createdAt: firestore.Timestamp.fromDate(new Date()) };
+              // Local writes arrives without `createdAt`.
+              // See https://firebase.google.com/docs/firestore/query-data/listen#events-local-changes
+              picture = { ...picture, createdAt: firestore.Timestamp.fromDate(new Date()) };
 
-            setEventPicturesDocs((prevState) => [change.doc, ...prevState]);
-            setEventPictures((prevState) => [picture, ...prevState]);
-          }
-        });
-      });
+              setEventPicturesDocs((prevState) => [change.doc, ...prevState]);
+              setEventPictures((prevState) => [picture, ...prevState]);
+            }
+          });
+        },
+        (err) => {
+          console.error(err);
+          throw err;
+        }
+      );
 
       return unsubscribe;
     };
@@ -95,7 +104,7 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
         setEventPictures(pictures);
         setEventPicturesDocs(pictureDocs);
 
-        unsubscribeListener = newPicturesListener(source, sourceId, pictureDocs[0]);
+        unsubscribeListener = newPicturesListener(source, sourceId);
       })
       .catch((err) => console.error(err))
       .finally(() => setFetchingPictures(false));
