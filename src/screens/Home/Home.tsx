@@ -3,12 +3,12 @@ import { StatusBar, StyleSheet, ScrollView } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import { Text } from '../../components';
 import { Stats, FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
-
+import EventCompactBox from '../../components/Widgets/FeaturedEvents/EventCompactBox';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { Event } from '@types/collections';
 
-function Home() {
+function Home({ navigation }) {
   const { eventStore, liveStore } = useStore();
   const scrollViewRef = useRef(null);
 
@@ -56,9 +56,18 @@ function Home() {
       {eventStore.upcomingEvents.length > 0 && (
         <>
           <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
-            הפגנות קרובות
+            ההפגנה הקרובה
           </Text>
 
+          <EventCompactBox
+            {...eventStore.upcomingEvents[0]}
+            variant="horizontal"
+            onPress={() => navigation.navigate('EventPage', { eventId: eventStore.upcomingEvents[0].id })}
+          />
+
+          <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+            כל ההפגנות
+          </Text>
           <FeaturedEvents style={{ marginBottom: 42 }} />
         </>
       )}
