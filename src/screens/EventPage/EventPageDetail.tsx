@@ -11,8 +11,11 @@ type EventPageDetailProps = {
 function EventPageDetail({ iconName, text }: EventPageDetailProps) {
   const [fontScale, setFontScale] = useState(1);
   getFontScale().then((scale) => setFontScale(scale));
+
+  const marginBottom = fontScale > 1 ? fontScale * 2.75 : 0;
+
   return (
-    <Box flexDirection="row" alignItems="center">
+    <Box flexDirection="row" alignItems="center" style={{ marginBottom }}>
       <Icon name={iconName} size={16 * fontScale} color="#50c9cd" style={{ marginRight: 8 * fontScale }} />
       <Text variant="text">{text}</Text>
     </Box>

@@ -26,7 +26,13 @@ function Settings({ navigation }: SettingsScreenProps) {
       <Box margin="m" borderRadius={10} backgroundColor="sectionListSeperator">
         <SettingBox first title="שאלות נפוצות" icon="❔" endIcon={null} />
 
-        <SettingBox last endIcon={null} title="שליחת פידבק" icon="📨" onPress={() => Linking.openURL('mailto:team@act1.co.il')} />
+        <SettingBox
+          last
+          endIcon={null}
+          title="שליחת פידבק"
+          icon="📨"
+          onPress={() => Linking.openURL('mailto:team@act1.co.il?subject=פידבק ל- Act1')}
+        />
       </Box>
 
       <Box margin="m" borderRadius={10} backgroundColor="sectionListSeperator">

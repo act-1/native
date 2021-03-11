@@ -40,7 +40,9 @@ function EventPageCounter({ event, style }: EventPageCounterProps) {
       <Box minHeight={35}>
         <Ticker textStyle={styles.countTextStyle}>{event.attendingCount.toLocaleString()}</Ticker>
       </Box>
-      <Text variant="text">יוצאים להפגין</Text>
+      <Text variant="text" maxFontSizeMultiplier={1.25}>
+        יוצאים להפגין
+      </Text>
     </Box>
   );
 }

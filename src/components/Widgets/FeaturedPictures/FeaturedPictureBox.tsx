@@ -45,10 +45,10 @@ function FeaturedPictureBox({ blurhash, pictureUrl, locationName, createdAt, par
       />
 
       <Box style={styles.pictureInfo}>
-        <Text variant="boxTitle" fontSize={16}>
+        <Text variant="boxTitle" fontSize={16} maxFontSizeMultiplier={1.1}>
           {locationName}
         </Text>
-        <Text variant="text" fontSize={15} opacity={0.9}>
+        <Text variant="text" fontSize={15} maxFontSizeMultiplier={1.05} opacity={0.9}>
           {timeago.format(createdAt.toDate(), 'he')}
         </Text>
       </Box>

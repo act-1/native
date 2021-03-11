@@ -41,14 +41,14 @@ function AttendingModal({ isModalVisible, setModalVisible }: AttendingModalProps
     >
       <Box style={styles.modalWrapper}>
         <LottieView source={checkMarkAnimation} autoPlay speed={0.85} loop={false} style={styles.modalImage} />
-        <Text variant="largeTitle" marginBottom="s">
+        <Text variant="largeTitle" marginBottom="s" maxFontSizeMultiplier={1.15}>
           נתראה בקרוב!
         </Text>
-        <Text variant="text" fontWeight="300" textAlign="center" marginBottom="m">
+        <Text variant="text" fontWeight="300" textAlign="center" marginBottom="m" maxFontSizeMultiplier={1.1}>
           תרצו לקבל עדכונים על ההפגנה?
         </Text>
         <RoundedButton text="הפעלת התראות" color="yellow" style={{ marginBottom: -4 }} onPress={notificationButtonPress} />
-        <Text variant="text" fontSize={15} fontWeight="300" textAlign="center" marginVertical="m">
+        <Text variant="text" fontSize={15} fontWeight="300" textAlign="center" marginVertical="m" maxFontSizeMultiplier={1}>
           זה נטו להודעות חשובות ועדכונים בלוחות זמנים. לא חופרים, באמא.
         </Text>
         <RoundedButton
@@ -70,7 +70,8 @@ const modalHeight = Dimensions.get('screen').height * 0.48;
 const styles = StyleSheet.create({
   modalImage: {
     width: 200,
-    marginBottom: -12,
+    marginTop: 4,
+    marginBottom: -6,
   },
   modalWrapper: {
     height: modalHeight,

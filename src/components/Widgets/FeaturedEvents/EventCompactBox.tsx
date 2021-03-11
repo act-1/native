@@ -36,8 +36,6 @@ function EventCompactBox({
     upcomingDate.replace('יום', '');
   }
 
-  const fontSize = variant === 'horizontal' ? 16 : 14;
-
   return (
     <TouchableScale
       activeScale={0.96}
@@ -56,37 +54,43 @@ function EventCompactBox({
         }}
         source={{ uri: compactThumbnail || thumbnail }}
       >
-        {variant === 'vertical' && (
-          <Box
-            alignSelf="center"
-            alignItems="center"
-            justifyContent="center"
-            marginBottom="m"
-            width={80}
-            height={20}
-            style={{ backgroundColor: 'rgba(255, 255, 255, 0.935)' }}
-            borderRadius={4}
-            elevation={4}
-          >
-            <Text variant="boxTitle" fontSize={14} color="mainBackground" textAlign="center">
-              {upcomingDate}
-            </Text>
-          </Box>
-        )}
+        <Box
+          alignSelf="center"
+          alignItems="center"
+          justifyContent="center"
+          marginBottom="m"
+          width={80}
+          height={20}
+          style={{ backgroundColor: 'rgba(255, 255, 255, 0.935)' }}
+          borderRadius={4}
+          elevation={4}
+        >
+          <Text variant="boxTitle" fontSize={14} color="mainBackground" textAlign="center">
+            {upcomingDate}
+          </Text>
+        </Box>
       </FastImage>
       <Box alignItems="flex-start" flex={1} width={148}>
-        <Text variant="boxSubtitle" fontSize={fontSize} marginTop="xs">
+        <Text variant="boxSubtitle" fontSize={14} paddingRight="s" marginTop="xs" marginBottom="xxs">
           {variant === 'horizontal' && locationName + ', '}
           {city}
         </Text>
 
-        <Text variant="boxTitle" fontSize={fontSize}>
+        <Text variant="boxTitle" fontSize={14} marginBottom="xxs">
           {shortTitle || title}
         </Text>
 
-        <Text variant="boxSubtitle" fontSize={fontSize}>
+        <Text variant="boxSubtitle" fontSize={14} marginBottom="m">
           {attendingCount} יוצאים להפגין
         </Text>
+
+        {/* {variant === 'horizontal' && (
+          <Box paddingRight="m">
+            <Text variant="text" fontSize={14} color="primaryColor">
+              אנחנו נפגשים ב18:00 במקום בשעה 20:00 - נא לשים לב!!
+            </Text>
+          </Box>
+        )} */}
       </Box>
     </TouchableScale>
   );

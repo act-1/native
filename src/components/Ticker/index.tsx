@@ -110,7 +110,7 @@ const TickItem: React.FC<TickProps> = ({ children, duration, textStyle, textProp
         }}
       >
         {rotateItems.map((v) => (
-          <Text key={v} {...textProps} style={[textStyle, { height: measurement.height }]}>
+          <Text key={v} {...textProps} style={[textStyle, { height: measurement.height }]} maxFontSizeMultiplier={1.25}>
             {v}
           </Text>
         ))}

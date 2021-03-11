@@ -74,7 +74,7 @@ function RoundedButton({
         {loading ? (
           <ActivityIndicator color={textColor} />
         ) : (
-          <Text style={{ color: textColor, ...textStyle }} variant="roundedButtonText" testID="button-text">
+          <Text style={{ color: textColor, ...textStyle }} variant="roundedButtonText" maxFontSizeMultiplier={1.15}>
             {text}
           </Text>
         )}
