@@ -1,26 +1,25 @@
 import React, { useMemo } from 'react';
 import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
-import { observer } from 'mobx-react-lite';
 import { logEvent } from '@services/analytics';
 import { useNavigation } from '@react-navigation/native';
-import { useStore } from '../../../stores';
 import { Box } from '../..';
 import { Event } from '@types/collections';
 import EventCompactBox from './EventCompactBox';
 import FeaturedEventsContentLoader from './FeaturedEventsContentLoader';
 
 type EventsWidgetProps = {
+  events: Event[];
+  loaded: boolean;
   style?: ViewStyle;
 };
 
-function EventsWidget({ style }: EventsWidgetProps) {
-  const { eventStore } = useStore();
+function EventsWidget({ events, loaded, style }: EventsWidgetProps) {
   const navigation = useNavigation();
   const widgetContent = useMemo(() => {
-    if (eventStore.eventsLoaded) {
+    if (loaded) {
       return (
         <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
-          {eventStore.upcomingEvents.slice(0, 5).map((event: Event, index: number) => (
+          {events.slice(0, 5).map((event: Event, index: number) => (
             <EventCompactBox {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
           ))}
         </ScrollView>
@@ -30,7 +29,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventStore.upcomingEvents]);
+  }, [events]);
 
   const onEventPress = (eventId: string, index: number) => {
     navigation.navigate('EventPage', { eventId });
@@ -44,7 +43,7 @@ function EventsWidget({ style }: EventsWidgetProps) {
   );
 }
 
-export default observer(EventsWidget);
+export default EventsWidget;
 
 const styles = StyleSheet.create({
   featuredEvents: {

@@ -2,14 +2,16 @@ import React, { useRef } from 'react';
 import { StatusBar, StyleSheet, ScrollView } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import { Text } from '../../components';
-import { Stats, FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
+import { FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
 import EventCompactBox from '../../components/Widgets/FeaturedEvents/EventCompactBox';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
+import { HomeScreenProps } from '@types/navigation';
 import { Event } from '@types/collections';
+import { removeArrayItem } from '@utils/array-utils';
 
-function Home({ navigation }) {
-  const { eventStore, liveStore } = useStore();
+function Home({ navigation }: HomeScreenProps) {
+  const { userStore, eventStore, liveStore } = useStore();
   const scrollViewRef = useRef(null);
 
   useScrollToTop(scrollViewRef);
@@ -27,6 +29,16 @@ function Home({ navigation }) {
       .sort((a, b) => b.protesters - a.protesters);
   }, [eventStore.liveEvents, liveStore.locationsCount]);
 
+  const [nextEvent, upcomingEvents] = React.useMemo(() => {
+    // Check if an upcoming eventId exists in the userEventIds
+    let upcoming = eventStore.upcomingEvents;
+    const event = eventStore.upcomingEvents.find((event: Event) => userStore.userEventIds.includes(event.id));
+    if (event) {
+      upcoming = removeArrayItem(upcoming, event);
+    }
+    return [event, upcoming];
+  }, [eventStore.upcomingEvents, userStore.userEventIds]);
+
   return (
     <ScrollView
       ref={scrollViewRef}
@@ -35,8 +47,6 @@ function Home({ navigation }) {
       showsVerticalScrollIndicator={false}
     >
       <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
-      {/* <Stats /> */}
-      {/* <Button title="check in update" onPress={() => functions().httpsCallable('updateCheckInCountManually')()} /> */}
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
         תמונות נבחרות
       </Text>
@@ -53,22 +63,25 @@ function Home({ navigation }) {
         </>
       )}
 
-      {eventStore.upcomingEvents.length > 0 && (
+      {upcomingEvents.length > 0 && (
         <>
-          <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
-            ההפגנה הקרובה
-          </Text>
+          {nextEvent && (
+            <>
+              <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+                ההפגנה הקרובה
+              </Text>
 
-          <EventCompactBox
-            {...eventStore.upcomingEvents[0]}
-            variant="horizontal"
-            onPress={() => navigation.navigate('EventPage', { eventId: eventStore.upcomingEvents[0].id })}
-          />
-
+              <EventCompactBox
+                {...nextEvent}
+                variant="horizontal"
+                onPress={() => navigation.navigate('EventPage', { eventId: nextEvent.id })}
+              />
+            </>
+          )}
           <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
             כל ההפגנות
           </Text>
-          <FeaturedEvents style={{ marginBottom: 42 }} />
+          <FeaturedEvents events={upcomingEvents} loaded={eventStore.eventsLoaded} style={{ marginBottom: 42 }} />
         </>
       )}
     </ScrollView>
