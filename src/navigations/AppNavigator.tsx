@@ -7,6 +7,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { EventPage, EventPictureList, Onboarding } from '../screens';
 import { RootStackParamList } from '../types/navigation';
+import HomeNavigator from './HomeNavigator';
 import CheckInNavigator from './CheckInNavigator';
 import ProtestDashboardNavigator from './ProtestDashboardNavigator';
 import SignUpNavigator from './SignUpNavigator';
@@ -34,7 +35,7 @@ function AppStackScreen() {
         headerTintColor: '#8a8a8b',
       }}
     >
-      <AppStack.Screen name="AppTabs" component={AppTabs} />
+      <AppStack.Screen name="AppTabs" component={HomeNavigator} />
       <AppStack.Screen name="LocationPage" component={LocationPage} />
       <AppStack.Screen name="EventPage" component={EventPage} />
       <AppStack.Screen

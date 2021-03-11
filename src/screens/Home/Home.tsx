@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { StatusBar, StyleSheet, ScrollView } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
-import { Text } from '../../components';
-import { FeaturedPictures, FeaturedEvents, FeaturedProtests } from '@components/Widgets';
+import { Box, Text, ActionButton } from '../../components';
+import { FeaturedPictures, FeaturedEvents, FeaturedProtests, RecentPicturesWidget } from '@components/Widgets';
 import EventCompactBox from '../../components/Widgets/FeaturedEvents/EventCompactBox';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -40,51 +40,74 @@ function Home({ navigation }: HomeScreenProps) {
   }, [eventStore.upcomingEvents, userStore.userEventIds]);
 
   return (
-    <ScrollView
-      ref={scrollViewRef}
-      style={styles.homeWrapper}
-      contentContainerStyle={styles.scrollViewContainer}
-      showsVerticalScrollIndicator={false}
-    >
-      <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
-      <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
-        תמונות נבחרות
-      </Text>
+    <>
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.homeWrapper}
+        contentContainerStyle={styles.scrollViewContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
+        <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+          תמונות נבחרות
+        </Text>
 
-      <FeaturedPictures style={{ marginBottom: 12 }} />
+        <FeaturedPictures style={{ marginBottom: 12 }} />
 
-      {liveEvents.length > 0 && (
-        <>
-          <Text variant="largeTitle" paddingHorizontal="m" marginTop="m" marginBottom="xm">
-            עכשיו מפגינים
-          </Text>
+        {liveEvents.length > 0 && (
+          <>
+            <Text variant="largeTitle" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+              עכשיו מפגינים
+            </Text>
 
-          <FeaturedProtests protests={liveEvents} style={{ marginBottom: 12 }} />
-        </>
-      )}
+            <FeaturedProtests protests={liveEvents} style={{ marginBottom: 12 }} />
+          </>
+        )}
 
-      {upcomingEvents.length > 0 && (
-        <>
-          {nextEvent && (
-            <>
-              <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
-                ההפגנה הקרובה
-              </Text>
+        {upcomingEvents.length > 0 && (
+          <>
+            {nextEvent && (
+              <>
+                <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+                  ההפגנה הקרובה
+                </Text>
 
-              <EventCompactBox
-                {...nextEvent}
-                variant="horizontal"
-                onPress={() => navigation.navigate('EventPage', { eventId: nextEvent.id })}
-              />
-            </>
-          )}
-          <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
-            כל ההפגנות
-          </Text>
-          <FeaturedEvents events={upcomingEvents} loaded={eventStore.eventsLoaded} style={{ marginBottom: 42 }} />
-        </>
-      )}
-    </ScrollView>
+                <EventCompactBox
+                  {...nextEvent}
+                  variant="horizontal"
+                  onPress={() => navigation.navigate('EventPage', { eventId: nextEvent.id })}
+                />
+              </>
+            )}
+            <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+              כל ההפגנות
+            </Text>
+            <FeaturedEvents events={upcomingEvents} loaded={eventStore.eventsLoaded} style={{ marginBottom: 12 }} />
+          </>
+        )}
+
+        <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="xm">
+          תמונות אחרונות
+        </Text>
+
+        <Box height={360} paddingHorizontal="m" marginBottom="l">
+          <RecentPicturesWidget />
+        </Box>
+
+        {eventStore.pastEvents.length > 0 && (
+          <Box marginBottom="xl">
+            <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="xm">
+              הפגנות בשבוע האחרון
+            </Text>
+
+            <FeaturedProtests protests={eventStore.pastEvents} />
+          </Box>
+        )}
+      </ScrollView>
+      <Box position="absolute" bottom={10} left={'40%'}>
+        <ActionButton />
+      </Box>
+    </>
   );
 }
 

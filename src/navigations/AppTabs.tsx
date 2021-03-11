@@ -10,8 +10,6 @@ import HapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/Feather';
 import ActionButton from '@screens/Action/ActionButton';
 
-const { width: deviceWidth } = Dimensions.get('screen');
-
 const icons: any = {
   Home: {
     iconName: 'home',
@@ -45,11 +43,9 @@ const AppTabs = ({ navigation }) => {
         activeTintColor: '#dddddd',
         inactiveTintColor: '#475968',
         showLabel: false,
-        style: { backgroundColor: '#0f1316', borderTopWidth: 2, borderTopColor: '#1e262d' },
+        style: { backgroundColor: 'transparent', borderTopWidth: 2, borderTopColor: '#1e262d', opacity: 1 },
       }}
     >
-      <Tab.Screen name="Home" component={HomeNavigator} />
-
       <Tab.Screen
         name="Action"
         component={ActionNavigator}
@@ -86,47 +82,8 @@ const AppTabs = ({ navigation }) => {
           },
         }}
       />
-      <Tab.Screen name="Community" component={CommunityNavigator} />
-
-      {/* <Tab.Screen name="Events" component={EventsNavigator} />
-      <Tab.Screen name="Profile" component={ProfileNavigator} /> */}
     </Tab.Navigator>
   );
 };
 
 export default observer(AppTabs);
-
-let actionTabButtonSize = Platform.select({ ios: 67, android: 70 });
-let actionIconWidth = Platform.select({ ios: 38, android: 39 });
-let actionIconHeight = Platform.select({ ios: 35, android: 37 });
-
-if (deviceWidth > 400) {
-  actionTabButtonSize = Platform.select({ ios: 71.5, android: 71.5 });
-  actionIconWidth = 40;
-  actionIconHeight = 37.5;
-}
-
-const styles = StyleSheet.create({
-  checkInIconWrapper: {
-    height: actionTabButtonSize,
-    width: actionTabButtonSize,
-
-    borderRadius: 58,
-    justifyContent: 'center',
-    alignItems: 'center',
-    transform: [{ scale: 1 }],
-    borderWidth: 4,
-    borderColor: '#32373d',
-    backgroundColor: '#071516',
-    shadowColor: '#000',
-    shadowOffset: { height: 0, width: 0 },
-    shadowOpacity: 0.25,
-    shadowRadius: 0.5,
-    elevation: 2,
-  },
-  checkInIcon: {
-    width: actionIconWidth,
-    height: actionIconHeight,
-    tintColor: '#ec534b',
-  },
-});
