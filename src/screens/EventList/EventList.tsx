@@ -38,7 +38,6 @@ function EventList({ navigation }: EventListScreenProps) {
     // TODO: Handle refresh failure
     setRefreshing(true);
     await eventStore.getEvents();
-    analytics().logEvent('event_list_refresh');
     setRefreshing(false);
   };
 
@@ -57,7 +56,6 @@ function EventList({ navigation }: EventListScreenProps) {
               {...item}
               onPress={() => {
                 navigation.navigate('EventPage', { eventId: item.id });
-                analytics().logEvent('event_list_event_press', { event_id: item.id });
               }}
             />
           )}

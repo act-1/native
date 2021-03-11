@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { Image, Platform, AppState, AppStateStatus, Linking, ActivityIndicator } from 'react-native';
-import analytics from '@react-native-firebase/analytics';
+import { Platform, AppState, AppStateStatus, Linking, ActivityIndicator } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { openSettings } from 'react-native-permissions';
 import { Box, Text } from '../../../components';
@@ -72,7 +71,6 @@ function LocationPermissionMessage() {
         <RoundedButton
           text="פתיחת הגדרות המכשיר"
           onPress={() => {
-            analytics().logEvent('select_location_open_settings_click');
             openSettings();
           }}
           color="grey"

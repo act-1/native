@@ -2,11 +2,9 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from '../../../components';
 import { RoundedButton } from '@components/Buttons';
-import { logEvent } from '@services/analytics';
 
 function Welcome({ nextPage, style }: BoardingScreenProps) {
   const startButtonPress = () => {
-    logEvent('start_button_press');
     nextPage();
   };
 

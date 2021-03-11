@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { Modal, Dimensions, ViewStyle } from 'react-native';
-import { logEvent } from '@services/analytics';
 import { Box, CircularButton } from '../..';
 import Carousel from 'react-native-snap-carousel';
 import ImageViewer from 'react-native-image-zoom-viewer';
@@ -36,13 +35,9 @@ function FeaturedPictures({ style }: EventsWidgetProps) {
   const onPicturePress = (index: number) => {
     setImageIndex(index);
     setDisplayGallery(true);
-    logEvent('home_picture_press', { picture_index: index + 1 });
   };
 
   const onGalleryChange = (index: number | undefined) => {
-    const pictureIndex = index ? index + 1 : 'undefined';
-    logEvent('home_picture_viewer_swipe', { picture_index: pictureIndex });
-
     if (index) {
       carouselRef.current?.snapToItem(index);
     }

@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
-import { logEvent } from '@services/analytics';
 import { useNavigation } from '@react-navigation/native';
 import { Box } from '../..';
 import { Event } from '@types/collections';
@@ -31,9 +30,8 @@ function EventsWidget({ events, loaded, style }: EventsWidgetProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [events]);
 
-  const onEventPress = (eventId: string, index: number) => {
+  const onEventPress = (eventId: string) => {
     navigation.navigate('EventPage', { eventId });
-    logEvent('featured_event_press', { event_id: eventId, index: index + 1 });
   };
 
   return (

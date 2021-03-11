@@ -1,7 +1,6 @@
 import React, { useRef, ReactNode } from 'react';
-import { StyleSheet, Animated, Pressable } from 'react-native';
+import { StyleSheet, Animated } from 'react-native';
 import { Box, Text, CircularButton } from '../';
-import { logEvent } from '@services/analytics';
 import FastImage from 'react-native-fast-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -71,12 +70,10 @@ function StickyHeaderScrollView({ children, goBack, headerTitle, thumbnail }: St
       </Animated.ScrollView>
 
       <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }], height: HEADER_MAX_HEIGHT }]}>
-        <Pressable onPress={() => logEvent('event_thumb_pressed')}>
-          <AnimatedImage
-            style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
-            source={{ uri: thumbnail }}
-          />
-        </Pressable>
+        <AnimatedImage
+          style={[styles.eventThumb, { opacity: imageOpacity }, { transform: [{ translateY: imageTranslateY }] }]}
+          source={{ uri: thumbnail }}
+        />
       </Animated.View>
 
       <Animated.View

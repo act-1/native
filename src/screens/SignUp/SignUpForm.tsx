@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Platform, TextInput, StyleSheet } from 'react-native';
-import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { Box, EditProfilePicture } from '../../components';
 import { observer } from 'mobx-react-lite';
@@ -47,7 +46,6 @@ function SignUpForm({ currentIndex }: SignUpFormProps) {
       setLoading(true);
       await updateUserProvince(province);
       await updateUserDisplayName(displayName);
-      analytics().logEvent('sign_up_form_submitted');
     } catch (err) {
       setLoading(false);
       console.log(err);

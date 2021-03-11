@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Alert, Image, ScrollView } from 'react-native';
-import { logEvent } from '@services/analytics';
 import { SelectLocationScreenProps } from '@types/navigation';
 import { Box, Text, LocationBox, EventBox } from '../../../components';
 import { observer } from 'mobx-react-lite';
@@ -29,8 +28,6 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       checkInStore.setCurrentLocation(entry);
       locationId = entry.id;
       locationName = entry.name;
-
-      logEvent('check_in_select_location', { locationId });
     } else {
       checkInStore.setCurrentEvent(entry);
       eventId = entry.id;
@@ -42,8 +39,6 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
       eventEndDate = entry.endDate.toDate();
       locationId = entry.locationId;
       locationName = entry.locationName;
-
-      logEvent('check_in_select_event', { eventId });
     }
 
     const checkInData = {
@@ -68,7 +63,6 @@ function SelectLocation({ navigation }: SelectLocationScreenProps) {
 
     try {
       await checkInStore.checkIn(checkInData);
-      logEvent('check_in_success');
     } catch (err) {
       throw err;
     }
