@@ -16,8 +16,8 @@ function ActionButton() {
   const { checkInStore } = useStore();
   return (
     <TouchableScale
-      activeScale={0.92}
-      friction={6}
+      activeScale={0.94}
+      friction={7}
       onPressIn={() => {
         // Vibrate some android devices in an annoying way.
         // Better leave it exclusively to iOS for now.
@@ -53,7 +53,7 @@ let actionIconWidth = Platform.select({ ios: 38, android: 39 });
 let actionIconHeight = Platform.select({ ios: 35, android: 37 });
 
 if (deviceWidth > 400) {
-  actionTabButtonSize = Platform.select({ ios: 71.5, android: 71.5 });
+  actionTabButtonSize = 75;
   actionIconWidth = 40;
   actionIconHeight = 37.5;
 }

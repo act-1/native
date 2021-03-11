@@ -9,10 +9,12 @@ import { useStore } from '../../stores';
 import { HomeScreenProps } from '@types/navigation';
 import { Event } from '@types/collections';
 import { removeArrayItem } from '@utils/array-utils';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function Home({ navigation }: HomeScreenProps) {
   const { userStore, eventStore, liveStore } = useStore();
   const scrollViewRef = useRef(null);
+  const insets = useSafeAreaInsets();
 
   useScrollToTop(scrollViewRef);
 
@@ -104,7 +106,7 @@ function Home({ navigation }: HomeScreenProps) {
           </Box>
         )}
       </ScrollView>
-      <Box position="absolute" bottom={10} left={'40%'}>
+      <Box position="absolute" bottom={0} left={12 + insets.left}>
         <ActionButton />
       </Box>
     </>
