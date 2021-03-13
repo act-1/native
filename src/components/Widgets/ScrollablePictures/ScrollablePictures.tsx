@@ -15,6 +15,7 @@ type ScrollablePicturesProps = {
 
 function ScrollablePictures({ pictures, onPicturePress, size, style }: ScrollablePicturesProps) {
   const pictureSize = size === 'large' ? styles.largePicture : styles.smallPicture;
+  const textStyle = size === 'large' ? styles.largeText : styles.smallText;
 
   return (
     <ScrollView
@@ -31,7 +32,9 @@ function ScrollablePictures({ pictures, onPicturePress, size, style }: Scrollabl
           onPress={() => onPicturePress(index)}
         >
           <FastImage source={{ uri: picture.pictureUrl }} style={[styles.picture, pictureSize]} />
-          <Text variant="boxSubtitle">{timeAgo(picture.createdAt.toDate())}</Text>
+          <Text variant="boxSubtitle" style={textStyle}>
+            {timeAgo(picture.createdAt.toDate())}
+          </Text>
         </TouchableScale>
       ))}
     </ScrollView>
@@ -45,5 +48,7 @@ const styles = StyleSheet.create({
   pictureWrapper: { marginRight: 12 },
   picture: { marginBottom: 4, borderRadius: 4, elevation: 6 },
   largePicture: { width: 225, height: 225 },
-  smallPicture: { width: 125, height: 125 },
+  smallPicture: { width: 88, height: 88 },
+  largeText: { fontSize: 16 },
+  smallText: { fontSize: 12 },
 });
