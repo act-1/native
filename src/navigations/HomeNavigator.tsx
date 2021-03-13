@@ -4,6 +4,7 @@ import { Home } from '../screens';
 import HeaderProfilePicture from '@components/HeaderProfilePicture';
 import { RootStackParamList } from '../types/navigation';
 import { createStackNavigator } from '@react-navigation/stack';
+import RecentPictures from '@screens/Community/RecentPictures';
 
 const HomeStack = createStackNavigator<RootStackParamList>();
 
@@ -30,6 +31,15 @@ function HomeNavigator({ navigation }) {
       }}
     >
       <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen
+        name="RecentPictures"
+        options={{
+          headerTitle: 'תמונות אחרונות',
+          headerBackTitleVisible: false,
+          headerTitleAlign: 'center',
+        }}
+        component={RecentPictures}
+      />
     </HomeStack.Navigator>
   );
 }
