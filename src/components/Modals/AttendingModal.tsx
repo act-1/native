@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { Box, Text } from '../';
 import { RoundedButton } from '../Buttons';
-import { logEvent } from '@services/analytics';
 import Modal from 'react-native-modal';
 import messaging from '@react-native-firebase/messaging';
 import LottieView from 'lottie-react-native';
@@ -18,13 +17,11 @@ function AttendingModal({ isModalVisible, setModalVisible }: AttendingModalProps
     const authorizationStatus = await messaging().requestPermission();
 
     if (authorizationStatus) {
-      logEvent('event_notification_permission_received', { authorizationStatus });
       setModalVisible(false);
     }
   };
 
   const notificationButtonPress = () => {
-    logEvent('notification_modal_permission_click');
     notificationPermissionsRequest();
   };
 
@@ -55,7 +52,6 @@ function AttendingModal({ isModalVisible, setModalVisible }: AttendingModalProps
           text="לא עכשיו"
           color="porcelain"
           onPress={() => {
-            logEvent('notification_modal_cancel_click');
             setModalVisible(false);
           }}
         />

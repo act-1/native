@@ -137,7 +137,6 @@ class UserStore {
   // Updates the location permission status and return the result.
   async updateLocationPermission() {
     const permission = await checkLocationPermission();
-    analytics().logEvent(`user_permission_location_${permission}`);
 
     runInAction(() => {
       this.userLocationPermission = permission;
@@ -163,7 +162,6 @@ class UserStore {
 
   async getUserCoordinates() {
     try {
-      analytics().logEvent('user_permission_location_request');
       const permission = await requestLocationPermission();
 
       let coordinates: LatLng | undefined;
@@ -175,7 +173,6 @@ class UserStore {
         });
       }
 
-      analytics().logEvent(`user_permission_location_${permission}`);
       runInAction(() => {
         this.userLocationPermission = permission;
       });

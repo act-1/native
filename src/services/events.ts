@@ -1,6 +1,5 @@
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { firebase } from '@react-native-firebase/auth';
-import analytics from '@react-native-firebase/analytics';
 import * as geofirestore from 'geofirestore';
 import { Event } from '@types/collections';
 
@@ -82,8 +81,6 @@ export async function attendEvent({
     batch.update(eventRef, { attendingCount: firestore.FieldValue.increment(1) });
     await batch.commit();
 
-    await analytics().logEvent('attendEvent', { event_id: eventId });
-
     return { attended: true };
   } catch (err) {
     console.error(err);
@@ -106,8 +103,6 @@ export async function unattendEvent({ eventId }: { eventId: string }): Promise<{
     batch.delete(eventAttendRef);
     batch.update(eventRef, { attendingCount: firestore.FieldValue.increment(-1) });
     await batch.commit();
-
-    await analytics().logEvent('unattend_event', { event_id: eventId });
 
     return { removed: true };
   } catch (err) {

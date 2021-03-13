@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, KeyboardAvoidingView, TextInput, Dimensions, Platform, StyleSheet } from 'react-native';
 import { StackActions } from '@react-navigation/native';
-import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { Box, Text } from '../../components';
 import { RoundedButton } from '@components/Buttons';
@@ -25,7 +24,6 @@ function CheckInForm({ navigation, route }: CheckInFormScreenProps) {
       .checkIn({ ...route.params.checkInData, privacySetting })
       .then(() => {
         // If the user added text, create a new text post
-        analytics().logEvent('check_in_success');
       })
       .catch((err: any) => {
         crashlytics().log('Check in denied; already exists.');

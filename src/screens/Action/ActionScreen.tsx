@@ -12,7 +12,7 @@ export default function ActionScreen({ navigation }: ActionScreenProps) {
   const openLibrary = async () => {
     try {
       await launchImageLibrary({ mediaType: 'photo', quality: 1 }, (image) => {
-        if (image.didCancel === true) return; // TODO: ANALYTICS HERE
+        if (image.didCancel === true) return;
 
         navigation.navigate('NewPost', { image, completionScreen: 'closeModal' });
       });
@@ -26,7 +26,7 @@ export default function ActionScreen({ navigation }: ActionScreenProps) {
   const openCamera = async () => {
     try {
       await launchCamera({ mediaType: 'photo' }, (image) => {
-        if (image.didCancel === true) return; // TODO: ANALYTICS HERE
+        if (image.didCancel === true) return;
 
         navigation.navigate('NewPost', { image, completionScreen: 'closeModal' });
       });

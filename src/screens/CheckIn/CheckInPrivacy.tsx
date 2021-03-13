@@ -7,14 +7,11 @@ import { CheckInFormScreenProps } from '@types/navigation';
 import crashlytics from '@react-native-firebase/crashlytics';
 import HapticFeedback from 'react-native-haptic-feedback';
 
-import { logEvent } from '@services/analytics';
-
 function CheckInPrivacy({ navigation }: CheckInFormScreenProps) {
   const { checkInStore } = useStore();
   const { privacySetting, setPrivacySetting } = checkInStore;
 
   const onPrivacySelection = (value: PrivacyOption) => {
-    logEvent('privacy_option_selected', { privacy: value });
     HapticFeedback.trigger('impactLight');
     setPrivacySetting(value);
   };
@@ -29,7 +26,6 @@ function CheckInPrivacy({ navigation }: CheckInFormScreenProps) {
 
     try {
       await checkInStore.checkIn();
-      logEvent('check_in_success');
     } catch (err) {
       crashlytics().recordError(err);
     }

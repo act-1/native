@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { Box, Text, LocationCounter } from '../../components';
 import { ProtestDashboardProps } from '@types/navigation';
-import { logEvent } from '@services/analytics';
 import ProtestActionButton from './ProtestActionButton';
 import EventPagePictures from '../EventPage/EventPagePictures';
 

@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
-import analytics from '@react-native-firebase/analytics';
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { observer } from 'mobx-react-lite';
 import { useStore } from './stores';
@@ -17,7 +16,6 @@ import RNBootSplash from 'react-native-bootsplash';
 let initalizedApp = false;
 
 function App() {
-  const routeNameRef = React.useRef();
   const navigationRef = React.useRef();
   const notificationRef = React.useRef<BannerNotification>(null);
   const store = useStore();
@@ -88,21 +86,6 @@ function App() {
           <NavigationContainer
             ref={navigationRef}
             theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#0B0D0F' } }}
-            onReady={() => (routeNameRef.current = navigationRef.current.getCurrentRoute().name)}
-            onStateChange={async () => {
-              const previousRouteName = routeNameRef.current;
-              const currentRouteName = navigationRef.current.getCurrentRoute().name;
-
-              if (previousRouteName !== currentRouteName) {
-                await analytics().logScreenView({
-                  screen_name: currentRouteName,
-                  screen_class: currentRouteName,
-                });
-              }
-
-              // Save the current route name for later comparision
-              routeNameRef.current = currentRouteName;
-            }}
           >
             <BannerNotification
               customComponent={<UploadBanner />}
