@@ -63,7 +63,7 @@ function Home({ navigation }: HomeScreenProps) {
 
             <FeaturedProtests protests={liveEvents} style={{ marginBottom: 12 }} />
           </>
-        )} */}
+        )}
 
         {/* {upcomingEvents.length > 0 && (
           <>
@@ -87,9 +87,17 @@ function Home({ navigation }: HomeScreenProps) {
           </>
         )} */}
 
-        <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="xm">
-          תמונות אחרונות
+        <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
+
+        <Text variant="hugeTitle" textAlign="center" color="primaryColor">
+          1,312
         </Text>
+
+        <Text variant="largeTitle" textAlign="center" paddingHorizontal="m" marginBottom="xm">
+          מפגינים עכשיו בכל הארץ
+        </Text>
+
+        <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
 
         <Box height={360} paddingHorizontal="m" marginBottom="l">
           <RecentPicturesWidget />

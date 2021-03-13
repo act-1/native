@@ -7,6 +7,7 @@ import MapView from 'react-native-maps';
 import EventPagePictures from '../EventPage/EventPagePictures';
 
 import { BlurView } from '@react-native-community/blur';
+import Icon from 'react-native-vector-icons/Feather';
 
 const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   if (Platform.OS === 'android') {
@@ -52,9 +53,31 @@ function InProtest({ event }) {
             </MapCounterView>
           </MapView>
         )}
-        <Box height={100} backgroundColor="seperator" borderRadius={8} marginVertical="m"></Box>
+        <Box
+          flexDirection="row"
+          justifyContent="space-around"
+          alignItems="center"
+          paddingVertical="m"
+          marginTop="m"
+          backgroundColor="seperator"
+          borderRadius={8}
+        >
+          <Box alignItems="center">
+            <Icon name="message-circle" size={36} color="white" style={{ marginBottom: 6 }} />
+            <Text variant="smallText">צ׳אט איזורי</Text>
+          </Box>
+          <Box alignItems="center">
+            <Icon name="camera" size={36} color="white" style={{ marginBottom: 6 }} />
+            <Text variant="smallText">צילום תמונה</Text>
+          </Box>
+          <Box alignItems="center">
+            <Icon name="share" size={36} color="white" style={{ marginBottom: 6 }} />
+            <Text variant="smallText">הזמנת חברים</Text>
+          </Box>
+        </Box>
       </Box>
-      {event && <EventPagePictures event={event} size="small" />}
+
+      <Box marginTop="m">{event && <EventPagePictures event={event} size="small" />}</Box>
     </>
   );
 }

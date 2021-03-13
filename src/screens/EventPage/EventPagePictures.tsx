@@ -117,7 +117,7 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
   }, [event, location]);
 
   return (
-    <Box style={{ minHeight: size === 'small' ? 152 : 225 }} justifyContent="center" marginBottom="m">
+    <Box style={{ minHeight: size === 'small' ? 107 : 225 }} justifyContent="center" marginBottom="m">
       {renderComponent}
     </Box>
   );
