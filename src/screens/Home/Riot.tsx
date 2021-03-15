@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import MapView from 'react-native-maps';
 import EventPagePictures from '../EventPage/EventPagePictures';
+import ProvinceCard from './ProvinceCard';
 
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Feather';
@@ -109,6 +110,38 @@ function InProtest({ event }) {
       </Box>
 
       <Box marginTop="m">{event && <EventPagePictures event={event} size="small" />}</Box>
+
+      <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
+
+      <Text variant="hugeTitle" textAlign="center" color="primaryColor">
+        1,312
+      </Text>
+
+      <Text variant="largeTitle" textAlign="center" paddingHorizontal="m" marginBottom="xm">
+        מפגינים עכשיו בכל הארץ
+      </Text>
+
+      <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
+
+      <Box paddingHorizontal="m">
+        <ProvinceCard
+          province="ירושלים"
+          counter={194}
+          imageUrl="https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/uploaded_pictures%2FAE2185BD-C838-498E-BB24-90C0EC6E9195.jpg?alt=media&token=c3d9e825-a168-47ba-b4d6-8eb41283587d"
+          containerStyle={{ marginBottom: 12 }}
+        />
+        <ProvinceCard
+          province="תל אביב"
+          counter={932}
+          imageUrl="https://res.cloudinary.com/act1/image/upload/v1614841195/featured_pictures/purimistors.jpg"
+          containerStyle={{ marginBottom: 12 }}
+        />
+        <ProvinceCard
+          province="חיפה"
+          counter={283}
+          imageUrl="https://res.cloudinary.com/act1/image/upload/v1615733637/featured_pictures/main_image44730_medium_hme0rv.jpg"
+        />
+      </Box>
     </>
   );
 }

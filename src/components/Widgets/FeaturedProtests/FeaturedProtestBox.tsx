@@ -1,19 +1,17 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { Box, Text, Ticker } from '../..';
 import FastImage from 'react-native-fast-image';
 import TouchableScale from 'react-native-touchable-scale';
-import { LiveEvent, PastEvent } from '@types/collections';
+import { Event } from '@types/collections';
 import FadeInOutView from '../../FadeInOutView';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../stores';
 
 type LiveLocationBoxProps = {
-  protest: LiveEvent | PastEvent;
+  protest: Event;
   onPress: () => void;
 };
-
-const boxWidth = 280; // Substract 12 margins
 
 function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
   const { liveStore } = useStore();
@@ -26,7 +24,7 @@ function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
   }
 
   return (
-    <TouchableScale activeScale={0.96} friction={20} onPress={onPress} style={{ width: boxWidth, marginHorizontal: 12 }}>
+    <TouchableScale activeScale={0.96} friction={20} onPress={onPress} style={{ marginHorizontal: 12 }}>
       <FastImage style={styles.eventThumbnail} source={{ uri: thumbnail }} />
 
       <Box alignItems="flex-start" flex={1}>
@@ -74,10 +72,20 @@ function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
 
 export default React.memo(observer(FeaturedProtestBox));
 
+const { width: deviceWidth } = Dimensions.get('screen');
+
+let boxWidth = 280;
+let boxHeight = 146;
+
+if (deviceWidth > 400) {
+  boxWidth = 310;
+  boxHeight = 158;
+}
+
 const styles = StyleSheet.create({
   eventThumbnail: {
     width: boxWidth,
-    height: 146,
+    height: boxHeight,
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 6,

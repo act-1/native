@@ -14,12 +14,13 @@ type EventsWidgetProps = {
 
 function EventsWidget({ events, loaded, style }: EventsWidgetProps) {
   const navigation = useNavigation();
+
   const widgetContent = useMemo(() => {
     if (loaded) {
       return (
         <ScrollView contentContainerStyle={styles.featuredEvents} showsHorizontalScrollIndicator={false} horizontal={true}>
-          {events.slice(0, 5).map((event: Event, index: number) => (
-            <EventCompactBox {...event} onPress={() => onEventPress(event.id, index)} key={event.id} />
+          {events.slice(0, 5).map((event: Event) => (
+            <EventCompactBox {...event} onPress={() => onEventPress(event.id)} key={event.id} />
           ))}
         </ScrollView>
       );
