@@ -19,6 +19,14 @@ class CheckInStore {
     this.loadCachedCheckIn();
   }
 
+  async getCurrentRegion() {
+    // run utility function to get the current region
+    // if no region is found - don't touch
+    // if region is found - check if already checked in in the app cache
+    // if it's not in the app cache, check if it's currently active in firestore
+    // if it is create a new check in and cache for 3 hours
+  }
+
   async loadCachedCheckIn() {
     // await AsyncStorage.clear();
     const checkIn = await AsyncStorage.getItem('lastCheckIn');
