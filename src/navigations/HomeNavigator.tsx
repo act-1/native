@@ -1,10 +1,11 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Pressable } from 'react-native';
 import { Home } from '../screens';
-import HeaderProfilePicture from '@components/HeaderProfilePicture';
+import { Box } from '../components';
 import { RootStackParamList } from '../types/navigation';
 import { createStackNavigator } from '@react-navigation/stack';
 import RecentPictures from '@screens/Community/RecentPictures';
+import Icon from 'react-native-vector-icons/Feather';
 
 const HomeStack = createStackNavigator<RootStackParamList>();
 
@@ -22,12 +23,14 @@ function HomeNavigator({ navigation }) {
           letterSpacing: 0.4,
           color: '#EC534B',
         },
-        // headerRight: () => (
-        //   <Box marginRight="xm" flexDirection="row">
-        //     <Icon name="inbox" size={24} color="#d4d4d4" style={{ marginRight: 4 }} />
-        //   </Box>
-        // ),
-        headerLeft: () => <HeaderProfilePicture navigation={navigation} />,
+        headerLeft: () => (
+          <Pressable
+            onPress={() => navigation.navigate('Secondary', { screen: 'Settings' })}
+            style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginLeft: 8 }}
+          >
+            <Icon name="inbox" size={22} color="#747474" />
+          </Pressable>
+        ),
       }}
     >
       <HomeStack.Screen name="Home" component={Home} />

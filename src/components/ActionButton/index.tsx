@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Image, Platform, Dimensions } from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
 import HapticFeedback from 'react-native-haptic-feedback';
@@ -6,41 +6,49 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { CheckInModal } from '@components/Modals';
 
 const fistIcon = require('@assets/icons/fist-icon.png');
 
 function ActionButton() {
+  const [isModalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   const { checkInStore } = useStore();
+
   return (
-    <TouchableScale
-      activeScale={0.94}
-      friction={7}
-      onPressIn={() => {
-        // Vibrate some android devices in an annoying way.
-        // Better leave it exclusively to iOS for now.
-        if (Platform.OS === 'ios') {
-          HapticFeedback.trigger('impactLight');
-        }
-      }}
-      onPressOut={() => {
-        if (Platform.OS === 'ios') {
-          HapticFeedback.trigger('impactMedium');
-        }
-      }}
-      onPress={() => {
-        if (checkInStore.hasActiveCheckIn) {
-          navigation.navigate('ProtestDashboard');
-        } else {
-          navigation.navigate('Secondary', { screen: 'CheckInModal' });
-        }
-      }}
-      style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 30 : 35 }]}
-    >
-      <Image source={fistIcon} style={styles.checkInIcon} />
-    </TouchableScale>
+    <>
+      <TouchableScale
+        activeScale={0.94}
+        friction={7}
+        onPressIn={() => {
+          // Vibrate some android devices in an annoying way.
+          // Better leave it exclusively to iOS for now.
+          if (Platform.OS === 'ios') {
+            HapticFeedback.trigger('impactLight');
+          }
+        }}
+        onPressOut={() => {
+          if (Platform.OS === 'ios') {
+            HapticFeedback.trigger('impactMedium');
+          }
+        }}
+        onPress={() => {
+          setModalVisible(true);
+          // if (checkInStore.hasActiveCheckIn) {
+          //   navigation.navigate('ProtestDashboard');
+          // } else {
+          //   navigation.navigate('Secondary', { screen: 'CheckInModal' });
+          // }
+        }}
+        style={[styles.checkInIconWrapper, { bottom: insets.bottom > 0 ? 30 : 35 }]}
+      >
+        <Image source={fistIcon} style={styles.checkInIcon} />
+      </TouchableScale>
+
+      <CheckInModal isModalVisible={isModalVisible} setModalVisible={setModalVisible} />
+    </>
   );
 }
 

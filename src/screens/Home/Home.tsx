@@ -10,6 +10,7 @@ import { HomeScreenProps } from '@types/navigation';
 import { Event } from '@types/collections';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useUpcomingEvents from './useUpcomingEvents';
+import ProvinceCard from './ProvinceCard';
 
 import InProtest from './InProtest';
 
@@ -47,14 +48,42 @@ function Home({ navigation }: HomeScreenProps) {
         showsVerticalScrollIndicator={false}
       >
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
-
-        <InProtest event={nextEvent} />
         {/* <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="xm">
           תמונות נבחרות
         </Text>
-
         <FeaturedPictures style={{ marginBottom: 12 }} /> */}
+        <InProtest event={nextEvent} />
+        <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
 
+        <Text variant="hugeTitle" textAlign="center" color="primaryColor">
+          1,312
+        </Text>
+
+        <Text variant="largeTitle" textAlign="center" paddingHorizontal="m" marginBottom="xm">
+          מפגינים עכשיו בכל הארץ
+        </Text>
+
+        <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
+
+        <Box paddingHorizontal="m">
+          <ProvinceCard
+            province="ירושלים"
+            counter={194}
+            imageUrl="https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/uploaded_pictures%2FAE2185BD-C838-498E-BB24-90C0EC6E9195.jpg?alt=media&token=c3d9e825-a168-47ba-b4d6-8eb41283587d"
+            containerStyle={{ marginBottom: 12 }}
+          />
+          <ProvinceCard
+            province="תל אביב"
+            counter={932}
+            imageUrl="https://res.cloudinary.com/act1/image/upload/v1614841195/featured_pictures/purimistors.jpg"
+            containerStyle={{ marginBottom: 12 }}
+          />
+          <ProvinceCard
+            province="חיפה"
+            counter={283}
+            imageUrl="https://res.cloudinary.com/act1/image/upload/v1615733637/featured_pictures/main_image44730_medium_hme0rv.jpg"
+          />
+        </Box>
         {/* {liveEvents.length > 0 && (
           <>
             <Text variant="largeTitle" paddingHorizontal="m" marginTop="m" marginBottom="xm">
@@ -65,7 +94,10 @@ function Home({ navigation }: HomeScreenProps) {
           </>
         )}
 
-        {/* {upcomingEvents.length > 0 && (
+        
+
+        {/* 
+        {upcomingEvents.length > 0 && (
           <>
             {nextEvent && (
               <>
@@ -87,23 +119,13 @@ function Home({ navigation }: HomeScreenProps) {
           </>
         )} */}
 
-        <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
-
-        <Text variant="hugeTitle" textAlign="center" color="primaryColor">
-          1,312
+        <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="xm">
+          תמונות אחרונות
         </Text>
-
-        <Text variant="largeTitle" textAlign="center" paddingHorizontal="m" marginBottom="xm">
-          מפגינים עכשיו בכל הארץ
-        </Text>
-
-        <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
-
         <Box height={360} paddingHorizontal="m" marginBottom="l">
           <RecentPicturesWidget />
         </Box>
-
-        {/* {eventStore.pastEvents.length > 0 && (
+        {eventStore.pastEvents.length > 0 && (
           <Box marginBottom="xl">
             <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="xm">
               הפגנות בשבוע האחרון
@@ -111,10 +133,10 @@ function Home({ navigation }: HomeScreenProps) {
 
             <FeaturedProtests protests={eventStore.pastEvents} />
           </Box>
-        )} */}
+        )}
       </ScrollView>
       <Box position="absolute" bottom={0} left={12 + insets.left}>
-        <ActionButton />
+        {/* <ActionButton /> */}
       </Box>
     </>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
-import { Box, Text } from '../../components';
+import { Box, Text, RoundedButton } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import MapView from 'react-native-maps';
@@ -55,25 +55,56 @@ function InProtest({ event }) {
         )}
         <Box
           flexDirection="row"
-          justifyContent="space-around"
+          justifyContent="space-evenly"
           alignItems="center"
           paddingVertical="m"
           marginTop="m"
           backgroundColor="seperator"
           borderRadius={8}
         >
-          <Box alignItems="center">
-            <Icon name="message-circle" size={36} color="white" style={{ marginBottom: 6 }} />
-            <Text variant="smallText">צ׳אט איזורי</Text>
+          <Box alignItems="center" minWidth={72.5}>
+            <Icon name="alert-circle" size={34} color="white" style={{ marginBottom: 6 }} />
+            <Text variant="smallText" fontSize={12}>
+              שליחת דיווח
+            </Text>
           </Box>
-          <Box alignItems="center">
-            <Icon name="camera" size={36} color="white" style={{ marginBottom: 6 }} />
-            <Text variant="smallText">צילום תמונה</Text>
+          <Box alignItems="center" minWidth={72.5}>
+            <Icon name="camera" size={34} color="white" style={{ marginBottom: 6 }} />
+            <Text variant="smallText" fontSize={12}>
+              צילום תמונה
+            </Text>
           </Box>
-          <Box alignItems="center">
-            <Icon name="share" size={36} color="white" style={{ marginBottom: 6 }} />
-            <Text variant="smallText">הזמנת חברים</Text>
+          <Box alignItems="center" minWidth={72.5}>
+            <Icon name="share" size={34} color="white" style={{ marginBottom: 6 }} />
+            <Text variant="smallText" fontSize={12}>
+              הזמנת חברים
+            </Text>
           </Box>
+        </Box>
+      </Box>
+
+      <Box
+        flexDirection="row"
+        alignItems="flex-start"
+        paddingVertical="m"
+        paddingLeft="m"
+        paddingRight="xl"
+        marginTop="m"
+        marginHorizontal="m"
+        backgroundColor="seperator"
+        borderRadius={8}
+      >
+        <Text fontSize={30} marginRight="m">
+          ⚠️
+        </Text>
+        <Box>
+          <Text variant="text" fontWeight="600" marginBottom="xxs">
+            המשטרה עצרה 4 מפגינים.
+          </Text>
+          <Text variant="text" fontWeight="600" paddingRight="xm" marginBottom="m">
+            מחפשים מתנדבים שיוכלו לחכות מחוץ לתחנה.
+          </Text>
+          <RoundedButton color="yellow" text="אני יכולה לחכות" size="small" textStyle={{ fontSize: 14.5 }} />
         </Box>
       </Box>
 
