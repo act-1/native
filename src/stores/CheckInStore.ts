@@ -3,6 +3,7 @@ import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { createCheckIn } from '@services/checkIn';
+import { getRegion } from '@services/locations';
 import { Location, Event } from '@types/collections';
 
 class CheckInStore {
@@ -25,6 +26,7 @@ class CheckInStore {
     // if region is found - check if already checked in in the app cache
     // if it's not in the app cache, check if it's currently active in firestore
     // if it is create a new check in and cache for 3 hours
+    getRegion([31.773581, 35.21508]);
   }
 
   async loadCachedCheckIn() {
