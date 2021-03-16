@@ -1,7 +1,7 @@
 import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { GeoQuerySnapshot } from 'geofirestore-core';
 import * as geofirestore from 'geofirestore';
-import { Event, Location, SelectEntry } from '@types/collections';
+import { Event, Location, SelectEntry, Region } from '@types/collections';
 
 import events from './events';
 
@@ -12,7 +12,7 @@ const regionCollection = GeoFirestore.collection('regions');
 /**
  * Returns the current region name of the provided position.
  * @param position [number, number] - A geopoint ([latitude, longitude]).
- * @returns string - The region's name of the position.
+ * @returns {Object} - The region's object.
  */
 export async function getRegion(position: [number, number]) {
   try {
@@ -22,7 +22,12 @@ export async function getRegion(position: [number, number]) {
       .near({ center: new firebase.firestore.GeoPoint(latitude, longitude), radius: 10 })
       .get();
 
-    console.log(snapshot.docs);
+    // TODO: Return nearest region
+    if (snapshot.docs[0].data()) {
+      const region = (snapshot.docs[0].data() as unknown) as Region;
+      return region;
+    }
+    return null;
   } catch (err) {
     console.log(err);
     throw err;

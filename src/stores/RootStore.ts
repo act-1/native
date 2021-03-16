@@ -31,8 +31,9 @@ class RootStore {
   // Initalization of the app during splash screen
   async initApp() {
     try {
+      this.checkInStore.isRiotAround();
+
       this.mediaStore.getHomeScreenPictures();
-      this.checkInStore.getCurrentRegion();
       this.eventStore.getEvents().then(({ liveEvents }) => {
         this.liveStore.getLiveProtestersPictures(liveEvents);
       });
