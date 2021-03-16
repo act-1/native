@@ -17,23 +17,30 @@ class CheckInStore {
 
   async isRiotAround() {
     // Check if there's an active check in.
-    const checkIn = this.loadCachedCheckIn();
+    try {
+      const checkIn = this.loadCachedCheckIn();
 
-    if (checkIn === null) {
-      const region = await getRegion([31.773581, 35.21508]);
+      if (checkIn === null) {
+        const region = await getRegion([31.773581, 35.21508]);
 
-      if (region) {
-        if (region.isActive) {
-          const expireAt = region.expireAt.toDate();
-          const fcmToken = this.rootStore?.userStore.FCMToken!;
+        if (region) {
+          if (region.isActive) {
+            const expireAt = region.expireAt.toDate();
+            const fcmToken = this.rootStore?.userStore.FCMToken!;
+            const checkInParams = { expireAt, region: region.name, fcmToken };
 
-          const checkIn = createCheckIn(region.name, expireAt, fcmToken);
+            await createCheckIn(checkInParams);
 
-          if (checkIn) {
-            await AsyncStorage.setItem('lastCheckIn', JSON.stringify({ region, expireAt }));
+            runInAction(() => {
+              this.currentCheckIn = checkInParams;
+            });
+
+            await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkInParams));
           }
         }
       }
+    } catch (err) {
+      throw err;
     }
   }
 

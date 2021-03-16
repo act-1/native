@@ -12,40 +12,10 @@ type PostAction = 'report' | 'delete';
 
 type PrivacyOption = 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
 
-type CheckIn = {
-  id?: string;
-  userId?: string;
-  displayName?: string;
-  profilePicture?: string;
-  locationId: string;
-  locationName: string;
-  city: string;
-  province: string;
-  coordinates: { _latitude: number; _longitude: number } | any; // Any as a temp workaround for GeoPoint values
-  eventId?: string | null;
-  eventName?: string | null;
-  eventThumbnail?: string;
-  blurhash?: string;
-  eventEndDate?: Date;
+type CheckInParams = {
+  region: string;
   expireAt: Date;
-  createdAt: Date;
-  isActive: boolean;
-  privacySetting: PrivacyOption;
-  protestersCount?: number;
-};
-
-type RTDBCheckIn = {
-  id: string;
-  locationId: string;
-  locationName: string;
-  locationCity: string;
-  userId: string;
-  displayName: string;
-  profilePicture: string;
-  createdAt: number;
-  expireAt: string;
-  eventId: string | null;
-  isActive: boolean;
+  fcmToken?: string;
 };
 
 type BoardingScreenProps = {
