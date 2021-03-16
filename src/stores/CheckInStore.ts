@@ -8,7 +8,7 @@ import { Location, Event } from '@types/collections';
 
 class CheckInStore {
   rootStore: null | rootStore = null;
-  currentCheckIn: CheckIn | undefined = undefined;
+  currentCheckIn: CheckInParams | undefined = undefined;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -18,7 +18,8 @@ class CheckInStore {
   async isRiotAround() {
     // Check if there's an active check in.
     try {
-      const checkIn = this.loadCachedCheckIn();
+      const checkIn = await this.loadCachedCheckIn();
+      console.log('checkIn', checkIn);
 
       if (checkIn === null) {
         const region = await getRegion([31.773581, 35.21508]);
@@ -27,7 +28,7 @@ class CheckInStore {
           if (region.isActive) {
             const expireAt = region.expireAt.toDate();
             const fcmToken = this.rootStore?.userStore.FCMToken!;
-            const checkInParams = { expireAt, region: region.name, fcmToken };
+            const checkInParams = { expireAt, region: region.id, fcmToken };
 
             await createCheckIn(checkInParams);
 
@@ -40,28 +41,34 @@ class CheckInStore {
         }
       }
     } catch (err) {
+      console.error(err);
       throw err;
     }
   }
 
   async loadCachedCheckIn() {
-    const cachedCheckIn = await AsyncStorage.getItem('lastCheckIn');
+    try {
+      const cachedCheckIn = await AsyncStorage.getItem('lastCheckIn');
 
-    if (cachedCheckIn) {
-      const checkIn = JSON.parse(cachedCheckIn);
-      // Check if the check in is active
-      if (new Date() < new Date(checkIn.expireAt)) {
-        runInAction(() => {
-          this.currentCheckIn = checkIn;
-        });
-        return checkIn;
+      if (cachedCheckIn) {
+        const checkIn = JSON.parse(cachedCheckIn);
+        // Check if the check in is active
+        if (new Date() < new Date(checkIn.expireAt)) {
+          runInAction(() => {
+            this.currentCheckIn = checkIn;
+          });
+          return checkIn;
+        } else {
+          // Check in has expired
+          AsyncStorage.removeItem('lastCheckIn');
+          return null;
+        }
       } else {
-        // Check in has expired
-        AsyncStorage.removeItem('lastCheckIn');
         return null;
       }
-    } else {
-      return null;
+    } catch (err) {
+      console.error(err);
+      throw err;
     }
   }
 }

@@ -8,7 +8,8 @@ import Planner from './Planner';
 import Riot from './Riot';
 
 function Home({ navigation }: HomeScreenProps) {
-  const { userStore, eventStore, liveStore } = useStore();
+  const { checkInStore } = useStore();
+  const { currentCheckIn } = checkInStore;
 
   return (
     <>
@@ -18,7 +19,7 @@ function Home({ navigation }: HomeScreenProps) {
         showsVerticalScrollIndicator={false}
       >
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
-        <Planner />
+        {currentCheckIn ? <Riot regionName={currentCheckIn.region} /> : <Planner />}
       </ScrollView>
     </>
   );

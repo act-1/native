@@ -6,7 +6,7 @@ export async function createCheckIn(checkInParams: CheckInParams) {
 
   const { region, expireAt, fcmToken } = checkInParams;
 
-  firestore().collection('checkIns').doc(userId).set({
+  return firestore().collection('checkIns').doc(userId).set({
     region,
     fcmToken,
     createAt: firestore.FieldValue.serverTimestamp(),

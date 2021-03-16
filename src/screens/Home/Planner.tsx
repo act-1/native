@@ -47,7 +47,7 @@ function Riot() {
       </Text>
 
       <Box height={360} paddingHorizontal="m" marginBottom="l">
-        <RecentPicturesWidget />
+        {/* <RecentPicturesWidget /> */}
       </Box>
       {eventStore.pastEvents.length > 0 && (
         <Box marginBottom="xl">

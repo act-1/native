@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
-import { Box, Text, RoundedButton } from '../../components';
+import { Box, Text, Ticker, RoundedButton } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import MapView from 'react-native-maps';
 import EventPagePictures from '../EventPage/EventPagePictures';
 import ProvinceCard from './ProvinceCard';
+import useRiotCounter from '../../hooks/useRiotCounter';
 
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Feather';
@@ -22,38 +23,40 @@ const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   }
 };
 
-function InProtest({ event }) {
-  const { userStore, eventStore, liveStore } = useStore();
+function InProtest({ regionName }: { regionName: string }) {
+  const { userStore, eventStore, checkInStore } = useStore();
+  const [regionCounter, totalCounter] = useRiotCounter(regionName);
+
+  if (!checkInStore.currentCheckIn.region) return null;
 
   return (
     <>
       <Box marginHorizontal="m">
-        {event && (
-          <MapView
-            style={{
-              height: 275,
-              borderRadius: 8,
-            }}
-            maxZoomLevel={16}
-            minZoomLevel={14}
-            mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
-            initialRegion={{
-              latitude: event?.coordinates._latitude,
-              longitude: event?.coordinates._longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          >
-            <MapCounterView>
-              <Text variant="boxTitle" fontSize={18} color="primaryColor" textAlign="center">
-                82
-              </Text>
-              <Text variant="smallText" textAlign="center" fontWeight="600">
-                באיזורך
-              </Text>
-            </MapCounterView>
-          </MapView>
-        )}
+        <MapView
+          style={{
+            height: 275,
+            borderRadius: 8,
+          }}
+          maxZoomLevel={16}
+          minZoomLevel={14}
+          mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
+          initialRegion={{
+            latitude: 31.774979,
+            longitude: 35.217181,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        >
+          <MapCounterView>
+            <Ticker textStyle={{ fontFamily: 'AtlasDL3.1AAA-Bold', fontSize: 18, textAlign: 'center', color: '#eb524b' }}>
+              {regionCounter}
+            </Ticker>
+            <Text variant="smallText" textAlign="center" fontWeight="600">
+              באיזורך
+            </Text>
+          </MapCounterView>
+        </MapView>
+
         <Box
           flexDirection="row"
           justifyContent="space-evenly"
@@ -109,17 +112,19 @@ function InProtest({ event }) {
         </Box>
       </Box>
 
-      <Box marginTop="m">{event && <EventPagePictures event={event} size="small" />}</Box>
+      {/* <Box marginTop="m">{event && <EventPagePictures event={event} size="small" />}</Box> */}
 
       <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
 
-      <Text variant="hugeTitle" textAlign="center" color="primaryColor">
-        1,312
-      </Text>
+      <Box alignItems="center">
+        <Ticker textStyle={{ fontFamily: 'AtlasDL3.1AAA-Bold', fontSize: 38, textAlign: 'center', color: '#eb524b' }}>
+          {totalCounter}
+        </Ticker>
 
-      <Text variant="largeTitle" textAlign="center" paddingHorizontal="m" marginBottom="xm">
-        מפגינים עכשיו בכל הארץ
-      </Text>
+        <Text variant="largeTitle" textAlign="center" paddingHorizontal="m" marginBottom="xm">
+          מפגינים עכשיו בכל הארץ
+        </Text>
+      </Box>
 
       <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
 
@@ -152,5 +157,6 @@ const styles = StyleSheet.create({
   mapCounter: {
     padding: 8,
     borderRadius: 8,
+    alignItems: 'center',
   },
 });
