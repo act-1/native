@@ -14,7 +14,7 @@ type PostBase = {
   locationId?: string;
   locationCity?: string;
   locationName?: string;
-  province?: string;
+  region?: string;
   coordinates?: { _latitude: number; _longitude: number };
 
   likeCount: number;
@@ -50,8 +50,18 @@ export type Location = {
   id: string;
   city: string;
   name: string;
-  province: Province;
+  region: Region;
   coordinates: { _latitude: number; _longitude: number };
+};
+
+/*
+ * Check In Types
+ */
+
+export type CheckIn = Location & {
+  expireAt: Date;
+  fcmToken?: string;
+  locationId: string;
 };
 
 /*
@@ -65,7 +75,7 @@ type EventBase = {
   locationId: string;
   locationName: string;
   city: string;
-  province: Province;
+  region: Region;
   startDate: Date;
   endDate: Date;
   thumbnail: string;

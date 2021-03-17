@@ -7,27 +7,27 @@ import events from './events';
 
 // Create a GeoFirestore reference
 const GeoFirestore = geofirestore.initializeApp(firestore());
-const regionCollection = GeoFirestore.collection('regions');
+const locationsCollection = GeoFirestore.collection('locations');
 
 /**
  * Returns the current region name of the provided position.
  * @param position [number, number] - A geopoint ([latitude, longitude]).
  * @returns {Object} - The region's object.
  */
-export async function getRegion(position: [number, number]) {
+export async function getClosestLocation(position: [number, number]) {
   try {
     const [latitude, longitude] = position;
 
-    const snapshot = await regionCollection
-      .near({ center: new firebase.firestore.GeoPoint(latitude, longitude), radius: 10000 })
+    const snapshot = await locationsCollection
+      .near({ center: new firebase.firestore.GeoPoint(latitude, longitude), radius: 1.5 })
       .where('isActive', '==', true)
       .get();
 
     // TODO: Return nearest region
     console.log(snapshot.docs);
-    if (snapshot.docs[0]?.data()) {
-      const region = (snapshot.docs[0].data() as unknown) as Region;
-      return region;
+    if (snapshot.docs.length > 0) {
+      const location = (snapshot.docs[0].data() as unknown) as Location;
+      return location;
     }
     return null;
   } catch (err) {

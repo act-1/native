@@ -20,7 +20,7 @@ class UserStore {
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
   userData: FirebaseFirestoreTypes.DocumentData | null = null;
-  signUpData: { pronoun?: Pronoun; province: Province; avatar: Avatar } = {};
+  signUpData: { pronoun?: Pronoun; region: Region; avatar: Avatar } = {};
   FCMToken: string = '';
   initializedUser = false;
 

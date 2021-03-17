@@ -115,6 +115,17 @@ export async function newImagePost({ imageUri, text, location, event }: NewImage
         text,
       };
 
+      if (location) {
+        postData = {
+          ...postData,
+          locationId: location.id,
+          locationName: location.name,
+          city: location.city,
+          region: location.region,
+          coordinates: new firebase.firestore.GeoPoint(location.coordinates._latitude, location.coordinates._longitude),
+        };
+      }
+
       if (event) {
         postData = {
           ...postData,
@@ -122,24 +133,13 @@ export async function newImagePost({ imageUri, text, location, event }: NewImage
           eventTitle: event.title,
           locationId: event.locationId,
           locationName: event.locationName,
-          province: event.province,
+          region: event.region,
           city: event.city,
           coordinates: new firebase.firestore.GeoPoint(event.coordinates._latitude, event.coordinates._longitude),
         };
       }
 
       let postRef = null;
-
-      if (location) {
-        postData = {
-          ...postData,
-          locationId: location.id,
-          locationName: location.name,
-          city: location.city,
-          province: location.province,
-          coordinates: new firebase.firestore.GeoPoint(location.coordinates._latitude, location.coordinates._longitude),
-        };
-      }
 
       postRef = postsCollection.doc();
 
