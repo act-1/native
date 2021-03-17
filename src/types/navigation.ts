@@ -21,6 +21,7 @@ export type RecentPicturesProps = StackScreenProps<RootStackParamList, 'RecentPi
 export type ProtestDashboardProps = StackScreenProps<RootStackParamList, 'ProtestDashboard'>;
 export type ProtestChatProps = StackScreenProps<RootStackParamList, 'ProtestChat'>;
 export type CapturePictureProps = StackScreenProps<RootStackParamList, 'CapturePicture'>;
+export type UploadPreviewProps = StackScreenProps<RootStackParamList, 'UploadPreview'>;
 
 export type RootStackParamList = {
   AppTabs: undefined;
@@ -54,6 +55,7 @@ export type RootStackParamList = {
   ProtestDashboard: undefined;
   ProtestChat: undefined;
   RecentPictures: { initialIndex?: number };
+  UploadPreview: { image: ImagePickerResponse };
 };
 
 type TabBarParamList = {

@@ -15,7 +15,7 @@ class RootStore {
   mediaStore: mediaStore;
   chatStore: chatStore;
   checkInStore: checkInStore;
-  liveStore: liveStore;
+  // liveStore: liveStore;
 
   constructor() {
     makeAutoObservable(this);
@@ -25,7 +25,7 @@ class RootStore {
     this.mediaStore = new mediaStore(this);
     this.chatStore = new chatStore(this);
     this.checkInStore = new checkInStore(this);
-    this.liveStore = new liveStore(this);
+    // this.liveStore = new liveStore(this);
   }
 
   // Initalization of the app during splash screen
@@ -35,9 +35,9 @@ class RootStore {
 
       this.mediaStore.getHomeScreenPictures();
       this.eventStore.getEvents().then(({ liveEvents }) => {
-        this.liveStore.getLiveProtestersPictures(liveEvents);
+        // this.liveStore.getLiveProtestersPictures(liveEvents);
       });
-      this.liveStore.setLiveListeners();
+      // this.liveStore.setLiveListeners();
       this.userStore.getUserEvents();
       this.userStore.refreshFCMToken();
       this.feedStore.getUserLikes();

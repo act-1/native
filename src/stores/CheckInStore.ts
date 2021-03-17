@@ -24,23 +24,21 @@ class CheckInStore {
         const region = await getRegion([31.773581, 35.21508]);
 
         if (region) {
-          if (region.isActive) {
-            // Set expiration time to 1 hour from now
-            // If the user open the app after 1 hour, we check if the region is still active and check them in again.
-            const expireAt = new Date();
-            expireAt.setMinutes(expireAt.getMinutes() + 60);
+          // Set expiration time to 1 hour from now
+          // If the user open the app after 1 hour, we check if the region is still active and check them in again.
+          const expireAt = new Date();
+          expireAt.setMinutes(expireAt.getMinutes() + 60);
 
-            const fcmToken = this.rootStore?.userStore.FCMToken!;
-            const checkInParams = { expireAt, region: region.id, fcmToken };
+          const fcmToken = this.rootStore?.userStore.FCMToken!;
+          const checkInParams = { expireAt, region: region.id, fcmToken };
 
-            await createCheckIn(checkInParams);
+          await createCheckIn(checkInParams);
 
-            runInAction(() => {
-              this.currentCheckIn = checkInParams;
-            });
+          runInAction(() => {
+            this.currentCheckIn = checkInParams;
+          });
 
-            await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkInParams));
-          }
+          await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkInParams));
         }
       }
     } catch (err) {
@@ -51,6 +49,7 @@ class CheckInStore {
 
   async loadCachedCheckIn() {
     try {
+      // await AsyncStorage.clear();
       const cachedCheckIn = await AsyncStorage.getItem('lastCheckIn');
 
       if (cachedCheckIn) {

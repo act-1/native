@@ -13,15 +13,27 @@ function useRiotCounter(regionName: string) {
   const regionCounterQuery = RealtimeDatabase.database.ref('regionCounter').child(regionName);
   const totalCounterQuery = RealtimeDatabase.database.ref('totalCounter');
 
-  regionCounterQuery.on('value', (snapshot) => {
-    const value = snapshot.val();
-    setRegionCounter(value);
-  });
+  regionCounterQuery.on(
+    'value',
+    (snapshot) => {
+      const value = snapshot.val();
+      setRegionCounter(value);
+    },
+    (err) => {
+      throw err;
+    }
+  );
 
-  totalCounterQuery.on('value', (snapshot) => {
-    const value = snapshot.val();
-    setTotalCounter(value);
-  });
+  totalCounterQuery.on(
+    'value',
+    (snapshot) => {
+      const value = snapshot.val();
+      setTotalCounter(value);
+    },
+    (err) => {
+      throw err;
+    }
+  );
 
   return [regionCounter, totalCounter];
 }

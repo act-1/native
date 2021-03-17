@@ -9,7 +9,7 @@ export async function createCheckIn(checkInParams: CheckInParams) {
   return firestore().collection('checkIns').doc(userId).set({
     region,
     fcmToken,
-    createAt: firestore.FieldValue.serverTimestamp(),
+    createdAt: firestore.FieldValue.serverTimestamp(),
     expireAt,
   });
 }

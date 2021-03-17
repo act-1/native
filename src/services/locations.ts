@@ -17,13 +17,15 @@ const regionCollection = GeoFirestore.collection('regions');
 export async function getRegion(position: [number, number]) {
   try {
     const [latitude, longitude] = position;
-    console.log(latitude);
+
     const snapshot = await regionCollection
-      .near({ center: new firebase.firestore.GeoPoint(latitude, longitude), radius: 10 })
+      .near({ center: new firebase.firestore.GeoPoint(latitude, longitude), radius: 10000 })
+      .where('isActive', '==', true)
       .get();
 
     // TODO: Return nearest region
-    if (snapshot.docs[0].data()) {
+    console.log(snapshot.docs);
+    if (snapshot.docs[0]?.data()) {
       const region = (snapshot.docs[0].data() as unknown) as Region;
       return region;
     }

@@ -22,7 +22,7 @@ const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   }
 };
 
-function InProtest({ regionName }: { regionName: string }) {
+function Riot({ regionName }: { regionName: string }) {
   const { userStore, eventStore, checkInStore } = useStore();
   const [regionCounter, totalCounter] = useRiotCounter(regionName);
 
@@ -31,21 +31,22 @@ function InProtest({ regionName }: { regionName: string }) {
   return (
     <>
       <Box marginHorizontal="m">
-        <MapView
-          style={{
-            height: 275,
-            borderRadius: 8,
-          }}
-          maxZoomLevel={16}
-          minZoomLevel={14}
-          mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
-          initialRegion={{
-            latitude: 31.774979,
-            longitude: 35.217181,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        >
+        <Box>
+          <MapView
+            style={{
+              height: 320,
+              borderRadius: 8,
+            }}
+            maxZoomLevel={16}
+            minZoomLevel={14}
+            mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
+            initialRegion={{
+              latitude: 31.774979,
+              longitude: 35.217181,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
           <MapCounterView>
             <Ticker textStyle={{ fontFamily: 'AtlasDL3.1AAA-Bold', fontSize: 18, textAlign: 'center', color: '#eb524b' }}>
               {regionCounter}
@@ -54,11 +55,10 @@ function InProtest({ regionName }: { regionName: string }) {
               באיזורך
             </Text>
           </MapCounterView>
-        </MapView>
+        </Box>
 
         <RiotActions />
       </Box>
-
       <Box
         flexDirection="row"
         alignItems="flex-start"
@@ -83,11 +83,8 @@ function InProtest({ regionName }: { regionName: string }) {
           <RoundedButton color="yellow" text="אני יכולה לחכות" size="small" textStyle={{ fontSize: 14.5 }} />
         </Box>
       </Box>
-
       {/* <Box marginTop="m">{event && <EventPagePictures event={event} size="small" />}</Box> */}
-
-      <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
-
+      <Box backgroundColor="seperator" width="100%" height={4} marginTop="xm" marginBottom="m" />
       <Box alignItems="center">
         <Ticker textStyle={{ fontFamily: 'AtlasDL3.1AAA-Bold', fontSize: 38, textAlign: 'center', color: '#eb524b' }}>
           {totalCounter}
@@ -98,8 +95,7 @@ function InProtest({ regionName }: { regionName: string }) {
         </Text>
       </Box>
 
-      <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
-
+      <Box backgroundColor="seperator" width="100%" height={4} marginBottom="l" />
       <Box paddingHorizontal="m">
         <ProvinceCard
           province="ירושלים"
@@ -123,10 +119,11 @@ function InProtest({ regionName }: { regionName: string }) {
   );
 }
 
-export default observer(InProtest);
+export default observer(Riot);
 
 const styles = StyleSheet.create({
   mapCounter: {
+    position: 'absolute',
     padding: 8,
     borderRadius: 8,
     alignItems: 'center',
