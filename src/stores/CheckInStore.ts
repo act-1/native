@@ -19,14 +19,17 @@ class CheckInStore {
     // Check if there's an active check in.
     try {
       const checkIn = await this.loadCachedCheckIn();
-      console.log('checkIn', checkIn);
 
       if (checkIn === null) {
         const region = await getRegion([31.773581, 35.21508]);
 
         if (region) {
           if (region.isActive) {
-            const expireAt = region.expireAt.toDate();
+            // Set expiration time to 1 hour from now
+            // If the user open the app after 1 hour, we check if the region is still active and check them in again.
+            const expireAt = new Date();
+            expireAt.setMinutes(expireAt.getMinutes() + 60);
+
             const fcmToken = this.rootStore?.userStore.FCMToken!;
             const checkInParams = { expireAt, region: region.id, fcmToken };
 
