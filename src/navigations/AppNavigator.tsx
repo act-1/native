@@ -71,6 +71,7 @@ function SecondaryNavigator() {
   return (
     <SecondaryStack.Navigator screenOptions={{ stackPresentation: 'modal' }}>
       <SecondaryStack.Screen name="ProfileModal" component={ProfileNavigator} options={{ headerShown: false }} />
+
       <SecondaryStack.Screen name="CheckInModal" component={CheckInNavigator} options={{ headerShown: false }} />
     </SecondaryStack.Navigator>
   );

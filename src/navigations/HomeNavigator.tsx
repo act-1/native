@@ -1,12 +1,13 @@
 import React from 'react';
 import { Platform, Pressable } from 'react-native';
-import { Home } from '../screens';
+import { Home, RiotMap } from '../screens';
 import { CapturePicture } from '../components';
 import { RootStackParamList } from '../types/navigation';
 import { createStackNavigator } from '@react-navigation/stack';
 import RecentPictures from '@screens/Community/RecentPictures';
 import NewPost from '@screens/NewPost';
 import Icon from 'react-native-vector-icons/Feather';
+import { backgroundColor } from '@shopify/restyle';
 
 const HomeStack = createStackNavigator<RootStackParamList>();
 
@@ -29,12 +30,13 @@ function HomeNavigator({ navigation }) {
             onPress={() => navigation.navigate('Secondary', { screen: 'Settings' })}
             style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginLeft: 6 }}
           >
-            <Icon name="inbox" size={22} color="#747474" />
+            <Icon name="settings" size={22} color="#747474" />
           </Pressable>
         ),
       }}
     >
       <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="RiotMap" component={RiotMap} />
 
       <HomeStack.Screen
         name="RecentPictures"

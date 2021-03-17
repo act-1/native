@@ -22,6 +22,7 @@ export type ProtestDashboardProps = StackScreenProps<RootStackParamList, 'Protes
 export type ProtestChatProps = StackScreenProps<RootStackParamList, 'ProtestChat'>;
 export type CapturePictureProps = StackScreenProps<RootStackParamList, 'CapturePicture'>;
 export type UploadPreviewProps = StackScreenProps<RootStackParamList, 'UploadPreview'>;
+export type RiotMapProps = StackScreenProps<RootStackParamList, 'RiotMap'>;
 
 export type RootStackParamList = {
   AppTabs: undefined;
@@ -54,6 +55,7 @@ export type RootStackParamList = {
   CheckInPrivacy: undefined;
   ProtestDashboard: undefined;
   ProtestChat: undefined;
+  RiotMap: undefined;
   RecentPictures: { initialIndex?: number };
   UploadPreview: { image: ImagePickerResponse };
 };

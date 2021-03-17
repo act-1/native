@@ -10,6 +10,7 @@ import useRiotCounter from '../../../hooks/useRiotCounter';
 import RiotActions from './RiotActions';
 import { BlurView } from '@react-native-community/blur';
 import mapStyle from '@utils/mapStyle.json';
+import { useNavigation } from '@react-navigation/native';
 
 const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   if (Platform.OS === 'android') {
@@ -32,6 +33,8 @@ const MapCounterView = ({ children }: { children: React.ReactNode }) => {
 function Riot({ regionName }: { regionName: string }) {
   const { userStore, eventStore, checkInStore } = useStore();
   const [regionCounter, totalCounter] = useRiotCounter(regionName);
+  const navigation = useNavigation();
+
   const { currentCheckIn } = checkInStore;
 
   return (
@@ -39,6 +42,7 @@ function Riot({ regionName }: { regionName: string }) {
       <Box marginHorizontal="m">
         <Box overflow="hidden" borderRadius={8}>
           <MapView
+            onPress={() => navigation.navigate('RiotMap')}
             style={{ height: Platform.select({ ios: 320, android: 270 }) }}
             customMapStyle={mapStyle}
             maxZoomLevel={16}

@@ -26,7 +26,7 @@ function ProfileNavigator({ navigation }) {
         headerTintColor: '#8a8a8b',
       }}
     >
-      <ProfileStack.Screen
+      {/* <ProfileStack.Screen
         name="Profile"
         options={{
           headerTitleAlign: 'center',
@@ -36,7 +36,7 @@ function ProfileNavigator({ navigation }) {
           headerRightContainerStyle: { marginRight: 12, opacity: 0.75 },
         }}
         component={Profile}
-      />
+      /> */}
       <ProfileStack.Screen
         name="Settings"
         component={Settings}
