@@ -2,7 +2,8 @@ import firestore, { firebase, FirebaseFirestoreTypes } from '@react-native-fireb
 import * as geofirestore from 'geofirestore';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
-import { Post, PicturePost, Event, Location } from '@types/collections';
+import { Post, PicturePost, Event, Location, LocationRef } from '@types/collections';
+import { ImagePickerResponse } from 'react-native-image-picker';
 import Storage, { uploadPicture } from './storage';
 
 const GeoFirestore = geofirestore.initializeApp(firestore());
@@ -87,23 +88,21 @@ export async function createTextPost({ text, locationData }: CreateTextPostProps
 }
 
 type NewImagePostProps = {
-  imageUri: string;
+  image: ImagePickerResponse;
   text?: string;
-  location?: Location;
+  locationRef: LocationRef;
   event?: Event;
 };
 
-export async function newImagePost({ imageUri, text, location, event }: NewImagePostProps) {
+export async function newImagePost({ image, text, locationRef, event }: NewImagePostProps) {
   try {
     const currentUser = auth().currentUser;
     if (currentUser) {
-      const uploadedImage = await Storage.uploadPicture(imageUri);
+      const uploadedImage = await Storage.uploadPicture(image.uri!);
 
       let postData = {
         type: 'picture',
         authorId: currentUser.uid,
-        authorName: currentUser.displayName,
-        authorPicture: currentUser.photoURL,
         pictureWidth: uploadedImage.width,
         pictureHeight: uploadedImage.height,
         pictureUrl: uploadedImage.url,
@@ -111,36 +110,17 @@ export async function newImagePost({ imageUri, text, location, event }: NewImage
         archived: false,
         featured: false,
         homeScreen: false,
+        ...locationRef,
+        coordinates: new firebase.firestore.GeoPoint(locationRef.coordinates._latitude, locationRef.coordinates._longitude),
         likeCount: 0,
         text,
       };
 
-      if (location) {
-        postData = {
-          ...postData,
-          locationId: location.id,
-          locationName: location.name,
-          city: location.city,
-          region: location.region,
-          coordinates: new firebase.firestore.GeoPoint(location.coordinates._latitude, location.coordinates._longitude),
-        };
-      }
-
       if (event) {
-        postData = {
-          ...postData,
-          eventId: event.id,
-          eventTitle: event.title,
-          locationId: event.locationId,
-          locationName: event.locationName,
-          region: event.region,
-          city: event.city,
-          coordinates: new firebase.firestore.GeoPoint(event.coordinates._latitude, event.coordinates._longitude),
-        };
+        postData = { ...postData, eventId: event.id, eventTitle: event.title };
       }
 
       let postRef = null;
-
       postRef = postsCollection.doc();
 
       await postRef.set({

@@ -114,7 +114,7 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
         unsubscribeListener();
       }
     };
-  }, [event, location]);
+  }, []);
 
   return (
     <Box style={{ minHeight: size === 'small' ? 107 : 225 }} justifyContent="center" marginBottom="m">
@@ -123,4 +123,4 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
   );
 }
 
-export default EventPagePictures;
+export default React.memo(EventPagePictures);

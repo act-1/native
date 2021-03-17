@@ -9,13 +9,20 @@ import ProvinceCard from '../ProvinceCard';
 import useRiotCounter from '../../../hooks/useRiotCounter';
 import RiotActions from './RiotActions';
 import { BlurView } from '@react-native-community/blur';
+import mapStyle from '@utils/mapStyle.json';
 
 const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   if (Platform.OS === 'android') {
-    return <Box style={[styles.mapCounter, { opacity: 0.8, backgroundColor: '#000', elevation: 2 }]}>{children}</Box>;
+    return (
+      <Box
+        style={[styles.mapCounter, { opacity: 0.8, backgroundColor: 'rgba(0,0,0,0.85)', elevation: 2, paddingHorizontal: 10.5 }]}
+      >
+        {children}
+      </Box>
+    );
   } else {
     return (
-      <BlurView blurType="extraDark" style={[styles.mapCounter, { width: 75, margin: 12.5 }]}>
+      <BlurView blurType="extraDark" style={[styles.mapCounter, { width: 75 }]}>
         {children}
       </BlurView>
     );
@@ -25,18 +32,15 @@ const MapCounterView = ({ children }: { children: React.ReactNode }) => {
 function Riot({ regionName }: { regionName: string }) {
   const { userStore, eventStore, checkInStore } = useStore();
   const [regionCounter, totalCounter] = useRiotCounter(regionName);
-
-  if (!checkInStore.currentCheckIn.region) return null;
+  const { currentCheckIn } = checkInStore;
 
   return (
     <>
       <Box marginHorizontal="m">
-        <Box>
+        <Box overflow="hidden" borderRadius={8}>
           <MapView
-            style={{
-              height: 320,
-              borderRadius: 8,
-            }}
+            style={{ height: Platform.select({ ios: 320, android: 270 }) }}
+            customMapStyle={mapStyle}
             maxZoomLevel={16}
             minZoomLevel={14}
             mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
@@ -48,8 +52,15 @@ function Riot({ regionName }: { regionName: string }) {
             }}
           />
           <MapCounterView>
-            <Ticker textStyle={{ fontFamily: 'AtlasDL3.1AAA-Bold', fontSize: 18, textAlign: 'center', color: '#eb524b' }}>
-              {regionCounter}
+            <Ticker
+              textStyle={{
+                fontFamily: 'AtlasDL3.1AAA-Bold',
+                fontSize: 18,
+                textAlign: 'center',
+                color: '#eb524b',
+              }}
+            >
+              {regionCounter.toLocaleString()}
             </Ticker>
             <Text variant="smallText" textAlign="center" fontWeight="600">
               באיזורך
@@ -59,7 +70,7 @@ function Riot({ regionName }: { regionName: string }) {
 
         <RiotActions />
       </Box>
-      <Box
+      {/* <Box
         flexDirection="row"
         alignItems="flex-start"
         paddingVertical="m"
@@ -82,12 +93,15 @@ function Riot({ regionName }: { regionName: string }) {
           </Text>
           <RoundedButton color="yellow" text="אני יכולה לחכות" size="small" textStyle={{ fontSize: 14.5 }} />
         </Box>
+      </Box> */}
+
+      <Box marginTop="xm">
+        <EventPagePictures location={{ id: currentCheckIn.locationId, name: currentCheckIn.locationName }} size="small" />
       </Box>
-      {/* <Box marginTop="m">{event && <EventPagePictures event={event} size="small" />}</Box> */}
-      <Box backgroundColor="seperator" width="100%" height={4} marginTop="xm" marginBottom="m" />
+      <Box backgroundColor="seperator" width="100%" height={4} marginBottom="m" />
       <Box alignItems="center">
         <Ticker textStyle={{ fontFamily: 'AtlasDL3.1AAA-Bold', fontSize: 38, textAlign: 'center', color: '#eb524b' }}>
-          {totalCounter}
+          {totalCounter.toLocaleString()}
         </Ticker>
 
         <Text variant="largeTitle" textAlign="center" paddingHorizontal="m" marginBottom="xm">
@@ -125,6 +139,7 @@ const styles = StyleSheet.create({
   mapCounter: {
     position: 'absolute',
     padding: 8,
+    margin: 12.5,
     borderRadius: 8,
     alignItems: 'center',
   },

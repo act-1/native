@@ -31,11 +31,14 @@ class CheckInStore {
 
           const fcmToken = this.rootStore?.userStore.FCMToken!;
           const checkInParams = {
-            expireAt,
-            fcmToken,
-            ...location,
-            locationId: location.id,
             id: this.rootStore?.userStore.user?.uid,
+            locationId: location.id,
+            locationName: location.name,
+            locationCity: location.city,
+            locationRegion: location.region,
+            coordinates: location.coordinates,
+            fcmToken,
+            expireAt,
           } as CheckIn;
 
           await createCheckIn(checkInParams);
@@ -55,7 +58,7 @@ class CheckInStore {
 
   async loadCachedCheckIn() {
     try {
-      // await AsyncStorage.clear();
+      await AsyncStorage.clear();
       const cachedCheckIn = await AsyncStorage.getItem('lastCheckIn');
 
       if (cachedCheckIn) {

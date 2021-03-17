@@ -1,10 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import auth from '@react-native-firebase/auth';
 import { likePost, unlikePost, newImagePost, getAllPostLikes } from '@services/feed';
-import { Post, Location } from '@types/collections';
+import { LocationRef } from '@types/collections';
 import { removeArrayItem, updateArrayItem } from '@utils/array-utils';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ImagePickerResponse } from 'react-native-image-picker';
 
 class FeedStore {
   rootStore: null | rootStore = null;
@@ -62,23 +63,27 @@ class FeedStore {
    *
    * Therefor we moved it here for resolving the issue faster.
    */
-  async uploadImage({
-    imageUri,
-    text,
-    location,
-    event,
-  }: {
-    imageUri: string;
-    text?: string;
-    location?: Location;
-    event?: Event;
-  }) {
+  async uploadImage({ image, text }: { image: ImagePickerResponse; text?: string }) {
     try {
       runInAction(() => {
         this.uploadStatus = 'in_progress';
       });
 
-      const document = await newImagePost({ imageUri, text, location, event });
+      // Grab the location info from the current check in
+      const {
+        locationCity,
+        locationId,
+        locationName,
+        locationRegion,
+        coordinates,
+      } = this.rootStore?.checkInStore.currentCheckIn!;
+
+      const locationRef = { locationId, locationName, locationCity, locationRegion, coordinates } as LocationRef;
+
+      // Check if the location has an ongoing event.
+      const event = this.rootStore?.eventStore.liveEvents.find((e) => e.locationId === locationId);
+
+      const document = await newImagePost({ image, text, locationRef, event });
       // Upload to firestore
 
       runInAction(() => {

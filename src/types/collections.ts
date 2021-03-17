@@ -54,14 +54,22 @@ export type Location = {
   coordinates: { _latitude: number; _longitude: number };
 };
 
+export type LocationRef = {
+  locationId: string;
+  locationCity: string;
+  locationName: string;
+  locationRegion: Region;
+  coordinates: { _latitude: number; _longitude: number };
+};
+
 /*
  * Check In Types
  */
 
-export type CheckIn = Location & {
+export type CheckIn = LocationRef & {
+  id: string;
   expireAt: Date;
   fcmToken?: string;
-  locationId: string;
 };
 
 /*

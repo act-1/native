@@ -11,15 +11,13 @@ import { NewPostProps } from '../../types/navigation';
 const deviceWidth = Dimensions.get('window').width;
 
 function NewPost({ navigation, route }: NewPostProps) {
-  const { feedStore, checkInStore } = useStore();
+  const { feedStore } = useStore();
   const [caption, setCaption] = useState('');
   const { image } = route.params;
 
   const uploadPost = async (text: string) => {
     try {
-      const { region, locationId, locationName, locationCity, coordinates } = checkInStore.currentCheckIn;
-      const location = { region, locationId, locationName, locationCity, coordinates };
-      feedStore.uploadImage({ image, text, location });
+      feedStore.uploadImage({ image, text });
 
       navigation.goBack();
     } catch (err) {

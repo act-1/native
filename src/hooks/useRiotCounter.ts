@@ -16,7 +16,7 @@ function useRiotCounter(regionName: string) {
   regionCounterQuery.on(
     'value',
     (snapshot) => {
-      const value = snapshot.val();
+      let value = snapshot.val();
       setRegionCounter(value);
     },
     (err) => {
@@ -27,7 +27,7 @@ function useRiotCounter(regionName: string) {
   totalCounterQuery.on(
     'value',
     (snapshot) => {
-      const value = snapshot.val();
+      let value = snapshot.val();
       setTotalCounter(value);
     },
     (err) => {
