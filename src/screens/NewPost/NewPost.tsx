@@ -13,25 +13,13 @@ import { NewPostProps } from '../../types/navigation';
 const deviceWidth = Dimensions.get('window').width;
 
 function NewPost({ navigation, route }: NewPostProps) {
-  const { userStore, feedStore, mediaStore } = useStore();
+  const { feedStore, checkInStore } = useStore();
   const [caption, setCaption] = useState('');
   const { image, completionScreen, location } = route.params;
 
-  const uploadPost = async (textContent: string) => {
+  const uploadPost = async (text: string) => {
     try {
-      if (image) {
-        feedStore.uploadImage({ image, textContent: caption, location });
-      } else {
-        const locationData = {
-          locationId: location!.id,
-          locationName: location!.name,
-          locationCity: location!.city,
-          locationProvince: location!.province,
-          coordinates: location!.coordinates,
-        };
-
-        await createTextPost({ textContent, locationData });
-      }
+      feedStore.uploadImage({ image, text, regionId });
 
       navigation.goBack();
     } catch (err) {
@@ -59,11 +47,10 @@ function NewPost({ navigation, route }: NewPostProps) {
     <ScrollView style={{ paddingTop: 12 }}>
       <Box paddingHorizontal="m">
         <Box flexDirection="row" alignItems="flex-start" marginBottom="m">
-          <FastImage source={{ uri: userStore.userData?.profilePicture }} style={styles.profilePicture} />
           <TextInput
             value={caption}
             onChangeText={(text) => setCaption(text)}
-            placeholder="מסר לאומה..."
+            placeholder="תיאור תמונה"
             placeholderTextColor="grey"
             style={styles.textInput}
             multiline={true}

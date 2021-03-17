@@ -1,10 +1,11 @@
 import React from 'react';
 import { Platform, Pressable } from 'react-native';
 import { Home } from '../screens';
-import { Box } from '../components';
+import { CapturePicture } from '../components';
 import { RootStackParamList } from '../types/navigation';
 import { createStackNavigator } from '@react-navigation/stack';
 import RecentPictures from '@screens/Community/RecentPictures';
+import NewPost from '@screens/NewPost';
 import Icon from 'react-native-vector-icons/Feather';
 
 const HomeStack = createStackNavigator<RootStackParamList>();
@@ -34,6 +35,7 @@ function HomeNavigator({ navigation }) {
       }}
     >
       <HomeStack.Screen name="Home" component={Home} />
+
       <HomeStack.Screen
         name="RecentPictures"
         options={{
@@ -42,6 +44,29 @@ function HomeNavigator({ navigation }) {
           headerTitleAlign: 'center',
         }}
         component={RecentPictures}
+      />
+
+      <HomeStack.Screen
+        name="NewPost"
+        component={NewPost}
+        options={{
+          headerTitle: 'העלאת תמונה',
+          headerTitleStyle: {
+            fontSize: 20,
+            fontFamily: 'AtlasDL3.1AAA-Medium',
+            fontWeight: Platform.select({ ios: '700', android: null }),
+            color: '#EC534B',
+            marginRight: 15,
+          },
+          headerTitleContainerStyle: { marginBottom: 6 },
+          headerRightContainerStyle: { marginRight: 12 },
+          headerLeftContainerStyle: { marginLeft: 12, marginBottom: 6 },
+          headerLeft: () => (
+            <Pressable onPress={() => navigation.goBack()} hitSlop={10}>
+              <Icon name="x" size={22} color="#747474" />
+            </Pressable>
+          ),
+        }}
       />
     </HomeStack.Navigator>
   );
