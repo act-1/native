@@ -1,97 +1,76 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { createCheckIn } from '@services/checkIn';
+import { getRegion } from '@services/locations';
 import { Location, Event } from '@types/collections';
 
 class CheckInStore {
   rootStore: null | rootStore = null;
-  pendingCheckIn: CheckIn | undefined = undefined;
-  lastCheckIn: CheckIn | undefined = undefined;
-  privacySetting: PrivacyOption = 'PUBLIC';
-  currentLocation: Location | undefined = undefined;
-  currentEvent: Event | undefined = undefined;
+  currentCheckIn: CheckInParams | undefined = undefined;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
-    this.loadCachedCheckIn();
   }
 
-  async loadCachedCheckIn() {
-    // await AsyncStorage.clear();
-    const checkIn = await AsyncStorage.getItem('lastCheckIn');
-
-    // Loads the location
-    const checkInLocation = await AsyncStorage.getItem('checkInLocation');
-    const checkInEvent = await AsyncStorage.getItem('checkInEvent');
-
-    if (checkIn) {
-      const lastCheckIn = JSON.parse(checkIn);
-      this.setLastCheckIn(lastCheckIn);
-
-      if (checkInLocation) this.currentLocation = JSON.parse(checkInLocation);
-      if (checkInEvent) this.currentEvent = JSON.parse(checkInEvent);
-    }
-  }
-
-  get hasActiveCheckIn() {
-    if (this.lastCheckIn) {
-      return new Date() < new Date(this.lastCheckIn.expireAt);
-    }
-    return false;
-  }
-
-  setPendingCheckIn = (checkInInfo: CheckIn) => {
-    this.pendingCheckIn = checkInInfo;
-  };
-
-  setLastCheckIn = (checkInInfo: CheckIn | undefined) => {
-    this.lastCheckIn = checkInInfo;
-  };
-
-  async setCurrentLocation(location: Location) {
-    this.currentLocation = location;
-    await AsyncStorage.setItem('checkInLocation', JSON.stringify(location));
-  }
-
-  async setCurrentEvent(event: Event) {
-    this.currentEvent = event;
-    await AsyncStorage.setItem('checkInEvent', JSON.stringify(event));
-  }
-
-  setPrivacySetting = (value: PrivacyOption) => {
-    this.privacySetting = value;
-  };
-
-  async checkIn(checkInData) {
+  async isRiotAround() {
+    // Check if there's an active check in.
     try {
-      const { checkIn } = await createCheckIn({ ...checkInData, privacySetting: this.privacySetting });
+      const checkIn = await this.loadCachedCheckIn();
 
-      this.setLastCheckIn(checkIn);
+      if (checkIn === null) {
+        const region = await getRegion([31.773581, 35.21508]);
 
-      if (checkIn.eventId) {
-        this.rootStore?.chatStore.setCurrentRoomName(checkIn.eventId);
-      } else {
-        // Reset chat room name if checking to location.
-        this.rootStore?.chatStore.setCurrentRoomName(undefined);
+        if (region) {
+          if (region.isActive) {
+            // Set expiration time to 1 hour from now
+            // If the user open the app after 1 hour, we check if the region is still active and check them in again.
+            const expireAt = new Date();
+            expireAt.setMinutes(expireAt.getMinutes() + 60);
+
+            const fcmToken = this.rootStore?.userStore.FCMToken!;
+            const checkInParams = { expireAt, region: region.id, fcmToken };
+
+            await createCheckIn(checkInParams);
+
+            runInAction(() => {
+              this.currentCheckIn = checkInParams;
+            });
+
+            await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkInParams));
+          }
+        }
       }
-
-      await AsyncStorage.setItem('lastCheckIn', JSON.stringify(checkIn));
-      return checkIn;
     } catch (err) {
-      console.error('Check in error: ', err);
+      console.error(err);
       throw err;
     }
   }
 
-  async deleteLastCheckIn() {
+  async loadCachedCheckIn() {
     try {
-      await AsyncStorage.removeItem('lastCheckIn');
+      const cachedCheckIn = await AsyncStorage.getItem('lastCheckIn');
 
-      this.setLastCheckIn(undefined);
+      if (cachedCheckIn) {
+        const checkIn = JSON.parse(cachedCheckIn);
+        // Check if the check in is active
+        if (new Date() < new Date(checkIn.expireAt)) {
+          runInAction(() => {
+            this.currentCheckIn = checkIn;
+          });
+          return checkIn;
+        } else {
+          // Check in has expired
+          AsyncStorage.removeItem('lastCheckIn');
+          return null;
+        }
+      } else {
+        return null;
+      }
     } catch (err) {
+      console.error(err);
       throw err;
     }
   }

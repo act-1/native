@@ -134,3 +134,10 @@ export type ChatImageMessage = ChatMessageBase & {
 };
 
 export type ChatMessage = ChatTextMessage | ChatImageMessage;
+
+export type Region = {
+  id: string;
+  name: string;
+  isActive: boolean;
+  expireAt: FirebaseFirestoreTypes.Timestamp;
+};

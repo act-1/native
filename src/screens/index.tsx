@@ -5,7 +5,6 @@ export { default as EventPage } from './EventPage';
 export { default as EventPictureList } from './EventPage/EventPictureList';
 export { default as Onboarding } from './Onboarding/Onboarding';
 export { default as Profile } from './Profile';
-export { default as Explore } from './Explore';
 export { default as LiveFeed } from './LiveFeed';
 export { default as Community } from './Community';
 export { default as ProtestChat } from './ProtestChat';

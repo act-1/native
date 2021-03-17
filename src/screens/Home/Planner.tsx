@@ -37,21 +37,17 @@ function Riot() {
         </>
       )}
 
-      {upcomingEvents.length > 0 && (
-        <>
-          <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="xm" marginBottom="m">
-            כל ההפגנות
-          </Text>
-          <FeaturedEvents events={upcomingEvents} loaded={eventStore.eventsLoaded} style={{ marginBottom: 12 }} />
-        </>
-      )}
+      <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="xm" marginBottom="m">
+        כל ההפגנות
+      </Text>
+      <FeaturedEvents events={upcomingEvents} loaded={eventStore.eventsLoaded} style={{ marginBottom: 12 }} />
 
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="m">
         תמונות אחרונות
       </Text>
 
       <Box height={360} paddingHorizontal="m" marginBottom="l">
-        <RecentPicturesWidget />
+        {/* <RecentPicturesWidget /> */}
       </Box>
       {eventStore.pastEvents.length > 0 && (
         <Box marginBottom="xl">

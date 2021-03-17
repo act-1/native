@@ -50,7 +50,6 @@ export type RootStackParamList = {
     showGallerySwitch?: boolean;
   };
   SelectLocation: undefined;
-  Explore: undefined;
   CheckInPrivacy: undefined;
   ProtestDashboard: undefined;
   ProtestChat: undefined;

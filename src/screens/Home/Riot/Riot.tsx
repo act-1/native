@@ -1,15 +1,14 @@
 import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
-import { Box, Text, Ticker, RoundedButton } from '../../components';
+import { Box, Text, Ticker, RoundedButton } from '../../../components';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../stores';
+import { useStore } from '../../../stores';
 import MapView from 'react-native-maps';
-import EventPagePictures from '../EventPage/EventPagePictures';
-import ProvinceCard from './ProvinceCard';
-import useRiotCounter from '../../hooks/useRiotCounter';
-
+import EventPagePictures from '../../EventPage/EventPagePictures';
+import ProvinceCard from '../ProvinceCard';
+import useRiotCounter from '../../../hooks/useRiotCounter';
+import RiotActions from './RiotActions';
 import { BlurView } from '@react-native-community/blur';
-import Icon from 'react-native-vector-icons/Feather';
 
 const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   if (Platform.OS === 'android') {
@@ -57,34 +56,7 @@ function InProtest({ regionName }: { regionName: string }) {
           </MapCounterView>
         </MapView>
 
-        <Box
-          flexDirection="row"
-          justifyContent="space-evenly"
-          alignItems="center"
-          paddingVertical="m"
-          marginTop="m"
-          backgroundColor="seperator"
-          borderRadius={8}
-        >
-          <Box alignItems="center" minWidth={72.5}>
-            <Icon name="alert-circle" size={34} color="white" style={{ marginBottom: 6 }} />
-            <Text variant="smallText" fontSize={12}>
-              שליחת דיווח
-            </Text>
-          </Box>
-          <Box alignItems="center" minWidth={72.5}>
-            <Icon name="camera" size={34} color="white" style={{ marginBottom: 6 }} />
-            <Text variant="smallText" fontSize={12}>
-              צילום תמונה
-            </Text>
-          </Box>
-          <Box alignItems="center" minWidth={72.5}>
-            <Icon name="share" size={34} color="white" style={{ marginBottom: 6 }} />
-            <Text variant="smallText" fontSize={12}>
-              הזמנת חברים
-            </Text>
-          </Box>
-        </Box>
+        <RiotActions />
       </Box>
 
       <Box
