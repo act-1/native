@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Platform, Image, StyleSheet } from 'react-native';
-import { Box, Text } from '../../components';
+import { Box, Text, CircularOption } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import HapticFeedback from 'react-native-haptic-feedback';
 import RoundedButton from '@components/Buttons/RoundedButton';
-import CircularOption from './CircularOption';
 import Ivrita from 'ivrita';
 
 const icons = {

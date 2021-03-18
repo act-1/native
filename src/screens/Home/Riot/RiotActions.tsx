@@ -9,7 +9,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 let fontScale = PixelRatio.getFontScale();
 if (fontScale > 1.2) fontScale = 1.2;
 
-export default function RiotActions() {
+export default function RiotActions({ expand }) {
   const navigation = useNavigation();
 
   const camera = () => {
@@ -20,11 +20,13 @@ export default function RiotActions() {
   };
 
   return (
-    <Box style={styles.actionsWrapper}>
-      <RiotAction title="שליחת דיווח" iconName="alert-circle" />
-      <RiotAction title="צילום תמונה" iconName="camera" onPress={() => camera()} />
-      <RiotAction title="הזמנת חברים" iconName="share" />
-    </Box>
+    <>
+      <Box style={styles.actionsWrapper}>
+        <RiotAction title="שליחת דיווח" iconName="alert-circle" />
+        <RiotAction title="צילום תמונה" iconName="camera" onPress={() => expand()} />
+        <RiotAction title="הזמנת חברים" iconName="share" />
+      </Box>
+    </>
   );
 }
 

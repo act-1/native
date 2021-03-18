@@ -43,3 +43,32 @@ function RiotMap({ navigation }: RiotMapProps) {
 export default RiotMap;
 
 const styles = StyleSheet.create({});
+
+// <BottomSheet
+//         ref={bottomSheetRef}
+//         index={1}
+//         snapPoints={snapPoints}
+//         onChange={handleSheetChanges}
+//         handleComponent={() => <LocationDetailsHandle />}
+//       >
+//         <Box flex={1} padding="xl" style={{ backgroundColor: '#363636' }}>
+//           <Box flexDirection="row" justifyContent="space-around">
+//             <CircularOption content="👊" caption="אלימות" />
+//             <CircularOption content="⚠️" caption="כללי" />
+//           </Box>
+//         </Box>
+//       </BottomSheet>
+
+// const LocationDetailsHandle = () => (
+//   <Box style={{ paddingHorizontal: 16, paddingVertical: 5, backgroundColor: '#363636' }}>
+//     <Box
+//       style={{
+//         alignSelf: 'center',
+//         width: 40,
+//         height: 5,
+//         borderRadius: 4,
+//         backgroundColor: '#696a6c',
+//       }}
+//     />
+//   </Box>
+// );

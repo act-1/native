@@ -19,3 +19,4 @@ export { default as Chat } from './Chat';
 export { default as CapturePicture } from './CapturePicture/CapturePicture';
 export { default as FadeInOutView } from './FadeInOutView';
 export { default as ActionButton } from './ActionButton';
+export { default as CircularOption } from './CircularOption/CircularOption';
