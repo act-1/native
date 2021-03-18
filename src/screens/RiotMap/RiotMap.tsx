@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { StyleSheet, Dimensions, Pressable } from 'react-native';
 import { Box, Text, CircularButton } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,6 +15,7 @@ const LATITUDE_DELTA = 0.05;
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
 
 function RiotMap({ navigation }: RiotMapProps) {
+  const [currrentSheetIndex, setCurrrentSheetIndex] = useState(0);
   const insets = useSafeAreaInsets();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -24,7 +25,7 @@ function RiotMap({ navigation }: RiotMapProps) {
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
+    setCurrrentSheetIndex(index);
   }, []);
 
   return (
@@ -35,7 +36,16 @@ function RiotMap({ navigation }: RiotMapProps) {
       <MapView
         style={{ flex: 1 }}
         customMapStyle={mapStyle}
-        onPanDrag={() => bottomSheetRef.current?.snapTo(1)}
+        onPress={() => {
+          if (currrentSheetIndex > 0) {
+            bottomSheetRef.current?.close();
+          }
+        }}
+        onPanDrag={() => {
+          if (currrentSheetIndex === 2) {
+            bottomSheetRef.current?.snapTo(1);
+          }
+        }}
         maxZoomLevel={16}
         minZoomLevel={7}
         mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
