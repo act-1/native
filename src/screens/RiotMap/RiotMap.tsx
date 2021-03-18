@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useRef } from 'react';
-import { StyleSheet, Dimensions, Pressable } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { Box, Text, CircularButton } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MapView from 'react-native-maps';
@@ -8,6 +8,7 @@ import mapStyle from '@utils/mapStyle.json';
 import { RiotMapProps } from '@types/navigation';
 
 import BottomSheet from '@gorhom/bottom-sheet';
+import EventPagePictures from '@screens/EventPage/EventPagePictures';
 
 const { height, width } = Dimensions.get('window');
 
@@ -21,7 +22,7 @@ function RiotMap({ navigation }: RiotMapProps) {
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   // variables
-  const snapPoints = useMemo(() => [0, 50 + insets.bottom, '25%'], [insets.bottom]);
+  const snapPoints = useMemo(() => [0, 50 + insets.bottom, 175 + insets.bottom], [insets.bottom]);
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
@@ -80,15 +81,14 @@ function RiotMap({ navigation }: RiotMapProps) {
         onChange={handleSheetChanges}
         handleComponent={() => <LocationDetailsHandle />}
       >
-        <Box flex={1} paddingVertical="xxs" paddingHorizontal="xm" style={{ backgroundColor: '#363636' }}>
+        <Box flex={1} paddingVertical="xxs" style={{ backgroundColor: '#363636' }}>
           <Box flexDirection="row" justifyContent="space-between" alignItems="baseline">
-            <Box>
+            <Box paddingHorizontal="xm" marginBottom="m">
               <Text variant="extraLargeTitle">כיכר פריז</Text>
-              <Text variant="text" marginBottom="xxs">
-                ירושלים
-              </Text>
+              <Text variant="text">ירושלים</Text>
             </Box>
           </Box>
+          <EventPagePictures location={{ id: 'nayot', name: 'בלפור' }} size="small" />
         </Box>
       </BottomSheet>
     </Box>

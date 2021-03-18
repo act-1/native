@@ -16,7 +16,7 @@ type ScrollablePicturesProps = {
 function ScrollablePictures({ pictures, onPicturePress, size, style }: ScrollablePicturesProps) {
   const pictureSize = size === 'large' ? styles.largePicture : styles.smallPicture;
   const textStyle = size === 'large' ? styles.largeText : styles.smallText;
-  console.log(pictures.map((picture) => picture.id));
+
   return (
     <ScrollView
       contentContainerStyle={[styles.scrollablePictures, style]}
