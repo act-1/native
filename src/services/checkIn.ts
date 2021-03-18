@@ -1,15 +1,15 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { CheckIn } from '@types/collections';
 
-export async function createCheckIn(checkInParams: CheckInParams) {
+export async function createCheckIn(checkInParams: CheckIn) {
   const { uid: userId } = auth().currentUser!;
 
-  const { region, expireAt, fcmToken } = checkInParams;
-
-  return firestore().collection('checkIns').doc(userId).set({
-    region,
-    fcmToken,
-    createdAt: firestore.FieldValue.serverTimestamp(),
-    expireAt,
-  });
+  return firestore()
+    .collection('checkIns')
+    .doc(userId)
+    .set({
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      ...checkInParams,
+    });
 }

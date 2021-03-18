@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 
 const deviceWidth = Dimensions.get('window').width;
+const mapPinIcon = require('@assets/icons/location-circular-icon.png');
 
 type PictureListItemProps = {
   post: PicturePost;
@@ -70,13 +71,13 @@ function PictureListItem({ post, updatePostLikeCount, postAction }: PictureListI
     <Box>
       <Box style={styles.postItemAuthorRow}>
         <Box flexDirection="row">
-          <FastImage source={{ uri: post.authorPicture }} style={styles.profilePic} />
+          <FastImage source={mapPinIcon} style={styles.profilePic} />
           <Box>
-            <Text variant="boxTitle">{post.authorName}</Text>
+            <Text variant="boxTitle">{post.locationName}</Text>
             {post.locationId && (
               <Box flexDirection="row" alignItems="center">
                 <Text variant="boxSubtitle" textAlign="left">
-                  {post.locationName}
+                  {post.locationCity}
                 </Text>
               </Box>
             )}

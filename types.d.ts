@@ -12,12 +12,6 @@ type PostAction = 'report' | 'delete';
 
 type PrivacyOption = 'PUBLIC' | 'PRIVATE' | 'ANONYMOUS';
 
-type CheckInParams = {
-  region: string;
-  expireAt: Date;
-  fcmToken?: string;
-};
-
 type BoardingScreenProps = {
   nextPage: () => void;
   scrollToPage?: (index: number) => void;
@@ -33,7 +27,7 @@ type GraphAPIResult = {
   };
 };
 
-type Province = [
+type Region = [
   'הגליל העליון',
   'הגליל התחתון',
   'הגולן',

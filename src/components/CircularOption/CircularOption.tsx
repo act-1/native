@@ -1,7 +1,6 @@
-import { backgroundColor } from '@shopify/restyle';
-import React, { useState, useEffect, useRef, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { Box, Text } from '../../components';
+import { Box, Text } from '../';
 
 type CircularOptionProps = {
   content: string | ReactElement;
@@ -12,9 +11,9 @@ type CircularOptionProps = {
 
 function CircularOption({ content, caption, selected, onPress }: CircularOptionProps) {
   return (
-    <Box>
+    <Box alignItems="center">
       <Pressable
-        style={[styles.optionWrapper, { backgroundColor: selected ? '#ff7a7a' : 'white' }]}
+        style={[styles.optionWrapper, { backgroundColor: selected ? '#ff7a7a' : '#696a6c' }]}
         onPress={onPress}
         android_ripple={{ color: '#FF5858', radius: 50 }}
       >

@@ -3,12 +3,12 @@ import rootStore from './RootStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { createCheckIn } from '@services/checkIn';
-import { getRegion } from '@services/locations';
-import { Location, Event } from '@types/collections';
+import { getClosestLocation, getRegion } from '@services/locations';
+import { Location, Event, CheckIn } from '@types/collections';
 
 class CheckInStore {
   rootStore: null | rootStore = null;
-  currentCheckIn: CheckInParams | undefined = undefined;
+  currentCheckIn: CheckIn | undefined = undefined;
 
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
@@ -21,16 +21,25 @@ class CheckInStore {
       const checkIn = await this.loadCachedCheckIn();
 
       if (checkIn === null) {
-        const region = await getRegion([31.773581, 35.21508]);
+        const location = await getClosestLocation([31.773581, 35.21508]);
 
-        if (region) {
+        if (location) {
           // Set expiration time to 1 hour from now
           // If the user open the app after 1 hour, we check if the region is still active and check them in again.
           const expireAt = new Date();
           expireAt.setMinutes(expireAt.getMinutes() + 60);
 
           const fcmToken = this.rootStore?.userStore.FCMToken!;
-          const checkInParams = { expireAt, region: region.id, fcmToken };
+          const checkInParams = {
+            id: this.rootStore?.userStore.user?.uid,
+            locationId: location.id,
+            locationName: location.name,
+            locationCity: location.city,
+            locationRegion: location.region,
+            coordinates: location.coordinates,
+            fcmToken,
+            expireAt,
+          } as CheckIn;
 
           await createCheckIn(checkInParams);
 
@@ -49,7 +58,7 @@ class CheckInStore {
 
   async loadCachedCheckIn() {
     try {
-      // await AsyncStorage.clear();
+      await AsyncStorage.clear();
       const cachedCheckIn = await AsyncStorage.getItem('lastCheckIn');
 
       if (cachedCheckIn) {

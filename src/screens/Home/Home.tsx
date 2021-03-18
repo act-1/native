@@ -19,7 +19,7 @@ function Home({ navigation }: HomeScreenProps) {
         showsVerticalScrollIndicator={false}
       >
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
-        {currentCheckIn ? <Riot regionName={currentCheckIn.region} /> : <Planner />}
+        {currentCheckIn ? <Riot regionName={currentCheckIn.locationRegion} /> : <Planner />}
       </ScrollView>
     </>
   );

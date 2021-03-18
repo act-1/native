@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { StyleSheet } from 'react-native';
-import { useScrollToTop } from '@react-navigation/native';
 import { Box, Text } from '../../components';
 import { FeaturedPictures, FeaturedEvents, FeaturedProtests, RecentPicturesWidget } from '@components/Widgets';
 import EventCompactBox from '../../components/Widgets/FeaturedEvents/EventCompactBox';

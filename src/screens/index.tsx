@@ -8,3 +8,4 @@ export { default as Profile } from './Profile';
 export { default as LiveFeed } from './LiveFeed';
 export { default as Community } from './Community';
 export { default as ProtestChat } from './ProtestChat';
+export { default as RiotMap } from './RiotMap';

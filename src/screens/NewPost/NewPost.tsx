@@ -5,21 +5,19 @@ import { useStore } from '../../stores';
 import { observer } from 'mobx-react-lite';
 import { Box } from '../../components';
 import { HeaderButton } from '@components/Buttons';
-import { createTextPost } from '@services/feed';
-import FastImage from 'react-native-fast-image';
 import { TextInput } from 'react-native-gesture-handler';
 import { NewPostProps } from '../../types/navigation';
 
 const deviceWidth = Dimensions.get('window').width;
 
 function NewPost({ navigation, route }: NewPostProps) {
-  const { feedStore, checkInStore } = useStore();
+  const { feedStore } = useStore();
   const [caption, setCaption] = useState('');
-  const { image, completionScreen, location } = route.params;
+  const { image } = route.params;
 
   const uploadPost = async (text: string) => {
     try {
-      feedStore.uploadImage({ image, text, regionId });
+      feedStore.uploadImage({ image, text });
 
       navigation.goBack();
     } catch (err) {

@@ -32,7 +32,7 @@ function ScrollablePictures({ pictures, onPicturePress, size, style }: Scrollabl
           onPress={() => onPicturePress(index)}
         >
           <FastImage source={{ uri: picture.pictureUrl }} style={[styles.picture, pictureSize]} />
-          <Text variant="boxSubtitle" style={textStyle}>
+          <Text variant="boxSubtitle" style={textStyle} maxFontSizeMultiplier={1.15}>
             {timeAgo(picture.createdAt.toDate())}
           </Text>
         </TouchableScale>
