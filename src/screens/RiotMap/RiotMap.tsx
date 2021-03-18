@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { Box, CircularButton } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MapView from 'react-native-maps';
+import ProtestMarker from './ProtestMarker';
 import mapStyle from '@utils/mapStyle.json';
 import { RiotMapProps } from '@types/navigation';
 
@@ -26,7 +27,10 @@ function RiotMap({ navigation }: RiotMapProps) {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-      ></MapView>
+      >
+        <ProtestMarker coordinates={{ latitude: 31.774979, longitude: 35.217181 }} />
+        <ProtestMarker coordinates={{ latitude: 31.762779, longitude: 35.217181 }} />
+      </MapView>
     </Box>
   );
 }

@@ -25,6 +25,7 @@ function HomeNavigator({ navigation }) {
           letterSpacing: 0.4,
           color: '#EC534B',
         },
+        headerTitleAllowFontScaling: false,
         headerLeft: () => (
           <Pressable
             onPress={() => navigation.navigate('Secondary', { screen: 'Settings' })}

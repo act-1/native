@@ -1,10 +1,13 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, PixelRatio } from 'react-native';
 import { Box, Text } from '../../../components';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+
+let fontScale = PixelRatio.getFontScale();
+if (fontScale > 1.2) fontScale = 1.2;
 
 export default function RiotActions() {
   const navigation = useNavigation();
@@ -26,9 +29,9 @@ export default function RiotActions() {
 }
 
 const RiotAction = ({ title, iconName, onPress }: { title: string; iconName: string; onPress?: () => void }) => (
-  <TouchableOpacity style={{ alignItems: 'center', minWidth: 72.5 }} onPress={onPress} activeOpacity={0.75}>
-    <Icon name={iconName} size={34} color="white" style={{ marginBottom: 6 }} />
-    <Text variant="smallText" fontSize={12}>
+  <TouchableOpacity style={{ alignItems: 'center', minWidth: 72.5 * fontScale }} onPress={onPress} activeOpacity={0.75}>
+    <Icon name={iconName} size={34 * fontScale} color="white" style={{ marginBottom: 6 * fontScale }} />
+    <Text variant="smallText" fontSize={12} maxFontSizeMultiplier={fontScale}>
       {title}
     </Text>
   </TouchableOpacity>
@@ -39,8 +42,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingVertical: 12,
-    marginTop: 12,
+    paddingVertical: 12 * fontScale,
+    marginTop: 12 * fontScale,
     backgroundColor: '#222222',
     borderRadius: 8,
   },
