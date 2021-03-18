@@ -22,7 +22,7 @@ class CheckInStore {
 
       if (checkIn === null) {
         const location = await getClosestLocation([31.773581, 35.21508]);
-
+        console.log(location);
         if (location) {
           // Set expiration time to 1 hour from now
           // If the user open the app after 1 hour, we check if the region is still active and check them in again.
@@ -58,7 +58,7 @@ class CheckInStore {
 
   async loadCachedCheckIn() {
     try {
-      await AsyncStorage.clear();
+      // await AsyncStorage.clear();
       const cachedCheckIn = await AsyncStorage.getItem('lastCheckIn');
 
       if (cachedCheckIn) {

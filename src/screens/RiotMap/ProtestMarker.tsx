@@ -9,11 +9,12 @@ const fontScale = PixelRatio.getFontScale();
 type ProtestMarkerProps = {
   coordinates: { latitude: number; longitude: number };
   counter: number | string;
+  onPress?: () => void;
 };
 
-function ProtestMarker({ coordinates, counter }: ProtestMarkerProps) {
+function ProtestMarker({ coordinates, counter, onPress }: ProtestMarkerProps) {
   return (
-    <Marker coordinate={coordinates}>
+    <Marker coordinate={coordinates} onPress={onPress} stopPropagation={true}>
       <Box style={styles.markerBox}>
         <Image
           source={{ uri: 'https://res.cloudinary.com/act1/image/upload/v1614841512/featured_pictures/balfur-rabaati.jpg' }}
