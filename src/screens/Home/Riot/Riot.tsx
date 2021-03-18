@@ -11,6 +11,8 @@ import RiotActions from './RiotActions';
 import { BlurView } from '@react-native-community/blur';
 import mapStyle from '@utils/mapStyle.json';
 import { useNavigation } from '@react-navigation/native';
+import ProtestMarker from '@screens/RiotMap/ProtestMarker';
+import TouchableScale from 'react-native-touchable-scale';
 
 const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   if (Platform.OS === 'android') {
@@ -43,10 +45,16 @@ function Riot({ regionName }: { regionName: string }) {
         <Box overflow="hidden" borderRadius={8}>
           <MapView
             onPress={() => navigation.navigate('RiotMap')}
-            style={{ height: Platform.select({ ios: 320, android: 270 }) }}
+            style={{ height: Platform.select({ ios: 320, android: 270 }), width: '100%' }}
             customMapStyle={mapStyle}
-            maxZoomLevel={16}
+            maxZoomLevel={14}
             minZoomLevel={14}
+            zoomEnabled={false}
+            pitchEnabled={false}
+            scrollEnabled={false}
+            cacheEnabled={true}
+            loadingIndicatorColor="grey"
+            loadingBackgroundColor="#222222"
             mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
             initialRegion={{
               latitude: 31.774979,
@@ -54,7 +62,9 @@ function Riot({ regionName }: { regionName: string }) {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
-          />
+          >
+            <ProtestMarker coordinates={{ latitude: 31.774979, longitude: 35.217181 }} counter={432} />
+          </MapView>
           <MapCounterView>
             <Ticker
               textStyle={{

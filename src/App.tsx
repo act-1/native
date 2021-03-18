@@ -30,7 +30,7 @@ function App() {
         // before hiding the splash screen
         setTimeout(async () => {
           await RNBootSplash.hide({ fade: true });
-        }, 600);
+        }, 1050);
 
         inAppMessaging().setMessagesDisplaySuppressed(false);
       } catch (err) {

@@ -8,9 +8,10 @@ const fontScale = PixelRatio.getFontScale();
 
 type ProtestMarkerProps = {
   coordinates: { latitude: number; longitude: number };
+  counter: number | string;
 };
 
-function ProtestMarker({ coordinates }: ProtestMarkerProps) {
+function ProtestMarker({ coordinates, counter }: ProtestMarkerProps) {
   return (
     <Marker coordinate={coordinates}>
       <Box style={styles.markerBox}>
@@ -19,20 +20,12 @@ function ProtestMarker({ coordinates }: ProtestMarkerProps) {
           style={{ width: '100%', height: '100%' }}
         />
       </Box>
-      <Box
-        position="absolute"
-        top={-12.5}
-        left={-10}
-        backgroundColor="primaryColor"
-        paddingHorizontal="s"
-        paddingVertical="xxs"
-        borderRadius={50}
-      >
-        <Text variant="smallText">100</Text>
+      <Box style={styles.counterContainer}>
+        <Text variant="smallText">{counter}</Text>
       </Box>
-      <Box position="absolute" bottom={-19 * fontScale} zIndex={30}>
+      <Box style={styles.arrowContainer}>
         <Svg width={60 * fontScale} height={20 * fontScale} viewBox="0 0 12 12">
-          <Path d="M 0 0 L 0 0 L 6 6 L 12 0" fill="#cccccc" strokeWidth={1} strokeLinecap="round" stroke="#cccccc" />
+          <Path d="M 0 0 L 0 0 L 6 6 L 12 0" fill="#dcdcdc" strokeWidth={1} strokeLinecap="round" stroke="#dcdcdc" />
         </Svg>
       </Box>
     </Marker>
@@ -45,8 +38,21 @@ const styles = StyleSheet.create({
   markerBox: {
     height: 60 * fontScale,
     width: 60 * fontScale,
-    backgroundColor: '#cccccc',
+    backgroundColor: '#dcdcdc',
     borderRadius: 4,
     padding: 3,
+  },
+  arrowContainer: {
+    position: 'absolute',
+    bottom: -19 * fontScale,
+  },
+  counterContainer: {
+    position: 'absolute',
+    top: -12.5,
+    left: -10,
+    backgroundColor: '#eb524b',
+    paddingHorizontal: 4.5,
+    paddingVertical: 2.5,
+    borderRadius: 50,
   },
 });
