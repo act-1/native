@@ -8,11 +8,12 @@ import EventPagePictures from '@screens/EventPage/EventPagePictures';
 
 type RiotMapBottomSheetProps = {
   bottomSheetRef: Ref<BottomSheet>;
+  selectedProtest: any;
   currentSheetIndex: number;
   setCurrentSheetIndex: (index: number) => void;
 };
 
-function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex }: RiotMapBottomSheetProps) {
+function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, selectedProtest }: RiotMapBottomSheetProps) {
   const insets = useSafeAreaInsets();
   const picturesOpacity = useRef(new Animated.Value(0)).current;
   const snapPoints = useMemo(() => [0, 50 + insets.bottom, 195 + insets.bottom], [insets.bottom]);
@@ -62,7 +63,7 @@ function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex }: RiotMapBot
       <Box flex={1} paddingVertical="xxs" style={{ backgroundColor: '#363636' }}>
         <Box flexDirection="row" justifyContent="space-between" alignItems="flex-start" paddingHorizontal="xm">
           <Box marginBottom="xxs">
-            <Text variant="extraLargeTitle">כיכר פריז</Text>
+            <Text variant="extraLargeTitle">{selectedProtest.name}</Text>
             <Text variant="text">ירושלים</Text>
           </Box>
           <Box opacity={0.65}>

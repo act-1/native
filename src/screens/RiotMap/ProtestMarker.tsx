@@ -13,7 +13,7 @@ type ProtestMarkerProps = {
   selected?: boolean;
 };
 
-function ProtestMarker({ coordinates, counter, onPress, selected }: ProtestMarkerProps) {
+function ProtestMarker({ coordinates, counter, onPress }: ProtestMarkerProps) {
   return (
     <Marker coordinate={coordinates} onPress={onPress} stopPropagation={true}>
       <Box style={[styles.markerBox]}>
