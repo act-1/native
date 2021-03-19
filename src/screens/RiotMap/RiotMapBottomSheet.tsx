@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useMemo, useRef, Ref } from 'react';
+import React, { useCallback, useMemo, useRef, Ref } from 'react';
 import { StyleSheet, Animated } from 'react-native';
 import { Box, Text, CircularButton } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import BottomSheet, { BottomSheetHandleProps } from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 
 import EventPagePictures from '@screens/EventPage/EventPagePictures';
 
@@ -12,7 +12,7 @@ type RiotMapBottomSheetProps = {
   setCurrentSheetIndex: (index: number) => void;
 };
 
-function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, currentSheetIndex }: RiotMapBottomSheetProps) {
+function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex }: RiotMapBottomSheetProps) {
   const insets = useSafeAreaInsets();
   const picturesOpacity = useRef(new Animated.Value(0)).current;
   const snapPoints = useMemo(() => [0, 50 + insets.bottom, 195 + insets.bottom], [insets.bottom]);
