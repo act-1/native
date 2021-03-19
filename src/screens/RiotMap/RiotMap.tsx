@@ -1,14 +1,13 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
-import { Box, Text, CircularButton } from '../../components';
+import { Box, CircularButton } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MapView from 'react-native-maps';
 import ProtestMarker from './ProtestMarker';
 import mapStyle from '@utils/mapStyle.json';
 import { RiotMapProps } from '@types/navigation';
-
 import BottomSheet from '@gorhom/bottom-sheet';
-import EventPagePictures from '@screens/EventPage/EventPagePictures';
+import RiotMapBottomSheet from './RiotMapBottomSheet';
 
 const { height, width } = Dimensions.get('window');
 
@@ -16,18 +15,10 @@ const LATITUDE_DELTA = 0.05;
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
 
 function RiotMap({ navigation }: RiotMapProps) {
-  const [currrentSheetIndex, setCurrrentSheetIndex] = useState(0);
   const insets = useSafeAreaInsets();
-
   const bottomSheetRef = useRef<BottomSheet>(null);
-
-  // variables
-  const snapPoints = useMemo(() => [0, 50 + insets.bottom, 175 + insets.bottom], [insets.bottom]);
-
-  // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    setCurrrentSheetIndex(index);
-  }, []);
+  const mapRef = useRef<MapView>(null);
+  const [currentSheetIndex, setCurrrentSheetIndex] = useState(0);
 
   return (
     <Box flex={1}>
@@ -35,15 +26,11 @@ function RiotMap({ navigation }: RiotMapProps) {
         <CircularButton iconName={'arrow-right'} color="white" transparent onPress={() => navigation.goBack()} />
       </Box>
       <MapView
+        ref={mapRef}
         style={{ flex: 1 }}
         customMapStyle={mapStyle}
-        onPress={() => {
-          if (currrentSheetIndex > 0) {
-            bottomSheetRef.current?.close();
-          }
-        }}
-        onPanDrag={() => {
-          if (currrentSheetIndex === 2) {
+        onTouchStart={() => {
+          if (currentSheetIndex === 2) {
             bottomSheetRef.current?.snapTo(1);
           }
         }}
@@ -60,7 +47,16 @@ function RiotMap({ navigation }: RiotMapProps) {
         <ProtestMarker
           coordinates={{ latitude: 31.774979, longitude: 35.217181 }}
           counter={432}
-          onPress={() => bottomSheetRef.current?.expand()}
+          onPress={() => {
+            bottomSheetRef.current?.expand();
+            mapRef.current?.animateToRegion({
+              latitude: 31.774979,
+              longitude: 35.217181,
+              latitudeDelta: LATITUDE_DELTA,
+              longitudeDelta: LONGITUDE_DELTA,
+            });
+          }}
+          selected={true}
         />
         <ProtestMarker
           coordinates={{ latitude: 31.762779, longitude: 35.217181 }}
@@ -73,24 +69,11 @@ function RiotMap({ navigation }: RiotMapProps) {
           onPress={() => bottomSheetRef.current?.expand()}
         />
       </MapView>
-
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={0}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        handleComponent={() => <LocationDetailsHandle />}
-      >
-        <Box flex={1} paddingVertical="xxs" style={{ backgroundColor: '#363636' }}>
-          <Box flexDirection="row" justifyContent="space-between" alignItems="baseline">
-            <Box paddingHorizontal="xm" marginBottom="m">
-              <Text variant="extraLargeTitle">כיכר פריז</Text>
-              <Text variant="text">ירושלים</Text>
-            </Box>
-          </Box>
-          <EventPagePictures location={{ id: 'nayot', name: 'בלפור' }} size="small" />
-        </Box>
-      </BottomSheet>
+      <RiotMapBottomSheet
+        bottomSheetRef={bottomSheetRef}
+        currentSheetIndex={currentSheetIndex}
+        setCurrentSheetIndex={(index: number) => setCurrrentSheetIndex(index)}
+      />
     </Box>
   );
 }
@@ -98,17 +81,3 @@ function RiotMap({ navigation }: RiotMapProps) {
 export default RiotMap;
 
 const styles = StyleSheet.create({});
-
-const LocationDetailsHandle = () => (
-  <Box style={{ paddingHorizontal: 16, paddingVertical: 5, backgroundColor: '#363636' }}>
-    <Box
-      style={{
-        alignSelf: 'center',
-        width: 40,
-        height: 5,
-        borderRadius: 4,
-        backgroundColor: '#696a6c',
-      }}
-    />
-  </Box>
-);
