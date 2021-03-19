@@ -2,7 +2,8 @@ import React, { useState, useCallback, useMemo, useRef, Ref } from 'react';
 import { StyleSheet, Animated } from 'react-native';
 import { Box, Text, CircularButton } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetHandleProps } from '@gorhom/bottom-sheet';
+
 import EventPagePictures from '@screens/EventPage/EventPagePictures';
 
 type RiotMapBottomSheetProps = {
@@ -14,7 +15,7 @@ type RiotMapBottomSheetProps = {
 function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, currentSheetIndex }: RiotMapBottomSheetProps) {
   const insets = useSafeAreaInsets();
   const picturesOpacity = useRef(new Animated.Value(0)).current;
-  const snapPoints = useMemo(() => [0, 50 + insets.bottom, 185 + insets.bottom], [insets.bottom]);
+  const snapPoints = useMemo(() => [0, 50 + insets.bottom, 195 + insets.bottom], [insets.bottom]);
 
   const onSheetAnimation = useCallback(
     (fromIndex: number, toIndex: number) => {
@@ -22,7 +23,6 @@ function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, currentSheet
         Animated.timing(picturesOpacity, {
           toValue: 0,
           duration: 200,
-          delay: 0,
           useNativeDriver: true,
         }).start();
       }
@@ -30,7 +30,6 @@ function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, currentSheet
         Animated.timing(picturesOpacity, {
           toValue: 1,
           duration: 400,
-          delay: 0,
           useNativeDriver: true,
         }).start();
       }
@@ -44,7 +43,6 @@ function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, currentSheet
       Animated.timing(picturesOpacity, {
         toValue: 1,
         duration: 400,
-        delay: 0,
         useNativeDriver: true,
       }).start();
     }
@@ -86,16 +84,26 @@ export default RiotMapBottomSheet;
 
 const styles = StyleSheet.create({});
 
-const LocationDetailsHandle = () => (
-  <Box style={{ paddingHorizontal: 16, paddingVertical: 5, backgroundColor: '#363636' }}>
+const LocationDetailsHandle = () => {
+  return (
     <Box
       style={{
-        alignSelf: 'center',
-        width: 40,
-        height: 5,
-        borderRadius: 4,
-        backgroundColor: '#696a6c',
+        paddingHorizontal: 16,
+        paddingVertical: 5,
+        backgroundColor: '#363636',
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
       }}
-    />
-  </Box>
-);
+    >
+      <Box
+        style={{
+          alignSelf: 'center',
+          width: 40,
+          height: 5,
+          borderRadius: 4,
+          backgroundColor: '#696a6c',
+        }}
+      />
+    </Box>
+  );
+};
