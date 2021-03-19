@@ -9,12 +9,14 @@ const fontScale = PixelRatio.getFontScale();
 type ProtestMarkerProps = {
   coordinates: { latitude: number; longitude: number };
   counter: number | string;
+  onPress?: () => void;
+  selected?: boolean;
 };
 
-function ProtestMarker({ coordinates, counter }: ProtestMarkerProps) {
+function ProtestMarker({ coordinates, counter, onPress, selected }: ProtestMarkerProps) {
   return (
-    <Marker coordinate={coordinates}>
-      <Box style={styles.markerBox}>
+    <Marker coordinate={coordinates} onPress={onPress} stopPropagation={true}>
+      <Box style={[styles.markerBox]}>
         <Image
           source={{ uri: 'https://res.cloudinary.com/act1/image/upload/v1614841512/featured_pictures/balfur-rabaati.jpg' }}
           style={{ width: '100%', height: '100%' }}
@@ -23,7 +25,7 @@ function ProtestMarker({ coordinates, counter }: ProtestMarkerProps) {
       <Box style={styles.counterContainer}>
         <Text variant="smallText">{counter}</Text>
       </Box>
-      <Box style={styles.arrowContainer}>
+      <Box style={[styles.arrowContainer]}>
         <Svg width={60 * fontScale} height={20 * fontScale} viewBox="0 0 12 12">
           <Path d="M 0 0 L 0 0 L 6 6 L 12 0" fill="#dcdcdc" strokeWidth={1} strokeLinecap="round" stroke="#dcdcdc" />
         </Svg>

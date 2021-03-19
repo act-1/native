@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
-import { Box, Text, Ticker, RoundedButton } from '../../../components';
+import { Box, Text, Ticker, RoundedButton, CircularButton } from '../../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../stores';
 import MapView from 'react-native-maps';
@@ -47,12 +47,9 @@ function Riot({ regionName }: { regionName: string }) {
             onPress={() => navigation.navigate('RiotMap')}
             style={{ height: Platform.select({ ios: 320, android: 270 }), width: '100%' }}
             customMapStyle={mapStyle}
-            maxZoomLevel={14}
-            minZoomLevel={14}
-            zoomEnabled={false}
+            maxZoomLevel={15}
+            minZoomLevel={12.5}
             pitchEnabled={false}
-            scrollEnabled={false}
-            cacheEnabled={true}
             loadingIndicatorColor="grey"
             loadingBackgroundColor="#222222"
             mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
@@ -63,7 +60,11 @@ function Riot({ regionName }: { regionName: string }) {
               longitudeDelta: 0.0421,
             }}
           >
-            <ProtestMarker coordinates={{ latitude: 31.774979, longitude: 35.217181 }} counter={432} />
+            <ProtestMarker
+              coordinates={{ latitude: 31.774979, longitude: 35.217181 }}
+              counter={432}
+              onPress={() => navigation.navigate('RiotMap')}
+            />
           </MapView>
           <MapCounterView>
             <Ticker
@@ -80,6 +81,9 @@ function Riot({ regionName }: { regionName: string }) {
               באיזורך
             </Text>
           </MapCounterView>
+          <Box style={{ position: 'absolute', right: 8, top: 8, opacity: 0.9 }}>
+            <CircularButton iconName="maximize-2" size="large" color="grey" onPress={() => navigation.navigate('RiotMap')} />
+          </Box>
         </Box>
 
         <RiotActions />
