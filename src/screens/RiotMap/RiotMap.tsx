@@ -1,42 +1,32 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
-import { Box, CircularButton } from '../../components';
+import { StyleSheet, Animated, Dimensions } from 'react-native';
+import { Box, Text, CircularButton } from '../../components';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import MapView from 'react-native-maps';
+import MapView, { Marker, Region } from 'react-native-maps';
 import ProtestMarker from './ProtestMarker';
+import RegionMarker from './RegionMarker';
 import mapStyle from '@utils/mapStyle.json';
 import { RiotMapProps } from '@types/navigation';
 import BottomSheet from '@gorhom/bottom-sheet';
 import RiotMapBottomSheet from './RiotMapBottomSheet';
+import { MarkerUnits } from 'react-native-svg';
 
 const { height, width } = Dimensions.get('window');
 
 const LATITUDE_DELTA = 0.05;
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
 
-const protestMarkers = [
-  {
-    id: 'balfur',
-    coordinates: { latitude: 31.774979, longitude: 35.217181 },
-    name: 'כיכר פריז',
-    city: 'ירושלים',
-    counter: 281,
-  },
-  {
-    id: 'tel-aviv',
-    coordinates: { latitude: 32.083645, longitude: 34.8003023 },
-    name: 'כיכר דיזינגוף',
-    city: 'תל אביב',
-    counter: 2942,
-  },
-];
-
 function RiotMap({ navigation }: RiotMapProps) {
+  const { mapStore } = useStore();
   const insets = useSafeAreaInsets();
   const bottomSheetRef = useRef<BottomSheet>(null);
   const mapRef = useRef<MapView>(null);
   const [currentSheetIndex, setCurrrentSheetIndex] = useState(0);
   const [selectedProtest, setSelectedProtest] = useState({});
+  const [mapZoom, setMapZoom] = useState(0);
 
   const onMarkerPress = useCallback(
     (protest: any) => {
@@ -45,12 +35,12 @@ function RiotMap({ navigation }: RiotMapProps) {
       // Workaround to delay the bottom sheet expansion after the region animation
       setTimeout(() => {
         bottomSheetRef.current?.expand();
-      }, 50);
+      }, 300);
 
       mapRef.current?.animateToRegion(
         {
-          latitude: protest.coordinates.latitude,
-          longitude: protest.coordinates.longitude,
+          latitude: protest.latitude,
+          longitude: protest.longitude,
           latitudeDelta: LATITUDE_DELTA,
           longitudeDelta: LONGITUDE_DELTA,
         },
@@ -60,12 +50,19 @@ function RiotMap({ navigation }: RiotMapProps) {
     [bottomSheetRef]
   );
 
-  useEffect(() => {
-    // Workaround to refresh the bottom sheet ref initially
-    setTimeout(() => {
-      setSelectedProtest(protestMarkers[0]);
-    }, 5);
-  }, []);
+  const onMapMoveCompletion = (region: Region) => {
+    // Update zoom state for region markers only when there are > 4 live protests
+    // if (mapStore.protests.length > 4) setMapZoom(region.latitudeDelta);
+  };
+
+  // useEffect(() => {
+  //   // Workaround to refresh the bottom sheet ref initially
+  //   if (mapStore.protests.length > 0) {
+  //     setTimeout(() => {
+  //       setSelectedProtest(mapStore.protests[0]);
+  //     }, 5);
+  //   }
+  // }, []);
 
   return (
     <Box flex={1}>
@@ -77,13 +74,13 @@ function RiotMap({ navigation }: RiotMapProps) {
         style={{ flex: 1 }}
         customMapStyle={mapStyle}
         onTouchStart={() => {
-          console.log('moving...', currentSheetIndex);
           if (currentSheetIndex === 2) {
             bottomSheetRef.current?.snapTo(1);
           }
         }}
         maxZoomLevel={16}
         minZoomLevel={7}
+        onRegionChangeComplete={onMapMoveCompletion}
         mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
         initialRegion={{
           latitude: 31.774979,
@@ -92,17 +89,20 @@ function RiotMap({ navigation }: RiotMapProps) {
           longitudeDelta: LONGITUDE_DELTA,
         }}
       >
-        {protestMarkers.map((protest) => (
+        {mapStore.protests.map((protest: Protest) => (
           <ProtestMarker
             key={protest.id}
-            coordinates={protest.coordinates}
+            coordinates={{ latitude: protest.latitude, longitude: protest.longitude }}
             counter={protest.counter}
             onPress={() => onMarkerPress(protest)}
+            displayed={mapZoom < 1.35}
           />
         ))}
+        <RegionMarker displayed={mapZoom > 1.35} coordinates={{ latitude: 31.774979, longitude: 35.217181 }} counter={200} />
+        <RegionMarker displayed={mapZoom > 1.35} coordinates={{ latitude: 32.072387, longitude: 34.7817674 }} counter={568} />
       </MapView>
       <RiotMapBottomSheet
-        selectedProtest={selectedProtest}
+        protest={selectedProtest}
         bottomSheetRef={bottomSheetRef}
         currentSheetIndex={currentSheetIndex}
         setCurrentSheetIndex={(index: number) => setCurrrentSheetIndex(index)}
@@ -111,17 +111,6 @@ function RiotMap({ navigation }: RiotMapProps) {
   );
 }
 
-export default RiotMap;
+export default observer(RiotMap);
 
 const styles = StyleSheet.create({});
-
-// <ProtestMarker
-//           coordinates={{ latitude: 31.762779, longitude: 35.217181 }}
-//           counter={86}
-//           onPress={() => bottomSheetRef.current?.expand()}
-//         />
-//         <ProtestMarker
-//           coordinates={{ latitude: 31.741779, longitude: 35.207181 }}
-//           counter={32}
-//           onPress={() => bottomSheetRef.current?.expand()}
-//         />

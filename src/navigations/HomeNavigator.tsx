@@ -37,7 +37,7 @@ function HomeNavigator({ navigation }) {
       }}
     >
       <HomeStack.Screen name="Home" component={Home} />
-      <HomeStack.Screen name="RiotMap" component={RiotMap} />
+      <HomeStack.Screen name="RiotMap" component={RiotMap} options={{ headerShown: false }} />
 
       <HomeStack.Screen
         name="RecentPictures"

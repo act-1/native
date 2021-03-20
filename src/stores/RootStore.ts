@@ -6,6 +6,7 @@ import eventStore from './EventStore';
 import mediaStore from './MediaStore';
 import chatStore from './ChatStore';
 import checkInStore from './CheckInStore';
+import mapStore from './MapStore';
 import liveStore from './LiveStore';
 
 class RootStore {
@@ -15,6 +16,7 @@ class RootStore {
   mediaStore: mediaStore;
   chatStore: chatStore;
   checkInStore: checkInStore;
+  mapStore: mapStore;
   // liveStore: liveStore;
 
   constructor() {
@@ -25,6 +27,7 @@ class RootStore {
     this.mediaStore = new mediaStore(this);
     this.chatStore = new chatStore(this);
     this.checkInStore = new checkInStore(this);
+    this.mapStore = new mapStore(this);
     // this.liveStore = new liveStore(this);
   }
 

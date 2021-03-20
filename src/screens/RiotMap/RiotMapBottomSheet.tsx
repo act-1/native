@@ -2,18 +2,18 @@ import React, { useCallback, useMemo, useRef, Ref } from 'react';
 import { StyleSheet, Animated } from 'react-native';
 import { Box, Text, CircularButton } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetHandleProps } from '@gorhom/bottom-sheet';
 
 import EventPagePictures from '@screens/EventPage/EventPagePictures';
 
 type RiotMapBottomSheetProps = {
   bottomSheetRef: Ref<BottomSheet>;
-  selectedProtest: any;
+  protest: any;
   currentSheetIndex: number;
   setCurrentSheetIndex: (index: number) => void;
 };
 
-function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, selectedProtest }: RiotMapBottomSheetProps) {
+function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, protest }: RiotMapBottomSheetProps) {
   const insets = useSafeAreaInsets();
   const picturesOpacity = useRef(new Animated.Value(0)).current;
   const snapPoints = useMemo(() => [0, 50 + insets.bottom, 195 + insets.bottom], [insets.bottom]);
@@ -63,8 +63,8 @@ function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, selectedProt
       <Box flex={1} paddingVertical="xxs" style={{ backgroundColor: '#363636' }}>
         <Box flexDirection="row" justifyContent="space-between" alignItems="flex-start" paddingHorizontal="xm">
           <Box marginBottom="xxs">
-            <Text variant="extraLargeTitle">{selectedProtest.name}</Text>
-            <Text variant="text">ירושלים</Text>
+            <Text variant="extraLargeTitle">{protest.name}</Text>
+            <Text variant="text">{protest.city}</Text>
           </Box>
           <Box opacity={0.65}>
             <CircularButton iconName="x" color="grey" size="small" onPress={() => bottomSheetRef.current?.close()} />
@@ -85,7 +85,10 @@ export default RiotMapBottomSheet;
 
 const styles = StyleSheet.create({});
 
-const LocationDetailsHandle = () => {
+const LocationDetailsHandle = ({ animatedIndex }: BottomSheetHandleProps) => {
+  if (animatedIndex) {
+    console.log('val: ', animatedIndex.value);
+  }
   return (
     <Box
       style={{
