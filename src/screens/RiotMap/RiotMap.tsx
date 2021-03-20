@@ -30,12 +30,16 @@ function RiotMap({ navigation }: RiotMapProps) {
 
   const onMarkerPress = useCallback(
     (protest: any) => {
-      setSelectedProtest(protest);
+      if (protest !== selectedProtest) {
+        setSelectedProtest(protest);
+      }
 
+      // if (currentSheetIndex !== 2) {
       // Workaround to delay the bottom sheet expansion after the region animation
       setTimeout(() => {
         bottomSheetRef.current?.expand();
       }, 300);
+      // }
 
       mapRef.current?.animateToRegion(
         {
@@ -67,7 +71,7 @@ function RiotMap({ navigation }: RiotMapProps) {
   return (
     <Box flex={1}>
       <Box position="absolute" zIndex={3} top={insets.top - 10}>
-        <CircularButton iconName={'arrow-right'} color="white" transparent onPress={() => navigation.goBack()} />
+        <CircularButton iconName={'x'} color="white" transparent onPress={() => navigation.goBack()} />
       </Box>
       <MapView
         ref={mapRef}
@@ -81,7 +85,7 @@ function RiotMap({ navigation }: RiotMapProps) {
         maxZoomLevel={16}
         minZoomLevel={7}
         onRegionChangeComplete={onMapMoveCompletion}
-        mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
+        mapPadding={{ right: -35, top: 0, bottom: -insets.top + insets.bottom, left: 5 }}
         initialRegion={{
           latitude: 31.774979,
           longitude: 35.217181,
