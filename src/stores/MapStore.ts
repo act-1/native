@@ -16,10 +16,12 @@ class MapStore {
     RealtimeDatabase.database
       .ref('locations')
       .orderByChild('counter')
-      .startAt(16)
+      .startAt(4)
       .once('value')
       .then((snapshot) => {
-        this.protests = Object.values(snapshot.val());
+        if (snapshot.val()) {
+          this.protests = Object.values(snapshot.val());
+        }
       });
   }
 }

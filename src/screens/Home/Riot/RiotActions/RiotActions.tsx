@@ -39,7 +39,7 @@ export default function RiotActions({ expand }) {
   return (
     <>
       <Box style={styles.actionsWrapper}>
-        <ContextMenuButton
+        {/* <ContextMenuButton
           isMenuPrimaryAction={true}
           onPress={() => HapticFeedback.trigger('impactLight')}
           onPressMenuItem={({ nativeEvent }) => console.log(nativeEvent)}
@@ -94,7 +94,7 @@ export default function RiotActions({ expand }) {
           }}
         >
           <RiotAction title="שליחת דיווח" iconName="alert-circle" />
-        </ContextMenuButton>
+        </ContextMenuButton> */}
         <ContextMenuButton
           isMenuPrimaryAction={true}
           onPressMenuItem={({ nativeEvent }) => handleImageMenuPress(nativeEvent.actionKey)}

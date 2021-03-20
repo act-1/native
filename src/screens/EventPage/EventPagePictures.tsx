@@ -60,11 +60,10 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
 
       const unsubscribe = query.onSnapshot(
         (snapshot) => {
-          console.log(new Date());
+          console.log(snapshot);
           if (snapshot === null) return;
           snapshot.docChanges().forEach((change) => {
             if (change.type === 'added') {
-              console.log(change.doc.data());
               let picture = change.doc.data() as PicturePost;
 
               // Local writes arrives without `createdAt`.
@@ -110,7 +109,7 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
         unsubscribeListener();
       }
     };
-  }, [event, location]);
+  }, []);
 
   return (
     <Box style={{ minHeight: size === 'small' ? 107 : 225 }} justifyContent="center" marginBottom="m">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { StyleSheet, Animated, Dimensions } from 'react-native';
-import { Box, Text, CircularButton } from '../../components';
+import { Box, Text, CircularButton, StatusBarBlurBackground } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 
@@ -16,7 +16,7 @@ import { MarkerUnits } from 'react-native-svg';
 
 const { height, width } = Dimensions.get('window');
 
-const LATITUDE_DELTA = 0.05;
+const LATITUDE_DELTA = 0.5;
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
 
 function RiotMap({ navigation }: RiotMapProps) {
@@ -45,8 +45,8 @@ function RiotMap({ navigation }: RiotMapProps) {
         {
           latitude: protest.latitude,
           longitude: protest.longitude,
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: LONGITUDE_DELTA,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1 * (width / height),
         },
         350
       );
@@ -70,8 +70,9 @@ function RiotMap({ navigation }: RiotMapProps) {
 
   return (
     <Box flex={1}>
-      <Box position="absolute" zIndex={3} top={insets.top - 10}>
-        <CircularButton iconName={'x'} color="white" transparent onPress={() => navigation.goBack()} />
+      <StatusBarBlurBackground blurType="dark" />
+      <Box position="absolute" zIndex={3} top={insets.top + 7.5} left={7.5} opacity={0.97}>
+        <CircularButton iconName={'x'} color="grey" size="large" onPress={() => navigation.goBack()} />
       </Box>
       <MapView
         ref={mapRef}
