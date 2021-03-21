@@ -5,20 +5,27 @@ import RoundedButton from '@components/Buttons/RoundedButton';
 
 function SignUpHello({ navigation }) {
   return (
-    <Box flex={1}>
-      <Text variant="hugeTitle" color="primaryColor" fontSize={68} textAlign="center" marginBottom="xxl">
+    <Box flex={1} paddingHorizontal="l">
+      <Text
+        variant="hugeTitle"
+        color="primaryColor"
+        fontSize={68}
+        textAlign="center"
+        marginBottom="l"
+        maxFontSizeMultiplier={1.2}
+      >
         ACT1
       </Text>
-      <Text variant="hugeTitle" marginBottom="xm">
+      <Text variant="hugeTitle" marginBottom="xm" maxFontSizeMultiplier={1.05}>
         היי! 👋
       </Text>
-      <Text variant="largeTitle" marginBottom="m">
+      <Text variant="largeTitle" marginBottom="l" maxFontSizeMultiplier={1.05}>
         השימוש ב- ACT1 הוא אנונימי לחלוטין.
       </Text>
-      <Text variant="largeTitle" marginBottom="m">
+      <Text variant="largeTitle" marginBottom="l" maxFontSizeMultiplier={1.05}>
         בשביל שנוכל להתאים את האפליקציה עבורכן.ם, יש לנו כמה שאלות.
       </Text>
-      <Text variant="largeTitle" marginBottom="xl">
+      <Text variant="largeTitle" marginBottom="xl" maxFontSizeMultiplier={1.05}>
         אין חובה לענות על שום שאלה.
       </Text>
 

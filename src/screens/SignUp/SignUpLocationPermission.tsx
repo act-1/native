@@ -42,37 +42,6 @@ function SignUpPronoun({ navigation }) {
       <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Light" marginBottom="xl" maxFontSizeMultiplier={1.1}>
         בשביל שנדע איך לפנות אליך :)
       </Text>
-      <Box flexDirection="row" justifyContent="space-evenly" marginBottom="xm">
-        <CircularOption
-          content={heIcon!}
-          caption="מפגין"
-          selected={userStore.signUpData.pronoun === 'MALE'}
-          onPress={() => onPronounPress('MALE')}
-        />
-        <CircularOption
-          content={sheIcon!}
-          caption="מפגינה"
-          selected={userStore.signUpData.pronoun === 'FEMALE'}
-          onPress={() => onPronounPress('FEMALE')}
-        />
-      </Box>
-      <Box flexDirection="row" justifyContent="space-evenly" marginBottom="xl">
-        <CircularOption
-          content={nonBinaryIcon!}
-          caption="מפגינ/ה"
-          selected={userStore.signUpData.pronoun === 'NEUTRAL'}
-          onPress={() => onPronounPress('NEUTRAL')}
-        />
-        <CircularOption
-          content="👀"
-          caption={`מעדיפ/ה ${'\n'}לא להגיד`}
-          selected={userStore.signUpData.pronoun === 'ORIGINAL'}
-          onPress={() => onPronounPress('ORIGINAL')}
-        />
-      </Box>
-      <Box alignItems="center">
-        <RoundedButton color="yellow" text="המשך" onPress={() => nextStep()} />
-      </Box>
     </Box>
   );
 }

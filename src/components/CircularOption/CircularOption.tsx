@@ -17,10 +17,16 @@ function CircularOption({ content, caption, selected, onPress }: CircularOptionP
         onPress={onPress}
         android_ripple={{ color: '#FF5858', radius: 50 }}
       >
-        {typeof content === 'string' ? <Text fontSize={58}>{content}</Text> : content}
+        {typeof content === 'string' ? (
+          <Text fontSize={58} allowFontScaling={false}>
+            {content}
+          </Text>
+        ) : (
+          content
+        )}
       </Pressable>
       {caption && (
-        <Text variant="text" textAlign="center">
+        <Text variant="text" textAlign="center" maxFontSizeMultiplier={1.05}>
           {caption}
         </Text>
       )}

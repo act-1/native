@@ -19,7 +19,7 @@ class UserStore {
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
   userData: FirebaseFirestoreTypes.DocumentData | null = null;
-  signUpData: { pronoun?: Pronoun; region: Region; avatar: Avatar } = {};
+  signUpData: { pronoun?: Pronoun; region: Region | null } = { pronoun: 'NEUTRAL', region: null };
   FCMToken: string = '';
   initializedUser = false;
 
@@ -27,7 +27,7 @@ class UserStore {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
     this.initUserLocation();
-    this.signOut();
+    // this.signOut();
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user?.uid) {
         if (userDataListenerActive === false) {

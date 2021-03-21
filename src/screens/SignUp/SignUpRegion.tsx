@@ -3,12 +3,13 @@ import { Platform, Pressable, StyleSheet } from 'react-native';
 import { Box, Text } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
+import { updateUserRegion } from '@services/user';
 import HapticFeedback from 'react-native-haptic-feedback';
 import RoundedButton from '@components/Buttons/RoundedButton';
 
 import Ivrita from 'ivrita';
 
-function SignUpProvince({ navigation }) {
+function SignUpRegion({ navigation }) {
   const { userStore } = useStore();
   const { pronoun, region } = userStore.signUpData;
 
@@ -19,6 +20,8 @@ function SignUpProvince({ navigation }) {
   };
 
   const nextStep = () => {
+    updateUserRegion(region);
+
     if (userStore.userLocationPermission !== 'denied') {
       // Finish sign up
       // navigate to homepage
@@ -29,13 +32,22 @@ function SignUpProvince({ navigation }) {
   };
 
   return (
-    <Box flex={1}>
-      <Text variant="hugeTitle" color="primaryColor" fontSize={68} textAlign="center" marginBottom="l">
+    <Box flex={1} marginHorizontal="l">
+      <Text
+        variant="hugeTitle"
+        color="primaryColor"
+        fontSize={68}
+        textAlign="center"
+        style={{ marginBottom: Platform.select({ ios: 32, android: 8 }) }}
+        maxFontSizeMultiplier={1.2}
+      >
         ACT1
       </Text>
 
-      <Text variant="extraLargeTitle">{Ivrita.genderize('מאיפה אתם.ן בארץ?', Ivrita[pronoun])}</Text>
-      <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Light" marginBottom="l">
+      <Text variant="extraLargeTitle" maxFontSizeMultiplier={1.1}>
+        {Ivrita.genderize('מאיפה אתם.ן בארץ?', Ivrita[pronoun])}
+      </Text>
+      <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Light" marginBottom="l" maxFontSizeMultiplier={1.1}>
         בשביל שנוכל להציג הפגנות באיזורך
       </Text>
       <Box flexDirection="row" flexWrap="wrap" marginBottom="l">
@@ -76,7 +88,7 @@ function SignUpProvince({ navigation }) {
   );
 }
 
-export default observer(SignUpProvince);
+export default observer(SignUpRegion);
 
 type ProvinceOptionProps = {
   value: Province;
@@ -92,7 +104,7 @@ const ProvinceOption = ({ value, selectedProvince, onPress }: ProvinceOptionProp
       style={[styles.provinceOptionWrapper, value === selectedProvince && styles.provinceOptionSelected]}
       onPress={() => onPress(value)}
     >
-      <Text variant="smallText" fontSize={fontSize} fontFamily="AtlasDL3.1AAA-Medium" maxFontSizeMultiplier={1.15}>
+      <Text variant="smallText" fontSize={fontSize} fontFamily="AtlasDL3.1AAA-Medium" maxFontSizeMultiplier={1.1}>
         {value}
       </Text>
     </Pressable>
