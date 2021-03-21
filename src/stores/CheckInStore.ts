@@ -24,10 +24,10 @@ class CheckInStore {
         const location = await getClosestLocation([31.773581, 35.21508]);
 
         if (location) {
-          // Set expiration time to 1 hour from now
-          // If the user open the app after 1 hour, we check if the region is still active and check them in again.
+          // Set expiration time to 1.5 hour from now
+          // If the user open the app after 1.5 hour, we check if the location is still active and check them in again.
           const expireAt = new Date();
-          expireAt.setMinutes(expireAt.getMinutes() + 60);
+          expireAt.setMinutes(expireAt.getMinutes() + 90);
 
           const fcmToken = this.rootStore?.userStore.FCMToken!;
           const checkInParams = {

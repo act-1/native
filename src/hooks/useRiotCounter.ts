@@ -10,7 +10,7 @@ function useRiotCounter(regionName: string) {
   const [regionCounter, setRegionCounter] = useState(0);
   const [totalCounter, setTotalCounter] = useState(0);
 
-  const regionCounterQuery = RealtimeDatabase.database.ref('regions').child('jerusalem').child('counter');
+  const regionCounterQuery = RealtimeDatabase.database.ref('regions').child(regionName).child('counter');
   const totalCounterQuery = RealtimeDatabase.database.ref('totalCounter');
 
   regionCounterQuery.on(
