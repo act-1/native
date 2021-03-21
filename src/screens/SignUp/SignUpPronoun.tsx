@@ -20,6 +20,9 @@ function SignUpPronoun({ navigation }) {
 
   return (
     <Box flex={1}>
+      <Text variant="hugeTitle" color="primaryColor" fontSize={68} textAlign="center" marginBottom="l">
+        ACT1
+      </Text>
       <Text variant="extraLargeTitle">את/ה מפגין/ה?</Text>
       <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Light" marginBottom="xl">
         זה בשביל שנדע איך לפנות אליך :)

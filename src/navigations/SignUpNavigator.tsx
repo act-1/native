@@ -2,6 +2,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { RootStackParamList } from '../types/navigation';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import SignUpLanding from '../screens/SignUp/SignUpLanding';
 import SignUpHello from '../screens/SignUp/SignUpHello';
 import SignUpPronoun from '../screens/SignUp/SignUpPronoun';
 import SignUpProvince from '../screens/SignUp/SignUpProvince';
@@ -14,22 +15,29 @@ const SignUpStack = createStackNavigator<RootStackParamList>();
 
 function SignUpNavigator() {
   const insets = useSafeAreaInsets();
+
   return (
     <SignUpStack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
+        headerBackground: () => null,
+        headerBackTitleVisible: false,
         cardStyle: {
-          paddingTop: Platform.select({ ios: 0, android: 40 }) + insets.top,
-          paddingHorizontal: 24,
+          paddingHorizontal: 16,
+          paddingTop: Platform.select({ ios: 0, android: 40 }),
+          paddingBottom: insets.bottom + 10,
           backgroundColor: '#111112',
         },
-        ...TransitionPresets.ModalPresentationIOS,
+        headerTintColor: 'rgba(255,0,0,0.5)',
+        headerTitle: '',
+        headerLeftContainerStyle: { marginLeft: 6 },
+        ...TransitionPresets.SlideFromRightIOS,
       }}
     >
+      <SignUpStack.Screen name="SignUpLanding" component={SignUpLanding} />
       <SignUpStack.Screen name="SignUpHello" component={SignUpHello} />
       <SignUpStack.Screen name="SignUpPronoun" component={SignUpPronoun} />
       <SignUpStack.Screen name="SignUpProvince" component={SignUpProvince} />
-      <SignUpStack.Screen name="SignUpIncitement" component={SignUpIncitement} />
       <SignUpStack.Screen name="SignUpCompleted" component={SignUpCompleted} />
     </SignUpStack.Navigator>
   );

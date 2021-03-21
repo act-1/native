@@ -13,7 +13,7 @@ function CircularOption({ content, caption, selected, onPress }: CircularOptionP
   return (
     <Box alignItems="center">
       <Pressable
-        style={[styles.optionWrapper, { backgroundColor: selected ? '#ff7a7a' : '#696a6c' }]}
+        style={[styles.optionWrapper, { borderColor: selected ? '#ff7a7a' : '#333333' }]}
         onPress={onPress}
         android_ripple={{ color: '#FF5858', radius: 50 }}
       >
@@ -38,5 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 8,
     borderRadius: 50,
+    borderWidth: 4,
+    backgroundColor: '#333333',
   },
 });

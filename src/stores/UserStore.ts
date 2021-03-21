@@ -2,7 +2,6 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
@@ -28,7 +27,7 @@ class UserStore {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
     this.initUserLocation();
-    // this.signOut();
+    this.signOut();
     auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null) => {
       if (user?.uid) {
         if (userDataListenerActive === false) {
@@ -141,6 +140,7 @@ class UserStore {
     runInAction(() => {
       this.userLocationPermission = permission;
     });
+
     return permission;
   }
 

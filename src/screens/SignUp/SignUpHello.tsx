@@ -13,6 +13,9 @@ function SignUpHello({ navigation }) {
         היי! 👋
       </Text>
       <Text variant="largeTitle" marginBottom="m">
+        השימוש ב- ACT1 הוא אנונימי לחלוטין.
+      </Text>
+      <Text variant="largeTitle" marginBottom="m">
         בשביל שנוכל להתאים את האפליקציה עבורכן.ם, יש לנו כמה שאלות.
       </Text>
       <Text variant="largeTitle" marginBottom="xl">

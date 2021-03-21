@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, ActivityIndicator } from 'react-native';
-import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { Box, Text, ProtestFeed } from '../../components';
 import { observer } from 'mobx-react-lite';

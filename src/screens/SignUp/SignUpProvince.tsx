@@ -5,6 +5,8 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import HapticFeedback from 'react-native-haptic-feedback';
 import RoundedButton from '@components/Buttons/RoundedButton';
+import { PermissionStatus } from 'react-native-permissions';
+
 import Ivrita from 'ivrita';
 
 // function getProvinceCaption(province) {
@@ -26,7 +28,7 @@ import Ivrita from 'ivrita';
 function SignUpProvince({ navigation }) {
   const { userStore } = useStore();
   const { pronoun, province } = userStore.signUpData;
-
+  console.log(userStore.userLocationPermission);
   const onProvincePress = (value: Province) => {
     // Reset value if clicking the same option twice.
     HapticFeedback.trigger('impactLight');
@@ -40,6 +42,10 @@ function SignUpProvince({ navigation }) {
 
   return (
     <Box flex={1}>
+      <Text variant="hugeTitle" color="primaryColor" fontSize={68} textAlign="center" marginBottom="l">
+        ACT1
+      </Text>
+
       <Text variant="extraLargeTitle">{Ivrita.genderize('מאיפה אתם.ן בארץ?', Ivrita[pronoun])}</Text>
       <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Light" marginBottom="l">
         בשביל שנוכל להציג הפגנות באיזורך
