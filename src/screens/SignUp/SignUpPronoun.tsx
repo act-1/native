@@ -25,7 +25,7 @@ function SignUpPronoun({ navigation }) {
       </Text>
       <Text variant="extraLargeTitle">את/ה מפגין/ה?</Text>
       <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Light" marginBottom="xl">
-        זה בשביל שנדע איך לפנות אליך :)
+        בשביל שנדע איך לפנות אליך :)
       </Text>
       <Box flexDirection="row" justifyContent="space-evenly" marginBottom="xm">
         <CircularOption

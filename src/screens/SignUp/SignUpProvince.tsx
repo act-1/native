@@ -5,39 +5,27 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import HapticFeedback from 'react-native-haptic-feedback';
 import RoundedButton from '@components/Buttons/RoundedButton';
-import { PermissionStatus } from 'react-native-permissions';
 
 import Ivrita from 'ivrita';
 
-// function getProvinceCaption(province) {
-//   switch (province) {
-//     case 'חוף אשקלון ועוטף עזה':
-//       return 'פיצוץ! 🚀';
-//     case 'אילת והערבה':
-//       return 'עיר של מלכים 👑';
-//     case 'הגדה המערבית':
-//       return 'כבשתן אותנו 👹';
-//     case 'הגדה המערבית':
-//       return 'כבשתן אותנו 👹';
-
-//     default:
-//       '';
-//   }
-// }
-
 function SignUpProvince({ navigation }) {
   const { userStore } = useStore();
-  const { pronoun, province } = userStore.signUpData;
-  console.log(userStore.userLocationPermission);
-  const onProvincePress = (value: Province) => {
+  const { pronoun, region } = userStore.signUpData;
+
+  const onProvincePress = (value: Region) => {
     // Reset value if clicking the same option twice.
     HapticFeedback.trigger('impactLight');
-    userStore.updateSignUpData({ province: value });
+    userStore.updateSignUpData({ region: value });
   };
 
-  const skipStep = () => {
-    userStore.updateSignUpData({ province: null });
-    navigation.navigate('SignUpIncitement');
+  const nextStep = () => {
+    if (userStore.userLocationPermission !== 'denied') {
+      // Finish sign up
+      // navigate to homepage
+      navigation.navigate('');
+    } else {
+      // navigate to location permission page
+    }
   };
 
   return (
@@ -51,18 +39,18 @@ function SignUpProvince({ navigation }) {
         בשביל שנוכל להציג הפגנות באיזורך
       </Text>
       <Box flexDirection="row" flexWrap="wrap" marginBottom="l">
-        <ProvinceOption value="הגליל העליון" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="הגליל התחתון" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="הגולן" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="חיפה והקריות" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="השרון" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="תל אביב" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="המרכז" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="השפלה" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="ירושלים" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="חוף אשקלון ועוטף עזה" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="הנגב" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
-        <ProvinceOption value="אילת והערבה" onPress={(value) => onProvincePress(value)} selectedProvince={province} />
+        <ProvinceOption value="הגליל העליון" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="הגליל התחתון" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="הגולן" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="חיפה והקריות" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="השרון" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="תל אביב" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="המרכז" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="השפלה" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="ירושלים" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="חוף אשקלון ועוטף עזה" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="הנגב" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <ProvinceOption value="אילת והערבה" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
       </Box>
 
       {/* <Box minHeight={70}>
@@ -72,10 +60,17 @@ function SignUpProvince({ navigation }) {
       </Box> */}
 
       <Box alignItems="center" marginBottom="m">
-        <RoundedButton color="yellow" text="המשך" onPress={() => navigation.navigate('SignUpIncitement')} />
+        <RoundedButton color="yellow" text="המשך" onPress={() => nextStep()} />
       </Box>
       <Box alignItems="center" opacity={0.55}>
-        <RoundedButton color="grey" text="דילוג" onPress={skipStep} />
+        <RoundedButton
+          color="grey"
+          text="דילוג"
+          onPress={() => {
+            userStore.updateSignUpData({ region: null });
+            nextStep();
+          }}
+        />
       </Box>
     </Box>
   );

@@ -23,7 +23,6 @@ function SignUpNavigator() {
         headerBackground: () => null,
         headerBackTitleVisible: false,
         cardStyle: {
-          paddingHorizontal: 16,
           paddingTop: Platform.select({ ios: 0, android: 40 }),
           paddingBottom: insets.bottom + 10,
           backgroundColor: '#111112',
@@ -34,7 +33,7 @@ function SignUpNavigator() {
         ...TransitionPresets.SlideFromRightIOS,
       }}
     >
-      <SignUpStack.Screen name="SignUpLanding" component={SignUpLanding} />
+      <SignUpStack.Screen name="SignUpLanding" component={SignUpLanding} options={{ headerShown: false }} />
       <SignUpStack.Screen name="SignUpHello" component={SignUpHello} />
       <SignUpStack.Screen name="SignUpPronoun" component={SignUpPronoun} />
       <SignUpStack.Screen name="SignUpProvince" component={SignUpProvince} />
