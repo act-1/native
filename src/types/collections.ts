@@ -70,6 +70,7 @@ export type CheckIn = LocationRef & {
   id: string;
   expireAt: Date;
   fcmToken?: string;
+  eventId?: string;
 };
 
 /*

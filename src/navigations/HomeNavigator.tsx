@@ -3,11 +3,10 @@ import { Platform, Pressable } from 'react-native';
 import { Home, RiotMap } from '../screens';
 import { CapturePicture } from '../components';
 import { RootStackParamList } from '../types/navigation';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import RecentPictures from '@screens/Community/RecentPictures';
 import NewPost from '@screens/NewPost';
 import Icon from 'react-native-vector-icons/Feather';
-import { backgroundColor } from '@shopify/restyle';
 
 const HomeStack = createStackNavigator<RootStackParamList>();
 
@@ -15,6 +14,7 @@ function HomeNavigator({ navigation }) {
   return (
     <HomeStack.Navigator
       screenOptions={{
+        ...TransitionPresets.ModalSlideFromBottomIOS,
         headerTitle: 'ACT1',
         headerTitleAlign: 'center',
         headerStyle: { backgroundColor: '#0a0a0a', shadowOffset: { height: 0, width: 0 } },
@@ -37,7 +37,7 @@ function HomeNavigator({ navigation }) {
       }}
     >
       <HomeStack.Screen name="Home" component={Home} />
-      <HomeStack.Screen name="RiotMap" component={RiotMap} />
+      <HomeStack.Screen name="RiotMap" component={RiotMap} options={{ headerShown: false }} />
 
       <HomeStack.Screen
         name="RecentPictures"

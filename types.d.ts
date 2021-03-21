@@ -41,3 +41,11 @@ type Region = [
   'הנגב',
   'אילת והערבה'
 ];
+
+type Protest = {
+  id: string;
+  name: string;
+  counter: number;
+  latitude: number;
+  longitude: number;
+};

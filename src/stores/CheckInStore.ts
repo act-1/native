@@ -22,7 +22,7 @@ class CheckInStore {
 
       if (checkIn === null) {
         const location = await getClosestLocation([31.773581, 35.21508]);
-        console.log(location);
+
         if (location) {
           // Set expiration time to 1 hour from now
           // If the user open the app after 1 hour, we check if the region is still active and check them in again.
@@ -41,7 +41,14 @@ class CheckInStore {
             expireAt,
           } as CheckIn;
 
+          // Check if the location has an ongoing event
+          const event = this.rootStore?.eventStore.liveEvents.find((event) => event.locationId === location.id);
+          if (event) {
+            checkInParams.eventId = event.id;
+          }
+
           await createCheckIn(checkInParams);
+          console.log('params: ', checkInParams);
 
           runInAction(() => {
             this.currentCheckIn = checkInParams;

@@ -33,7 +33,7 @@ function ScrollablePictures({ pictures, onPicturePress, size, style }: Scrollabl
         >
           <FastImage source={{ uri: picture.pictureUrl }} style={[styles.picture, pictureSize]} />
           <Text variant="boxSubtitle" style={textStyle} maxFontSizeMultiplier={1.15}>
-            {timeAgo(picture.createdAt.toDate())}
+            {timeAgo(picture.createdAt.toDate ? picture.createdAt.toDate() : picture.createdAt)}
           </Text>
         </TouchableScale>
       ))}

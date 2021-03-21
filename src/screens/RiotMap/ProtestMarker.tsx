@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image, StyleSheet, PixelRatio } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { Image, StyleSheet, Animated, PixelRatio } from 'react-native';
 import { Box, Text } from '../../components';
 import { Marker } from 'react-native-maps';
 import Svg, { Path } from 'react-native-svg';
@@ -10,12 +10,33 @@ type ProtestMarkerProps = {
   coordinates: { latitude: number; longitude: number };
   counter: number | string;
   onPress?: () => void;
-  selected?: boolean;
+  displayed?: boolean;
 };
 
-function ProtestMarker({ coordinates, counter, onPress, selected }: ProtestMarkerProps) {
+const AnimatedMarker = Animated.createAnimatedComponent(Marker);
+
+function ProtestMarker({ coordinates, counter, onPress, displayed }: ProtestMarkerProps) {
+  const markerOpacity = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    if (displayed) {
+      Animated.timing(markerOpacity, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+    if (!displayed) {
+      Animated.timing(markerOpacity, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [displayed, markerOpacity]);
+
   return (
-    <Marker coordinate={coordinates} onPress={onPress} stopPropagation={true}>
+    <AnimatedMarker coordinate={coordinates} style={{ opacity: markerOpacity }} onPress={onPress} stopPropagation={true}>
       <Box style={[styles.markerBox]}>
         <Image
           source={{ uri: 'https://res.cloudinary.com/act1/image/upload/v1614841512/featured_pictures/balfur-rabaati.jpg' }}
@@ -30,7 +51,7 @@ function ProtestMarker({ coordinates, counter, onPress, selected }: ProtestMarke
           <Path d="M 0 0 L 0 0 L 6 6 L 12 0" fill="#dcdcdc" strokeWidth={1} strokeLinecap="round" stroke="#dcdcdc" />
         </Svg>
       </Box>
-    </Marker>
+    </AnimatedMarker>
   );
 }
 

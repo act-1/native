@@ -218,6 +218,7 @@ export async function getPictures({ source, sourceId, startAfter, afterDate, lim
   const sourceField = source + 'Id'; // `event` -> eventId, location -> locationId
 
   try {
+    console.log('bbbbbb', source, sourceId);
     let query = firestore()
       .collection('posts')
       .where('type', '==', 'picture')

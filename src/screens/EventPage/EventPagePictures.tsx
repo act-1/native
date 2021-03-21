@@ -8,12 +8,6 @@ import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firest
 
 import { useNavigation } from '@react-navigation/native';
 
-const noPicturesText = (
-  <Text variant="largeTitle" textAlign="center">
-    לא הועלו תמונות
-  </Text>
-);
-
 type EventPagePicturesProps = {
   event?: Event;
   location?: Location;
@@ -44,7 +38,7 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
 
   const renderComponent = useMemo(() => {
     if (fetchingPictures) return <ActivityIndicator color="grey" />;
-    if (eventPictures.length === 0) return noPicturesText;
+    if (eventPictures.length === 0) return null;
     return <ScrollablePictures pictures={eventPictures} onPicturePress={onPicturePress} size={size} />;
   }, [eventPictures, fetchingPictures]);
 
@@ -66,11 +60,10 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
 
       const unsubscribe = query.onSnapshot(
         (snapshot) => {
-          console.log(new Date());
+          console.log(snapshot);
           if (snapshot === null) return;
           snapshot.docChanges().forEach((change) => {
             if (change.type === 'added') {
-              console.log(change.doc.data());
               let picture = change.doc.data() as PicturePost;
 
               // Local writes arrives without `createdAt`.
@@ -95,6 +88,8 @@ function EventPagePictures({ event, location, size = 'large' }: EventPagePicture
 
     const source = event ? 'event' : 'location';
     const sourceId = event ? event.id : location!.id;
+
+    console.log(source, sourceId);
 
     let unsubscribeListener: any;
 
