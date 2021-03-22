@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Platform, Pressable, StyleSheet } from 'react-native';
 import { Box, Text } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
-import { updateUserRegion } from '@services/user';
+import { updateUserRegion, completeSignUp } from '@services/user';
 import HapticFeedback from 'react-native-haptic-feedback';
 import RoundedButton from '@components/Buttons/RoundedButton';
 
@@ -11,24 +11,21 @@ import Ivrita from 'ivrita';
 
 function SignUpRegion({ navigation }) {
   const { userStore } = useStore();
+  const [isLoading, setLoading] = useState(false);
   const { pronoun, region } = userStore.signUpData;
 
-  const onProvincePress = (value: Region) => {
+  const onRegionPress = (value: Region) => {
     // Reset value if clicking the same option twice.
     HapticFeedback.trigger('impactLight');
     userStore.updateSignUpData({ region: value });
   };
 
   const nextStep = () => {
+    setLoading(true);
     updateUserRegion(region);
-
-    if (userStore.userLocationPermission !== 'denied') {
-      // Finish sign up
-      // navigate to homepage
-      navigation.navigate('');
-    } else {
-      // navigate to location permission page
-    }
+    // Sets the `signupCompleted` user flag to true.
+    // Once the update hits firestore, the navigator will automatically switch to Home (see `AppNavigator`).
+    completeSignUp();
   };
 
   return (
@@ -51,36 +48,27 @@ function SignUpRegion({ navigation }) {
         בשביל שנוכל להציג הפגנות באיזורך
       </Text>
       <Box flexDirection="row" flexWrap="wrap" marginBottom="l">
-        <ProvinceOption value="הגליל העליון" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="הגליל התחתון" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="הגולן" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="חיפה והקריות" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="השרון" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="תל אביב" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="המרכז" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="השפלה" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="ירושלים" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="חוף אשקלון ועוטף עזה" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="הנגב" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
-        <ProvinceOption value="אילת והערבה" onPress={(value) => onProvincePress(value)} selectedProvince={region} />
+        <RegionOption value="הגליל העליון" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="הגליל התחתון" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="הגולן" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="חיפה והקריות" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="השרון" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="תל אביב" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="המרכז" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="השפלה" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="ירושלים" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="חוף אשקלון ועוטף עזה" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="הנגב" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
+        <RegionOption value="אילת והערבה" onPress={(value) => onRegionPress(value)} selectedRegion={region} />
       </Box>
-
-      {/* <Box minHeight={70}>
-        <Text variant="largeTitle" textAlign="center" marginBottom="xl">
-          {getProvinceCaption(province)}
-        </Text>
-      </Box> */}
 
       <Box alignItems="center" marginBottom="m">
-        <RoundedButton color="yellow" text="המשך" onPress={() => nextStep()} />
-      </Box>
-      <Box alignItems="center" opacity={0.55}>
         <RoundedButton
-          color="grey"
-          text="דילוג"
+          color="yellow"
+          text="סיום"
+          loading={isLoading}
           onPress={() => {
-            userStore.updateSignUpData({ region: null });
-            nextStep();
+            if (!isLoading) nextStep();
           }}
         />
       </Box>
@@ -90,18 +78,18 @@ function SignUpRegion({ navigation }) {
 
 export default observer(SignUpRegion);
 
-type ProvinceOptionProps = {
-  value: Province;
-  selectedProvince: Province;
-  onPress: (value: Province) => void;
+type RegionOptionProps = {
+  value: Region;
+  selectedRegion: Region;
+  onPress: (value: Region) => void;
 };
 
 const fontSize = Platform.select({ ios: 16, android: 14 });
 
-const ProvinceOption = ({ value, selectedProvince, onPress }: ProvinceOptionProps) => {
+const RegionOption = ({ value, selectedRegion, onPress }: RegionOptionProps) => {
   return (
     <Pressable
-      style={[styles.provinceOptionWrapper, value === selectedProvince && styles.provinceOptionSelected]}
+      style={[styles.provinceOptionWrapper, value === selectedRegion && styles.provinceOptionSelected]}
       onPress={() => onPress(value)}
     >
       <Text variant="smallText" fontSize={fontSize} fontFamily="AtlasDL3.1AAA-Medium" maxFontSizeMultiplier={1.1}>
