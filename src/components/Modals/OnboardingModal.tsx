@@ -19,6 +19,9 @@ type OnboardingModalProps = {
 const actIcon = require('@assets/icons/fuck-fascists.png');
 const pictureDoodle = require('@assets/illustrations/picture-doodle.png');
 const calendarDoodle = require('@assets/illustrations/calendar-doodle.png');
+const humanDoodle = require('@assets/illustrations/human-being.png');
+const badDoodle = require('@assets/illustrations/bad-guys.png');
+const goodDoodle = require('@assets/illustrations/peace-weapons.png');
 
 function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalProps) {
   const { userStore } = useStore();
@@ -45,23 +48,28 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
       animationInTiming={350}
       animationOut="zoomOut"
       animationOutTiming={350}
-      onBackdropPress={() => setModalVisible(false)}
       useNativeDriver
     >
-      {/* <Box style={styles.modalWrapper}> */}
       <Pages
         ref={pages}
         scrollEnabled={true}
         indicatorOpacity={0}
-        indicatorColor="black"
+        indicatorColor="#111111"
         rtl={isAndroid}
-        onScrollEnd={onScrollEnd}
+        // onScrollEnd={onScrollEnd}
         containerStyle={styles.modalWrapper}
       >
         <Box flex={1} style={{ alignItems: 'center', paddingHorizontal: 16, paddingBottom: 28 }}>
           <Image source={actIcon} style={{ width: 94, height: 94, marginBottom: 16 }} />
 
-          <Text variant="largeTitle" color="primaryColor" marginBottom="s" textAlign="center" maxFontSizeMultiplier={1.15}>
+          <Text
+            variant="largeTitle"
+            fontSize={22}
+            color="primaryColor"
+            marginBottom="s"
+            textAlign="center"
+            maxFontSizeMultiplier={1.15}
+          >
             {Ivrita.genderize('ברוכים.ות הבאים.ות ל- ACT1', Ivrita[pronoun])}
           </Text>
           <Text variant="text" marginBottom="xm" textAlign="center" maxFontSizeMultiplier={1.15}>
@@ -80,38 +88,45 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
         </Box>
 
         <Box flex={1} style={{ alignItems: 'center', paddingHorizontal: 24 }}>
-          <Box flexDirection="row">
+          <Box flexDirection="row" marginBottom="m">
             <MotiView
               from={{ translateY: 0 }}
-              animate={{ translateY: -15 }}
+              animate={{ translateY: -10 }}
               transition={{
                 loop: true,
                 type: 'timing',
-                duration: 1500,
+                duration: 2500,
                 delay: 0,
               }}
               style={{ position: 'absolute', top: 10, left: -10, zIndex: 10 }}
             >
-              <Image source={calendarDoodle} style={{ width: 110, height: 94 }} />
+              <Image source={calendarDoodle} style={{ width: 100, height: 88 }} />
             </MotiView>
             <MotiView
-              from={{ translateY: -15 }}
+              from={{ translateY: -10 }}
               animate={{ translateY: 0 }}
               transition={{
                 loop: true,
                 type: 'timing',
-                duration: 1500,
-                delay: 0,
+                duration: 2500,
+                delay: 10,
               }}
             >
-              <Image source={pictureDoodle} style={{ width: 130, height: 110, marginLeft: 50 }} />
+              <Image source={pictureDoodle} style={{ width: 110, height: 90, marginLeft: 50 }} />
             </MotiView>
           </Box>
 
-          <Text variant="largeTitle" color="primaryColor" marginBottom="s" textAlign="center" maxFontSizeMultiplier={1.15}>
+          <Text
+            variant="largeTitle"
+            fontSize={22}
+            color="primaryColor"
+            marginBottom="m"
+            textAlign="center"
+            maxFontSizeMultiplier={1.15}
+          >
             מצב מנוחה
           </Text>
-          <Text variant="text" marginBottom="xm" textAlign="center" maxFontSizeMultiplier={1.15}>
+          <Text variant="text" fontFamily="AtlasDL3.1AAA-Medium" marginBottom="s" textAlign="center" maxFontSizeMultiplier={1.15}>
             כשנאבקים לאורך זמן, חשוב לנוח בשביל לשמור על שפיות.
           </Text>
           <Text variant="text" marginBottom="xm" textAlign="center" maxFontSizeMultiplier={1.15}>
@@ -127,6 +142,34 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
         </Box>
 
         <Box flex={1} style={{ alignItems: 'center', paddingHorizontal: 24 }}>
+          <Box flexDirection="row" marginBottom="m" alignItems="center">
+            <MotiView
+              from={{ translateY: 0 }}
+              animate={{ translateY: 10 }}
+              transition={{
+                loop: true,
+                type: 'timing',
+                duration: 2500,
+                delay: 0,
+              }}
+            >
+              <Image source={badDoodle} style={{ width: 70, height: 80, transform: [{ translateY: -30 }, { translateX: 10 }] }} />
+            </MotiView>
+            <Image source={humanDoodle} style={{ width: 123, height: 132 }} />
+
+            <MotiView
+              from={{ translateY: 15 }}
+              animate={{ translateY: 0 }}
+              transition={{
+                loop: true,
+                type: 'timing',
+                duration: 2500,
+                delay: 0,
+              }}
+            >
+              <Image source={goodDoodle} style={{ width: 80, height: 76, transform: [{ translateX: 2.5 }] }} />
+            </MotiView>
+          </Box>
           <Text variant="largeTitle" color="primaryColor" marginBottom="s" textAlign="center" maxFontSizeMultiplier={1.15}>
             מצב הפגנה
           </Text>
@@ -145,13 +188,12 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
           />
         </Box>
       </Pages>
-      {/* </Box> */}
     </Modal>
   );
 }
 export default observer(OnboardingmModal);
 
-const modalHeight = Dimensions.get('screen').height * 0.48;
+const modalHeight = Dimensions.get('screen').height * 0.5;
 
 const styles = StyleSheet.create({
   modalImage: {
@@ -161,7 +203,7 @@ const styles = StyleSheet.create({
   },
   modalWrapper: {
     maxHeight: modalHeight,
-    marginHorizontal: 24,
+    marginHorizontal: 16,
     paddingTop: 16,
     borderRadius: 6,
     shadowColor: '#000000',

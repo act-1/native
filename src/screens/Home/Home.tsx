@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar, StyleSheet, ScrollView } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -9,8 +9,15 @@ import Planner from './Planner';
 import Riot from './Riot';
 
 function Home({ navigation }: HomeScreenProps) {
+  const [modalVisible, setModalVisible] = useState(false);
   const { checkInStore } = useStore();
   const { currentCheckIn } = checkInStore;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setModalVisible(true);
+    }, 1500);
+  }, []);
 
   return (
     <>
@@ -21,7 +28,7 @@ function Home({ navigation }: HomeScreenProps) {
       >
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
         {currentCheckIn ? <Riot regionName={currentCheckIn.locationRegion} /> : <Planner />}
-        <OnboardingModal isModalVisible={true} />
+        <OnboardingModal isModalVisible={modalVisible} setModalVisible={setModalVisible} />
       </ScrollView>
     </>
   );
