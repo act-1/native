@@ -79,7 +79,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>יש לאפשר גישה למצלמה על מנת לצלם תמונות</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>נשתמש במיקום למציאת הפגנות ואירועים באיזורך</string>
+	<string>המיקום נשאר על גבי מכשירכם בלבד ולא עובר אלינו</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>על מנת להעלות תמונות יש לאפשר גישה לספריית התמונות</string>
 	<key>UIAppFonts</key>

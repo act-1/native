@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, StyleSheet, ScrollView } from 'react-native';
+import { StatusBar, StyleSheet, ScrollView, Button } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { HomeScreenProps } from '@types/navigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import OnboardingModal from '@components/Modals/OnboardingModal';
 
 import Planner from './Planner';
@@ -15,7 +16,11 @@ function Home({ navigation }: HomeScreenProps) {
 
   useEffect(() => {
     setTimeout(() => {
-      setModalVisible(true);
+      AsyncStorage.getItem('onboardingFinished').then((value) => {
+        if (value) {
+          setModalVisible(true);
+        }
+      });
     }, 1500);
   }, []);
 
@@ -29,6 +34,7 @@ function Home({ navigation }: HomeScreenProps) {
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
         {currentCheckIn ? <Riot regionName={currentCheckIn.locationRegion} /> : <Planner />}
         <OnboardingModal isModalVisible={modalVisible} setModalVisible={setModalVisible} />
+        <Button onPress={() => openModal()} title="asd" />
       </ScrollView>
     </>
   );

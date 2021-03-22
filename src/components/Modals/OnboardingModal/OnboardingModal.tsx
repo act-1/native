@@ -1,13 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { Image, StyleSheet, Dimensions, Platform } from 'react-native';
-import { Box, Text } from '../';
-import { RoundedButton } from '../Buttons';
+import { Box, Text } from '../..';
+import { RoundedButton } from '../../Buttons';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../stores';
+import { useStore } from '../../../stores';
 import Modal from 'react-native-modal';
 import { Pages } from 'react-native-pages';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View as MotiView } from 'moti';
 import Ivrita from 'ivrita';
+import OnboardingPermission from './OnboardingPermission';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -36,16 +38,19 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
     pages.current?.scrollToPage(nextIndex);
   };
 
-  const onScrollEnd = (index: number) => {
-    setCurrentIndex(index);
+  const finishOnboarding = () => {
+    AsyncStorage.setItem('onboardingFinished', 'true');
+    setModalVisible(false);
   };
 
+  console.log(isModalVisible);
   return (
     <Modal
+      propagateSwipe
       isVisible={isModalVisible}
       backdropOpacity={0.825}
       animationIn="zoomIn"
-      animationInTiming={350}
+      animationInTiming={400}
       animationOut="zoomOut"
       animationOutTiming={350}
       useNativeDriver
@@ -56,7 +61,6 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
         indicatorOpacity={0}
         indicatorColor="#111111"
         rtl={isAndroid}
-        // onScrollEnd={onScrollEnd}
         containerStyle={styles.modalWrapper}
       >
         <Box flex={1} style={{ alignItems: 'center', paddingHorizontal: 16, paddingBottom: 28 }}>
@@ -88,7 +92,7 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
         </Box>
 
         <Box flex={1} style={{ alignItems: 'center', paddingHorizontal: 24 }}>
-          <Box flexDirection="row" marginBottom="m">
+          <Box flexDirection="row" minHeight={130} alignItems="center">
             <MotiView
               from={{ translateY: 0 }}
               animate={{ translateY: -10 }}
@@ -98,9 +102,9 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
                 duration: 2500,
                 delay: 0,
               }}
-              style={{ position: 'absolute', top: 10, left: -10, zIndex: 10 }}
+              style={{ position: 'absolute', top: 32.5, left: -7.5, zIndex: 10 }}
             >
-              <Image source={calendarDoodle} style={{ width: 100, height: 88 }} />
+              <Image source={calendarDoodle} style={{ width: 110, height: 94 }} />
             </MotiView>
             <MotiView
               from={{ translateY: -10 }}
@@ -112,7 +116,7 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
                 delay: 10,
               }}
             >
-              <Image source={pictureDoodle} style={{ width: 110, height: 90, marginLeft: 50 }} />
+              <Image source={pictureDoodle} style={{ width: 110, height: 90, marginLeft: 60 }} />
             </MotiView>
           </Box>
 
@@ -149,13 +153,13 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
               transition={{
                 loop: true,
                 type: 'timing',
-                duration: 2500,
+                duration: 2000,
                 delay: 0,
               }}
             >
-              <Image source={badDoodle} style={{ width: 70, height: 80, transform: [{ translateY: -30 }, { translateX: 10 }] }} />
+              <Image source={badDoodle} style={{ width: 65, height: 75, transform: [{ translateY: -30 }, { translateX: 10 }] }} />
             </MotiView>
-            <Image source={humanDoodle} style={{ width: 123, height: 132 }} />
+            <Image source={humanDoodle} style={{ width: 110, height: 125 }} />
 
             <MotiView
               from={{ translateY: 15 }}
@@ -163,11 +167,11 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
               transition={{
                 loop: true,
                 type: 'timing',
-                duration: 2500,
+                duration: 2000,
                 delay: 0,
               }}
             >
-              <Image source={goodDoodle} style={{ width: 80, height: 76, transform: [{ translateX: 2.5 }] }} />
+              <Image source={goodDoodle} style={{ width: 75, height: 69, transform: [{ translateX: -3 }] }} />
             </MotiView>
           </Box>
           <Text variant="largeTitle" color="primaryColor" marginBottom="s" textAlign="center" maxFontSizeMultiplier={1.15}>
@@ -187,6 +191,7 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
             }}
           />
         </Box>
+        <OnboardingPermission finishOnboarding={finishOnboarding} />
       </Pages>
     </Modal>
   );
