@@ -16,7 +16,9 @@ function OnboardingPermission({ finishOnboarding }: { finishOnboarding: () => vo
     try {
       await requestLocationPermission();
       userStore.initUserLocation();
-      finishOnboarding();
+      setTimeout(() => {
+        finishOnboarding();
+      }, 300);
     } catch (err) {
       throw err;
     }
