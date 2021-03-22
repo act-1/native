@@ -3,6 +3,7 @@ import { StatusBar, StyleSheet, ScrollView } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { HomeScreenProps } from '@types/navigation';
+import OnboardingModal from '@components/Modals/OnboardingModal';
 
 import Planner from './Planner';
 import Riot from './Riot';
@@ -20,6 +21,7 @@ function Home({ navigation }: HomeScreenProps) {
       >
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
         {currentCheckIn ? <Riot regionName={currentCheckIn.locationRegion} /> : <Planner />}
+        <OnboardingModal isModalVisible={true} />
       </ScrollView>
     </>
   );
