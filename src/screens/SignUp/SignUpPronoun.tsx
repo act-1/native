@@ -13,6 +13,7 @@ const nonBinaryIcon = Platform.select({ ios: '🧒', android: '👦' });
 
 function SignUpPronoun({ navigation }) {
   const { userStore } = useStore();
+  const { pronoun } = userStore.signUpData;
 
   const onPronounPress = (pronoun: Pronoun) => {
     userStore.updateSignUpData({ pronoun });
@@ -20,7 +21,7 @@ function SignUpPronoun({ navigation }) {
   };
 
   const nextStep = () => {
-    userStore.updateSignUpData(userStore.signUpData.pronoun);
+    updateUserPronoun(pronoun);
     navigation.navigate('SignUpRegion');
   };
 
