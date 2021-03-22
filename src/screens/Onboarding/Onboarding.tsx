@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Platform, Animated, ImageBackground, StyleSheet, Dimensions, StatusBar } from 'react-native';
-import analytics from '@react-native-firebase/analytics';
 import { Box } from '../../components';
 import { Pages } from 'react-native-pages';
 import { Welcome, About, Features, AnonymousSignIn } from './steps';

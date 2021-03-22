@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Platform, TextInput, StyleSheet } from 'react-native';
+import React from 'react';
+import { Platform, StyleSheet } from 'react-native';
 import { Box, Text, CircularOption } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
+import { updateUserPronoun } from '@services/user';
 import HapticFeedback from 'react-native-haptic-feedback';
 import RoundedButton from '@components/Buttons/RoundedButton';
 
@@ -14,15 +15,32 @@ function SignUpPronoun({ navigation }) {
   const { userStore } = useStore();
 
   const onPronounPress = (pronoun: Pronoun) => {
-    HapticFeedback.trigger('impactLight');
     userStore.updateSignUpData({ pronoun });
+    HapticFeedback.trigger('impactLight');
+  };
+
+  const nextStep = () => {
+    userStore.updateSignUpData(userStore.signUpData.pronoun);
+    navigation.navigate('SignUpRegion');
   };
 
   return (
-    <Box flex={1}>
-      <Text variant="extraLargeTitle">את/ה מפגין/ה?</Text>
-      <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Light" marginBottom="xl">
-        זה בשביל שנדע איך לפנות אליך :)
+    <Box flex={1} paddingHorizontal="l">
+      <Text
+        variant="hugeTitle"
+        color="primaryColor"
+        fontSize={68}
+        textAlign="center"
+        maxFontSizeMultiplier={1.2}
+        style={{ marginBottom: Platform.select({ ios: 32, android: 8 }) }}
+      >
+        ACT1
+      </Text>
+      <Text variant="extraLargeTitle" maxFontSizeMultiplier={1.1}>
+        את/ה מפגין/ה?
+      </Text>
+      <Text variant="boxTitle" fontFamily="AtlasDL3.1AAA-Light" marginBottom="xl" maxFontSizeMultiplier={1.1}>
+        בשביל שנדע איך לפנות אליך :)
       </Text>
       <Box flexDirection="row" justifyContent="space-evenly" marginBottom="xm">
         <CircularOption
@@ -53,7 +71,7 @@ function SignUpPronoun({ navigation }) {
         />
       </Box>
       <Box alignItems="center">
-        <RoundedButton color="yellow" text="המשך" onPress={() => navigation.navigate('SignUpProvince')} />
+        <RoundedButton color="yellow" text="המשך" onPress={() => nextStep()} />
       </Box>
     </Box>
   );

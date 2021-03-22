@@ -89,7 +89,6 @@ function AppNavigator() {
         </>
       ) : (
         <>
-          <RootStack.Screen name="OnboardingModal" component={Onboarding} options={{ headerShown: false }} />
           <RootStack.Screen name="SignUp" component={SignUpNavigator} options={{ headerShown: false }} />
         </>
       )}

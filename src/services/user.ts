@@ -129,3 +129,39 @@ export async function submitUserSignUpData(signUpData) {
     throw err;
   }
 }
+
+export async function updateUserPronoun(pronoun: Pronoun) {
+  try {
+    const user = auth().currentUser;
+
+    if (user) {
+      return firestore().collection('users').doc(user.uid).update({ pronoun });
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function updateUserRegion(region: Region | null) {
+  try {
+    const user = auth().currentUser;
+
+    if (user) {
+      return firestore().collection('users').doc(user.uid).update({ region });
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function completeSignUp() {
+  try {
+    const user = auth().currentUser;
+
+    if (user) {
+      return firestore().collection('users').doc(user.uid).update({ signupCompleted: true });
+    }
+  } catch (err) {
+    throw err;
+  }
+}

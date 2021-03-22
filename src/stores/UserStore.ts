@@ -2,7 +2,6 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import { PermissionStatus } from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import messaging from '@react-native-firebase/messaging';
 import { checkLocationPermission, getCurrentPosition, requestLocationPermission } from '@utils/location-utils';
@@ -20,7 +19,7 @@ class UserStore {
   userLocationPermission: PermissionStatus = 'unavailable';
   userCurrentPosition: LatLng | undefined;
   userData: FirebaseFirestoreTypes.DocumentData | null = null;
-  signUpData: { pronoun?: Pronoun; region: Region; avatar: Avatar } = {};
+  signUpData: { pronoun?: Pronoun; region: Region | null } = { pronoun: 'NEUTRAL', region: null };
   FCMToken: string = '';
   initializedUser = false;
 
@@ -141,6 +140,7 @@ class UserStore {
     runInAction(() => {
       this.userLocationPermission = permission;
     });
+
     return permission;
   }
 

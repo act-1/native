@@ -1,7 +1,6 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import { StatusBar, SectionList, SafeAreaView, SectionListData, RefreshControl } from 'react-native';
 import { observer } from 'mobx-react-lite';
-import analytics from '@react-native-firebase/analytics';
 import { EventListScreenProps } from '@types/navigation';
 import { Event } from '@types/collections';
 import { Box, Text, EventBox } from '../../components';
