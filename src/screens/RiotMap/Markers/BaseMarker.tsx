@@ -10,11 +10,20 @@ type BaseMarkerProps = MarkerProps & {
   children: React.ReactChild;
   style?: ViewStyle;
   arrowFillColor?: string;
+  markerWidth?: number;
 };
 
 const AnimatedMarker = Animated.createAnimatedComponent(Marker);
 
-function BaseMarker({ coordinates, children, onPress, displayed, arrowFillColor = '#fff', style }: BaseMarkerProps) {
+function BaseMarker({
+  coordinates,
+  children,
+  onPress,
+  displayed,
+  arrowFillColor = '#fff',
+  markerWidth = 60,
+  style,
+}: BaseMarkerProps) {
   const markerOpacity = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
@@ -36,10 +45,10 @@ function BaseMarker({ coordinates, children, onPress, displayed, arrowFillColor 
 
   return (
     <AnimatedMarker coordinate={coordinates} style={{ opacity: markerOpacity }} onPress={onPress} stopPropagation={true}>
-      <Box style={[styles.markerBox, style]}>{children}</Box>
+      <Box style={[styles.markerBox, { height: markerWidth * fontScale, width: markerWidth * fontScale }, style]}>{children}</Box>
 
       <Box style={[styles.arrowContainer]}>
-        <Svg width={60 * fontScale} height={20 * fontScale} viewBox="0 0 12 12">
+        <Svg width={markerWidth * fontScale} height={20 * fontScale} viewBox="0 0 12 12">
           <Path d="M 0 0 L 0 0 L 6 6 L 12 0" fill={arrowFillColor} strokeWidth={2} strokeLinecap="round" stroke="#DFDFDF" />
         </Svg>
       </Box>
@@ -51,9 +60,6 @@ export default React.memo(BaseMarker);
 
 const styles = StyleSheet.create({
   markerBox: {
-    height: 60 * fontScale,
-    width: 60 * fontScale,
-
     justifyContent: 'center',
     backgroundColor: '#fff',
     borderWidth: 3.5,

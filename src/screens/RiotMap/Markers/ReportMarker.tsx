@@ -14,8 +14,14 @@ type ReportMarkerProps = MarkerProps & {
 };
 
 function ReportMarker(props: ReportMarkerProps) {
+  let markerWidth = 60;
+
+  if (props.reportType === 'general') {
+    markerWidth = 40;
+  }
+
   return (
-    <BaseMarker {...props} style={styles.markerStyle}>
+    <BaseMarker {...props} markerWidth={markerWidth} style={styles.markerStyle}>
       <Text fontSize={20} maxFontSizeMultiplier={1.05} textAlign="center">
         {reportMarkerEmojis[props.reportType]}
       </Text>

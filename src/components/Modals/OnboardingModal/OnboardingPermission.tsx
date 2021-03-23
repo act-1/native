@@ -42,8 +42,9 @@ function OnboardingPermission({ finishOnboarding }: { finishOnboarding: () => vo
           longitudeDelta: 0.00421,
         }}
       >
-        {/* <ProtestMarker coordinates={{ latitude: 31.774979, longitude: 35.217181 }} counter={432} displayed={true} /> */}
-        <ReportMarker coordinates={{ latitude: 31.774979, longitude: 35.217181 }} displayed={true} />
+        <ProtestMarker coordinates={{ latitude: 31.774979, longitude: 35.217181 }} counter={432} displayed={true} />
+        <ReportMarker reportType="general" coordinates={{ latitude: 31.7624, longitude: 35.216181 }} displayed={true} />
+        <ReportMarker reportType="policeViolence" coordinates={{ latitude: 31.7734, longitude: 35.217181 }} displayed={true} />
       </MapView>
       <Text variant="largeTitle" color="primaryColor" marginBottom="s" textAlign="center" maxFontSizeMultiplier={1.15}>
         מצב הפגנה
