@@ -11,8 +11,9 @@ import RiotActions from './RiotActions';
 import { BlurView } from '@react-native-community/blur';
 import mapStyle from '@utils/mapStyle.json';
 import { useNavigation } from '@react-navigation/native';
-import ProtestMarker from '@screens/RiotMap/ProtestMarker';
-import TouchableScale from 'react-native-touchable-scale';
+
+import ProtestMarker from '@screens/RiotMap/Markers/ProtestMarker';
+import ReportMarker from '@screens/RiotMap/Markers/ReportMarker';
 
 const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   if (Platform.OS === 'android') {
@@ -50,20 +51,28 @@ function Riot({ regionName }: { regionName: string }) {
             maxZoomLevel={15}
             minZoomLevel={12.5}
             pitchEnabled={false}
+            showsCompass={false}
             loadingIndicatorColor="grey"
             loadingBackgroundColor="#222222"
             mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
             initialRegion={{
               latitude: 31.774979,
               longitude: 35.217181,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              latitudeDelta: 0.003,
+              longitudeDelta: 0.00421,
             }}
           >
             <ProtestMarker
-              coordinates={{ latitude: 31.774979, longitude: 35.217181 }}
+              coordinates={{ latitude: 31.775302, longitude: 35.21766 }}
               counter={432}
+              displayed={true}
               onPress={() => navigation.navigate('RiotMap')}
+            />
+            <ReportMarker reportType="general" coordinates={{ latitude: 31.7756, longitude: 35.214581 }} displayed={true} />
+            <ReportMarker
+              reportType="policeViolence"
+              coordinates={{ latitude: 31.7834, longitude: 35.217181 }}
+              displayed={true}
             />
           </MapView>
           <MapCounterView>
@@ -77,7 +86,7 @@ function Riot({ regionName }: { regionName: string }) {
             >
               {regionCounter.toLocaleString()}
             </Ticker>
-            <Text variant="smallText" textAlign="center" fontWeight="600">
+            <Text variant="smallText" textAlign="center" fontWeight="600" maxFontSizeMultiplier={1.15}>
               באיזורך
             </Text>
           </MapCounterView>

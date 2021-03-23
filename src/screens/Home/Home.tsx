@@ -1,15 +1,47 @@
-import React from 'react';
-import { StatusBar, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { Image, StatusBar, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { HomeScreenProps } from '@types/navigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import OnboardingModal from '@components/Modals/OnboardingModal';
+import Icon from 'react-native-vector-icons/Feather';
 
 import Planner from './Planner';
 import Riot from './Riot';
 
+const locationOffIcon = require('@assets/icons/location-off.png');
+const riotOffIcon = require('@assets/icons/riot-mode-off.png');
+const riotOnIcon = require('@assets/icons/riot-mode-on.png');
+
 function Home({ navigation }: HomeScreenProps) {
-  const { checkInStore } = useStore();
+  const [modalVisible, setModalVisible] = useState(false);
+  const { userStore, checkInStore } = useStore();
   const { currentCheckIn } = checkInStore;
+
+  useEffect(() => {
+    setTimeout(() => {
+      AsyncStorage.getItem('onboardingFinished').then((value) => {
+        if (!value) {
+          setModalVisible(true);
+        }
+      });
+    }, 1500);
+  }, []);
+
+  useLayoutEffect(() => {
+    let iconSource = locationOffIcon;
+    if (userStore.userLocationPermission === 'granted') iconSource = riotOffIcon;
+    if (currentCheckIn) iconSource = riotOnIcon;
+
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginRight: 6 }}>
+          <Image source={iconSource} />
+        </Pressable>
+      ),
+    });
+  }, [navigation, userStore.userLocationPermission]);
 
   return (
     <>
@@ -20,6 +52,7 @@ function Home({ navigation }: HomeScreenProps) {
       >
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
         {currentCheckIn ? <Riot regionName={currentCheckIn.locationRegion} /> : <Planner />}
+        <OnboardingModal isModalVisible={modalVisible} setModalVisible={setModalVisible} />
       </ScrollView>
     </>
   );

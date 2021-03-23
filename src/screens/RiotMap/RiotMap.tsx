@@ -5,14 +5,13 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import MapView, { Marker, Region } from 'react-native-maps';
-import ProtestMarker from './ProtestMarker';
+import MapView, { Region } from 'react-native-maps';
+import ProtestMarker from './Markers/ProtestMarker';
 import RegionMarker from './RegionMarker';
 import mapStyle from '@utils/mapStyle.json';
 import { RiotMapProps } from '@types/navigation';
 import BottomSheet from '@gorhom/bottom-sheet';
 import RiotMapBottomSheet from './RiotMapBottomSheet';
-import { MarkerUnits } from 'react-native-svg';
 
 const { height, width } = Dimensions.get('window');
 
