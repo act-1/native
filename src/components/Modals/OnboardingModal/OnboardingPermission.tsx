@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { Image, StyleSheet, Dimensions, Platform } from 'react-native';
 import { Box, Text } from '../..';
 import { RoundedButton } from '../../Buttons';
+import MapView from 'react-native-maps';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../stores';
 import { requestLocationPermission } from '@utils/location-utils';
+import ProtestMarker from '@screens/RiotMap/ProtestMarker';
 
 import Ivrita from 'ivrita';
 
@@ -25,7 +26,22 @@ function OnboardingPermission({ finishOnboarding }: { finishOnboarding: () => vo
   };
 
   return (
-    <Box flex={1} style={{ alignItems: 'center', paddingHorizontal: 24 }}>
+    <Box flex={1} style={{ alignItems: 'center' }}>
+      <MapView
+        style={{ height: 150, width: '100%', borderRadius: 12, marginBottom: 12 }}
+        pitchEnabled={false}
+        zoomEnabled={false}
+        cacheEnabled={true}
+        mapPadding={{ right: -100, left: -100 }}
+        initialRegion={{
+          latitude: 31.774979,
+          longitude: 35.217181,
+          latitudeDelta: 0.003,
+          longitudeDelta: 0.00421,
+        }}
+      >
+        <ProtestMarker coordinates={{ latitude: 31.774979, longitude: 35.217181 }} counter={432} displayed={true} />
+      </MapView>
       <Text variant="largeTitle" color="primaryColor" marginBottom="s" textAlign="center" maxFontSizeMultiplier={1.15}>
         מצב הפגנה
       </Text>

@@ -43,7 +43,6 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
     setModalVisible(false);
   };
 
-  console.log(isModalVisible);
   return (
     <Modal
       propagateSwipe
@@ -63,7 +62,7 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
         rtl={isAndroid}
         containerStyle={styles.modalWrapper}
       >
-        <Box flex={1} style={{ alignItems: 'center', paddingHorizontal: 16, paddingBottom: 28 }}>
+        <Box flex={1} style={{ alignItems: 'center', paddingTop: 16, paddingHorizontal: 16, paddingBottom: 28 }}>
           <Image source={actIcon} style={{ width: 94, height: 94, marginBottom: 16 }} />
 
           <Text
@@ -145,7 +144,7 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
           />
         </Box>
 
-        <Box flex={1} style={{ alignItems: 'center', paddingHorizontal: 24 }}>
+        <Box flex={1} style={{ alignItems: 'center', paddingTop: 16, paddingHorizontal: 24 }}>
           <Box flexDirection="row" marginBottom="m" alignItems="center">
             <MotiView
               from={{ translateY: 0 }}
@@ -196,6 +195,7 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
     </Modal>
   );
 }
+
 export default observer(OnboardingmModal);
 
 const modalHeight = Dimensions.get('screen').height * 0.5;
@@ -208,8 +208,7 @@ const styles = StyleSheet.create({
   },
   modalWrapper: {
     maxHeight: modalHeight,
-    marginHorizontal: 16,
-    paddingTop: 16,
+    marginHorizontal: 24,
     borderRadius: 6,
     shadowColor: '#000000',
     shadowOpacity: 0.45,
