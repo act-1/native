@@ -44,7 +44,13 @@ function BaseMarker({
   }, [displayed, markerOpacity]);
 
   return (
-    <AnimatedMarker coordinate={coordinates} style={{ opacity: markerOpacity }} onPress={onPress} stopPropagation={true}>
+    <AnimatedMarker
+      centerOffset={{ x: 0, y: -32.5 }}
+      coordinate={coordinates}
+      style={{ opacity: markerOpacity }}
+      onPress={onPress}
+      stopPropagation={true}
+    >
       <Box style={[styles.markerBox, { height: markerWidth * fontScale, width: markerWidth * fontScale }, style]}>{children}</Box>
 
       <Box style={[styles.arrowContainer]}>

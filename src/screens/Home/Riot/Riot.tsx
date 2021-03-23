@@ -46,7 +46,7 @@ function Riot({ regionName }: { regionName: string }) {
         <Box overflow="hidden" borderRadius={8}>
           <MapView
             onPress={() => navigation.navigate('RiotMap')}
-            style={{ height: Platform.select({ ios: 320, android: 270 }), width: '100%' }}
+            style={{ height: Platform.select({ ios: 150, android: 270 }), width: '100%' }}
             customMapStyle={mapStyle}
             maxZoomLevel={15}
             minZoomLevel={12.5}
@@ -58,20 +58,20 @@ function Riot({ regionName }: { regionName: string }) {
             initialRegion={{
               latitude: 31.774979,
               longitude: 35.217181,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              latitudeDelta: 0.003,
+              longitudeDelta: 0.00421,
             }}
           >
             <ProtestMarker
-              coordinates={{ latitude: 31.774979, longitude: 35.217181 }}
+              coordinates={{ latitude: 31.775302, longitude: 35.21766 }}
               counter={432}
               displayed={true}
               onPress={() => navigation.navigate('RiotMap')}
             />
-            <ReportMarker reportType="general" coordinates={{ latitude: 31.7724, longitude: 35.216181 }} displayed={true} />
+            <ReportMarker reportType="general" coordinates={{ latitude: 31.7756, longitude: 35.214581 }} displayed={true} />
             <ReportMarker
               reportType="policeViolence"
-              coordinates={{ latitude: 31.7734, longitude: 35.217181 }}
+              coordinates={{ latitude: 31.7834, longitude: 35.217181 }}
               displayed={true}
             />
           </MapView>

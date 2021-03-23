@@ -36,15 +36,15 @@ function OnboardingPermission({ finishOnboarding }: { finishOnboarding: () => vo
         cacheEnabled={true}
         mapPadding={{ right: -100, left: -100 }}
         initialRegion={{
-          latitude: 31.774979,
-          longitude: 35.217181,
-          latitudeDelta: 0.003,
+          latitude: 31.775567,
+          longitude: 35.217771,
+          latitudeDelta: 0.0036,
           longitudeDelta: 0.00421,
         }}
       >
-        <ProtestMarker coordinates={{ latitude: 31.774979, longitude: 35.217181 }} counter={432} displayed={true} />
-        <ReportMarker reportType="general" coordinates={{ latitude: 31.7624, longitude: 35.216181 }} displayed={true} />
-        <ReportMarker reportType="policeViolence" coordinates={{ latitude: 31.7734, longitude: 35.217181 }} displayed={true} />
+        <ProtestMarker coordinates={{ latitude: 31.775302, longitude: 35.21766 }} counter={432} displayed={true} />
+        <ReportMarker reportType="general" coordinates={{ latitude: 31.774676, longitude: 35.215251 }} displayed={true} />
+        <ReportMarker reportType="policeViolence" coordinates={{ latitude: 31.773956, longitude: 35.219077 }} displayed={true} />
       </MapView>
       <Text variant="largeTitle" color="primaryColor" marginBottom="s" textAlign="center" maxFontSizeMultiplier={1.15}>
         מצב הפגנה
