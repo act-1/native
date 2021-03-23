@@ -47,7 +47,7 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
     <Modal
       propagateSwipe
       isVisible={isModalVisible}
-      backdropOpacity={0.825}
+      backdropOpacity={0.65}
       animationIn="zoomIn"
       animationInTiming={400}
       animationOut="zoomOut"
@@ -62,7 +62,10 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
         rtl={isAndroid}
         containerStyle={styles.modalWrapper}
       >
-        <Box flex={1} style={{ alignItems: 'center', paddingTop: 16, paddingHorizontal: 16, paddingBottom: 28 }}>
+        <Box
+          flex={1}
+          style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 0, paddingHorizontal: 16, paddingBottom: 28 }}
+        >
           <Image source={actIcon} style={{ width: 94, height: 94, marginBottom: 16 }} />
 
           <Text
@@ -74,9 +77,6 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
             maxFontSizeMultiplier={1.15}
           >
             {Ivrita.genderize('ברוכים.ות הבאים.ות ל- ACT1', Ivrita[pronoun])}
-          </Text>
-          <Text variant="text" marginBottom="xm" textAlign="center" maxFontSizeMultiplier={1.15}>
-            רצינו להסביר בקצרה מה הולך כאן :)
           </Text>
           <Text variant="text" marginBottom="xm" textAlign="center" maxFontSizeMultiplier={1.15}>
             באפליקצייה יש 2 מצבים - מנוחה והפגנה
@@ -133,7 +133,7 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
             כשנאבקים לאורך זמן, חשוב לנוח בשביל לשמור על שפיות.
           </Text>
           <Text variant="text" marginBottom="xm" textAlign="center" maxFontSizeMultiplier={1.15}>
-            במצב מנוחה תוכלו לראות הפגנות קרובות, תמונות ועדכונים מרחבי הארץ.
+            כאן תוכלו לראות הפגנות קרובות, תמונות ועדכונים מרחבי הארץ.
           </Text>
           <RoundedButton
             color="yellow"
@@ -156,7 +156,10 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
                 delay: 0,
               }}
             >
-              <Image source={badDoodle} style={{ width: 65, height: 75, transform: [{ translateY: -30 }, { translateX: 10 }] }} />
+              <Image
+                source={badDoodle}
+                style={{ width: 65, height: 75, opacity: 0.8, transform: [{ translateY: -30 }, { translateX: 10 }] }}
+              />
             </MotiView>
             <Image source={humanDoodle} style={{ width: 110, height: 125 }} />
 
@@ -170,17 +173,17 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
                 delay: 0,
               }}
             >
-              <Image source={goodDoodle} style={{ width: 75, height: 69, transform: [{ translateX: -3 }] }} />
+              <Image source={goodDoodle} style={{ width: 75, height: 69, opacity: 0.8, transform: [{ translateX: -3 }] }} />
             </MotiView>
           </Box>
           <Text variant="largeTitle" color="primaryColor" marginBottom="s" textAlign="center" maxFontSizeMultiplier={1.15}>
             מצב הפגנה
           </Text>
           <Text variant="text" marginBottom="xm" textAlign="center" maxFontSizeMultiplier={1.15}>
-            מצב הפגנה יופעל אוטומטית כשתגיעו לאיזור הפגנה.
+            מצב הפגנה יופעל אוטומטית כשתגיעו לאיזור בו מתקיימת הפגנה.
           </Text>
           <Text variant="text" marginBottom="xm" textAlign="center" maxFontSizeMultiplier={1.15}>
-            מצב הפגנה מאפשר לקבל ולשלוח דיווחים, להעלות תמונות מהשטח ולראות כמה מפגינים באיזורכם.
+            תוכלו לקבל ולשלוח דיווחים, להעלות תמונות מהשטח ולראות כמה מפגינים באיזורכם.
           </Text>
           <RoundedButton
             color="yellow"
