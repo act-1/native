@@ -11,8 +11,9 @@ import RiotActions from './RiotActions';
 import { BlurView } from '@react-native-community/blur';
 import mapStyle from '@utils/mapStyle.json';
 import { useNavigation } from '@react-navigation/native';
-import ProtestMarker from '@screens/RiotMap/ProtestMarker';
-import TouchableScale from 'react-native-touchable-scale';
+
+import ProtestMarker from '@screens/RiotMap/Markers/ProtestMarker';
+import ReportMarker from '@screens/RiotMap/Markers/ReportMarker';
 
 const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   if (Platform.OS === 'android') {
@@ -50,6 +51,7 @@ function Riot({ regionName }: { regionName: string }) {
             maxZoomLevel={15}
             minZoomLevel={12.5}
             pitchEnabled={false}
+            showsCompass={false}
             loadingIndicatorColor="grey"
             loadingBackgroundColor="#222222"
             mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
@@ -63,7 +65,14 @@ function Riot({ regionName }: { regionName: string }) {
             <ProtestMarker
               coordinates={{ latitude: 31.774979, longitude: 35.217181 }}
               counter={432}
+              displayed={true}
               onPress={() => navigation.navigate('RiotMap')}
+            />
+            <ReportMarker reportType="general" coordinates={{ latitude: 31.7724, longitude: 35.216181 }} displayed={true} />
+            <ReportMarker
+              reportType="policeViolence"
+              coordinates={{ latitude: 31.7734, longitude: 35.217181 }}
+              displayed={true}
             />
           </MapView>
           <MapCounterView>

@@ -49,3 +49,10 @@ type Protest = {
   latitude: number;
   longitude: number;
 };
+
+type MarkerProps = {
+  coordinates: { latitude: number; longitude: number };
+  counter?: number | string;
+  onPress?: () => void;
+  displayed?: boolean;
+};
