@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Image, StatusBar, StyleSheet, ScrollView, Button, Pressable } from 'react-native';
+import { Image, StatusBar, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { HomeScreenProps } from '@types/navigation';
@@ -20,7 +20,6 @@ function Home({ navigation }: HomeScreenProps) {
   const { currentCheckIn } = checkInStore;
 
   useEffect(() => {
-    setModalVisible(true);
     setTimeout(() => {
       AsyncStorage.getItem('onboardingFinished').then((value) => {
         if (!value) {
@@ -54,7 +53,6 @@ function Home({ navigation }: HomeScreenProps) {
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
         {currentCheckIn ? <Riot regionName={currentCheckIn.locationRegion} /> : <Planner />}
         <OnboardingModal isModalVisible={modalVisible} setModalVisible={setModalVisible} />
-        <Button onPress={() => openModal()} title="asd" />
       </ScrollView>
     </>
   );

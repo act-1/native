@@ -46,7 +46,7 @@ function Riot({ regionName }: { regionName: string }) {
         <Box overflow="hidden" borderRadius={8}>
           <MapView
             onPress={() => navigation.navigate('RiotMap')}
-            style={{ height: Platform.select({ ios: 150, android: 270 }), width: '100%' }}
+            style={{ height: Platform.select({ ios: 320, android: 270 }), width: '100%' }}
             customMapStyle={mapStyle}
             maxZoomLevel={15}
             minZoomLevel={12.5}
@@ -86,7 +86,7 @@ function Riot({ regionName }: { regionName: string }) {
             >
               {regionCounter.toLocaleString()}
             </Ticker>
-            <Text variant="smallText" textAlign="center" fontWeight="600">
+            <Text variant="smallText" textAlign="center" fontWeight="600" maxFontSizeMultiplier={1.15}>
               באיזורך
             </Text>
           </MapCounterView>
