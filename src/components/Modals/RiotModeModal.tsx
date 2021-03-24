@@ -62,10 +62,10 @@ function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
         <Text variant="extraLargeTitle" color="green" textAlign="center" marginBottom="s">
           מצב הפגנה פעיל
         </Text>
-        <Text variant="text" fontWeight="500" color="lightText" textAlign="center" marginBottom="l">
+        <Text variant="text" fontWeight="500" textAlign="center" marginBottom="l">
           {Ivrita.genderize('איתרנו הפגנה פעילה באיזורכם.ן', Ivrita[userData.pronoun])}
         </Text>
-        <RoundedButton text="חזרה" onPress={() => setModalVisible(false)} color="yellow" style={{ opacity: 0.75 }} />
+        <RoundedButton text="חזרה" onPress={() => setModalVisible(false)} color="yellow" />
       </>
     );
   } else if (userStore.userLocationPermission === 'granted') {
