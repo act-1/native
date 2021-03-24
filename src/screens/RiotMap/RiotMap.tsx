@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { StyleSheet, Animated, Dimensions, Button } from 'react-native';
-import { Box, Text, CircularButton, StatusBarBlurBackground } from '../../components';
+import { Dimensions } from 'react-native';
+import { Box, CircularButton, StatusBarBlurBackground } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 
@@ -94,6 +94,7 @@ function RiotMap({ navigation, route }: RiotMapProps) {
             bottomSheetRef.current?.snapTo(1);
           }
         }}
+        customMapStyle={mapStyle}
         maxZoomLevel={16}
         minZoomLevel={7}
         onRegionChangeComplete={onMapMoveCompletion}
@@ -117,8 +118,13 @@ function RiotMap({ navigation, route }: RiotMapProps) {
             />
           );
         })}
-        <RegionMarker displayed={mapZoom > 1.35} coordinates={{ latitude: 31.774979, longitude: 35.217181 }} counter={200} />
-        <RegionMarker displayed={mapZoom > 1.35} coordinates={{ latitude: 32.072387, longitude: 34.7817674 }} counter={568} />
+        {Object.values(mapStore.regions).map((region) => (
+          <RegionMarker
+            displayed={mapZoom > 1.35}
+            coordinates={{ latitude: region.latitude, longitude: region.longitude }}
+            counter={region.counter}
+          />
+        ))}
       </MapView>
       <RiotMapBottomSheet
         protest={selectedProtest}
