@@ -55,7 +55,7 @@ function RiotMap({ navigation }: RiotMapProps) {
 
   const onMapMoveCompletion = (region: Region) => {
     // Update zoom state for region markers only when there are > 4 live protests
-    // if (mapStore.protests.length > 4) setMapZoom(region.latitudeDelta);
+    setMapZoom(region.latitudeDelta);
   };
 
   // useEffect(() => {
@@ -93,15 +93,18 @@ function RiotMap({ navigation }: RiotMapProps) {
           longitudeDelta: LONGITUDE_DELTA,
         }}
       >
-        {mapStore.protests.map((protest: Protest) => (
-          <ProtestMarker
-            key={protest.id}
-            coordinates={{ latitude: protest.latitude, longitude: protest.longitude }}
-            counter={protest.counter}
-            onPress={() => onMarkerPress(protest)}
-            displayed={mapZoom < 1.35}
-          />
-        ))}
+        {mapStore.protests.map((protest: Protest) => {
+          if (!protest.id || !protest.latitude || !protest.longitude) return null;
+          return (
+            <ProtestMarker
+              key={protest.id}
+              coordinates={{ latitude: protest.latitude, longitude: protest.longitude }}
+              counter={protest.counter}
+              onPress={() => onMarkerPress(protest)}
+              displayed={mapZoom < 1.35}
+            />
+          );
+        })}
         <RegionMarker displayed={mapZoom > 1.35} coordinates={{ latitude: 31.774979, longitude: 35.217181 }} counter={200} />
         <RegionMarker displayed={mapZoom > 1.35} coordinates={{ latitude: 32.072387, longitude: 34.7817674 }} counter={568} />
       </MapView>

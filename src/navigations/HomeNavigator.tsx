@@ -29,7 +29,7 @@ function HomeNavigator({ navigation }) {
         headerLeft: () => (
           <Pressable
             onPress={() => navigation.navigate('Secondary', { screen: 'Settings' })}
-            style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginLeft: 6 }}
+            style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginLeft: 8 }}
           >
             <Icon name="settings" size={22} color="#747474" />
           </Pressable>

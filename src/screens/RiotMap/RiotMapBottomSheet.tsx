@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, Ref } from 'react';
-import { StyleSheet, Animated } from 'react-native';
+import { StyleSheet, Animated, PixelRatio } from 'react-native';
 import { Box, Text, CircularButton } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -14,11 +14,14 @@ type RiotMapBottomSheetProps = {
   setCurrentSheetIndex: (index: number) => void;
 };
 
+let fontScale = PixelRatio.getFontScale();
+if (fontScale > 1.15) fontScale = 1.15;
+
 function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, currentSheetIndex, protest }: RiotMapBottomSheetProps) {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const picturesOpacity = useRef(new Animated.Value(0)).current;
-  const snapPoints = useMemo(() => [0, 50 + insets.bottom, 195 + insets.bottom], [insets.bottom]);
+  const snapPoints = useMemo(() => [0, 60 * fontScale + insets.bottom, 210 * fontScale + insets.bottom], [insets.bottom]);
 
   const onSheetAnimation = useCallback(
     (fromIndex: number, toIndex: number) => {

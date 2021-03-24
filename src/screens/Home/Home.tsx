@@ -5,17 +5,20 @@ import { useStore } from '../../stores';
 import { HomeScreenProps } from '@types/navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OnboardingModal from '@components/Modals/OnboardingModal';
+import { View as MotiView } from 'moti';
 import Icon from 'react-native-vector-icons/Feather';
 
 import Planner from './Planner';
 import Riot from './Riot';
+import { RiotModeModal } from '@components/Modals';
 
 const locationOffIcon = require('@assets/icons/location-off.png');
 const riotOffIcon = require('@assets/icons/riot-mode-off.png');
 const riotOnIcon = require('@assets/icons/riot-mode-on.png');
 
 function Home({ navigation }: HomeScreenProps) {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [onboardingVisible, setOnboardingVisible] = useState(false);
+  const [riotModalVisible, setRiotModalVisible] = useState(false);
   const { userStore, checkInStore } = useStore();
   const { currentCheckIn } = checkInStore;
 
@@ -23,7 +26,7 @@ function Home({ navigation }: HomeScreenProps) {
     setTimeout(() => {
       AsyncStorage.getItem('onboardingFinished').then((value) => {
         if (!value) {
-          setModalVisible(true);
+          setOnboardingVisible(true);
         }
       });
     }, 1500);
@@ -31,17 +34,33 @@ function Home({ navigation }: HomeScreenProps) {
 
   useLayoutEffect(() => {
     let iconSource = locationOffIcon;
+    let playIconAnimation = false;
+
     if (userStore.userLocationPermission === 'granted') iconSource = riotOffIcon;
-    if (currentCheckIn) iconSource = riotOnIcon;
+    if (currentCheckIn) {
+      iconSource = riotOnIcon;
+      playIconAnimation = true;
+    }
 
     navigation.setOptions({
       headerRight: () => (
-        <Pressable style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginRight: 6 }}>
-          <Image source={iconSource} />
+        <Pressable
+          onPress={() => setRiotModalVisible(true)}
+          style={{
+            alignItems: 'center',
+            padding: 6,
+            justifyContent: 'center',
+            borderRadius: 50,
+            marginRight: 8,
+          }}
+        >
+          <MotiView from={{ opacity: 1 }} animate={{ opacity: 0.7 }} transition={{ loop: playIconAnimation, duration: 1250 }}>
+            <Image source={iconSource} style={{ height: 26, maxWidth: 26, resizeMode: 'contain' }} />
+          </MotiView>
         </Pressable>
       ),
     });
-  }, [navigation, userStore.userLocationPermission]);
+  }, [navigation, userStore.userLocationPermission, currentCheckIn]);
 
   return (
     <>
@@ -52,7 +71,8 @@ function Home({ navigation }: HomeScreenProps) {
       >
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
         {currentCheckIn ? <Riot regionName={currentCheckIn.locationRegion} /> : <Planner />}
-        <OnboardingModal isModalVisible={modalVisible} setModalVisible={setModalVisible} />
+        <OnboardingModal isModalVisible={onboardingVisible} setModalVisible={setOnboardingVisible} />
+        <RiotModeModal isModalVisible={riotModalVisible} setModalVisible={setRiotModalVisible} />
       </ScrollView>
     </>
   );

@@ -47,9 +47,10 @@ function BaseMarker({
     <AnimatedMarker
       centerOffset={{ x: 0, y: -32.5 }}
       coordinate={coordinates}
-      style={{ opacity: markerOpacity }}
+      style={{ opacity: markerOpacity, overflow: 'visible' }}
       onPress={onPress}
       stopPropagation={true}
+      tracksViewChanges={false}
     >
       <Box style={[styles.markerBox, { height: markerWidth * fontScale, width: markerWidth * fontScale }, style]}>{children}</Box>
 
@@ -68,12 +69,15 @@ const styles = StyleSheet.create({
   markerBox: {
     justifyContent: 'center',
     backgroundColor: '#fff',
-    borderWidth: 3.5,
+    borderWidth: 3,
     borderColor: '#DFDFDF',
     borderRadius: 4,
+    overflow: 'visible',
+    zIndex: 1,
   },
   arrowContainer: {
     position: 'absolute',
-    bottom: -16.5 * fontScale,
+    bottom: -17 * fontScale,
+    zIndex: 10,
   },
 });

@@ -13,6 +13,7 @@ type RoundedButtonProps = {
   textStyle?: TextStyle;
   loading?: boolean;
   disabled?: boolean;
+  transparent?: boolean;
 };
 
 function getButtonDimenions(size: string): ViewStyle {
@@ -46,6 +47,7 @@ function RoundedButton({
   textStyle,
   loading = false,
   disabled = false,
+  transparent = false,
 }: RoundedButtonProps) {
   const [pressed, setPressed] = useState(false);
   let { initialColor, pressedColor, textColor } = buttonColors[disabled ? 'grey' : color];
@@ -54,6 +56,10 @@ function RoundedButton({
   // Override button dimensions.
   if (style?.width) buttonDimensions.width = style.width;
   if (style?.height) buttonDimensions.height = style.height;
+  if (transparent) {
+    initialColor = 'transparent';
+    pressedColor = 'transparent';
+  }
 
   return (
     <Box

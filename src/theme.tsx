@@ -54,6 +54,8 @@ const theme = createTheme({
     seperator: palette.metal,
     link: palette.blue,
     yellow: palette.yellow,
+    lightGreen: palette.greenLight,
+    green: palette.greenPrimary,
   },
   spacing: {
     xxs: 2,

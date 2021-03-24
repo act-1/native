@@ -56,3 +56,8 @@ type MarkerProps = {
   onPress?: () => void;
   displayed?: boolean;
 };
+
+type ModalProps = {
+  isModalVisible: boolean;
+  setModalVisible: (modalVisible: boolean) => void;
+};

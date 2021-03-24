@@ -52,5 +52,10 @@ const styles = StyleSheet.create({
     borderColor: '#ffc7c7',
     borderWidth: 2,
     borderRadius: 50,
+    shadowColor: '#000000',
+    shadowOpacity: 0.45,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 3,
+    elevation: 4,
   },
 });
