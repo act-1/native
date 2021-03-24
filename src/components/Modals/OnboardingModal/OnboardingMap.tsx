@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView from 'react-native-maps';
+import mapStyle from '@utils/mapStyle.json';
 
 import ProtestMarker from '@screens/RiotMap/Markers/ProtestMarker';
 import ReportMarker from '@screens/RiotMap/Markers/ReportMarker';
@@ -13,6 +14,8 @@ export default function OnboardingMap() {
         pitchEnabled={false}
         zoomEnabled={false}
         cacheEnabled={true}
+        scrollEnabled={false}
+        customMapStyle={mapStyle}
         mapPadding={{ right: -100, left: -100 }}
         initialRegion={{
           latitude: 31.775567,

@@ -1,19 +1,25 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, Platform } from 'react-native';
 import { Box, Text } from '../../../components';
 import BaseMarker from './BaseMarker';
+
+// Android displays the counter incorrectly
+const isAndroid = Platform.OS === 'android';
 
 function ProtestMarker(props: MarkerProps) {
   return (
     <BaseMarker {...props} arrowFillColor="#DFDFDF">
       <>
+        {!isAndroid && (
+          <Box style={styles.counterContainer}>
+            <Text variant="smallText">{props.counter}</Text>
+          </Box>
+        )}
+
         <Image
           source={{ uri: 'https://res.cloudinary.com/act1/image/upload/v1614841512/featured_pictures/balfur-rabaati.jpg' }}
           style={{ width: '100%', height: '100%' }}
         />
-        <Box style={styles.counterContainer}>
-          <Text variant="smallText">{props.counter}</Text>
-        </Box>
       </>
     </BaseMarker>
   );

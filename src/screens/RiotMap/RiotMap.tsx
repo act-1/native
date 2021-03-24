@@ -93,7 +93,7 @@ function RiotMap({ navigation }: RiotMapProps) {
           longitudeDelta: LONGITUDE_DELTA,
         }}
       >
-        {mapStore.protests.map((protest: Protest) => (
+        {/* {mapStore.protests.map((protest: Protest) => (
           <ProtestMarker
             key={protest.id}
             coordinates={{ latitude: protest.latitude, longitude: protest.longitude }}
@@ -101,7 +101,7 @@ function RiotMap({ navigation }: RiotMapProps) {
             onPress={() => onMarkerPress(protest)}
             displayed={mapZoom < 1.35}
           />
-        ))}
+        ))} */}
         <RegionMarker displayed={mapZoom > 1.35} coordinates={{ latitude: 31.774979, longitude: 35.217181 }} counter={200} />
         <RegionMarker displayed={mapZoom > 1.35} coordinates={{ latitude: 32.072387, longitude: 34.7817674 }} counter={568} />
       </MapView>
