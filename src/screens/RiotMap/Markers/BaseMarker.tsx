@@ -78,5 +78,6 @@ const styles = StyleSheet.create({
   arrowContainer: {
     position: 'absolute',
     bottom: -17 * fontScale,
+    zIndex: 10,
   },
 });
