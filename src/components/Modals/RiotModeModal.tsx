@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Image, Dimensions, Platform, AppState } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Image, Platform, AppState, AppStateStatus, ActivityIndicator } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { requestLocationPermission } from '@utils/location-utils';
@@ -10,15 +10,13 @@ import Ivrita from 'ivrita';
 import { View as MotiView } from 'moti';
 
 const locationOffIcon = require('@assets/icons/location-off.png');
-const riotOffIcon = require('@assets/icons/riot-mode-off.png');
 const riotOnIcon = require('@assets/icons/riot-mode-on.png');
-
-const { width: deviceWidth } = Dimensions.get('screen');
 
 function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
   const { userStore, checkInStore } = useStore();
   const { currentCheckIn } = checkInStore;
   const { userLocationPermission, userCurrentPosition, userData } = userStore;
+  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
 
   // Listen to location permission setting change if the user changed permission through the device settings.
   React.useEffect(() => {
@@ -38,13 +36,27 @@ function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
   }, []);
 
   const requestLocation = async () => {
-    await requestLocationPermission();
-    userStore.initUserLocation();
+    try {
+      await requestLocationPermission();
+      setIsLoadingLocation(true);
+      await userStore.initUserLocation();
+      await checkInStore.isRiotAround();
+      setIsLoadingLocation(false);
+    } catch (err) {
+      setIsLoadingLocation(false);
+      throw err;
+    }
   };
 
   let modalContent = null;
 
-  if (currentCheckIn) {
+  if (isLoadingLocation) {
+    modalContent = (
+      <Box minHeight={225} justifyContent="center">
+        <ActivityIndicator size="large" color="grey" />
+      </Box>
+    );
+  } else if (currentCheckIn) {
     modalContent = (
       <>
         <MotiView

@@ -46,10 +46,16 @@ function Home({ navigation }: HomeScreenProps) {
       headerRight: () => (
         <Pressable
           onPress={() => setRiotModalVisible(true)}
-          style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginRight: 8 }}
+          style={{
+            alignItems: 'center',
+            padding: 6,
+            justifyContent: 'center',
+            borderRadius: 50,
+            marginRight: 8,
+          }}
         >
           <MotiView from={{ opacity: 1 }} animate={{ opacity: 0.7 }} transition={{ loop: playIconAnimation, duration: 1250 }}>
-            <Image source={iconSource} style={{ width: 26, resizeMode: 'contain' }} />
+            <Image source={iconSource} style={{ height: 26, maxWidth: 26, resizeMode: 'contain' }} />
           </MotiView>
         </Pressable>
       ),
