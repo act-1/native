@@ -8,6 +8,9 @@ import Modal from 'react-native-modal';
 import { Box, Text, RoundedButton } from '../';
 
 const locationOffIcon = require('@assets/icons/location-off.png');
+const riotOffIcon = require('@assets/icons/riot-mode-off.png');
+const riotOnIcon = require('@assets/icons/riot-mode-on.png');
+
 const { width: deviceWidth } = Dimensions.get('screen');
 
 function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
@@ -38,6 +41,18 @@ function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
   };
 
   let modalContent = null;
+
+  if (currentCheckIn) {
+    modalContent = (
+      <>
+        <Image source={riotOnIcon} style={{ marginBottom: 16 }} />
+
+        <Text variant="largeTitle" style={{ color: '#f67272' }} textAlign="center" marginBottom="xm">
+          מצב הפגנה פעיל
+        </Text>
+      </>
+    );
+  }
 
   if (userStore.userLocationPermission !== 'granted') {
     if (userLocationPermission === 'blocked') {
@@ -128,8 +143,6 @@ function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
   );
 }
 export default observer(RiotModeModal);
-
-const modalHeight = Dimensions.get('screen').height * 0.48;
 
 const styles = StyleSheet.create({
   modalImage: {
