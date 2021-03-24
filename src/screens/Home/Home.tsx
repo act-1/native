@@ -9,13 +9,15 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import Planner from './Planner';
 import Riot from './Riot';
+import { RiotModeModal } from '@components/Modals';
 
 const locationOffIcon = require('@assets/icons/location-off.png');
 const riotOffIcon = require('@assets/icons/riot-mode-off.png');
 const riotOnIcon = require('@assets/icons/riot-mode-on.png');
 
 function Home({ navigation }: HomeScreenProps) {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [onboardingVisible, setOnboardingVisible] = useState(false);
+  const [riotModalVisible, setRiotModalVisible] = useState(false);
   const { userStore, checkInStore } = useStore();
   const { currentCheckIn } = checkInStore;
 
@@ -36,7 +38,10 @@ function Home({ navigation }: HomeScreenProps) {
 
     navigation.setOptions({
       headerRight: () => (
-        <Pressable style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginRight: 6 }}>
+        <Pressable
+          onPress={() => setRiotModalVisible(true)}
+          style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginRight: 6 }}
+        >
           <Image source={iconSource} />
         </Pressable>
       ),
@@ -52,7 +57,8 @@ function Home({ navigation }: HomeScreenProps) {
       >
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
         {currentCheckIn ? <Riot regionName={currentCheckIn.locationRegion} /> : <Planner />}
-        <OnboardingModal isModalVisible={modalVisible} setModalVisible={setModalVisible} />
+        <OnboardingModal isModalVisible={onboardingVisible} setModalVisible={setOnboardingVisible} />
+        <RiotModeModal isModalVisible={riotModalVisible} setModalVisible={setRiotModalVisible} />
       </ScrollView>
     </>
   );
