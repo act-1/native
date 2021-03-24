@@ -6,7 +6,6 @@ import { HomeScreenProps } from '@types/navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OnboardingModal from '@components/Modals/OnboardingModal';
 import { View as MotiView } from 'moti';
-import Icon from 'react-native-vector-icons/Feather';
 
 import Planner from './Planner';
 import Riot from './Riot';
@@ -70,7 +69,7 @@ function Home({ navigation }: HomeScreenProps) {
         showsVerticalScrollIndicator={false}
       >
         <StatusBar backgroundColor="#0a0a0a" barStyle="light-content" networkActivityIndicatorVisible={false} />
-        {currentCheckIn ? <Riot regionName={currentCheckIn.locationRegion} /> : <Planner />}
+        {currentCheckIn ? <Riot navigation={navigation} /> : <Planner />}
         <OnboardingModal isModalVisible={onboardingVisible} setModalVisible={setOnboardingVisible} />
         <RiotModeModal isModalVisible={riotModalVisible} setModalVisible={setRiotModalVisible} />
       </ScrollView>

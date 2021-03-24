@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { StyleSheet, Animated, Dimensions } from 'react-native';
+import { StyleSheet, Animated, Dimensions, Button } from 'react-native';
 import { Box, Text, CircularButton, StatusBarBlurBackground } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
@@ -18,7 +18,7 @@ const { height, width } = Dimensions.get('window');
 const LATITUDE_DELTA = 0.5;
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
 
-function RiotMap({ navigation }: RiotMapProps) {
+function RiotMap({ navigation, route }: RiotMapProps) {
   const { mapStore } = useStore();
   const insets = useSafeAreaInsets();
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -58,6 +58,19 @@ function RiotMap({ navigation }: RiotMapProps) {
     setMapZoom(region.latitudeDelta);
   };
 
+  useEffect(() => {
+    if (route.params?.initialCoordinates) {
+      mapRef.current?.animateToRegion(
+        {
+          ...route.params.initialCoordinates,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA,
+        },
+        500
+      );
+    }
+  }, [route.params]);
+
   // useEffect(() => {
   //   // Workaround to refresh the bottom sheet ref initially
   //   if (mapStore.protests.length > 0) {
@@ -70,13 +83,12 @@ function RiotMap({ navigation }: RiotMapProps) {
   return (
     <Box flex={1}>
       <StatusBarBlurBackground blurType="dark" />
-      <Box position="absolute" zIndex={3} top={insets.top + 7.5} left={7.5} opacity={0.97}>
+      <Box zIndex={15} position="absolute" top={insets.top + 7.5} left={7.5} opacity={0.97}>
         <CircularButton iconName={'x'} color="grey" size="large" onPress={() => navigation.goBack()} />
       </Box>
       <MapView
         ref={mapRef}
         style={{ flex: 1 }}
-        customMapStyle={mapStyle}
         onTouchStart={() => {
           if (currentSheetIndex === 2) {
             bottomSheetRef.current?.snapTo(1);
@@ -119,5 +131,3 @@ function RiotMap({ navigation }: RiotMapProps) {
 }
 
 export default observer(RiotMap);
-
-const styles = StyleSheet.create({});

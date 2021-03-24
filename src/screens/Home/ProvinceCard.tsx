@@ -1,14 +1,16 @@
 import React from 'react';
 import { ImageBackground, ViewStyle } from 'react-native';
-import { Box, Text } from '../../components';
+import { Box, Text, Ticker } from '../../components';
 import LinearGradient from 'react-native-linear-gradient';
 import TouchableScale from 'react-native-touchable-scale';
 
-type ProvinceCardProps = { province: string; counter: number; imageUrl: string; containerStyle?: ViewStyle };
+type ProvinceCardProps = { province: string; counter: number; imageUrl: string; onPress: () => void; containerStyle?: ViewStyle };
 
-function ProvinceCard({ province, counter, imageUrl, containerStyle }: ProvinceCardProps) {
+function ProvinceCard({ province, counter, imageUrl, onPress, containerStyle }: ProvinceCardProps) {
+  if (!imageUrl) return null;
+
   return (
-    <TouchableScale activeScale={0.96} friction={20} style={containerStyle}>
+    <TouchableScale activeScale={0.96} friction={20} onPress={onPress} style={containerStyle}>
       <ImageBackground
         style={{ width: '100%', height: 180, justifyContent: 'flex-end' }}
         imageStyle={{ borderRadius: 6 }}
@@ -25,9 +27,12 @@ function ProvinceCard({ province, counter, imageUrl, containerStyle }: ProvinceC
             <Text variant="extraLargeTitle" color="lightText">
               {province}
             </Text>
-            <Text variant="largeTitle" color="primaryColor" fontFamily="AtlasDL3.1AAA-Medium">
-              {counter} מפגינים
-            </Text>
+            <Box flexDirection="row">
+              <Ticker textStyle={{ fontFamily: 'AtlasDL3.1AAA-Medium', fontSize: 20, color: '#eb524b' }}>{counter}</Ticker>
+              <Text variant="largeTitle" color="primaryColor" fontFamily="AtlasDL3.1AAA-Medium" style={{ marginLeft: 6 }}>
+                מפגינים
+              </Text>
+            </Box>
           </Box>
         </Box>
       </ImageBackground>
@@ -35,4 +40,4 @@ function ProvinceCard({ province, counter, imageUrl, containerStyle }: ProvinceC
   );
 }
 
-export default ProvinceCard;
+export default React.memo(ProvinceCard);

@@ -55,7 +55,7 @@ export type RootStackParamList = {
   CheckInPrivacy: undefined;
   ProtestDashboard: undefined;
   ProtestChat: undefined;
-  RiotMap: undefined;
+  RiotMap: { initialCoordinates?: { latitude: number; longitude: number } };
   RecentPictures: { initialIndex?: number };
   UploadPreview: { image: ImagePickerResponse };
 };

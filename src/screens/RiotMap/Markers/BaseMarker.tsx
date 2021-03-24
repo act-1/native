@@ -73,11 +73,9 @@ const styles = StyleSheet.create({
     borderColor: '#DFDFDF',
     borderRadius: 4,
     overflow: 'visible',
-    zIndex: 1,
   },
   arrowContainer: {
     position: 'absolute',
     bottom: -17 * fontScale,
-    zIndex: 10,
   },
 });

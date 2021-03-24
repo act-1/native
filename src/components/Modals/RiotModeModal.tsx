@@ -107,7 +107,7 @@ function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
             יש לאפשר שימוש בשירותי המיקום על מנת להכנס למצב הפגנה
           </Text>
           <Text variant="text" textAlign="center" color="lightText" paddingHorizontal="xm" marginBottom="xm">
-            מיקומכם יישמר על גבי מכשירכם בלבד ולא יעבור אלינו
+            מיקומכם יישמר במכשירכם בלבד ולא יעבור אלינו
           </Text>
 
           <RoundedButton
@@ -129,7 +129,7 @@ function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
               שירותי המיקום מנוטרלים.
             </Text>
             <Text variant="importantText" fontWeight="500" textAlign="center" marginBottom="xm">
-              על מנת למצוא הפגנות באיזורכם, יש לאפשר שימוש בשירותי המיקום.
+              יש לאפשר שימוש בשירותי המיקום על מנת להכנס למצב הפגנה
             </Text>
           </Box>
 
@@ -153,7 +153,7 @@ function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
             על מנת להכנס למצב הפגנה יש לאפשר שימוש בשירותי המיקום
           </Text>
           <Text variant="text" textAlign="center" color="lightText" paddingHorizontal="xm" marginBottom="l">
-            מיקומכם נשמר על גבי מכשירכם בלבד ולא עובר אלינו
+            מיקומכם יישמר במכשירכם בלבד ולא יעבור אלינו
           </Text>
           <RoundedButton text="הפעלת שירותי מיקום" onPress={() => requestLocation()} color="blue" style={{ marginBottom: 8 }} />
           <RoundedButton

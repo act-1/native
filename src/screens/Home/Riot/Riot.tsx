@@ -3,10 +3,13 @@ import { StyleSheet, Platform } from 'react-native';
 import { Box, Text, Ticker, RoundedButton, CircularButton } from '../../../components';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../stores';
+import { Region } from '@types/collections';
 import MapView from 'react-native-maps';
 import EventPagePictures from '../../EventPage/EventPagePictures';
 import ProvinceCard from '../ProvinceCard';
-import useRiotCounter from '../../../hooks/useRiotCounter';
+
+import useTotalCounter from '../../../hooks/useTotalCounter';
+
 import RiotActions from './RiotActions';
 import { BlurView } from '@react-native-community/blur';
 import mapStyle from '@utils/mapStyle.json';
@@ -14,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import ProtestMarker from '@screens/RiotMap/Markers/ProtestMarker';
 import ReportMarker from '@screens/RiotMap/Markers/ReportMarker';
+import { HomeScreenProps } from '@types/navigation';
 
 const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   if (Platform.OS === 'android') {
@@ -33,10 +37,9 @@ const MapCounterView = ({ children }: { children: React.ReactNode }) => {
   }
 };
 
-function Riot({ regionName }: { regionName: string }) {
-  const { userStore, eventStore, checkInStore } = useStore();
-  const [regionCounter, totalCounter] = useRiotCounter(regionName);
-  const navigation = useNavigation();
+function Riot({ navigation }: HomeScreenProps) {
+  const { userStore, eventStore, checkInStore, mapStore } = useStore();
+  const totalCounter = useTotalCounter();
 
   const { currentCheckIn } = checkInStore;
 
@@ -76,16 +79,30 @@ function Riot({ regionName }: { regionName: string }) {
             />
           </MapView>
           <MapCounterView>
-            <Ticker
-              textStyle={{
-                fontFamily: 'AtlasDL3.1AAA-Bold',
-                fontSize: 18,
-                textAlign: 'center',
-                color: '#eb524b',
-              }}
-            >
-              {regionCounter.toLocaleString()}
-            </Ticker>
+            {mapStore?.regions[currentCheckIn.locationRegion]?.counter ? (
+              <Ticker
+                textStyle={{
+                  fontFamily: 'AtlasDL3.1AAA-Bold',
+                  fontSize: 18,
+                  textAlign: 'center',
+                  color: '#eb524b',
+                }}
+              >
+                {mapStore?.regions[currentCheckIn.locationRegion]?.counter.toLocaleString() || 0}
+              </Ticker>
+            ) : (
+              <Text
+                style={{
+                  fontFamily: 'AtlasDL3.1AAA-Bold',
+                  fontSize: 18,
+                  textAlign: 'center',
+                  color: '#eb524b',
+                }}
+              >
+                --
+              </Text>
+            )}
+
             <Text variant="smallText" textAlign="center" fontWeight="600" maxFontSizeMultiplier={1.15}>
               באיזורך
             </Text>
@@ -132,29 +149,27 @@ function Riot({ regionName }: { regionName: string }) {
         </Ticker>
 
         <Text variant="largeTitle" textAlign="center" paddingHorizontal="m" marginBottom="xm">
-          מפגינים עכשיו בכל הארץ
+          מפגינים עכשיו ברחבי הארץ
         </Text>
       </Box>
 
-      <Box backgroundColor="seperator" width="100%" height={4} marginBottom="l" />
+      <Box backgroundColor="seperator" width="100%" height={4} marginBottom="xm" />
       <Box paddingHorizontal="m">
-        <ProvinceCard
-          province="ירושלים"
-          counter={194}
-          imageUrl="https://firebasestorage.googleapis.com/v0/b/act1co.appspot.com/o/uploaded_pictures%2FAE2185BD-C838-498E-BB24-90C0EC6E9195.jpg?alt=media&token=c3d9e825-a168-47ba-b4d6-8eb41283587d"
-          containerStyle={{ marginBottom: 12 }}
-        />
-        <ProvinceCard
-          province="תל אביב"
-          counter={932}
-          imageUrl="https://res.cloudinary.com/act1/image/upload/v1614841195/featured_pictures/purimistors.jpg"
-          containerStyle={{ marginBottom: 12 }}
-        />
-        <ProvinceCard
-          province="חיפה"
-          counter={283}
-          imageUrl="https://res.cloudinary.com/act1/image/upload/v1615733637/featured_pictures/main_image44730_medium_hme0rv.jpg"
-        />
+        {Object.values(mapStore.regions)
+          .filter((region: Region) => region.counter > 50)
+          .sort((a: Region, b: Region) => b.counter - a.counter)
+          .map((region: Region) => (
+            <ProvinceCard
+              key={region.id}
+              onPress={() =>
+                navigation.navigate('RiotMap', { initialCoordinates: { latitude: region.latitude, longitude: region.longitude } })
+              }
+              province={region.name}
+              counter={region.counter!}
+              imageUrl={region.thumbnail!}
+              containerStyle={{ marginBottom: 12 }}
+            />
+          ))}
       </Box>
     </>
   );

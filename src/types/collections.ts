@@ -157,6 +157,11 @@ export type ChatMessage = ChatTextMessage | ChatImageMessage;
 export type Region = {
   id: string;
   name: string;
+  city: string;
+  latitude: number;
+  longitude: number;
   isActive: boolean;
+  thumbnail?: string;
+  counter?: number;
   expireAt: FirebaseFirestoreTypes.Timestamp;
 };
