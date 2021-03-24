@@ -97,7 +97,10 @@ export default function RiotActions({ expand }) {
         </ContextMenuButton> */}
         <ContextMenuButton
           isMenuPrimaryAction={true}
-          onPressMenuItem={({ nativeEvent }) => handleImageMenuPress(nativeEvent.actionKey)}
+          onPressMenuItem={({ nativeEvent }) => {
+            HapticFeedback.trigger('impactLight');
+            handleImageMenuPress(nativeEvent.actionKey);
+          }}
           menuConfig={{
             menuTitle: '',
             menuItems: [
