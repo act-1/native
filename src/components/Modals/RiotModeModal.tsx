@@ -1,14 +1,9 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
-import { Box, Text } from '../';
-import { RoundedButton } from '../Buttons';
 import Modal from 'react-native-modal';
+import { Box, Text, RoundedButton } from '../';
 
-type CheckInModalProps = {
-  isModalVisible: boolean;
-  setModalVisible: (modalVisible: boolean) => void;
-};
-function CheckInModal({ isModalVisible, setModalVisible }: CheckInModalProps) {
+function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
   return (
     <Modal
       isVisible={isModalVisible}
@@ -25,7 +20,7 @@ function CheckInModal({ isModalVisible, setModalVisible }: CheckInModalProps) {
     </Modal>
   );
 }
-export default CheckInModal;
+export default RiotModeModal;
 
 const modalHeight = Dimensions.get('screen').height * 0.48;
 
