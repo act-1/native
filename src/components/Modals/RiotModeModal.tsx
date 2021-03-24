@@ -6,6 +6,8 @@ import { requestLocationPermission } from '@utils/location-utils';
 import { openSettings } from 'react-native-permissions';
 import Modal from 'react-native-modal';
 import { Box, Text, RoundedButton } from '../';
+import Ivrita from 'ivrita';
+import { View as MotiView } from 'moti';
 
 const locationOffIcon = require('@assets/icons/location-off.png');
 const riotOffIcon = require('@assets/icons/riot-mode-off.png');
@@ -16,7 +18,7 @@ const { width: deviceWidth } = Dimensions.get('screen');
 function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
   const { userStore, checkInStore } = useStore();
   const { currentCheckIn } = checkInStore;
-  const { userLocationPermission, userCurrentPosition } = userStore;
+  const { userLocationPermission, userCurrentPosition, userData } = userStore;
 
   // Listen to location permission setting change if the user changed permission through the device settings.
   React.useEffect(() => {
@@ -45,11 +47,38 @@ function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
   if (currentCheckIn) {
     modalContent = (
       <>
-        <Image source={riotOnIcon} style={{ marginBottom: 16 }} />
-
-        <Text variant="largeTitle" style={{ color: '#f67272' }} textAlign="center" marginBottom="xm">
+        <MotiView
+          from={{ opacity: 1, scale: 1.075 }}
+          animate={{ opacity: 0.6, scale: 1 }}
+          transition={{
+            loop: true,
+            type: 'timing',
+            duration: 1500,
+            delay: 0,
+          }}
+        >
+          <Image source={riotOnIcon} style={{ height: 90, resizeMode: 'contain', marginBottom: 12 }} />
+        </MotiView>
+        <Text variant="extraLargeTitle" color="green" textAlign="center" marginBottom="s">
           מצב הפגנה פעיל
         </Text>
+        <Text variant="text" fontWeight="500" color="lightText" textAlign="center" marginBottom="l">
+          {Ivrita.genderize('איתרנו הפגנה פעילה באיזורכם.ן', Ivrita[userData.pronoun])}
+        </Text>
+        <RoundedButton text="חזרה" onPress={() => setModalVisible(false)} color="yellow" style={{ opacity: 0.75 }} />
+      </>
+    );
+  } else if (userStore.userLocationPermission === 'granted') {
+    modalContent = (
+      <>
+        <Image source={riotOnIcon} style={{ height: 90, resizeMode: 'contain', marginBottom: 12, opacity: 0.7 }} />
+        <Text variant="extraLargeTitle" color="primaryColor" textAlign="center" marginBottom="s">
+          מצב הפגנה כבוי
+        </Text>
+        <Text variant="text" fontWeight="500" color="lightText" textAlign="center" marginBottom="l">
+          {Ivrita.genderize('מצב הפגנה יופעל אוטומטית כשתהיו קרובים.ות להפגנה פעילה', Ivrita[userData.pronoun])}
+        </Text>
+        <RoundedButton text="חזרה" onPress={() => setModalVisible(false)} color="yellow" style={{ opacity: 0.9 }} />
       </>
     );
   }
@@ -105,14 +134,14 @@ function RiotModeModal({ isModalVisible, setModalVisible }: ModalProps) {
       modalContent = (
         <>
           <Image source={locationOffIcon} style={{ width: 75, height: 75, marginBottom: 16, tintColor: '#f67272' }} />
-          <Text variant="boxTitle" textAlign="center" style={{ color: '#f67272' }} paddingHorizontal="xl" marginBottom="s">
+          <Text variant="largeTitle" textAlign="center" style={{ color: '#f67272' }} paddingHorizontal="xl" marginBottom="m">
             שירותי המיקום כבויים
           </Text>
-          <Text variant="text" textAlign="center" color="lightText" paddingHorizontal="xm" marginBottom="xm">
-            על מנת להכנס למצב הפגנה יש לאפשר שימוש בשירותי המיקום.
+          <Text variant="text" textAlign="center" color="lightText" paddingHorizontal="xm" marginBottom="m">
+            על מנת להכנס למצב הפגנה יש לאפשר שימוש בשירותי המיקום
           </Text>
-          <Text variant="text" textAlign="center" color="lightText" paddingHorizontal="xm" marginBottom="xm">
-            מיקומכם נשמר על גבי מכשירכם בלבד ולא עובר אלינו.
+          <Text variant="text" textAlign="center" color="lightText" paddingHorizontal="xm" marginBottom="l">
+            מיקומכם נשמר על גבי מכשירכם בלבד ולא עובר אלינו
           </Text>
           <RoundedButton text="הפעלת שירותי מיקום" onPress={() => requestLocation()} color="blue" style={{ marginBottom: 8 }} />
           <RoundedButton
@@ -161,6 +190,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
     elevation: 4,
-    backgroundColor: '#111111',
+    backgroundColor: '#1d1d1d',
   },
 });

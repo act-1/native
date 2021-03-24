@@ -5,6 +5,7 @@ import { useStore } from '../../stores';
 import { HomeScreenProps } from '@types/navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OnboardingModal from '@components/Modals/OnboardingModal';
+import { View as MotiView } from 'moti';
 import Icon from 'react-native-vector-icons/Feather';
 
 import Planner from './Planner';
@@ -25,7 +26,7 @@ function Home({ navigation }: HomeScreenProps) {
     setTimeout(() => {
       AsyncStorage.getItem('onboardingFinished').then((value) => {
         if (!value) {
-          setModalVisible(true);
+          setOnboardingVisible(true);
         }
       });
     }, 1500);
@@ -33,20 +34,27 @@ function Home({ navigation }: HomeScreenProps) {
 
   useLayoutEffect(() => {
     let iconSource = locationOffIcon;
+    let playIconAnimation = false;
+
     if (userStore.userLocationPermission === 'granted') iconSource = riotOffIcon;
-    if (currentCheckIn) iconSource = riotOnIcon;
+    if (currentCheckIn) {
+      iconSource = riotOnIcon;
+      playIconAnimation = true;
+    }
 
     navigation.setOptions({
       headerRight: () => (
         <Pressable
           onPress={() => setRiotModalVisible(true)}
-          style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginRight: 6 }}
+          style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginRight: 8 }}
         >
-          <Image source={iconSource} />
+          <MotiView from={{ opacity: 1 }} animate={{ opacity: 0.7 }} transition={{ loop: playIconAnimation, duration: 1250 }}>
+            <Image source={iconSource} style={{ width: 26, resizeMode: 'contain' }} />
+          </MotiView>
         </Pressable>
       ),
     });
-  }, [navigation, userStore.userLocationPermission]);
+  }, [navigation, userStore.userLocationPermission, currentCheckIn]);
 
   return (
     <>

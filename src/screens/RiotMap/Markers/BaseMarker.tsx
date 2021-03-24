@@ -68,12 +68,12 @@ const styles = StyleSheet.create({
   markerBox: {
     justifyContent: 'center',
     backgroundColor: '#fff',
-    borderWidth: 3.5,
+    borderWidth: 3,
     borderColor: '#DFDFDF',
     borderRadius: 4,
   },
   arrowContainer: {
     position: 'absolute',
-    bottom: -16.5 * fontScale,
+    bottom: -17 * fontScale,
   },
 });
