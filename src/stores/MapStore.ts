@@ -19,7 +19,7 @@ class MapStore {
     RealtimeDatabase.database
       .ref('locations')
       .orderByChild('counter')
-      .startAt(4)
+      .startAt(1)
       .once('value')
       .then((snapshot) => {
         if (snapshot.val()) {

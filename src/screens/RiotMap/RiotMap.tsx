@@ -35,13 +35,19 @@ function RiotMap({ navigation, route }: RiotMapProps) {
     // Workaround to delay the bottom sheet expansion after the region animation
     setTimeout(() => {
       bottomSheetRef.current?.expand();
+
+      // When pressing another marker, the map's onTouchStart is messing with the sheet expansion,
+      // so we have to ensure it's opened
+      setTimeout(() => {
+        bottomSheetRef.current?.expand();
+      }, 50);
     }, 400);
 
     mapRef.current?.animateToRegion(
       {
         latitude: protest.latitude,
         longitude: protest.longitude,
-        latitudeDelta: 0.1,
+        latitudeDelta: 0.075,
         longitudeDelta: 0.1 * (width / height),
       },
       300
