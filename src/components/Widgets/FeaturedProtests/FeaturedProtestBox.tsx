@@ -14,14 +14,7 @@ type LiveLocationBoxProps = {
 };
 
 function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
-  const { liveStore } = useStore();
-  const { status, title, city, locationName, locationId, thumbnail } = protest;
-
-  let protestersCount = '---';
-
-  if (protest.status === 'live' && liveStore.locationsCount[locationId]) {
-    protestersCount = liveStore.locationsCount[locationId];
-  }
+  const { status, title, city, locationName, thumbnail } = protest;
 
   return (
     <TouchableScale activeScale={0.96} friction={20} onPress={onPress} style={{ marginHorizontal: 12 }}>
@@ -35,31 +28,7 @@ function FeaturedProtestBox({ protest, onPress }: LiveLocationBoxProps) {
           {locationName}, {city}
         </Text>
         <Box width={'100%'}>
-          {status === 'live' && liveStore.locationProtesters[locationId]?.length === 3 && (
-            <Box flexDirection="row" alignItems="center" marginLeft="xs">
-              {liveStore.locationProtesters[locationId].map((profilePicture: string, index: number) => (
-                <FastImage key={index} source={{ uri: profilePicture }} style={styles.attendingProfilePic} />
-              ))}
-
-              <FadeInOutView style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: 6 }}>
-                {typeof protestersCount === 'number' ? (
-                  <Ticker textStyle={{ fontSize: 16, fontFamily: 'AtlasDL3.1AAA-Bold', color: '#eb524b' }}>
-                    {protestersCount}
-                  </Ticker>
-                ) : (
-                  <Text variant="text" fontFamily="AtlasDL3.1AAA-Bold" color="primaryColor" marginLeft="xs">
-                    ---
-                  </Text>
-                )}
-
-                <Text variant="text" fontFamily="AtlasDL3.1AAA-Bold" color="primaryColor" marginLeft="xs">
-                  עכשיו בהפגנה
-                </Text>
-              </FadeInOutView>
-            </Box>
-          )}
-
-          {protest.status === 'past' && (
+          {status === 'past' && (
             <Text variant="boxInfo" color="important" fontSize={14}>
               {protest.protestersCount > 10 && `${protest.protestersCount} יצאו להפגין`}
             </Text>

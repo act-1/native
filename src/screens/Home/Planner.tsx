@@ -26,6 +26,16 @@ function Riot() {
 
       <FeaturedPictures style={{ marginBottom: 12 }} />
 
+      {eventStore.liveEvents.length > 0 && (
+        <>
+          <Text variant="largeTitle" paddingHorizontal="m" marginTop="m" marginBottom="xm">
+            עכשיו מפגינים
+          </Text>
+
+          <FeaturedProtests protests={eventStore.liveEvents} style={{ marginBottom: 12 }} />
+        </>
+      )}
+
       {nextEvent && (
         <>
           <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="m" marginBottom="m">
@@ -76,13 +86,3 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 });
-
-// {liveEvents.length > 0 && (
-//   <>
-//     <Text variant="largeTitle" paddingHorizontal="m" marginTop="m" marginBottom="xm">
-//       עכשיו מפגינים
-//     </Text>
-
-//     <FeaturedProtests protests={liveEvents} style={{ marginBottom: 12 }} />
-//   </>
-// )}
