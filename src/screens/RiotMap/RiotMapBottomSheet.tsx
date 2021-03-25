@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useRef, Ref } from 'react';
-import { StyleSheet, Animated, PixelRatio } from 'react-native';
+import React, { useMemo, Ref } from 'react';
+import { PixelRatio } from 'react-native';
 import { Box, Text, CircularButton } from '../../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -20,41 +20,11 @@ if (fontScale > 1.15) fontScale = 1.15;
 function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, currentSheetIndex, protest }: RiotMapBottomSheetProps) {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
-  const picturesOpacity = useRef(new Animated.Value(0)).current;
   const snapPoints = useMemo(() => [0, 60 * fontScale + insets.bottom, 210 * fontScale + insets.bottom], [insets.bottom]);
 
-  const onSheetAnimation = useCallback(
-    (fromIndex: number, toIndex: number) => {
-      if (toIndex < 2) {
-        Animated.timing(picturesOpacity, {
-          toValue: 0,
-          duration: 200,
-          useNativeDriver: true,
-        }).start();
-      }
-      if (toIndex === 2) {
-        Animated.timing(picturesOpacity, {
-          toValue: 1,
-          duration: 400,
-          useNativeDriver: true,
-        }).start();
-      }
-    },
-    [picturesOpacity]
-  );
-
-  const handleSheetChanges = useCallback((index: number) => {
-    // Workaround for cases when the user dragging the handler to snap #2 and onAnimate isn't being called.
-    if (index === 2) {
-      Animated.timing(picturesOpacity, {
-        toValue: 1,
-        duration: 400,
-        useNativeDriver: true,
-      }).start();
-    }
-
+  const handleSheetChanges = (index: number) => {
     setCurrentSheetIndex(index);
-  }, []);
+  };
 
   return (
     <BottomSheet
@@ -62,7 +32,6 @@ function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, currentSheet
       index={0}
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
-      onAnimate={onSheetAnimation}
       handleComponent={() => <LocationDetailsHandle />}
     >
       <Box flex={1} paddingVertical="xxs" style={{ backgroundColor: '#363636' }}>
@@ -79,34 +48,28 @@ function RiotMapBottomSheet({ bottomSheetRef, setCurrentSheetIndex, currentSheet
             <CircularButton iconName="x" color="grey" size="small" onPress={() => bottomSheetRef.current?.close()} />
           </Box>
         </Box>
-        <Animated.View style={{ opacity: picturesOpacity }}>
-          <Text variant="text" color="primaryColor" paddingHorizontal="xm" marginBottom="m">
-            {protest.counter} עכשיו מפגינים
-          </Text>
-          {protest.recentPictures?.length > 0 && (
-            <ScrollablePictures
-              pictures={protest.recentPictures}
-              onPicturePress={() =>
-                navigation.navigate('EventPictureList', {
-                  source: 'location',
-                  sourceId: protest.id,
-                  title: protest.name,
-                })
-              }
-              size="small"
-            />
-          )}
-        </Animated.View>
+        <Text variant="text" color="primaryColor" paddingHorizontal="xm" marginBottom="m">
+          {protest.counter} עכשיו מפגינים
+        </Text>
+        {protest.recentPictures?.length > 0 && (
+          <ScrollablePictures
+            pictures={protest.recentPictures}
+            onPicturePress={() =>
+              navigation.navigate('EventPictureList', {
+                source: 'location',
+                sourceId: protest.id,
+                title: protest.name,
+              })
+            }
+            size="small"
+          />
+        )}
       </Box>
     </BottomSheet>
   );
 }
-{
-  /* <EventPagePictures location={{ id: protest.id, name: protest.name }} size="small" /> */
-}
-export default RiotMapBottomSheet;
 
-const styles = StyleSheet.create({});
+export default RiotMapBottomSheet;
 
 const LocationDetailsHandle = () => {
   return (

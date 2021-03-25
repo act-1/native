@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Dimensions } from 'react-native';
 import { Box, CircularButton, StatusBarBlurBackground } from '../../components';
 import { observer } from 'mobx-react-lite';
@@ -27,31 +27,26 @@ function RiotMap({ navigation, route }: RiotMapProps) {
   const [selectedProtest, setSelectedProtest] = useState({});
   const [mapZoom, setMapZoom] = useState(0);
 
-  const onMarkerPress = useCallback(
-    (protest: any) => {
-      if (protest !== selectedProtest) {
-        setSelectedProtest(protest);
-      }
+  const onMarkerPress = (protest: any) => {
+    if (protest !== selectedProtest) {
+      setSelectedProtest(protest);
+    }
 
-      // if (currentSheetIndex !== 2) {
-      // Workaround to delay the bottom sheet expansion after the region animation
-      setTimeout(() => {
-        bottomSheetRef.current?.expand();
-      }, 300);
-      // }
+    // Workaround to delay the bottom sheet expansion after the region animation
+    setTimeout(() => {
+      bottomSheetRef.current?.expand();
+    }, 400);
 
-      mapRef.current?.animateToRegion(
-        {
-          latitude: protest.latitude,
-          longitude: protest.longitude,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1 * (width / height),
-        },
-        350
-      );
-    },
-    [bottomSheetRef]
-  );
+    mapRef.current?.animateToRegion(
+      {
+        latitude: protest.latitude,
+        longitude: protest.longitude,
+        latitudeDelta: 0.1,
+        longitudeDelta: 0.1 * (width / height),
+      },
+      300
+    );
+  };
 
   const onMapMoveCompletion = (region: Region) => {
     // Update zoom state for region markers only when there are > 4 live protests
@@ -71,15 +66,6 @@ function RiotMap({ navigation, route }: RiotMapProps) {
     }
   }, [route.params]);
 
-  // useEffect(() => {
-  //   // Workaround to refresh the bottom sheet ref initially
-  //   if (mapStore.protests.length > 0) {
-  //     setTimeout(() => {
-  //       setSelectedProtest(mapStore.protests[0]);
-  //     }, 5);
-  //   }
-  // }, []);
-
   return (
     <Box flex={1}>
       <StatusBarBlurBackground blurType="dark" />
@@ -90,8 +76,8 @@ function RiotMap({ navigation, route }: RiotMapProps) {
         ref={mapRef}
         style={{ flex: 1 }}
         onTouchStart={() => {
-          if (currentSheetIndex === 2) {
-            bottomSheetRef.current?.snapTo(1);
+          if (currentSheetIndex > 0) {
+            bottomSheetRef.current?.close();
           }
         }}
         customMapStyle={mapStyle}
