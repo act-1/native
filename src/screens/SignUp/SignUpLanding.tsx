@@ -10,6 +10,7 @@ function SignUpLanding({ navigation }) {
   const { userStore } = useStore();
 
   React.useEffect(() => {
+    console.log(userStore.user);
     if (!userStore.user) {
       signInAnonymously();
     }

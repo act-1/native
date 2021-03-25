@@ -41,7 +41,7 @@ function RiotMap({ navigation, route }: RiotMapProps) {
       setTimeout(() => {
         bottomSheetRef.current?.expand();
       }, 50);
-    }, 400);
+    }, 450);
 
     mapRef.current?.animateToRegion(
       {
@@ -112,6 +112,7 @@ function RiotMap({ navigation, route }: RiotMapProps) {
         })}
         {Object.values(mapStore.regions).map((region) => (
           <RegionMarker
+            key={region.id}
             displayed={mapZoom > 1.35}
             coordinates={{ latitude: region.latitude, longitude: region.longitude }}
             counter={region.counter}

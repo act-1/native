@@ -46,15 +46,14 @@ function Riot() {
         </>
       )}
 
-      {!eventStore.eventsLoaded ||
-        (eventStore.eventsLoaded && upcomingEvents.length > 0 && (
-          <>
-            <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="xm" marginBottom="m">
-              כל ההפגנות
-            </Text>
-            <FeaturedEvents events={upcomingEvents} loaded={eventStore.eventsLoaded} style={{ marginBottom: 12 }} />
-          </>
-        ))}
+      {(!eventStore.eventsLoaded || (eventStore.eventsLoaded && upcomingEvents.length) > 0) && (
+        <>
+          <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginTop="xm" marginBottom="m">
+            כל ההפגנות
+          </Text>
+          <FeaturedEvents events={upcomingEvents} loaded={eventStore.eventsLoaded} style={{ marginBottom: 12 }} />
+        </>
+      )}
 
       <Text variant="largeTitle" color="lightText" paddingHorizontal="m" marginBottom="m">
         תמונות אחרונות

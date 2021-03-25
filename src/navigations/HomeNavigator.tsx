@@ -14,7 +14,6 @@ function HomeNavigator({ navigation }) {
   return (
     <HomeStack.Navigator
       screenOptions={{
-        ...TransitionPresets.ModalSlideFromBottomIOS,
         headerTitle: 'ACT1',
         headerTitleAlign: 'center',
         headerStyle: { backgroundColor: '#0a0a0a', shadowOffset: { height: 0, width: 0 } },
@@ -25,26 +24,36 @@ function HomeNavigator({ navigation }) {
           letterSpacing: 0.4,
           color: '#EC534B',
         },
+        headerTintColor: '#EC534B',
         headerTitleAllowFontScaling: false,
-        headerLeft: () => (
-          <Pressable
-            onPress={() => navigation.navigate('Secondary', { screen: 'Settings' })}
-            style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginLeft: 8 }}
-          >
-            <Icon name="settings" size={22} color="#747474" />
-          </Pressable>
-        ),
       }}
     >
-      <HomeStack.Screen name="Home" component={Home} />
-      <HomeStack.Screen name="RiotMap" component={RiotMap} options={{ headerShown: false }} />
+      <HomeStack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Secondary', { screen: 'Settings' })}
+              style={{ alignItems: 'center', padding: 6, justifyContent: 'center', borderRadius: 50, marginLeft: 8 }}
+            >
+              <Icon name="settings" size={22} color="#747474" />
+            </Pressable>
+          ),
+        }}
+      />
+      <HomeStack.Screen
+        name="RiotMap"
+        component={RiotMap}
+        options={{ headerShown: false, ...TransitionPresets.ModalSlideFromBottomIOS }}
+      />
 
       <HomeStack.Screen
         name="RecentPictures"
         options={{
           headerTitle: 'תמונות אחרונות',
-          headerBackTitleVisible: false,
           headerTitleAlign: 'center',
+          headerBackTitleVisible: false,
         }}
         component={RecentPictures}
       />

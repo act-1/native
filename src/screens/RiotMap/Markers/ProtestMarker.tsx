@@ -18,7 +18,7 @@ function ProtestMarker(props: MarkerProps) {
 
         <Image
           source={{ uri: 'https://res.cloudinary.com/act1/image/upload/v1614841512/featured_pictures/balfur-rabaati.jpg' }}
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '100%', height: '100%', zIndex: 1 }}
         />
       </>
     </BaseMarker>

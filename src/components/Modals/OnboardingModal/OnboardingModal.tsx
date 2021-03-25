@@ -31,6 +31,7 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
   const pages = useRef<any>(null);
 
   const nextPage = () => {
+    alert(currentIndex + 1);
     const nextIndex = currentIndex + 1;
     setCurrentIndex(nextIndex);
     pages.current?.scrollToPage(nextIndex);
@@ -62,15 +63,7 @@ function OnboardingmModal({ isModalVisible, setModalVisible }: OnboardingModalPr
       animationOutTiming={350}
       useNativeDriver
     >
-      <Pages
-        ref={pages}
-        scrollEnabled={true}
-        indicatorOpacity={0}
-        indicatorColor="#111111"
-        rtl={isAndroid}
-        onScrollEnd={onScrollEnd}
-        containerStyle={styles.modalWrapper}
-      >
+      <Pages ref={pages} indicatorOpacity={0} indicatorColor="#111111" rtl={isAndroid} containerStyle={styles.modalWrapper}>
         <Box
           flex={1}
           style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 0, paddingHorizontal: 16, paddingBottom: 28 }}

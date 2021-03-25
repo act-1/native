@@ -42,13 +42,23 @@ function Riot({ navigation }: HomeScreenProps) {
   const totalCounter = useTotalCounter();
 
   const { currentCheckIn } = checkInStore;
+  const userCoordinates = React.useMemo(() => {
+    if (userStore.userCurrentPosition?.length > 0) {
+      return {
+        latitude: userStore.userCurrentPosition[0],
+        longitude: userStore.userCurrentPosition[1],
+      };
+    } else {
+      return { latitude: 31.774979, longitude: 35.217181 };
+    }
+  }, [userStore.userCurrentPosition]);
 
   return (
     <>
       <Box marginHorizontal="m">
         <Box overflow="hidden" borderRadius={8}>
           <MapView
-            onPress={() => navigation.navigate('RiotMap')}
+            onPress={() => navigation.navigate('RiotMap', { initialCoordinates: userCoordinates })}
             style={{ height: Platform.select({ ios: 320, android: 270 }), width: '100%' }}
             customMapStyle={mapStyle}
             maxZoomLevel={15}
@@ -59,8 +69,7 @@ function Riot({ navigation }: HomeScreenProps) {
             loadingBackgroundColor="#222222"
             mapPadding={{ right: -40, top: 0, bottom: 0, left: 0 }}
             initialRegion={{
-              latitude: 31.774979,
-              longitude: 35.217181,
+              ...userCoordinates,
               latitudeDelta: 0.003,
               longitudeDelta: 0.00421,
             }}
@@ -108,7 +117,12 @@ function Riot({ navigation }: HomeScreenProps) {
             </Text>
           </MapCounterView>
           <Box style={{ position: 'absolute', right: 8, top: 8, opacity: 0.9 }}>
-            <CircularButton iconName="maximize-2" size="large" color="grey" onPress={() => navigation.navigate('RiotMap')} />
+            <CircularButton
+              iconName="maximize-2"
+              size="large"
+              color="grey"
+              onPress={() => navigation.navigate('RiotMap', { initialCoordinates: userCoordinates })}
+            />
           </Box>
         </Box>
 

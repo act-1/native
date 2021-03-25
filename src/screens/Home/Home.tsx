@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Image, StatusBar, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { Image, StatusBar, StyleSheet, ScrollView, Platform, Pressable } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores';
 import { HomeScreenProps } from '@types/navigation';
@@ -22,13 +22,15 @@ function Home({ navigation }: HomeScreenProps) {
   const { currentCheckIn } = checkInStore;
 
   useEffect(() => {
-    setTimeout(() => {
-      AsyncStorage.getItem('onboardingFinished').then((value) => {
-        if (!value) {
-          setOnboardingVisible(true);
-        }
-      });
-    }, 1500);
+    if (Platform.OS !== 'android') {
+      setTimeout(() => {
+        AsyncStorage.getItem('onboardingFinished').then((value) => {
+          if (!value) {
+            setOnboardingVisible(true);
+          }
+        });
+      }, 1500);
+    }
   }, []);
 
   useLayoutEffect(() => {

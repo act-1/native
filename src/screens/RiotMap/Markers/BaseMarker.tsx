@@ -47,7 +47,7 @@ function BaseMarker({
     <AnimatedMarker
       centerOffset={{ x: 0, y: -32.5 }}
       coordinate={coordinates}
-      style={{ opacity: markerOpacity, overflow: 'visible' }}
+      style={{ opacity: markerOpacity }}
       onPress={onPress}
       stopPropagation={true}
       tracksViewChanges={false}

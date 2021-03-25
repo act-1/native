@@ -74,7 +74,7 @@ function PictureListItem({ post, updatePostLikeCount, postAction }: PictureListI
           <FastImage source={mapPinIcon} style={styles.profilePic} />
           <Box>
             <Text variant="boxTitle">{post.locationName}</Text>
-            {post.locationId && (
+            {post.locationCity && (
               <Box flexDirection="row" alignItems="center">
                 <Text variant="boxSubtitle" textAlign="left">
                   {post.locationCity}

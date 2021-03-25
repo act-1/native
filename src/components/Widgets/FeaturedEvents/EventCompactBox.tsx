@@ -37,12 +37,7 @@ function EventCompactBox({
   }
 
   return (
-    <TouchableScale
-      activeScale={0.96}
-      friction={20}
-      onPress={onPress}
-      style={[{ marginHorizontal: 12 }, styles[`${variant}Box`]]}
-    >
+    <TouchableScale activeScale={0.96} friction={20} onPress={onPress} style={[{ marginHorizontal: 8 }, styles[`${variant}Box`]]}>
       <FastImage
         style={{
           width: 154,
@@ -50,7 +45,7 @@ function EventCompactBox({
           borderRadius: 8,
           justifyContent: 'flex-end',
           alignItems: 'center',
-          marginRight: variant === 'horizontal' && 12,
+          marginRight: variant === 'horizontal' ? 12 : 0,
         }}
         source={{ uri: compactThumbnail || thumbnail }}
       >
@@ -71,7 +66,7 @@ function EventCompactBox({
         </Box>
       </FastImage>
       <Box alignItems="flex-start" flex={1} width={148}>
-        <Text variant="boxSubtitle" fontSize={14} paddingRight="s" marginTop="xs" marginBottom="xxs">
+        <Text variant="boxSubtitle" fontSize={14} marginTop="xs" marginBottom="xxs">
           {variant === 'horizontal' && locationName + ', '}
           {city}
         </Text>

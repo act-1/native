@@ -3,7 +3,7 @@ import { Share, StyleSheet, PixelRatio } from 'react-native';
 import { Box, Text } from '../../../../components';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { ContextMenuButton } from 'react-native-ios-context-menu';
 import HapticFeedback from 'react-native-haptic-feedback';
@@ -123,7 +123,9 @@ export default function RiotActions({ expand }) {
             ],
           }}
         >
-          <RiotAction title="צילום תמונה" iconName="camera" />
+          <TouchableNativeFeedback onPress={() => openCamera()}>
+            <RiotAction title="צילום תמונה" iconName="camera" />
+          </TouchableNativeFeedback>
         </ContextMenuButton>
         <RiotAction
           title="הזמנת חברים"

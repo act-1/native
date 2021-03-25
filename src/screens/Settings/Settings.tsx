@@ -47,9 +47,7 @@ function Settings({ navigation }: SettingsScreenProps) {
       </Box>
 
       <Box margin="m" borderRadius={10} backgroundColor="sectionListSeperator">
-        <SettingBox first endIcon={null} title="מדיניות פרטיות" icon="📜" />
-
-        <SettingBox last endIcon={null} title="תודות" icon="🙏" />
+        <SettingBox first last endIcon={null} title="מדיניות פרטיות" icon="📜" />
       </Box>
 
       <Text variant="boxSubtitle" textAlign="center" marginBottom="xxs" opacity={0.7}>

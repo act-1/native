@@ -11,8 +11,11 @@ class MapStore {
   constructor(rootStore: rootStore) {
     makeAutoObservable(this, { rootStore: false });
     this.rootStore = rootStore;
-    this.getProtests();
-    this.getRegions();
+
+    if (rootStore.userStore.user) {
+      this.getProtests();
+      this.getRegions();
+    }
   }
 
   getProtests() {

@@ -23,7 +23,7 @@ function EventPageCounter({ event, style }: EventPageCounterProps) {
         borderColor="lightBorderColor"
         style={[styles.counterBox, style]}
       >
-        <Text style={styles.countTextStyle}>{event.protestersCount.toLocaleString()}</Text>
+        <Text style={styles.countTextStyle}>{event.protestersCount && event.protestersCount.toLocaleString()}</Text>
         <Text variant="text">יצאו להפגין</Text>
       </Box>
     );
@@ -38,7 +38,7 @@ function EventPageCounter({ event, style }: EventPageCounterProps) {
       style={[styles.counterBox, style]}
     >
       <Box minHeight={35}>
-        <Ticker textStyle={styles.countTextStyle}>{event.attendingCount.toLocaleString()}</Ticker>
+        <Ticker textStyle={styles.countTextStyle}>{event.attendingCount && event.attendingCount.toLocaleString()}</Ticker>
       </Box>
       <Text variant="text" maxFontSizeMultiplier={1.25}>
         יוצאים להפגין
