@@ -1,7 +1,7 @@
 <h1 align="center">
     <img width="266" src="https://res.cloudinary.com/act1/image/upload/v1612944972/meta/logo_gf7ecz.svg" alt="Act1" />
 </h1>
-<img src="https://raw.githubusercontent.com/act-1/native/bb/src/assets/readme-screenshot.jpg" align="right" width="25%" />
+<img src="https://raw.githubusercontent.com/act-1/native/bb/src/assets/readme-screenshot.jpg" align="right" width="25%" alt="" />
 
 > ## Deprecated
 >
@@ -13,7 +13,7 @@
 > 
 > I still believe that this project needs to see the light of the day, and I hope to get back to it in the future.
 >
-> \- @guytepper
+> \- [@guytepper](https://github.com/guytepper)
 
 
 ## Welcome to Act1!
