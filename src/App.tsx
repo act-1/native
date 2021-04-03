@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
-import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { observer } from 'mobx-react-lite';
 import { useStore } from './stores';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
@@ -23,7 +22,6 @@ function App() {
   useEffect(() => {
     const initApp = async () => {
       try {
-        await inAppMessaging().setMessagesDisplaySuppressed(true);
         await store.initApp();
 
         // Allow enough time for AppNavigation to reflect changes to user properties
@@ -31,8 +29,6 @@ function App() {
         setTimeout(async () => {
           await RNBootSplash.hide({ fade: true });
         }, 1050);
-
-        inAppMessaging().setMessagesDisplaySuppressed(false);
       } catch (err) {
         // TODO: Log to crashlytics
         console.error(err);
