@@ -1,19 +1,20 @@
-# <h1 align="center">
-
+<h1 align="center">
     <img width="266" src="https://res.cloudinary.com/act1/image/upload/v1612944972/meta/logo_gf7ecz.svg" alt="Act1" />
-
-</h3>
-<hr/>
+</h1>
+<img src="https://raw.githubusercontent.com/act-1/native/bb/src/assets/readme-screenshot.jpg" align="right" width="25%" />
 
 > ## Deprecated
 >
 > Act1 tried to reduce the friction for people to become involved in activism, and also to reinvent the protest experience with a mobile app.
 >
-> I’ve worked on Act1 for 5 months, and learned a lot from it - it was my first app I built from the ground and I fell in love with crafting a great mobile experience.
+> I’ve worked on Act1 for 5 months, and learned a lot from it - it was my first app I built from the ground, and I fell in love with crafting a great mobile experience.
 >
-> Eventually I understood that I’m too invested in this project. I’ve worked alone, which made it pretty hard, and my mental health have been forgotten in the process. I still believe that this project is to see the light of the day, and maybe one day I'll come back to it [[with new powers?]].
+> Eventually I understood that I’m too invested in this project. I’ve worked alone, which made it pretty hard, and my mental health have been forgotten in the process. 
+> 
+> I still believe that this project needs to see the light of the day, and I hope to get back to it in the future.
 >
 > \- @guytepper
+
 
 ## Welcome to Act1!
 
